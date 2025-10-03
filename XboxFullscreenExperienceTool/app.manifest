@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1">
+  <assemblyIdentity version="1.0.0.0" name="MyApplication.app"/>
+  <trustInfo xmlns="urn:schemas-microsoft-com:asm.v2">
+    <security>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!-- UAC 資訊清單選項
+             如果要變更 Windows 使用者帳戶控制層級，請將 
+             requestedExecutionLevel 節點以下列其中之一取代。
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+            指定 requestedExecutionLevel 項目會停用檔案及登錄虛擬化。
+            如果您的應用程式需要針對回溯相容性進行這項虛擬化，請移除這個
+            項目。
+        -->
+        <requestedExecutionLevel level="requireAdministrator" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+
+  <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
+    <application>
+      <!-- 此應用程式已通過測試，並設計要搭配使用的
+           應用程式版本清單。請取消註解適當元素，
+           Windows 就會自動選取最相容的環境。 -->
+
+      <!-- Windows Vista -->
+      <!--<supportedOS Id="{e2011457-1546-43c5-a5fe-008deee3d3f0}" />-->
+
+      <!-- Windows 7 -->
+      <!--<supportedOS Id="{35138b9a-5d96-4fbd-8e2d-a2440225f93a}" />-->
+
+      <!-- Windows 8 -->
+      <!--<supportedOS Id="{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}" />-->
+
+      <!-- Windows 8.1 -->
+      <!--<supportedOS Id="{1f676c76-80e1-4239-95bb-83d0f6d0da78}" />-->
+
+      <!-- Windows 10 -->
+      <!--<supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}" />-->
+
+    </application>
+  </compatibility>
+
+  <!-- 表示應用程式為 DPI 感知，Windows 不會在 DPI 變高時自動
+       縮放。Windows Presentation Foundation (WPF) 應用程式會自動感知 DPI，因此不需要
+       加入。以 .NET Framework 4.6 為目標的 Windows Form 應用程式若加入這項設定，也
+       應該在其 app.config 中將 'EnableWindowsFormsHighDpiAutoResizing' 設定為 'true'。
+       
+       將應用程式設定為感知長路徑。請參閱 https://docs.microsoft.com/windows/win32/fileio/maximum-file-path-limitation-->
+  <!--
+  <application xmlns="urn:schemas-microsoft-com:asm.v3">
+    <windowsSettings>
+      <dpiAware xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">true</dpiAware>
+      <longPathAware xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings">true</longPathAware>
+    </windowsSettings>
+  </application>
+  -->
+
+  <!-- 啟用 Windows 通用控制項和對話方塊的佈景主題 (Windows XP 以後版本) -->
+  <!--
+  <dependency>
+    <dependentAssembly>
+      <assemblyIdentity
+          type="win32"
+          name="Microsoft.Windows.Common-Controls"
+          version="6.0.0.0"
+          processorArchitecture="*"
+          publicKeyToken="6595b64144ccf1df"
+          language="*"
+        />
+    </dependentAssembly>
+  </dependency>
+  -->
+
+</assembly>

@@ -1,0 +1,3 @@
+[submodule "lib/ViVe"]
+	path = lib/ViVe
+	url = https://github.com/thebookisclosed/ViVe.git
