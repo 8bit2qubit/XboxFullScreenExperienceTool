@@ -10,9 +10,9 @@
 
 <p align="center">
 <a href="https://github.com/8bit2qubit/XboxFullscreenExperienceTool/releases/latest"><img src="https://img.shields.io/github/v/release/8bit2qubit/XboxFullscreenExperienceTool?style=flat-square&color=blue" alt="最新版本"></a>
-<a href="https://github.com/8bit2qubit/XboxFullscreenExperienceTool/releases"><img src="https://img.shields.io/github/downloads/8bit2qubit/XboxFullscreenExperienceTool/total?style=flat-square&color=green" alt="總下載量"></a>
+<a href="https://github.com/8bit2qubit/XboxFullscreenExperienceTool/releases"><img src="https://img.shields.io/github/downloads/8bit2qubit/XboxFullscreenExperienceTool/total" alt="總下載量"></a>
 <a href="#"><img src="https://img.shields.io/badge/tech-C%23%20%26%20.NET%208-blueviolet.svg?style=flat-square" alt="技術"></a>
-<a href="https://github.com/8bit2qubit/XboxFullscreenExperienceTool/blob/main/LICENSE"><img src="https://img.shields.io/github/license/8bit2qubit/XboxFullscreenExperienceTool?style=flat-square&color=orange" alt="授權條款"></a>
+<a href="https://github.com/8bit2qubit/XboxFullscreenExperienceTool/blob/main/LICENSE"><img src="https://img.shields.io/github/license/8bit2qubit/XboxFullscreenExperienceTool" alt="授權條款"></a>
 </p>
 
 一款簡單、安全的一鍵式工具，專為啟用 Windows 11 中隱藏的 Xbox 全螢幕遊戲體驗而生。本工具將繁複的底層設定全部自動化，讓您輕鬆享受專為遊戲手把最佳化的類主機介面。
