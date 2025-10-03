@@ -68,7 +68,7 @@ namespace XboxFullscreenExperienceTool.Helpers
                     // 參數：查詢 (/query) 特定名稱 (/tn) 的工作
                     Arguments = $"/query /tn \"{TASK_NAME}\"",
                     UseShellExecute = false,       // 不使用作業系統殼層啟動
-                    RedirectStandardOutput = true, // 重新導向標準輸出，以便我們可以忽略它
+                    RedirectStandardOutput = true, // 重新導向標準輸出，以便可以忽略它
                     CreateNoWindow = true          // 不建立可見的命令提示字元視窗
                 }
             };
@@ -137,7 +137,7 @@ namespace XboxFullscreenExperienceTool.Helpers
   </Actions>
 </Task>";
 
-            // `schtasks /create /xml` 需要一個 XML 檔案路徑，因此我們先建立一個暫存檔案。
+            // `schtasks /create /xml` 需要一個 XML 檔案路徑，因此先建立一個暫存檔案。
             var tempXmlFile = Path.GetTempFileName();
             File.WriteAllText(tempXmlFile, xmlContent);
 
@@ -192,7 +192,7 @@ namespace XboxFullscreenExperienceTool.Helpers
             // `schtasks /delete` 的結束代碼有特殊含義：
             // 0: 成功刪除。
             // 1: 找不到指定的工作。
-            // 在我們的邏輯中，如果工作本來就不存在，也算是達成了「確保工作不存在」的目標，因此不應視為錯誤。
+            // 在邏輯中，如果工作本來就不存在，也算是達成了「確保工作不存在」的目標，因此不應視為錯誤。
             // 只有當結束代碼大於 1 時，才表示發生了真正的錯誤。
             if (process.ExitCode > 1)
             {

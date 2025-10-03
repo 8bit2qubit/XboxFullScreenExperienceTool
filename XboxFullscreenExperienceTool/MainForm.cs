@@ -23,6 +23,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 using XboxFullscreenExperienceTool.Helpers;
 
@@ -95,6 +96,20 @@ namespace XboxFullscreenExperienceTool
         /// </summary>
         private void MainForm_Load(object sender, EventArgs e)
         {
+            try
+            {
+                // 取得目前版本資訊
+                Version version = Assembly.GetExecutingAssembly().GetName().Version;
+                // 將標題設定為 "程式名稱 v主版號.次版號.組建編號"
+                // this.Text 的初始值是在設計工具中設定的 "Xbox 全螢幕體驗啟用工具"
+                this.Text = $"{this.Text} v{version.Major}.{version.Minor}.{version.Build}";
+            }
+            catch (Exception ex)
+            {
+                // 如果發生錯誤，至少記錄下來，但不要中斷程式執行
+                Log($"讀取版本號並設定標題時發生錯誤: {ex.Message}");
+            }
+
             // 步驟 1: 進行關鍵的前置檢查，確保 OS 版本符合要求。
             if (!CheckWindowsBuild())
             {
@@ -168,17 +183,27 @@ namespace XboxFullscreenExperienceTool
         {
             try
             {
-                // 檢查 1: ViVe 功能狀態
-                var config = FeatureManager.QueryFeatureConfiguration(FEATURE_IDS[0], RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
-                bool isFeatureEnabled = config.HasValue && config.Value.EnabledState == RTL_FEATURE_ENABLED_STATE.Enabled;
+                // 步驟 1: 檢查所有 ViVe 功能是否都已啟用
+                bool allFeaturesEnabled = true;
+                foreach (uint featureId in FEATURE_IDS)
+                {
+                    var config = FeatureManager.QueryFeatureConfiguration(featureId, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
+                    if (!config.HasValue || config.Value.EnabledState != RTL_FEATURE_ENABLED_STATE.Enabled)
+                    {
+                        allFeaturesEnabled = false;
+                        break; // 只要有一個不滿足條件，就停止檢查
+                    }
+                }
 
-                // 檢查 2: DeviceForm 登錄檔值狀態
-                bool isRegistrySet = Registry.GetValue($"HKEY_LOCAL_MACHINE\\{REG_PATH}", REG_VALUE, null) is int intValue && intValue == 0x2E;
+                // 步驟 2: 檢查 DeviceForm 登錄檔值是否已設定
+                object? regValue = Registry.GetValue($"HKEY_LOCAL_MACHINE\\{REG_PATH}", REG_VALUE, null);
+                bool isRegistrySet = regValue is int intValue && intValue == 0x2E;
 
                 // 最終判斷：必須兩者都滿足才算是「已啟用」
-                bool isEnabled = isFeatureEnabled && isRegistrySet;
+                bool isEnabled = allFeaturesEnabled && isRegistrySet;
 
-                Log($"狀態檢查 -> 功能啟用: {isFeatureEnabled}, 登錄檔設定: {isRegistrySet}");
+                // 輸出一個簡潔的狀態總結日誌
+                Log($"狀態檢查 -> ViVe 功能: {allFeaturesEnabled}, 登錄檔: {isRegistrySet}, 最終結果: {(isEnabled ? "已啟用" : "未啟用")}");
 
                 if (isEnabled)
                 {
@@ -347,39 +372,50 @@ namespace XboxFullscreenExperienceTool
         {
             Log("--- 開始停用流程 ---");
 
-            // 步驟 1: 重設 ViVe 功能為預設狀態。
-            Log($"正在重設功能 ID: {string.Join(", ", FEATURE_IDS)}...");
+            // 步驟 1: 明確地將 ViVe 功能設定為停用狀態。
+            // 這一步操作是安全的，因為使用者意圖就是停用該功能體驗。
+            Log($"正在明確停用功能 ID: {string.Join(", ", FEATURE_IDS)}...");
             var updates = Array.ConvertAll(FEATURE_IDS, id => new RTL_FEATURE_CONFIGURATION_UPDATE
             {
                 FeatureId = id,
-                Operation = RTL_FEATURE_CONFIGURATION_OPERATION.ResetState,
+                EnabledState = RTL_FEATURE_ENABLED_STATE.Disabled,
+                Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState,
                 Priority = RTL_FEATURE_CONFIGURATION_PRIORITY.User
             });
             FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
             FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Boot);
-            Log("功能已成功重設。");
+            Log("功能已成功設定為停用狀態。");
 
-            // 步驟 2: 還原或刪除登錄檔值。
-            Log("正在還原 DeviceForm 登錄檔...");
+            // 步驟 2: 極度安全地還原登錄檔值。
+            Log("正在檢查是否需要還原 DeviceForm 登錄檔...");
             try
             {
-                using RegistryKey? key = Registry.LocalMachine.OpenSubKey(REG_PATH, true);
-                if (key != null)
+                // 核心邏輯：只有在備份檔存在時，才對登錄檔進行操作。
+                if (File.Exists(BackupFilePath))
                 {
-                    if (File.Exists(BackupFilePath))
+                    Log("偵測到備份檔，表示登錄檔是由本工具修改的，將進行還原操作。");
+                    using RegistryKey? key = Registry.LocalMachine.OpenSubKey(REG_PATH, true);
+                    if (key != null)
                     {
-                        if (int.TryParse(File.ReadAllText(BackupFilePath), out int intValue))
+                        if (int.TryParse(File.ReadAllText(BackupFilePath), out int backupValue))
                         {
-                            key.SetValue(REG_VALUE, intValue, RegistryValueKind.DWord);
-                            Log($"已從備份檔還原數值: {intValue}");
+                            key.SetValue(REG_VALUE, backupValue, RegistryValueKind.DWord);
+                            Log($"已從備份檔還原數值: {backupValue}");
                         }
-                        File.Delete(BackupFilePath);
+                        else
+                        {
+                            // 備份檔內容無效，為安全起見，刪除該值。
+                            key.DeleteValue(REG_VALUE, false);
+                            Log($"備份檔內容無效，已直接移除登錄檔值 '{REG_VALUE}'。");
+                        }
                     }
-                    //else if (key.GetValue(REG_VALUE) != null)
-                    //{
-                    //    key.DeleteValue(REG_VALUE);
-                    //    Log("沒有備份檔，已直接移除登錄檔值。");
-                    //}
+                    File.Delete(BackupFilePath);
+                    Log("備份檔已刪除。");
+                }
+                else
+                {
+                    // 如果備份檔不存在，即使當前值是 46，也絕不碰它。
+                    Log("未找到備份檔。這可能是系統原生設定，為確保系統穩定性，將不會修改登錄檔。");
                 }
             }
             catch (Exception ex)

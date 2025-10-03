@@ -33,7 +33,6 @@ namespace XboxFullscreenExperienceTool
         /// <summary>
         /// 用於確保應用程式單一執行個體的 Mutex (互斥鎖) 全域名稱。
         /// 這個名稱在作業系統中必須是唯一的，以防止與其他應用程式衝突。
-        /// 加入開發者標識 (如 '8bit2qubit') 是一個好習慣。
         /// </summary>
         private const string AppMutexName = "XboxFullscreenExperienceTool-SingleInstanceMutex-8bit2qubit";
 
@@ -57,7 +56,7 @@ namespace XboxFullscreenExperienceTool
             // 嘗試取得一個全域 Mutex。
             // - true: 表示呼叫執行緒初始時就想擁有 Mutex。
             // - AppMutexName: Mutex 的唯一名稱。
-            // - createdNew: 如果成功建立新的 Mutex (表示我們是第一個實例)，則為 true；
+            // - createdNew: 如果成功建立新的 Mutex (表示是第一個實例)，則為 true；
             //              如果 Mutex 已存在 (表示已有實例在執行)，則為 false。
             _mutex = new Mutex(true, AppMutexName, out bool createdNew);
 
