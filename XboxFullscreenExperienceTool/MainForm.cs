@@ -49,6 +49,17 @@ namespace XboxFullscreenExperienceTool
         /// </summary>
         private readonly uint[] FEATURE_IDS = { 52580392, 50902630 };
 
+        // --- 螢幕尺寸限制 ---
+        /// <summary>
+        /// 觸發自動設定的螢幕對角線尺寸門檻 (英吋)。
+        /// 根據測試，尺寸大於此值 (例如 > 9.5") 的裝置需要建立工作排程。
+        /// </summary>
+        private const double MAX_DIAGONAL_INCHES = 9.5;
+        /// <summary>
+        /// 英吋與毫米的轉換率。
+        /// </summary>
+        private const double INCHES_TO_MM = 25.4;
+
         // --- 登錄檔相關常數 ---
         private const string REG_PATH_PARENT = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion";
         private const string REG_PATH = REG_PATH_PARENT + @"\OEM";
@@ -206,17 +217,45 @@ namespace XboxFullscreenExperienceTool
             {
                 Log("--- 開始啟用流程 ---");
 
-                // 步驟 1: 處理螢幕實體尺寸。如果尺寸未定義 (0x0)，則建立開機工作來設定它。
+                // 步驟 1: 處理螢幕實體尺寸。如果尺寸未定義 (0x0) 或大於 9.5 吋，則建立開機工作來設定它。
                 Log("正在讀取目前螢幕尺寸...");
                 var (success, size) = PanelManager.GetDisplaySize();
                 if (success)
                 {
                     Log($"成功讀取螢幕尺寸: {size.WidthMm}x{size.HeightMm}mm。");
-                    if (size.WidthMm == 0 && size.HeightMm == 0)
+
+                    bool isUndefined = size.WidthMm == 0 && size.HeightMm == 0;
+                    bool isTooLarge = false;
+                    double diagonalInches = 0;
+
+                    if (!isUndefined)
                     {
-                        Log("偵測到未定義的螢幕尺寸 (0x0mm)，正在建立開機工作排程...");
+                        // 使用畢氏定理計算對角線長度 (mm)
+                        double diagonalMm = Math.Sqrt((size.WidthMm * size.WidthMm) + (size.HeightMm * size.HeightMm));
+                        // 將毫米轉換為英吋
+                        diagonalInches = diagonalMm / INCHES_TO_MM;
+                        // 判斷是否大於 9.5 吋門檻
+                        isTooLarge = diagonalInches > MAX_DIAGONAL_INCHES;
+                    }
+
+                    // 如果尺寸未定義，或尺寸大於 9.5 吋，則建立工作排程
+                    if (isUndefined || isTooLarge)
+                    {
+                        if (isUndefined)
+                        {
+                            Log("偵測到未定義的螢幕尺寸 (0x0mm)，正在建立開機工作排程...");
+                        }
+                        else
+                        {
+                            Log($"偵測到螢幕尺寸 ({diagonalInches:F2}\") 大於 {MAX_DIAGONAL_INCHES}\" 門檻，正在建立開機工作排程...");
+                        }
                         TaskSchedulerManager.CreateSetPanelDimensionsTask();
                         Log("工作排程 'SetPanelDimensions' 已建立。");
+                    }
+                    else
+                    {
+                        // 說明尺寸在範圍內，無需操作
+                        Log($"螢幕尺寸 ({diagonalInches:F2}\") 在 {MAX_DIAGONAL_INCHES}\" 範圍內，無需建立工作排程。");
                     }
                 }
                 else
