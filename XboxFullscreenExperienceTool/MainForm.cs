@@ -177,45 +177,104 @@ namespace XboxFullscreenExperienceTool
         }
 
         /// <summary>
-        /// 檢查所有相關設定 (ViVe 功能、登錄檔) 以確定功能的目前啟用狀態，並更新 UI。
+        /// 檢查所有相關設定 (ViVe 功能、登錄檔、螢幕尺寸、排程工作) 以確定功能的目前啟用狀態，並相應地更新 UI。
+        /// 綜合性的檢查，處理多種中間狀態（例如，需要修正）。
         /// </summary>
         private void CheckCurrentStatus()
         {
             try
             {
-                // 步驟 1: 檢查所有 ViVe 功能是否都已啟用
-                bool allFeaturesEnabled = true;
-                foreach (uint featureId in FEATURE_IDS)
-                {
-                    var config = FeatureManager.QueryFeatureConfiguration(featureId, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
-                    if (!config.HasValue || config.Value.EnabledState != RTL_FEATURE_ENABLED_STATE.Enabled)
-                    {
-                        allFeaturesEnabled = false;
-                        break; // 只要有一個不滿足條件，就停止檢查
-                    }
-                }
+                // 步驟 1: 基礎核心檢查 (Core Prerequisite Checks)
+                // 1a. 檢查 ViVe 功能：確保所有必要的功能 ID 都已啟用。
+                // 使用 LINQ 的 .All() 方法來驗證陣列中的每一個 ID。
+                bool allFeaturesEnabled = FEATURE_IDS.All(id =>
+                    FeatureManager.QueryFeatureConfiguration(id, RTL_FEATURE_CONFIGURATION_TYPE.Runtime) is RTL_FEATURE_CONFIGURATION config &&
+                    config.EnabledState == RTL_FEATURE_ENABLED_STATE.Enabled);
 
-                // 步驟 2: 檢查 DeviceForm 登錄檔值是否已設定
+                // 1b. 檢查登錄檔：確認 DeviceForm 值是否已設定為 0x2E (46)。
                 object? regValue = Registry.GetValue($"HKEY_LOCAL_MACHINE\\{REG_PATH}", REG_VALUE, null);
                 bool isRegistrySet = regValue is int intValue && intValue == 0x2E;
 
-                // 最終判斷：必須兩者都滿足才算是「已啟用」
-                bool isEnabled = allFeaturesEnabled && isRegistrySet;
-
-                // 輸出一個簡潔的狀態總結日誌
-                Log($"狀態檢查 -> ViVe 功能: {allFeaturesEnabled}, 登錄檔: {isRegistrySet}, 最終結果: {(isEnabled ? "已啟用" : "未啟用")}");
-
-                if (isEnabled)
+                // 為了提供更詳細的日誌，建立一個描述登錄檔狀態的字串。
+                string registryStatusString;
+                if (regValue == null)
                 {
+                    registryStatusString = "False (不存在)";
+                }
+                else if (isRegistrySet)
+                {
+                    registryStatusString = "True (值為 46)";
+                }
+                else
+                {
+                    registryStatusString = $"False (值為 {regValue})"; // 記錄下錯誤的數值
+                }
+
+                // 步驟 2: 硬體相依性檢查 (Hardware-Dependent Checks)
+                // 2a. 判斷是否需要排程工作來覆寫螢幕尺寸。
+                // 在以下兩種情況下需要：
+                //   a) 系統無法偵測到實體尺寸 (回傳 0x0mm)。
+                //   b) 偵測到的尺寸過大 (例如，平板、筆電)，超出了此功能預期的掌機尺寸範圍。
+                bool isTaskRequired = false;
+                var (success, size) = PanelManager.GetDisplaySize();
+                if (success)
+                {
+                    // 情況 a: 尺寸未定義
+                    bool isUndefined = size.WidthMm == 0 && size.HeightMm == 0;
+                    if (isUndefined)
+                    {
+                        isTaskRequired = true;
+                    }
+                    // 情況 b: 尺寸過大
+                    else
+                    {
+                        // 假設 INCHES_TO_MM 和 MAX_DIAGONAL_INCHES 是已定義的常數
+                        double diagonalMm = Math.Sqrt((size.WidthMm * size.WidthMm) + (size.HeightMm * size.HeightMm));
+                        isTaskRequired = (diagonalMm / INCHES_TO_MM) > MAX_DIAGONAL_INCHES;
+                    }
+                }
+                else
+                {
+                    LogError("無法讀取螢幕尺寸，將無法判斷是否需要排程工作。");
+                }
+
+                // 2b. 檢查排程工作是否實際存在。
+                bool isTaskPresent = TaskSchedulerManager.TaskExists();
+
+                // 步驟 3: 綜合判斷與 UI 更新 (Final Logic & UI Update)
+                // isCoreEnabled: 核心的功能開關是否都已打開 (ViVe 功能 + 登錄檔)。
+                bool isCoreEnabled = allFeaturesEnabled && isRegistrySet;
+
+                // isFullyConfigured: 是否達到了完美的啟用狀態。
+                // 必須滿足核心啟用，且 (如果需要排程工作，則該工作必須存在)。
+                bool isFullyConfigured = isCoreEnabled && (!isTaskRequired || isTaskPresent);
+
+                Log($"狀態檢查 -> ViVe 功能: {allFeaturesEnabled}, 登錄檔: {registryStatusString}, 工作需求: {isTaskRequired}, 工作存在: {isTaskPresent}");
+
+                // 根據最終狀態更新 UI
+                if (isFullyConfigured && isCoreEnabled)
+                {
+                    // 狀態一：完全啟用。所有設定都正確。
                     lblStatus.Text = "狀態：已啟用";
                     lblStatus.ForeColor = Color.LimeGreen;
                     btnEnable.Enabled = false;
                     btnDisable.Enabled = true;
                 }
+                else if (isCoreEnabled && isTaskRequired && !isTaskPresent)
+                {
+                    // 狀態二：需要修正。核心功能已啟用，但缺少必要的硬體修正 (排程工作)。
+                    lblStatus.Text = "狀態：需要修正 (未建立螢幕尺寸工作)";
+                    lblStatus.ForeColor = Color.Orange;
+                    btnEnable.Text = "修正 Xbox 全螢幕體驗"; // 改變按鈕文字以提示使用者
+                    btnEnable.Enabled = true; // 允許使用者點選「修正」
+                    btnDisable.Enabled = false; // 不允許使用者點選「停用」
+                }
                 else
                 {
+                    // 狀態三：未啟用。任何核心設定未完成。
                     lblStatus.Text = "狀態：未啟用";
                     lblStatus.ForeColor = Color.Tomato;
+                    btnEnable.Text = "啟用 Xbox 全螢幕體驗"; // 重設按鈕文字
                     btnEnable.Enabled = true;
                     btnDisable.Enabled = false;
                 }
