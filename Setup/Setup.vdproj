@@ -21,6 +21,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_E38EFD43363E42358706E249A32DB9CF"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_FED00365D1094CBEA11BDAA3A5B514E6"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -144,6 +150,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E38EFD43363E42358706E249A32DB9CF"
+            {
+            "SourcePath" = "8:..\\app.ico"
+            "TargetName" = "8:app.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_A21001F12A454D16804E24C24E60D4FC"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -234,15 +260,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Xbox Fullscreen Experience Tool"
-        "ProductCode" = "8:{DC151425-1606-449D-9C7B-0314AE5DE953}"
-        "PackageCode" = "8:{4DA20FD4-FD1B-4C43-95AF-3FD498843A19}"
+        "ProductCode" = "8:{5B0CA839-86EF-4702-AD93-8C7E14BE5976}"
+        "PackageCode" = "8:{D02C8C60-19F7-4883-B5F6-E571C8657E99}"
         "UpgradeCode" = "8:{1FC446AC-4A81-40E7-B99E-292B8413FDBB}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:0.0.4"
+        "ProductVersion" = "8:0.0.5"
         "Manufacturer" = "8:8bit2qubit"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -366,7 +392,7 @@
             "Target" = "8:_272BC26B262F4E3D899B0F10EE3BA06C"
             "Folder" = "8:_7C5939D5FB6A480C8DEEF3E4EBF888D0"
             "WorkingFolder" = "8:_A21001F12A454D16804E24C24E60D4FC"
-            "Icon" = "8:"
+            "Icon" = "8:_E38EFD43363E42358706E249A32DB9CF"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_FDCC55D12D1A4CD68F76FBFDA2FDF13C"
@@ -380,7 +406,7 @@
             "Target" = "8:_272BC26B262F4E3D899B0F10EE3BA06C"
             "Folder" = "8:_39719A5D53C34892B85A86FB616CE511"
             "WorkingFolder" = "8:_A21001F12A454D16804E24C24E60D4FC"
-            "Icon" = "8:"
+            "Icon" = "8:_E38EFD43363E42358706E249A32DB9CF"
             "Feature" = "8:"
             }
         }
