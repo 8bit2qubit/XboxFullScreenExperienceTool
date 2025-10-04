@@ -98,11 +98,13 @@ namespace XboxFullscreenExperienceTool
         {
             try
             {
-                // 取得目前版本資訊
-                Version version = Assembly.GetExecutingAssembly().GetName().Version;
+                // 取得版本號字串，如果版本資訊不存在，使用一個預設值 (未知版本)
+                // Version.ToString(3) 的格式是 "Major.Minor.Build"
+                string versionString = Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? "未知版本";
+
                 // 將標題設定為 "程式名稱 v主版號.次版號.組建編號"
                 // this.Text 的初始值是在設計工具中設定的 "Xbox 全螢幕體驗啟用工具"
-                this.Text = $"{this.Text} v{version.Major}.{version.Minor}.{version.Build}";
+                this.Text = $"{this.Text} v{versionString}";
             }
             catch (Exception ex)
             {
