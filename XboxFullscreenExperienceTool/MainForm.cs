@@ -68,7 +68,7 @@ namespace XboxFullscreenExperienceTool
         /// <summary>
         /// 用於備份原始登錄檔值的檔案路徑。
         /// </summary>
-        private readonly string BackupFilePath = Path.Combine(Application.StartupPath, "deviceform.bak");
+        private readonly string BackupFilePath = Path.Combine(Application.StartupPath, "DeviceForm.bak");
         #endregion
 
         //======================================================================
@@ -351,15 +351,23 @@ namespace XboxFullscreenExperienceTool
 
                 // 步驟 2: 備份現有的登錄檔值，然後設定新的值。
                 Log($"正在備份並設定登錄檔...");
-                object? currentValue = Registry.GetValue($"HKEY_LOCAL_MACHINE\\{REG_PATH}", REG_VALUE, null);
-                if (currentValue != null)
+                // 只在備份檔案不存在時才執行備份，確保只備份一次最原始的狀態
+                if (!File.Exists(BackupFilePath))
                 {
-                    File.WriteAllText(BackupFilePath, currentValue.ToString() ?? "");
-                    Log($"已備份原始 DeviceForm 數值 ({currentValue})。");
-                }
-                else if (File.Exists(BackupFilePath))
-                {
-                    File.Delete(BackupFilePath); // 如果原始值不存在，則刪除舊的備份
+                    object? currentValue = Registry.GetValue($"HKEY_LOCAL_MACHINE\\{REG_PATH}", REG_VALUE, null);
+                    if (currentValue != null)
+                    {
+                        // 如果值存在，將其內容寫入備份檔
+                        File.WriteAllText(BackupFilePath, currentValue.ToString() ?? "");
+                        Log($"已備份原始 DeviceForm 數值 ({currentValue}) 到 {BackupFilePath}。");
+                    }
+                    else
+                    {
+                        // 如果值不存在，建立一個特殊的標記檔案
+                        // 這將告訴還原程序，原始狀態是「不存在」，因此需要刪除此鍵值。
+                        File.WriteAllText(BackupFilePath, "DELETE_ON_RESTORE");
+                        Log($"偵測到 DeviceForm 原始值不存在，已建立還原標記。");
+                    }
                 }
                 Registry.SetValue($"HKEY_LOCAL_MACHINE\\{REG_PATH}", REG_VALUE, 0x2E, RegistryValueKind.DWord); // 0x2E = 46
                 Log("登錄檔已成功設定為 46 (0x2E)。");
@@ -451,23 +459,31 @@ namespace XboxFullscreenExperienceTool
             Log("正在檢查是否需要還原 DeviceForm 登錄檔...");
             try
             {
-                // 核心邏輯：只有在備份檔存在時，才對登錄檔進行操作。
                 if (File.Exists(BackupFilePath))
                 {
-                    Log("偵測到備份檔，表示登錄檔是由本工具修改的，將進行還原操作。");
+                    Log("偵測到備份檔，將進行還原操作。");
+                    string backupContent = File.ReadAllText(BackupFilePath);
+
                     using RegistryKey? key = Registry.LocalMachine.OpenSubKey(REG_PATH, true);
                     if (key != null)
                     {
-                        if (int.TryParse(File.ReadAllText(BackupFilePath), out int backupValue))
+                        if (backupContent == "DELETE_ON_RESTORE")
                         {
+                            // 如果備份內容是我們的特殊標記，則刪除該值
+                            key.DeleteValue(REG_VALUE, false); // false 表示如果值不存在也不會拋出例外
+                            Log($"已根據備份標記，移除登錄檔值 '{REG_VALUE}'。");
+                        }
+                        else if (int.TryParse(backupContent, out int backupValue))
+                        {
+                            // 如果是數字，則還原該數值
                             key.SetValue(REG_VALUE, backupValue, RegistryValueKind.DWord);
                             Log($"已從備份檔還原數值: {backupValue}");
                         }
                         else
                         {
-                            // 備份檔內容無效，為安全起見，刪除該值。
+                            // 備份檔內容未知，為安全起見，同樣刪除該值
                             key.DeleteValue(REG_VALUE, false);
-                            Log($"備份檔內容無效，已直接移除登錄檔值 '{REG_VALUE}'。");
+                            Log($"備份檔內容格式不正確，為安全起見，已直接移除登錄檔值 '{REG_VALUE}'。");
                         }
                     }
                     File.Delete(BackupFilePath);
@@ -475,8 +491,9 @@ namespace XboxFullscreenExperienceTool
                 }
                 else
                 {
-                    // 如果備份檔不存在，即使當前值是 46，也絕不碰它。
-                    Log("未找到備份檔。這可能是系統原生設定，為確保系統穩定性，將不會修改登錄檔。");
+                    // 如果從未建立過備份檔，表示使用者從未點選過「啟用 Xbox 全螢幕體驗」。
+                    // 在這種情況下，工具從未修改過登錄檔，因此最安全的作法是什麼都不做。
+                    Log("未找到備份檔，表示此工具未曾修改過登錄檔，無需還原。");
                 }
             }
             catch (Exception ex)
