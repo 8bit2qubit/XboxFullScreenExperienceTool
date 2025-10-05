@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MainFormTitle" xml:space="preserve">
+    <value>Xbox Fullscreen Experience Tool</value>
+  </data>
+  <data name="UnknownVersion" xml:space="preserve">
+    <value>Unknown Version</value>
+  </data>
+  <data name="ErrorReadingVersion" xml:space="preserve">
+    <value>Error reading version number: {0}</value>
+  </data>
+  <data name="WelcomeMessage" xml:space="preserve">
+    <value>Welcome to the Xbox Fullscreen Experience Tool!</value>
+  </data>
+  <data name="ErrorCheckBuild" xml:space="preserve">
+    <value>Checking Windows build failed with an unexpected error: {0}</value>
+  </data>
+  <data name="VersionIncompatible" xml:space="preserve">
+    <value>Version Incompatible</value>
+  </data>
+  <data name="ErrorReadRegistry" xml:space="preserve">
+    <value>Error: Failed to read or parse current OS build information (CurrentBuild or UBR) from the registry.</value>
+  </data>
+  <data name="YourBuildVersion" xml:space="preserve">
+    <value>Your Windows build version: {0}</value>
+  </data>
+  <data name="ErrorBuildTooLow" xml:space="preserve">
+    <value>Error: Your Windows build ({0}) is too low.</value>
+  </data>
+  <data name="RequiredBuild" xml:space="preserve">
+    <value>This tool requires build {0} or higher.</value>
+  </data>
+  <data name="VersionOK" xml:space="preserve">
+    <value>Version meets requirements.</value>
+  </data>
+  <data name="StatusChecking" xml:space="preserve">
+    <value>Status: Checking...</value>
+  </data>
+  <data name="StatusEnabled" xml:space="preserve">
+    <value>Status: Enabled</value>
+  </data>
+  <data name="StatusDisabled" xml:space="preserve">
+    <value>Status: Disabled</value>
+  </data>
+  <data name="StatusNeedsFix" xml:space="preserve">
+    <value>Status: Needs fix (Screen size task not created)</value>
+  </data>
+  <data name="StatusUnknownError" xml:space="preserve">
+    <value>Status: Unknown (Error)</value>
+  </data>
+  <data name="StatusRestartPending" xml:space="preserve">
+    <value>Status: Restart pending...</value>
+  </data>
+  <data name="btnEnable_Text" xml:space="preserve">
+    <value>Enable Xbox Fullscreen Experience</value>
+  </data>
+  <data name="btnEnable_Text_Fix" xml:space="preserve">
+    <value>Fix Xbox Fullscreen Experience</value>
+  </data>
+  <data name="btnDisable_Text" xml:space="preserve">
+    <value>Disable &amp;&amp; Restore</value>
+  </data>
+  <data name="grpActions_Text" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="grpOutput_Text" xml:space="preserve">
+    <value>Log</value>
+  </data>
+  <data name="ErrorCheckStatus" xml:space="preserve">
+    <value>An error occurred while checking status: {0}</value>
+  </data>
+  <data name="LogStatusCheck" xml:space="preserve">
+    <value>Status Check -&gt; ViVe Features: {0}, Registry: {1}, Task Required: {2}, Task Exists: {3}</value>
+  </data>
+  <data name="LogRegStatusFalseNotExist" xml:space="preserve">
+    <value>False (Not exist)</value>
+  </data>
+  <data name="LogRegStatusTrue" xml:space="preserve">
+    <value>True (Value is 46)</value>
+  </data>
+  <data name="LogRegStatusFalseWrongValue" xml:space="preserve">
+    <value>False (Value is {0})</value>
+  </data>
+  <data name="LogErrorReadingScreenSize" xml:space="preserve">
+    <value>Failed to read screen size, unable to determine if a scheduled task is needed.</value>
+  </data>
+  <data name="LogBeginEnable" xml:space="preserve">
+    <value>--- Starting Enable Process ---</value>
+  </data>
+  <data name="LogReadingScreenSize" xml:space="preserve">
+    <value>Reading current screen size...</value>
+  </data>
+  <data name="LogScreenSizeSuccess" xml:space="preserve">
+    <value>Successfully read screen size: {0}x{1}mm.</value>
+  </data>
+  <data name="LogScreenSizeUndefined" xml:space="preserve">
+    <value>Undefined screen size (0x0mm) detected, creating startup task...</value>
+  </data>
+  <data name="LogScreenSizeTooLarge" xml:space="preserve">
+    <value>Screen size ({0:F2}") is larger than the {1}" threshold, creating startup task...</value>
+  </data>
+  <data name="LogTaskCreated" xml:space="preserve">
+    <value>Task 'SetPanelDimensions' created.</value>
+  </data>
+  <data name="LogTaskNotNeeded" xml:space="preserve">
+    <value>Screen size ({0:F2}") is within the {1}" range, no task needed.</value>
+  </data>
+  <data name="LogErrorReadingScreenSizeEnable" xml:space="preserve">
+    <value>Failed to read screen size, skipping this step.</value>
+  </data>
+  <data name="LogBackupAndSetRegistry" xml:space="preserve">
+    <value>Backing up and setting registry...</value>
+  </data>
+  <data name="LogRegistryBackupSuccess" xml:space="preserve">
+    <value>Backed up original DeviceForm value ({0}) to {1}.</value>
+  </data>
+  <data name="LogRegistryBackupMarkedForDelete" xml:space="preserve">
+    <value>Original DeviceForm value not found, created restore marker.</value>
+  </data>
+  <data name="LogRegistrySetSuccess" xml:space="preserve">
+    <value>Registry key successfully set to 46 (0x2E).</value>
+  </data>
+  <data name="LogEnablingFeatures" xml:space="preserve">
+    <value>Enabling Feature IDs: {0}...</value>
+  </data>
+  <data name="LogFeaturesEnabledSuccess" xml:space="preserve">
+    <value>Features enabled successfully.</value>
+  </data>
+  <data name="LogEnableComplete" xml:space="preserve">
+    <value>--- Enable Process Complete ---</value>
+  </data>
+  <data name="PromptRestartCaptionSuccess" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="PromptRestartCaptionDisableSuccess" xml:space="preserve">
+    <value>Disable Success</value>
+  </data>
+  <data name="PromptRestartMessage" xml:space="preserve">
+    <value>All changes have been applied. A restart is required for them to take full effect.
+
+Would you like to restart now?</value>
+  </data>
+  <data name="LogUserRestartNow" xml:space="preserve">
+    <value>User chose to restart now.</value>
+  </data>
+  <data name="ErrorRestartFailed" xml:space="preserve">
+    <value>Failed to execute restart command: {0}</value>
+  </data>
+  <data name="MessageBoxRestartFailed" xml:space="preserve">
+    <value>Could not automatically restart. Please restart your computer manually.</value>
+  </data>
+  <data name="LogUserRestartLater" xml:space="preserve">
+    <value>User chose to restart later. No further actions can be performed until restart.</value>
+  </data>
+  <data name="HandleExceptionMessage" xml:space="preserve">
+    <value>An error occurred:
+{0}
+
+Please ensure you are running this program with administrator privileges.</value>
+  </data>
+  <data name="HandleExceptionTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="LogErrorUnexpected" xml:space="preserve">
+    <value>An unexpected error occurred: {0}</value>
+  </data>
+  <data name="LogErrorAdminRights" xml:space="preserve">
+    <value>Please ensure this program is run with [Administrator Privileges].</value>
+  </data>
+  <data name="LogBeginDisable" xml:space="preserve">
+    <value>--- Starting Disable Process ---</value>
+  </data>
+  <data name="LogDisablingFeatures" xml:space="preserve">
+    <value>Explicitly disabling Feature IDs: {0}...</value>
+  </data>
+  <data name="LogFeaturesDisabledSuccess" xml:space="preserve">
+    <value>Features successfully set to disabled state.</value>
+  </data>
+  <data name="LogCheckingRegistryRestore" xml:space="preserve">
+    <value>Checking if DeviceForm registry value needs to be restored...</value>
+  </data>
+  <data name="LogBackupFound" xml:space="preserve">
+    <value>Backup file found, proceeding with restore.</value>
+  </data>
+  <data name="LogRegistryValueRemoved" xml:space="preserve">
+    <value>Removed registry value '{0}' based on backup marker.</value>
+  </data>
+  <data name="LogRegistryValueRestored" xml:space="preserve">
+    <value>Restored value from backup: {0}</value>
+  </data>
+  <data name="LogRegistryBackupInvalid" xml:space="preserve">
+    <value>Backup file content is invalid. Safely removing registry value '{0}'.</value>
+  </data>
+  <data name="LogBackupDeleted" xml:space="preserve">
+    <value>Backup file deleted.</value>
+  </data>
+  <data name="LogNoBackupFound" xml:space="preserve">
+    <value>No backup file found, indicating this tool has not modified the registry. No restore needed.</value>
+  </data>
+  <data name="ErrorRestoringRegistry" xml:space="preserve">
+    <value>Error restoring registry: {0}</value>
+  </data>
+  <data name="LogDeletingTask" xml:space="preserve">
+    <value>Deleting scheduled task 'SetPanelDimensions'...</value>
+  </data>
+  <data name="LogTaskDeleted" xml:space="preserve">
+    <value>Scheduled task deleted.</value>
+  </data>
+  <data name="LogDisableComplete" xml:space="preserve">
+    <value>--- Disable Process Complete ---</value>
+  </data>
+  <data name="ErrorAppRunning" xml:space="preserve">
+    <value>Application is already running.</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorFindFile" xml:space="preserve">
+    <value>Necessary file not found: {0}. Please ensure PhysPanelCS.exe is in the same directory as the main program.</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorCreate" xml:space="preserve">
+    <value>Failed to create scheduled task: {0}</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorDelete" xml:space="preserve">
+    <value>Failed to delete scheduled task: {0}</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorDirectoryNotFound" xml:space="preserve">
+    <value>Could not get the application's installation directory.</value>
+  </data>
+</root>

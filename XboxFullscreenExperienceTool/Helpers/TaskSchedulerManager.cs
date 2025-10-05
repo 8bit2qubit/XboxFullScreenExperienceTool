@@ -14,9 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics;
-using System.IO;
 using System.Reflection;
 
 namespace XboxFullscreenExperienceTool.Helpers
@@ -47,7 +45,7 @@ namespace XboxFullscreenExperienceTool.Helpers
             // 健全性檢查，確保目錄路徑有效
             if (string.IsNullOrEmpty(assemblyDirectory))
             {
-                throw new DirectoryNotFoundException("無法取得應用程式的安裝目錄。");
+                throw new DirectoryNotFoundException(Resources.Strings.TaskSchedulerManagerErrorDirectoryNotFound);
             }
 
             // 安全地組合目錄和檔名，形成一個跨平台相容的完整路徑
@@ -92,7 +90,7 @@ namespace XboxFullscreenExperienceTool.Helpers
             // 執行前檢查：確保必要的工具程式存在，若不存在則提早失敗並提供清晰的錯誤訊息。
             if (!File.Exists(physPanelPath))
             {
-                throw new FileNotFoundException($"找不到必要的檔案: {physPanelPath}。請確保 PhysPanelCS.exe 與主程式位於同一個目錄。");
+                throw new FileNotFoundException(string.Format(Resources.Strings.TaskSchedulerManagerErrorFindFile, physPanelPath));
             }
 
             // 使用 XML 定義工作排程。這種方法比使用一長串命令列參數更精確且可靠。
@@ -162,7 +160,7 @@ namespace XboxFullscreenExperienceTool.Helpers
             // 結束代碼 0 表示成功。任何非 0 值都表示失敗。
             if (process.ExitCode != 0)
             {
-                throw new Exception($"建立工作排程失敗: {err}");
+                throw new Exception(string.Format(Resources.Strings.TaskSchedulerManagerErrorCreate, err));
             }
         }
 
@@ -196,7 +194,7 @@ namespace XboxFullscreenExperienceTool.Helpers
             // 只有當結束代碼大於 1 時，才表示發生了真正的錯誤。
             if (process.ExitCode > 1)
             {
-                throw new Exception($"刪除工作排程失敗: {err}");
+                throw new Exception(string.Format(Resources.Strings.TaskSchedulerManagerErrorDelete, err));
             }
         }
     }

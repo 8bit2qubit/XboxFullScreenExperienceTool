@@ -14,9 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-using System.Threading;
-using System.Windows.Forms;
+using System.Globalization;
 
 namespace XboxFullscreenExperienceTool
 {
@@ -51,6 +49,11 @@ namespace XboxFullscreenExperienceTool
         [STAThread]
         static void Main(string[] args)
         {
+            // --- 0. 設定預設 UI 語言 ---
+            // 根據作業系統語言設定目前執行緒的 UI 在地化
+            // 這將決定應用程式啟動時預設載入的資源檔 (例如，Strings.zh-TW.resx)
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.InstalledUICulture;
+
             // --- 1. 單一執行個體檢查 (Single-Instance Check) ---
 
             // 嘗試取得一個全域 Mutex。
@@ -63,7 +66,7 @@ namespace XboxFullscreenExperienceTool
             if (!createdNew)
             {
                 // 如果 Mutex 已存在，顯示錯誤訊息並直接退出。
-                MessageBox.Show("應用程式已經在執行中。", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Resources.Strings.ErrorAppRunning, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

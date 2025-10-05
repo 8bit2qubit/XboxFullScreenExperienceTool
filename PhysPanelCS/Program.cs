@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
+using System.Globalization;
 using PhysPanelLib; // 引入自訂的函式庫
 
 namespace PhysPanelCS
@@ -33,6 +33,9 @@ namespace PhysPanelCS
         /// <returns>傳回 0 代表成功，非 0 代表失敗。</returns>
         static int Main(string[] args)
         {
+            // 這將決定應用程式啟動時預設載入的資源檔 (例如，Strings.zh-TW.resx)
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.InstalledUICulture;
+
             // 檢查是否提供了至少一個參數 (get/set)
             if (args.Length < 1)
             {
@@ -48,7 +51,7 @@ namespace PhysPanelCS
                 case "set":
                     return HandleSet(args);
                 default:
-                    Console.Error.WriteLine($"錯誤：未知的命令 '{args[0]}'");
+                    Console.Error.WriteLine(string.Format(Resources.Strings.ErrorUnknownCommand, args[0]));
                     PrintUsage();
                     return 1; // 1 代表用法錯誤
             }
@@ -72,12 +75,12 @@ namespace PhysPanelCS
                 // 將公釐轉換為英寸 (1 英寸 = 25.4 公釐)
                 double diagonalInches = diagonalMm / 25.4;
 
-                Console.WriteLine($"目前的尺寸: {size.WidthMm}x{size.HeightMm}mm ({diagonalInches:F2}\")");
+                Console.WriteLine(string.Format(Resources.Strings.CurrentSize, size.WidthMm, size.HeightMm, diagonalInches));
                 return 0; // 0 代表成功
             }
             else
             {
-                Console.Error.WriteLine("錯誤：無法取得顯示器尺寸。");
+                Console.Error.WriteLine(Resources.Strings.ErrorGetFailed);
                 return -1; // -1 代表執行期間發生錯誤
             }
         }
@@ -94,7 +97,7 @@ namespace PhysPanelCS
                 !uint.TryParse(args[1], out uint width) ||
                 !uint.TryParse(args[2], out uint height))
             {
-                Console.Error.WriteLine("錯誤：'set' 命令的參數格式不正確。");
+                Console.Error.WriteLine(Resources.Strings.ErrorSetInvalid);
                 PrintUsage();
                 return 1; // 1 代表用法錯誤
             }
@@ -102,13 +105,13 @@ namespace PhysPanelCS
             var newSize = new Dimensions { WidthMm = width, HeightMm = height };
             if (PanelManager.SetDisplaySize(newSize))
             {
-                Console.WriteLine("設定成功。");
+                Console.WriteLine(Resources.Strings.SetSuccess);
                 return 0; // 0 代表成功
             }
             else
             {
                 // 這是關鍵提示，因為修改 WNF 狀態通常需要更高的權限。
-                Console.Error.WriteLine("錯誤：無法設定顯示器尺寸。此操作可能需要以 SYSTEM 使用者權限執行。");
+                Console.Error.WriteLine(Resources.Strings.ErrorSetFailed);
                 return -1; // -1 代表執行期間發生錯誤
             }
         }
@@ -123,17 +126,17 @@ namespace PhysPanelCS
         private static void PrintUsage()
         {
             Console.WriteLine();
-            Console.WriteLine("PhysPanelCS 0.0.1 - Windows 內部顯示器實體尺寸工具");
+            Console.WriteLine(Resources.Strings.Description);
             Console.WriteLine("-----------------------------------------------------");
-            Console.WriteLine("用法: PhysPanelCS <命令> [參數...]");
+            Console.WriteLine(Resources.Strings.Usage);
             Console.WriteLine();
-            Console.WriteLine("命令:");
-            Console.WriteLine("  get               取得目前的實體尺寸設定。");
-            Console.WriteLine("  set <寬> <高>     設定新的實體尺寸 (單位為公釐)。");
+            Console.WriteLine(Resources.Strings.Commands);
+            Console.WriteLine(Resources.Strings.GetDescription);
+            Console.WriteLine(Resources.Strings.SetDescription);
             Console.WriteLine();
-            Console.WriteLine("範例:");
-            Console.WriteLine("  PhysPanelCS get");
-            Console.WriteLine("  PhysPanelCS set 155 87");
+            Console.WriteLine(Resources.Strings.Examples);
+            Console.WriteLine(Resources.Strings.GetExample);
+            Console.WriteLine(Resources.Strings.SetExample);
             Console.WriteLine();
         }
     }

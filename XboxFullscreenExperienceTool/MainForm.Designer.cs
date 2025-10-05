@@ -37,6 +37,7 @@ namespace XboxFullscreenExperienceTool
             this.grpOutput = new System.Windows.Forms.GroupBox();
             this.txtOutput = new System.Windows.Forms.RichTextBox();
             this.lblStatus = new System.Windows.Forms.Label();
+            this.cboLanguage = new System.Windows.Forms.ComboBox();
             this.grpActions.SuspendLayout();
             this.grpOutput.SuspendLayout();
             this.SuspendLayout();
@@ -114,11 +115,23 @@ namespace XboxFullscreenExperienceTool
             this.lblStatus.TabIndex = 7;
             this.lblStatus.Text = "狀態：偵測中...";
             // 
+            // cboLanguage
+            // 
+            this.cboLanguage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLanguage.FormattingEnabled = true;
+            this.cboLanguage.Location = new System.Drawing.Point(465, 12);
+            this.cboLanguage.Name = "cboLanguage";
+            this.cboLanguage.Size = new System.Drawing.Size(121, 20);
+            this.cboLanguage.TabIndex = 8;
+            this.cboLanguage.SelectedIndexChanged += new System.EventHandler(this.cboLanguage_SelectedIndexChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(598, 389);
+            this.Controls.Add(this.cboLanguage);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.grpOutput);
             this.Controls.Add(this.grpActions);
@@ -138,5 +151,6 @@ namespace XboxFullscreenExperienceTool
         private System.Windows.Forms.GroupBox grpOutput;
         private System.Windows.Forms.RichTextBox txtOutput;
         private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.ComboBox cboLanguage;
     }
 }

@@ -19,16 +19,17 @@ using Albacore.ViVe.NativeEnums;
 using Albacore.ViVe.NativeStructs;
 using Microsoft.Win32;
 using PhysPanelLib;
-using System;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
+using System.Globalization;
 using System.Reflection;
-using System.Windows.Forms;
 using XboxFullscreenExperienceTool.Helpers;
 
 namespace XboxFullscreenExperienceTool
 {
+    /// <summary>
+    /// 代表 Xbox 全螢幕體驗工具的主視窗。
+    /// 這個類別包含了所有用於檢查系統狀態、套用變更以及處理使用者互動的核心邏輯。
+    /// </summary>
     public partial class MainForm : Form
     {
         //======================================================================
@@ -53,7 +54,7 @@ namespace XboxFullscreenExperienceTool
         // --- 螢幕尺寸限制 ---
         /// <summary>
         /// 觸發自動設定的螢幕對角線尺寸門檻 (英吋)。
-        /// 根據測試，尺寸大於此值 (例如 > 9.5") 的裝置需要建立工作排程。
+        /// 根據測試，尺寸大於此值 (例如 > 9.5") 的裝置需要建立工作排程來強制覆寫尺寸。
         /// </summary>
         private const double MAX_DIAGONAL_INCHES = 9.5;
         /// <summary>
@@ -77,7 +78,7 @@ namespace XboxFullscreenExperienceTool
 
         /// <summary>
         /// 追蹤是否已套用變更但使用者尚未重新啟動電腦。
-        /// 在此狀態下，UI 應被鎖定。
+        /// 在此狀態下，UI 應被鎖定以防止進一步的操作。
         /// </summary>
         private bool _restartPending = false;
 
@@ -88,44 +89,17 @@ namespace XboxFullscreenExperienceTool
         public MainForm()
         {
             InitializeComponent();
+            InitializeLanguage(); // 初始化語言下拉選單
         }
-
 
         /// <summary>
         /// 表單載入時的初始化邏輯。
         /// </summary>
         private void MainForm_Load(object sender, EventArgs e)
         {
-            try
-            {
-                // 取得版本號字串，如果版本資訊不存在，使用一個預設值 (未知版本)
-                // Version.ToString(3) 的格式是 "Major.Minor.Build"
-                string versionString = Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? "未知版本";
-
-                // 將標題設定為 "程式名稱 v主版號.次版號.組建編號"
-                // this.Text 的初始值是在設計工具中設定的 "Xbox 全螢幕體驗啟用工具"
-                this.Text = $"{this.Text} v{versionString}";
-            }
-            catch (Exception ex)
-            {
-                // 如果發生錯誤，至少記錄下來，但不要中斷程式執行
-                Log($"讀取版本號並設定標題時發生錯誤: {ex.Message}");
-            }
-
-            // 步驟 1: 進行關鍵的前置檢查，確保 OS 版本符合要求。
-            if (!CheckWindowsBuild())
-            {
-                // 如果版本不符，CheckWindowsBuild 內部已顯示錯誤訊息，此處直接關閉應用程式。
-                Application.Exit();
-                return;
-            }
-
-            Log($"歡迎使用 Xbox 全螢幕體驗啟用工具！");
-
-            // 步驟 2: 檢查目前系統狀態並更新 UI。
-            CheckCurrentStatus();
+            UpdateUIForLanguage(); // 根據選定的語言更新 UI 文字
+            RerunChecksAndLog();   // 執行所有初始檢查並記錄結果
         }
-
 
         //======================================================================
         // 核心邏輯 - 檢查 (Core Logic - Checks)
@@ -147,33 +121,33 @@ namespace XboxFullscreenExperienceTool
                     !int.TryParse(currentBuildStr, out int currentBuild) ||
                     !int.TryParse(currentRevisionStr, out int currentRevision))
                 {
-                    string errorMsg = "錯誤: 無法從登錄檔讀取或解析目前 OS 的組建資訊 (CurrentBuild 或 UBR)。";
+                    string errorMsg = Resources.Strings.ErrorReadRegistry;
                     Log(errorMsg);
-                    MessageBox.Show(errorMsg, "版本不相容", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(errorMsg, Resources.Strings.VersionIncompatible, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
 
                 string versionString = $"{currentBuild}.{currentRevision}";
-                Log($"您的 Windows 組建版本: {versionString}");
+                Log(string.Format(Resources.Strings.YourBuildVersion, versionString));
 
                 // 版本比較邏輯
                 if (currentBuild < REQUIRED_BUILD || (currentBuild == REQUIRED_BUILD && currentRevision < REQUIRED_REVISION))
                 {
                     string requirementString = $"{REQUIRED_BUILD}.{REQUIRED_REVISION}";
-                    Log($"錯誤：您的 Windows 組建版本 ({versionString}) 過低。");
-                    Log($"此工具需要組建版本 {requirementString} 或更高版本。");
-                    MessageBox.Show($"您的 Windows 組建版本 ({versionString}) 不符，此工具需要 {requirementString} 或更高版本。", "版本不相容", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Log(string.Format(Resources.Strings.ErrorBuildTooLow, versionString));
+                    Log(string.Format(Resources.Strings.RequiredBuild, requirementString));
+                    MessageBox.Show(string.Format(Resources.Strings.RequiredBuild, requirementString), Resources.Strings.VersionIncompatible, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
 
-                Log($"版本符合要求。");
+                Log(Resources.Strings.VersionOK);
                 return true;
             }
             catch (Exception ex)
             {
-                string errorMsg = $"檢查 Windows 組建時發生未預期錯誤: {ex.Message}";
+                string errorMsg = string.Format(Resources.Strings.ErrorCheckBuild, ex.Message);
                 Log(errorMsg);
-                MessageBox.Show(errorMsg, "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(errorMsg, Resources.Strings.HandleExceptionTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -201,15 +175,15 @@ namespace XboxFullscreenExperienceTool
                 string registryStatusString;
                 if (regValue == null)
                 {
-                    registryStatusString = "False (不存在)";
+                    registryStatusString = Resources.Strings.LogRegStatusFalseNotExist;
                 }
                 else if (isRegistrySet)
                 {
-                    registryStatusString = "True (值為 46)";
+                    registryStatusString = Resources.Strings.LogRegStatusTrue;
                 }
                 else
                 {
-                    registryStatusString = $"False (值為 {regValue})"; // 記錄下錯誤的數值
+                    registryStatusString = string.Format(Resources.Strings.LogRegStatusFalseWrongValue, regValue);
                 }
 
                 // 步驟 2: 硬體相依性檢查 (Hardware-Dependent Checks)
@@ -237,7 +211,7 @@ namespace XboxFullscreenExperienceTool
                 }
                 else
                 {
-                    LogError("無法讀取螢幕尺寸，將無法判斷是否需要排程工作。");
+                    LogError(Resources.Strings.LogErrorReadingScreenSize);
                 }
 
                 // 2b. 檢查排程工作是否實際存在。
@@ -251,41 +225,42 @@ namespace XboxFullscreenExperienceTool
                 // 必須滿足核心啟用，且 (如果需要排程工作，則該工作必須存在)。
                 bool isFullyConfigured = isCoreEnabled && (!isTaskRequired || isTaskPresent);
 
-                Log($"狀態檢查 -> ViVe 功能: {allFeaturesEnabled}, 登錄檔: {registryStatusString}, 工作需求: {isTaskRequired}, 工作存在: {isTaskPresent}");
+                Log(string.Format(Resources.Strings.LogStatusCheck, allFeaturesEnabled, registryStatusString, isTaskRequired, isTaskPresent));
 
                 // 根據最終狀態更新 UI
                 if (isFullyConfigured && isCoreEnabled)
                 {
                     // 狀態一：完全啟用。所有設定都正確。
-                    lblStatus.Text = "狀態：已啟用";
+                    lblStatus.Text = Resources.Strings.StatusEnabled;
                     lblStatus.ForeColor = Color.LimeGreen;
+                    btnEnable.Text = Resources.Strings.btnEnable_Text; // 總是設定文字
                     btnEnable.Enabled = false;
                     btnDisable.Enabled = true;
                 }
                 else if (isCoreEnabled && isTaskRequired && !isTaskPresent)
                 {
                     // 狀態二：需要修正。核心功能已啟用，但缺少必要的硬體修正 (排程工作)。
-                    lblStatus.Text = "狀態：需要修正 (未建立螢幕尺寸工作)";
+                    lblStatus.Text = Resources.Strings.StatusNeedsFix;
                     lblStatus.ForeColor = Color.Orange;
-                    btnEnable.Text = "修正 Xbox 全螢幕體驗"; // 改變按鈕文字以提示使用者
+                    btnEnable.Text = Resources.Strings.btnEnable_Text_Fix; // 改變按鈕文字以提示使用者
                     btnEnable.Enabled = true; // 允許使用者點選「修正」
                     btnDisable.Enabled = false; // 不允許使用者點選「停用」
                 }
                 else
                 {
                     // 狀態三：未啟用。任何核心設定未完成。
-                    lblStatus.Text = "狀態：未啟用";
+                    lblStatus.Text = Resources.Strings.StatusDisabled;
                     lblStatus.ForeColor = Color.Tomato;
-                    btnEnable.Text = "啟用 Xbox 全螢幕體驗"; // 重設按鈕文字
+                    btnEnable.Text = Resources.Strings.btnEnable_Text; // 重設按鈕文字
                     btnEnable.Enabled = true;
                     btnDisable.Enabled = false;
                 }
             }
             catch (Exception ex)
             {
-                lblStatus.Text = "狀態：未知 (錯誤)";
+                lblStatus.Text = Resources.Strings.StatusUnknownError;
                 lblStatus.ForeColor = Color.OrangeRed;
-                LogError($"檢查狀態時發生錯誤: {ex.Message}");
+                LogError(string.Format(Resources.Strings.ErrorCheckStatus, ex.Message));
             }
         }
 
@@ -301,14 +276,14 @@ namespace XboxFullscreenExperienceTool
             this.Cursor = Cursors.WaitCursor;
             try
             {
-                Log("--- 開始啟用流程 ---");
+                Log(Resources.Strings.LogBeginEnable);
 
                 // 步驟 1: 處理螢幕實體尺寸。如果尺寸未定義 (0x0) 或大於 9.5 吋，則建立開機工作來設定它。
-                Log("正在讀取目前螢幕尺寸...");
+                Log(Resources.Strings.LogReadingScreenSize);
                 var (success, size) = PanelManager.GetDisplaySize();
                 if (success)
                 {
-                    Log($"成功讀取螢幕尺寸: {size.WidthMm}x{size.HeightMm}mm。");
+                    Log(string.Format(Resources.Strings.LogScreenSizeSuccess, size.WidthMm, size.HeightMm));
 
                     bool isUndefined = size.WidthMm == 0 && size.HeightMm == 0;
                     bool isTooLarge = false;
@@ -329,28 +304,28 @@ namespace XboxFullscreenExperienceTool
                     {
                         if (isUndefined)
                         {
-                            Log("偵測到未定義的螢幕尺寸 (0x0mm)，正在建立開機工作排程...");
+                            Log(Resources.Strings.LogScreenSizeUndefined);
                         }
                         else
                         {
-                            Log($"偵測到螢幕尺寸 ({diagonalInches:F2}\") 大於 {MAX_DIAGONAL_INCHES}\" 門檻，正在建立開機工作排程...");
+                            Log(string.Format(Resources.Strings.LogScreenSizeTooLarge, diagonalInches, MAX_DIAGONAL_INCHES));
                         }
                         TaskSchedulerManager.CreateSetPanelDimensionsTask();
-                        Log("工作排程 'SetPanelDimensions' 已建立。");
+                        Log(Resources.Strings.LogTaskCreated);
                     }
                     else
                     {
                         // 說明尺寸在範圍內，無需操作
-                        Log($"螢幕尺寸 ({diagonalInches:F2}\") 在 {MAX_DIAGONAL_INCHES}\" 範圍內，無需建立工作排程。");
+                        Log(string.Format(Resources.Strings.LogTaskNotNeeded, diagonalInches, MAX_DIAGONAL_INCHES));
                     }
                 }
                 else
                 {
-                    LogError("讀取螢幕尺寸失敗，將跳過此步驟。");
+                    LogError(Resources.Strings.LogErrorReadingScreenSizeEnable);
                 }
 
                 // 步驟 2: 備份現有的登錄檔值，然後設定新的值。
-                Log($"正在備份並設定登錄檔...");
+                Log(Resources.Strings.LogBackupAndSetRegistry);
                 // 只在備份檔案不存在時才執行備份，確保只備份一次最原始的狀態
                 if (!File.Exists(BackupFilePath))
                 {
@@ -359,21 +334,21 @@ namespace XboxFullscreenExperienceTool
                     {
                         // 如果值存在，將其內容寫入備份檔
                         File.WriteAllText(BackupFilePath, currentValue.ToString() ?? "");
-                        Log($"已備份原始 DeviceForm 數值 ({currentValue}) 到 {BackupFilePath}。");
+                        Log(string.Format(Resources.Strings.LogRegistryBackupSuccess, currentValue, BackupFilePath));
                     }
                     else
                     {
                         // 如果值不存在，建立一個特殊的標記檔案
                         // 這將告訴還原程序，原始狀態是「不存在」，因此需要刪除此鍵值。
                         File.WriteAllText(BackupFilePath, "DELETE_ON_RESTORE");
-                        Log($"偵測到 DeviceForm 原始值不存在，已建立還原標記。");
+                        Log(Resources.Strings.LogRegistryBackupMarkedForDelete);
                     }
                 }
                 Registry.SetValue($"HKEY_LOCAL_MACHINE\\{REG_PATH}", REG_VALUE, 0x2E, RegistryValueKind.DWord); // 0x2E = 46
-                Log("登錄檔已成功設定為 46 (0x2E)。");
+                Log(Resources.Strings.LogRegistrySetSuccess);
 
                 // 步驟 3: 使用 ViVe Manager 啟用所需的功能 ID。
-                Log($"正在啟用功能 ID: {string.Join(", ", FEATURE_IDS)}...");
+                Log(string.Format(Resources.Strings.LogEnablingFeatures, string.Join(", ", FEATURE_IDS)));
                 var updates = Array.ConvertAll(FEATURE_IDS, id => new RTL_FEATURE_CONFIGURATION_UPDATE
                 {
                     FeatureId = id,
@@ -383,13 +358,13 @@ namespace XboxFullscreenExperienceTool
                 });
                 FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
                 FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Boot);
-                Log("功能已成功啟用。");
+                Log(Resources.Strings.LogFeaturesEnabledSuccess);
 
                 // 流程結束
                 btnEnable.Enabled = false;
                 btnDisable.Enabled = false;
-                Log("--- 啟用流程完成 ---", true);
-                PromptForRestart("啟用成功");
+                Log(Resources.Strings.LogEnableComplete, true);
+                PromptForRestart(Resources.Strings.PromptRestartCaptionSuccess);
             }
             catch (Exception ex)
             {
@@ -417,8 +392,8 @@ namespace XboxFullscreenExperienceTool
 
                 btnEnable.Enabled = false;
                 btnDisable.Enabled = false;
-                Log("--- 停用流程完成 ---", true);
-                PromptForRestart("停用成功");
+                Log(Resources.Strings.LogDisableComplete, true);
+                PromptForRestart(Resources.Strings.PromptRestartCaptionDisableSuccess);
             }
             catch (Exception ex)
             {
@@ -439,11 +414,11 @@ namespace XboxFullscreenExperienceTool
         /// </summary>
         private void PerformDisableActions()
         {
-            Log("--- 開始停用流程 ---");
+            Log(Resources.Strings.LogBeginDisable);
 
             // 步驟 1: 明確地將 ViVe 功能設定為停用狀態。
             // 這一步操作是安全的，因為使用者意圖就是停用該功能體驗。
-            Log($"正在明確停用功能 ID: {string.Join(", ", FEATURE_IDS)}...");
+            Log(string.Format(Resources.Strings.LogDisablingFeatures, string.Join(", ", FEATURE_IDS)));
             var updates = Array.ConvertAll(FEATURE_IDS, id => new RTL_FEATURE_CONFIGURATION_UPDATE
             {
                 FeatureId = id,
@@ -453,15 +428,15 @@ namespace XboxFullscreenExperienceTool
             });
             FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
             FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Boot);
-            Log("功能已成功設定為停用狀態。");
+            Log(Resources.Strings.LogFeaturesDisabledSuccess);
 
             // 步驟 2: 極度安全地還原登錄檔值。
-            Log("正在檢查是否需要還原 DeviceForm 登錄檔...");
+            Log(Resources.Strings.LogCheckingRegistryRestore);
             try
             {
                 if (File.Exists(BackupFilePath))
                 {
-                    Log("偵測到備份檔，將進行還原操作。");
+                    Log(Resources.Strings.LogBackupFound);
                     string backupContent = File.ReadAllText(BackupFilePath);
 
                     using RegistryKey? key = Registry.LocalMachine.OpenSubKey(REG_PATH, true);
@@ -471,42 +446,42 @@ namespace XboxFullscreenExperienceTool
                         {
                             // 如果備份內容是我們的特殊標記，則刪除該值
                             key.DeleteValue(REG_VALUE, false); // false 表示如果值不存在也不會拋出例外
-                            Log($"已根據備份標記，移除登錄檔值 '{REG_VALUE}'。");
+                            Log(string.Format(Resources.Strings.LogRegistryValueRemoved, REG_VALUE));
                         }
                         else if (int.TryParse(backupContent, out int backupValue))
                         {
                             // 如果是數字，則還原該數值
                             key.SetValue(REG_VALUE, backupValue, RegistryValueKind.DWord);
-                            Log($"已從備份檔還原數值: {backupValue}");
+                            Log(string.Format(Resources.Strings.LogRegistryValueRestored, backupValue));
                         }
                         else
                         {
                             // 備份檔內容未知，為安全起見，同樣刪除該值
                             key.DeleteValue(REG_VALUE, false);
-                            Log($"備份檔內容格式不正確，為安全起見，已直接移除登錄檔值 '{REG_VALUE}'。");
+                            Log(string.Format(Resources.Strings.LogRegistryBackupInvalid, REG_VALUE));
                         }
                     }
                     File.Delete(BackupFilePath);
-                    Log("備份檔已刪除。");
+                    Log(Resources.Strings.LogBackupDeleted);
                 }
                 else
                 {
                     // 如果從未建立過備份檔，表示使用者從未點選過「啟用 Xbox 全螢幕體驗」。
                     // 在這種情況下，工具從未修改過登錄檔，因此最安全的作法是什麼都不做。
-                    Log("未找到備份檔，表示此工具未曾修改過登錄檔，無需還原。");
+                    Log(Resources.Strings.LogNoBackupFound);
                 }
             }
             catch (Exception ex)
             {
-                LogError($"還原登錄檔時發生錯誤: {ex.Message}");
+                LogError(string.Format(Resources.Strings.ErrorRestoringRegistry, ex.Message));
             }
 
             // 步驟 3: 如果存在，則刪除相關的工作排程。
             if (TaskSchedulerManager.TaskExists())
             {
-                Log("正在刪除工作排程 'SetPanelDimensions'...");
+                Log(Resources.Strings.LogDeletingTask);
                 TaskSchedulerManager.DeleteSetPanelDimensionsTask();
-                Log("工作排程已刪除。");
+                Log(Resources.Strings.LogTaskDeleted);
             }
         }
 
@@ -521,12 +496,12 @@ namespace XboxFullscreenExperienceTool
         private void PromptForRestart(string caption)
         {
             var result = MessageBox.Show(
-                "所有變更已套用，需要重新啟動電腦才能完全生效。\n\n您要現在重新啟動嗎？",
+                Resources.Strings.PromptRestartMessage,
                 caption, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
             if (result == DialogResult.Yes)
             {
-                Log("使用者選擇立即重新啟動電腦。");
+                Log(Resources.Strings.LogUserRestartNow);
                 try
                 {
                     Process.Start("shutdown.exe", "/r /t 5"); // 5 秒後重新啟動
@@ -534,8 +509,8 @@ namespace XboxFullscreenExperienceTool
                 }
                 catch (Exception ex)
                 {
-                    LogError($"無法執行重新啟動命令: {ex.Message}");
-                    MessageBox.Show("無法自動執行重新啟動命令，請手動重新啟動您的電腦。", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    LogError(string.Format(Resources.Strings.ErrorRestartFailed, ex.Message));
+                    MessageBox.Show(Resources.Strings.MessageBoxRestartFailed, Resources.Strings.HandleExceptionTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
@@ -550,11 +525,95 @@ namespace XboxFullscreenExperienceTool
         private void LockdownUIForRestart()
         {
             _restartPending = true;
-            lblStatus.Text = "狀態：等待重新啟動...";
+            lblStatus.Text = Resources.Strings.StatusRestartPending;
             lblStatus.ForeColor = Color.Orange;
             btnEnable.Enabled = false;
             btnDisable.Enabled = false;
-            Log("使用者選擇稍後重新啟動。在重新啟動前，無法進行其他操作。");
+            Log(Resources.Strings.LogUserRestartLater);
+        }
+
+        //======================================================================
+        // 多國語言 (Localization)
+        //======================================================================
+
+        /// <summary>
+        /// 初始化語言下拉選單，並根據目前系統語言自動選取。
+        /// </summary>
+        private void InitializeLanguage()
+        {
+            cboLanguage.Items.Add("English");
+            cboLanguage.Items.Add("繁體中文");
+
+            string currentCultureName = Thread.CurrentThread.CurrentUICulture.Name;
+            if (currentCultureName.StartsWith("zh-TW", StringComparison.OrdinalIgnoreCase) || currentCultureName.StartsWith("zh-Hant", StringComparison.OrdinalIgnoreCase))
+            {
+                cboLanguage.SelectedIndex = 1;
+            }
+            else
+            {
+                cboLanguage.SelectedIndex = 0; // Default to English
+            }
+        }
+
+        /// <summary>
+        /// 根據目前的在地化設定，更新所有 UI 控制項的文字。
+        /// </summary>
+        private void UpdateUIForLanguage()
+        {
+            // 手動從 Resources.Strings 更新所有控制項的文字
+            // 取得版本號字串，如果版本資訊不存在，使用一個預設值 (未知版本)
+            // Version.ToString(3) 的格式是 "Major.Minor.Build"
+            string versionString = Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? Resources.Strings.UnknownVersion;
+            // 將標題設定為 "程式名稱 v主版號.次版號.組建編號"
+            // this.Text 的初始值是在設計工具中設定的 "Xbox 全螢幕體驗啟用工具"
+            this.Text = $"{Resources.Strings.MainFormTitle} v{versionString}";
+
+            grpActions.Text = Resources.Strings.grpActions_Text;
+            grpOutput.Text = Resources.Strings.grpOutput_Text;
+            btnDisable.Text = Resources.Strings.btnDisable_Text;
+        }
+
+        /// <summary>
+        /// 重新執行所有檢查並更新日誌，通常在語言切換後呼叫。
+        /// </summary>
+        private void RerunChecksAndLog()
+        {
+            txtOutput.Clear();
+
+            // 步驟 1: 進行關鍵的前置檢查，確保 OS 版本符合要求。
+            if (!CheckWindowsBuild())
+            {
+                // 如果版本不符，CheckWindowsBuild 內部已顯示錯誤訊息，此處直接關閉應用程式。
+                Application.Exit();
+                return;
+            }
+            Log(Resources.Strings.WelcomeMessage);
+            // 步驟 2: 檢查目前系統狀態並更新 UI。
+            CheckCurrentStatus();
+        }
+
+        /// <summary>
+        /// 處理語言下拉選單的選擇變更事件。
+        /// </summary>
+        private void cboLanguage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string culture = "";
+            switch (cboLanguage.SelectedIndex)
+            {
+                case 0:
+                    culture = "en-US";
+                    break;
+                case 1:
+                    culture = "zh-TW";
+                    break;
+            }
+
+            if (!string.IsNullOrEmpty(culture) && Thread.CurrentThread.CurrentUICulture.Name != culture)
+            {
+                Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
+                UpdateUIForLanguage();
+                RerunChecksAndLog();
+            }
         }
 
         //======================================================================
@@ -589,7 +648,7 @@ namespace XboxFullscreenExperienceTool
 
         private void LogError(string message)
         {
-            string timestamp = $"[{DateTime.Now:HH:mm:ss}] [錯誤] ";
+            string timestamp = $"[{DateTime.Now:HH:mm:ss}] [{Resources.Strings.HandleExceptionTitle}] ";
             txtOutput.SelectionColor = Color.Tomato;
             txtOutput.AppendText(timestamp + message + Environment.NewLine);
             txtOutput.ScrollToCaret();
@@ -597,9 +656,9 @@ namespace XboxFullscreenExperienceTool
 
         private void HandleException(Exception ex)
         {
-            LogError($"發生未預期的錯誤: {ex.Message}");
-            LogError("請確認本程式是否以【系統管理員權限】執行。");
-            MessageBox.Show($"發生錯誤:\n{ex.Message}\n\n請確認您是以系統管理員權限執行本程式。", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            LogError(string.Format(Resources.Strings.LogErrorUnexpected, ex.Message));
+            LogError(Resources.Strings.LogErrorAdminRights);
+            MessageBox.Show(string.Format(Resources.Strings.HandleExceptionMessage, ex.Message), Resources.Strings.HandleExceptionTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         #endregion
     }
