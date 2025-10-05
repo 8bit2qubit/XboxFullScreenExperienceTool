@@ -27,13 +27,21 @@
 *   **備份是您的責任**：在執行本工具前，您有責任**備份所有重要資料**並**建立系統還原點**。
 *   **非官方工具**：本專案與 Microsoft 或 Xbox 官方無關。
 
+-----
+
+## ⚠️ 重要前提：系統版本要求
+
+本工具**僅適用於 Windows 11 開發人員預覽版 (Dev Channel) 組建 `26220.6690` 或更新版本**。在不符要求的系統上，工具將提示錯誤並無法執行。請在下載前確認您的作業系統版本。
+
 **[➡️ 前往發行頁面下載最新版本](https://github.com/8bit2qubit/XboxFullscreenExperienceTool/releases/latest)**
 
 -----
 
-### ⚠️ 重要前提：系統版本要求
+## ❤️ 支持這個專案 (Support This Project)
 
-本工具**僅適用於 Windows 11 開發人員預覽版 (Dev Channel) 組建 `26220.6690` 或更新版本**。在不符要求的系統上，工具將提示錯誤並無法執行。請在下載前確認您的作業系統版本。
+如果您覺得這個工具對您有幫助，您的支持會是我持續維護與開發更多開源專案的莫大動力！
+
+<a href="https://www.patreon.com/cw/u57025610/membership"><img src="https://img.shields.io/badge/Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white" alt="前往 Patreon 支持我"></a>
 
 -----
 
@@ -92,10 +100,10 @@
     使用 Visual Studio 開啟 `XboxFullscreenExperienceTool.sln` 方案檔。
 
 4.  **執行以進行開發**
-    在 Visual Studio 中，將組建組態設定為 `Debug`，然後按下 `F5` 或點選「開始」按鈕來建置並執行應用程式。
+    在 Visual Studio 中，將組建組態設定為 `Debug`，然後按下 `F5` 來建置並執行應用程式。
 
 5.  **建置以用於生產**
-    當您準備好部署時，將組建組態切換至 `Release` 並建置方案。成品將會生成在 `XboxFullscreenExperienceTool/bin/Release` 目錄下。
+    當您準備好部署時，將組建組態切換至 `Release` 並建置方案。成品將會生成在 `XboxFullscreenExperienceTool/bin/Release` 資料夾下。
 
 -----
 
