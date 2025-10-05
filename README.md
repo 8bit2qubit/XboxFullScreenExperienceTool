@@ -58,7 +58,7 @@
 
 -----
 
-## 🛠️ 技術堆疊
+## 💻 技術堆疊
 
 *   **執行環境**: .NET 8
 *   **核心邏輯**: C#
@@ -67,6 +67,35 @@
     *   **ViVeLib (ViVeTool)**: 一個用於操控 Windows 功能組態 (Feature Flags) 的原生 API 封裝函式庫。以 Git Submodule 方式整合，原始碼來自 [thebookisclosed/ViVe](https://github.com/thebookisclosed/ViVe)，特此感謝。
     *   **PhysPanelLib**: 封裝 `ntdll.dll` 未公開 API，用以讀寫實體顯示面板 (Physical Panel) 尺寸資訊的函式庫。為本專案自研，其概念參考自 [riverar/physpanel](https://github.com/riverar/physpanel) 的 Rust 實作，特此感謝。
 *   **安裝套件**: Visual Studio Installer Projects (MSI)
+
+-----
+
+## 🛠️ 本地開發
+
+若要在您自己的電腦上執行此專案，請遵循以下步驟。
+
+1.  **複製儲存庫**
+
+    ```bash
+    git clone https://github.com/8bit2qubit/XboxFullscreenExperienceTool.git
+    cd XboxFullscreenExperienceTool
+    ```
+
+2.  **初始化子模組**
+    本專案使用 Git Submodules 來管理相依套件。
+
+    ```bash
+    git submodule update --init --recursive
+    ```
+
+3.  **在 Visual Studio 中開啟**
+    使用 Visual Studio 開啟 `XboxFullscreenExperienceTool.sln` 方案檔。
+
+4.  **執行以進行開發**
+    在 Visual Studio 中，將組建組態設定為 `Debug`，然後按下 `F5` 或點選「開始」按鈕來建置並執行應用程式。
+
+5.  **建置以用於生產**
+    當您準備好部署時，將組建組態切換至 `Release` 並建置方案。成品將會生成在 `XboxFullscreenExperienceTool/bin/Release` 目錄下。
 
 -----
 
