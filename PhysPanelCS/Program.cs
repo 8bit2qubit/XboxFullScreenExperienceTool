@@ -15,6 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Globalization;
+using System.Reflection;
 using PhysPanelLib; // 引入自訂的函式庫
 
 namespace PhysPanelCS
@@ -33,7 +34,8 @@ namespace PhysPanelCS
         /// <returns>傳回 0 代表成功，非 0 代表失敗。</returns>
         static int Main(string[] args)
         {
-            // 這將決定應用程式啟動時預設載入的資源檔 (例如，Strings.zh-TW.resx)
+            // 設定目前執行緒的 UI 文化為作業系統的安裝語言。
+            // 這確保了從資源檔 (Resources.Strings) 讀取的字串會是正確的語言。
             Thread.CurrentThread.CurrentUICulture = CultureInfo.InstalledUICulture;
 
             // 檢查是否提供了至少一個參數 (get/set)
@@ -121,12 +123,17 @@ namespace PhysPanelCS
         //======================================================================
 
         /// <summary>
-        /// 將程式的用法說明顯示到主控台。
+        /// 將程式的用法說明顯示到主控台，所有文字均來自多國語言資源檔。
         /// </summary>
         private static void PrintUsage()
         {
+            // 動態從組件中取得版本號，格式為 "Major.Minor.Build"。
+            // ?. (null-conditional operator) 確保如果 GetName() 或 Version 為 null 也不會拋出例外。
+            // ?? (null-coalescing operator) 在版本號無法取得時提供一個來自資源檔的預設值。
+            string versionString = Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? Resources.Strings.UnknownVersion;
+
             Console.WriteLine();
-            Console.WriteLine(Resources.Strings.Description);
+            Console.WriteLine(string.Format(Resources.Strings.Description, versionString)); // 使用 string.Format 將版本號插入到從資源檔讀取的在地化描述字串中
             Console.WriteLine("-----------------------------------------------------");
             Console.WriteLine(Resources.Strings.Usage);
             Console.WriteLine();

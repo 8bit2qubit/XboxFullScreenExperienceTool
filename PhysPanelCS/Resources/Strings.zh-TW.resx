@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Description" xml:space="preserve">
-    <value>PhysPanelCS 0.0.1 - Windows 內部顯示器實體尺寸工具</value>
+    <value>PhysPanelCS {0} - Windows 內部顯示器實體尺寸工具</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>用法: PhysPanelCS &lt;命令&gt; [參數...]</value>
@@ -158,5 +158,8 @@
   </data>
   <data name="SetSuccess" xml:space="preserve">
     <value>設定成功。</value>
+  </data>
+  <data name="UnknownVersion" xml:space="preserve">
+    <value>未知版本</value>
   </data>
 </root>

@@ -79,7 +79,7 @@ namespace PhysPanelCS.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 PhysPanelCS 0.0.1 - Windows Internal Display Physical Size Tool 的當地語系化字串。
+        ///   查詢類似 PhysPanelCS {0} - Windows Internal Display Physical Size Tool 的當地語系化字串。
         /// </summary>
         internal static string Description {
             get {
@@ -133,7 +133,7 @@ namespace PhysPanelCS.Resources {
         }
         
         /// <summary>
-        ///   查詢類似   get               Get the current physical size settings. 的當地語系化字串。
+        ///   查詢類似   get                      Get the current physical size settings. 的當地語系化字串。
         /// </summary>
         internal static string GetDescription {
             get {
@@ -174,6 +174,15 @@ namespace PhysPanelCS.Resources {
         internal static string SetSuccess {
             get {
                 return ResourceManager.GetString("SetSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Unknown Version 的當地語系化字串。
+        /// </summary>
+        internal static string UnknownVersion {
+            get {
+                return ResourceManager.GetString("UnknownVersion", resourceCulture);
             }
         }
         

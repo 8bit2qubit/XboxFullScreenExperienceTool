@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Description" xml:space="preserve">
-    <value>PhysPanelCS 0.0.1 - Windows Internal Display Physical Size Tool</value>
+    <value>PhysPanelCS {0} - Windows Internal Display Physical Size Tool</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>Usage: PhysPanelCS &lt;command&gt; [parameters...]</value>
@@ -127,7 +127,7 @@
     <value>Commands:</value>
   </data>
   <data name="GetDescription" xml:space="preserve">
-    <value>  get               Get the current physical size settings.</value>
+    <value>  get                      Get the current physical size settings.</value>
   </data>
   <data name="SetDescription" xml:space="preserve">
     <value>  set &lt;width&gt; &lt;height&gt;     Set new physical dimensions (in millimeters).</value>
@@ -158,5 +158,8 @@
   </data>
   <data name="SetSuccess" xml:space="preserve">
     <value>Set successfully.</value>
+  </data>
+  <data name="UnknownVersion" xml:space="preserve">
+    <value>Unknown Version</value>
   </data>
 </root>

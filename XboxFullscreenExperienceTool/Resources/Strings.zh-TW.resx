@@ -214,13 +214,13 @@
     <value>偵測到未定義的螢幕尺寸 (0x0mm)，正在建立開機工作排程...</value>
   </data>
   <data name="LogScreenSizeTooLarge" xml:space="preserve">
-    <value>偵測到螢幕尺寸 ({0:F2}\") 大於 {1}\" 門檻，正在建立開機工作排程...</value>
+    <value>偵測到螢幕尺寸 ({0:F2}") 大於 {1}" 門檻，正在建立開機工作排程...</value>
   </data>
   <data name="LogTaskCreated" xml:space="preserve">
     <value>工作排程 'SetPanelDimensions' 已建立。</value>
   </data>
   <data name="LogTaskNotNeeded" xml:space="preserve">
-    <value>螢幕尺寸 ({0:F2}\") 在 {1}\" 範圍內，無需建立工作排程。</value>
+    <value>螢幕尺寸 ({0:F2}") 在 {1}" 範圍內，無需建立工作排程。</value>
   </data>
   <data name="LogErrorReadingScreenSizeEnable" xml:space="preserve">
     <value>讀取螢幕尺寸失敗，將跳過此步驟。</value>

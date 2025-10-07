@@ -527,8 +527,9 @@ namespace XboxFullscreenExperienceTool
             _restartPending = true;
             lblStatus.Text = Resources.Strings.StatusRestartPending;
             lblStatus.ForeColor = Color.Orange;
-            btnEnable.Enabled = false;
-            btnDisable.Enabled = false;
+            btnEnable.Enabled = false; // 停用「啟用」按鈕
+            btnDisable.Enabled = false; // 停用「停用」按鈕
+            cboLanguage.Enabled = false; // 停用「語言」選單
             Log(Resources.Strings.LogUserRestartLater);
         }
 
@@ -560,7 +561,6 @@ namespace XboxFullscreenExperienceTool
         /// </summary>
         private void UpdateUIForLanguage()
         {
-            // 手動從 Resources.Strings 更新所有控制項的文字
             // 取得版本號字串，如果版本資訊不存在，使用一個預設值 (未知版本)
             // Version.ToString(3) 的格式是 "Major.Minor.Build"
             string versionString = Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? Resources.Strings.UnknownVersion;

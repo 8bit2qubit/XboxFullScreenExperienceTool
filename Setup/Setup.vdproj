@@ -228,7 +228,7 @@
             {
             "Name" = "8:Condition%d1"
             "Condition" = "8:WINBUILD >= 26220 AND NOT WINREV < 6690"
-            "Message" = "8:此工具需要 Windows 11 版本 26220.6690 或更新版本。(This tool requires Windows 11 version 26220.6690 or later.)"
+            "Message" = "8:This tool requires Windows 11 version 26220.6690 or later."
             "InstallUrl" = "8:"
             }
         }
