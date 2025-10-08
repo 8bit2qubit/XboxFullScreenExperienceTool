@@ -119,8 +119,9 @@ namespace XboxFullscreenExperienceTool
             // 
             this.cboLanguage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cboLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLanguage.Font = new System.Drawing.Font("Microsoft JhengHei UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.cboLanguage.FormattingEnabled = true;
-            this.cboLanguage.Location = new System.Drawing.Point(465, 12);
+            this.cboLanguage.Location = new System.Drawing.Point(466, 24);
             this.cboLanguage.Name = "cboLanguage";
             this.cboLanguage.Size = new System.Drawing.Size(121, 20);
             this.cboLanguage.TabIndex = 8;
