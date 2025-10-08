@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MainFormTitle" xml:space="preserve">
+    <value>Xbox 전체 화면 경험 도구</value>
+  </data>
+  <data name="UnknownVersion" xml:space="preserve">
+    <value>알 수 없는 버전</value>
+  </data>
+  <data name="ErrorReadingVersion" xml:space="preserve">
+    <value>버전 번호를 읽고 제목을 설정하는 중 오류 발생: {0}</value>
+  </data>
+  <data name="WelcomeMessage" xml:space="preserve">
+    <value>Xbox 전체 화면 경험 도구에 오신 것을 환영합니다!</value>
+  </data>
+  <data name="ErrorCheckBuild" xml:space="preserve">
+    <value>Windows 빌드를 확인하는 중 예기치 않은 오류 발생: {0}</value>
+  </data>
+  <data name="VersionIncompatible" xml:space="preserve">
+    <value>버전이 호환되지 않음</value>
+  </data>
+  <data name="ErrorReadRegistry" xml:space="preserve">
+    <value>오류: 레지스트리에서 현재 OS의 빌드 정보(CurrentBuild 또는 UBR)를 읽거나 구문 분석할 수 없습니다.</value>
+  </data>
+  <data name="YourBuildVersion" xml:space="preserve">
+    <value>Windows 빌드 버전: {0}</value>
+  </data>
+  <data name="ErrorBuildTooLow" xml:space="preserve">
+    <value>오류: Windows 빌드 버전({0})이 너무 낮습니다.</value>
+  </data>
+  <data name="RequiredBuild" xml:space="preserve">
+    <value>이 도구는 빌드 버전 {0} 이상이 필요합니다.</value>
+  </data>
+  <data name="VersionOK" xml:space="preserve">
+    <value>버전이 요구 사항을 충족합니다.</value>
+  </data>
+  <data name="StatusChecking" xml:space="preserve">
+    <value>상태: 감지 중...</value>
+  </data>
+  <data name="StatusEnabled" xml:space="preserve">
+    <value>상태: 활성화됨</value>
+  </data>
+  <data name="StatusDisabled" xml:space="preserve">
+    <value>상태: 비활성화됨</value>
+  </data>
+  <data name="StatusNeedsFix" xml:space="preserve">
+    <value>상태: 수정 필요 (화면 크기 작업이 생성되지 않음)</value>
+  </data>
+  <data name="StatusUnknownError" xml:space="preserve">
+    <value>상태: 알 수 없음 (오류)</value>
+  </data>
+  <data name="StatusRestartPending" xml:space="preserve">
+    <value>상태: 다시 시작 대기 중...</value>
+  </data>
+  <data name="btnEnable_Text" xml:space="preserve">
+    <value>Xbox 전체 화면 경험 활성화</value>
+  </data>
+  <data name="btnEnable_Text_Fix" xml:space="preserve">
+    <value>Xbox 전체 화면 경험 수정</value>
+  </data>
+  <data name="btnDisable_Text" xml:space="preserve">
+    <value>비활성화하고 복원</value>
+  </data>
+  <data name="grpActions_Text" xml:space="preserve">
+    <value>작업</value>
+  </data>
+  <data name="grpOutput_Text" xml:space="preserve">
+    <value>실행 로그</value>
+  </data>
+  <data name="ErrorCheckStatus" xml:space="preserve">
+    <value>상태를 확인하는 중 오류 발생: {0}</value>
+  </data>
+  <data name="LogStatusCheck" xml:space="preserve">
+    <value>상태 확인 -&gt; ViVe 기능: {0}, 레지스트리: {1}, 작업 요구 사항: {2}, 작업 존재: {3}</value>
+  </data>
+  <data name="LogRegStatusFalseNotExist" xml:space="preserve">
+    <value>False (존재하지 않음)</value>
+  </data>
+  <data name="LogRegStatusTrue" xml:space="preserve">
+    <value>True (값은 46)</value>
+  </data>
+  <data name="LogRegStatusFalseWrongValue" xml:space="preserve">
+    <value>False (값은 {0})</value>
+  </data>
+  <data name="LogErrorReadingScreenSize" xml:space="preserve">
+    <value>화면 크기를 읽을 수 없어 예약된 작업이 필요한지 확인할 수 없습니다.</value>
+  </data>
+  <data name="LogBeginEnable" xml:space="preserve">
+    <value>--- 활성화 프로세스 시작 ---</value>
+  </data>
+  <data name="LogReadingScreenSize" xml:space="preserve">
+    <value>현재 화면 크기를 읽는 중...</value>
+  </data>
+  <data name="LogScreenSizeSuccess" xml:space="preserve">
+    <value>화면 크기 읽기 성공: {0}x{1}mm.</value>
+  </data>
+  <data name="LogScreenSizeUndefined" xml:space="preserve">
+    <value>정의되지 않은 화면 크기(0x0mm)가 감지되었습니다. 부팅 작업 예약 중...</value>
+  </data>
+  <data name="LogScreenSizeTooLarge" xml:space="preserve">
+    <value>화면 크기({0:F2}인치)가 임계값 {1}인치를 초과하는 것이 감지되었습니다. 부팅 작업 예약 중...</value>
+  </data>
+  <data name="LogTaskCreated" xml:space="preserve">
+    <value>작업 'SetPanelDimensions'가 생성되었습니다.</value>
+  </data>
+  <data name="LogTaskNotNeeded" xml:space="preserve">
+    <value>화면 크기({0:F2}인치)가 {1}인치 범위 내에 있으므로 작업을 예약할 필요가 없습니다.</value>
+  </data>
+  <data name="LogErrorReadingScreenSizeEnable" xml:space="preserve">
+    <value>화면 크기를 읽는 데 실패했습니다. 이 단계를 건너뜁니다.</value>
+  </data>
+  <data name="LogBackupAndSetRegistry" xml:space="preserve">
+    <value>레지스트리 백업 및 설정 중...</value>
+  </data>
+  <data name="LogRegistryBackupSuccess" xml:space="preserve">
+    <value>원래 DeviceForm 값({0})을 {1}에 백업했습니다.</value>
+  </data>
+  <data name="LogRegistryBackupMarkedForDelete" xml:space="preserve">
+    <value>원래 DeviceForm 값이 존재하지 않는 것이 감지되었습니다. 복원 마커가 생성되었습니다.</value>
+  </data>
+  <data name="LogRegistrySetSuccess" xml:space="preserve">
+    <value>레지스트리가 46(0x2E)으로 성공적으로 설정되었습니다.</value>
+  </data>
+  <data name="LogEnablingFeatures" xml:space="preserve">
+    <value>기능 ID 활성화 중: {0}...</value>
+  </data>
+  <data name="LogFeaturesEnabledSuccess" xml:space="preserve">
+    <value>기능이 성공적으로 활성화되었습니다.</value>
+  </data>
+  <data name="LogEnableComplete" xml:space="preserve">
+    <value>--- 활성화 프로세스 완료 ---</value>
+  </data>
+  <data name="PromptRestartCaptionSuccess" xml:space="preserve">
+    <value>활성화 성공</value>
+  </data>
+  <data name="PromptRestartCaptionDisableSuccess" xml:space="preserve">
+    <value>비활성화 성공</value>
+  </data>
+  <data name="PromptRestartMessage" xml:space="preserve">
+    <value>모든 변경 사항이 적용되었습니다. 완전히 적용하려면 컴퓨터를 다시 시작해야 합니다.
+
+지금 다시 시작하시겠습니까?</value>
+  </data>
+  <data name="LogUserRestartNow" xml:space="preserve">
+    <value>사용자가 지금 컴퓨터를 다시 시작하기로 선택했습니다.</value>
+  </data>
+  <data name="ErrorRestartFailed" xml:space="preserve">
+    <value>다시 시작 명령을 실행하지 못했습니다: {0}</value>
+  </data>
+  <data name="MessageBoxRestartFailed" xml:space="preserve">
+    <value>다시 시작 명령을 자동으로 실행할 수 없습니다. 컴퓨터를 수동으로 다시 시작하십시오.</value>
+  </data>
+  <data name="LogUserRestartLater" xml:space="preserve">
+    <value>사용자가 나중에 다시 시작하기로 선택했습니다. 다시 시작하기 전까지 다른 작업을 수행할 수 없습니다.</value>
+  </data>
+  <data name="HandleExceptionMessage" xml:space="preserve">
+    <value>오류가 발생했습니다:
+{0}
+
+이 프로그램을 관리자 권한으로 실행하고 있는지 확인하십시오.</value>
+  </data>
+  <data name="HandleExceptionTitle" xml:space="preserve">
+    <value>오류</value>
+  </data>
+  <data name="LogErrorUnexpected" xml:space="preserve">
+    <value>예기치 않은 오류가 발생했습니다: {0}</value>
+  </data>
+  <data name="LogErrorAdminRights" xml:space="preserve">
+    <value>이 프로그램이 [관리자 권한]으로 실행되고 있는지 확인하십시오.</value>
+  </data>
+  <data name="LogBeginDisable" xml:space="preserve">
+    <value>--- 비활성화 프로세스 시작 ---</value>
+  </data>
+  <data name="LogDisablingFeatures" xml:space="preserve">
+    <value>기능 ID를 명시적으로 비활성화하는 중: {0}...</value>
+  </data>
+  <data name="LogFeaturesDisabledSuccess" xml:space="preserve">
+    <value>기능이 비활성화 상태로 성공적으로 설정되었습니다.</value>
+  </data>
+  <data name="LogCheckingRegistryRestore" xml:space="preserve">
+    <value>DeviceForm 레지스트리를 복원해야 하는지 확인하는 중...</value>
+  </data>
+  <data name="LogBackupFound" xml:space="preserve">
+    <value>백업 파일이 감지되었습니다. 복원 작업을 수행합니다.</value>
+  </data>
+  <data name="LogRegistryValueRemoved" xml:space="preserve">
+    <value>백업 마커에 따라 레지스트리 값 '{0}'을 제거했습니다.</value>
+  </data>
+  <data name="LogRegistryValueRestored" xml:space="preserve">
+    <value>백업 파일에서 값을 복원했습니다: {0}</value>
+  </data>
+  <data name="LogRegistryBackupInvalid" xml:space="preserve">
+    <value>백업 파일 내용의 형식이 잘못되었습니다. 안전을 위해 레지스트리 값 '{0}'을 직접 제거했습니다.</value>
+  </data>
+  <data name="LogBackupDeleted" xml:space="preserve">
+    <value>백업 파일이 삭제되었습니다.</value>
+  </data>
+  <data name="LogNoBackupFound" xml:space="preserve">
+    <value>백업 파일을 찾을 수 없습니다. 이 도구가 레지스트리를 수정하지 않았으므로 복원이 필요하지 않습니다.</value>
+  </data>
+  <data name="ErrorRestoringRegistry" xml:space="preserve">
+    <value>레지스트리를 복원하는 중 오류 발생: {0}</value>
+  </data>
+  <data name="LogDeletingTask" xml:space="preserve">
+    <value>작업 'SetPanelDimensions'를 삭제하는 중...</value>
+  </data>
+  <data name="LogTaskDeleted" xml:space="preserve">
+    <value>작업이 삭제되었습니다.</value>
+  </data>
+  <data name="LogDisableComplete" xml:space="preserve">
+    <value>--- 비활성화 프로세스 완료 ---</value>
+  </data>
+  <data name="ErrorAppRunning" xml:space="preserve">
+    <value>응용 프로그램이 이미 실행 중입니다.</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorFindFile" xml:space="preserve">
+    <value>필요한 파일을 찾을 수 없습니다: {0}. PhysPanelCS.exe가 기본 프로그램과 동일한 디렉터리에 있는지 확인하십시오.</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorCreate" xml:space="preserve">
+    <value>작업을 생성하지 못했습니다: {0}</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorDelete" xml:space="preserve">
+    <value>작업을 삭제하지 못했습니다: {0}</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorDirectoryNotFound" xml:space="preserve">
+    <value>응용 프로그램의 설치 디렉터리를 가져올 수 없습니다.</value>
+  </data>
+</root>

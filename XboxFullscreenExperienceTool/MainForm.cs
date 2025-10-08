@@ -544,11 +544,26 @@ namespace XboxFullscreenExperienceTool
         {
             cboLanguage.Items.Add("English");
             cboLanguage.Items.Add("繁體中文");
+            cboLanguage.Items.Add("简体中文");
+            cboLanguage.Items.Add("日本語");
+            cboLanguage.Items.Add("한국어");
 
             string currentCultureName = Thread.CurrentThread.CurrentUICulture.Name;
             if (currentCultureName.StartsWith("zh-TW", StringComparison.OrdinalIgnoreCase) || currentCultureName.StartsWith("zh-Hant", StringComparison.OrdinalIgnoreCase))
             {
-                cboLanguage.SelectedIndex = 1;
+                cboLanguage.SelectedIndex = 1; // 繁體中文
+            }
+            else if (currentCultureName.StartsWith("zh-CN", StringComparison.OrdinalIgnoreCase) || currentCultureName.StartsWith("zh-Hans", StringComparison.OrdinalIgnoreCase))
+            {
+                cboLanguage.SelectedIndex = 2; // 简体中文
+            }
+            else if (currentCultureName.StartsWith("ja-JP", StringComparison.OrdinalIgnoreCase))
+            {
+                cboLanguage.SelectedIndex = 3; // 日本語
+            }
+            else if (currentCultureName.StartsWith("ko", StringComparison.OrdinalIgnoreCase))
+            {
+                cboLanguage.SelectedIndex = 4; // 한국어
             }
             else
             {
@@ -605,6 +620,15 @@ namespace XboxFullscreenExperienceTool
                     break;
                 case 1:
                     culture = "zh-TW";
+                    break;
+                case 2:
+                    culture = "zh-CN";
+                    break;
+                case 3:
+                    culture = "ja-JP";
+                    break;
+                case 4:
+                    culture = "ko-KR";
                     break;
             }
 

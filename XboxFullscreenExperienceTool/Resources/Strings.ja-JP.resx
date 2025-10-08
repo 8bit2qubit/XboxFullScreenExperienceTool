@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MainFormTitle" xml:space="preserve">
+    <value>Xbox 全画面表示エクスペリエンスツール</value>
+  </data>
+  <data name="UnknownVersion" xml:space="preserve">
+    <value>不明なバージョン</value>
+  </data>
+  <data name="ErrorReadingVersion" xml:space="preserve">
+    <value>バージョン番号の読み取りとタイトルの設定中にエラーが発生しました: {0}</value>
+  </data>
+  <data name="WelcomeMessage" xml:space="preserve">
+    <value>Xbox 全画面表示エクスペリエンスツールへようこそ！</value>
+  </data>
+  <data name="ErrorCheckBuild" xml:space="preserve">
+    <value>Windows ビルドの確認中に予期せぬエラーが発生しました: {0}</value>
+  </data>
+  <data name="VersionIncompatible" xml:space="preserve">
+    <value>バージョンの互換性がありません</value>
+  </data>
+  <data name="ErrorReadRegistry" xml:space="preserve">
+    <value>エラー: レジストリから現在の OS のビルド情報 (CurrentBuild または UBR) を読み取れないか、解析できません。</value>
+  </data>
+  <data name="YourBuildVersion" xml:space="preserve">
+    <value>お使いの Windows ビルドバージョン: {0}</value>
+  </data>
+  <data name="ErrorBuildTooLow" xml:space="preserve">
+    <value>エラー：お使いの Windows ビルドバージョン ({0}) は低すぎます。</value>
+  </data>
+  <data name="RequiredBuild" xml:space="preserve">
+    <value>このツールにはビルドバージョン {0} 以降が必要です。</value>
+  </data>
+  <data name="VersionOK" xml:space="preserve">
+    <value>バージョンは要件を満たしています。</value>
+  </data>
+  <data name="StatusChecking" xml:space="preserve">
+    <value>状態：検出中...</value>
+  </data>
+  <data name="StatusEnabled" xml:space="preserve">
+    <value>状態：有効</value>
+  </data>
+  <data name="StatusDisabled" xml:space="preserve">
+    <value>状態：無効</value>
+  </data>
+  <data name="StatusNeedsFix" xml:space="preserve">
+    <value>状態：修正が必要 (画面サイズタスクが作成されていません)</value>
+  </data>
+  <data name="StatusUnknownError" xml:space="preserve">
+    <value>状態：不明 (エラー)</value>
+  </data>
+  <data name="StatusRestartPending" xml:space="preserve">
+    <value>状態：再起動待ち...</value>
+  </data>
+  <data name="btnEnable_Text" xml:space="preserve">
+    <value>Xbox 全画面表示エクスペリエンスを有効にする</value>
+  </data>
+  <data name="btnEnable_Text_Fix" xml:space="preserve">
+    <value>Xbox 全画面表示エクスペリエンスを修正する</value>
+  </data>
+  <data name="btnDisable_Text" xml:space="preserve">
+    <value>無効にして元に戻す</value>
+  </data>
+  <data name="grpActions_Text" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="grpOutput_Text" xml:space="preserve">
+    <value>実行ログ</value>
+  </data>
+  <data name="ErrorCheckStatus" xml:space="preserve">
+    <value>状態の確認中にエラーが発生しました: {0}</value>
+  </data>
+  <data name="LogStatusCheck" xml:space="preserve">
+    <value>状態チェック -&gt; ViVe 機能: {0}, レジストリ: {1}, タスク要件: {2}, タスク存在: {3}</value>
+  </data>
+  <data name="LogRegStatusFalseNotExist" xml:space="preserve">
+    <value>False (存在しません)</value>
+  </data>
+  <data name="LogRegStatusTrue" xml:space="preserve">
+    <value>True (値は 46)</value>
+  </data>
+  <data name="LogRegStatusFalseWrongValue" xml:space="preserve">
+    <value>False (値は {0})</value>
+  </data>
+  <data name="LogErrorReadingScreenSize" xml:space="preserve">
+    <value>画面サイズを読み取れないため、スケジュールされたタスクが必要かどうかを判断できません。</value>
+  </data>
+  <data name="LogBeginEnable" xml:space="preserve">
+    <value>--- 有効化プロセスを開始 ---</value>
+  </data>
+  <data name="LogReadingScreenSize" xml:space="preserve">
+    <value>現在の画面サイズを読み取り中...</value>
+  </data>
+  <data name="LogScreenSizeSuccess" xml:space="preserve">
+    <value>画面サイズの読み取りに成功しました: {0}x{1}mm。</value>
+  </data>
+  <data name="LogScreenSizeUndefined" xml:space="preserve">
+    <value>未定義の画面サイズ (0x0mm) が検出されました。起動タスクをスケジュールしています...</value>
+  </data>
+  <data name="LogScreenSizeTooLarge" xml:space="preserve">
+    <value>画面サイズ ({0:F2}インチ) がしきい値 {1}インチ を超えているのを検出しました。起動タスクをスケジュールしています...</value>
+  </data>
+  <data name="LogTaskCreated" xml:space="preserve">
+    <value>タスク 'SetPanelDimensions' が作成されました。</value>
+  </data>
+  <data name="LogTaskNotNeeded" xml:space="preserve">
+    <value>画面サイズ ({0:F2}インチ) が {1}インチ の範囲内のため、タスクをスケジュールする必要はありません。</value>
+  </data>
+  <data name="LogErrorReadingScreenSizeEnable" xml:space="preserve">
+    <value>画面サイズの読み取りに失敗しました。このステップはスキップされます。</value>
+  </data>
+  <data name="LogBackupAndSetRegistry" xml:space="preserve">
+    <value>レジストリをバックアップして設定しています...</value>
+  </data>
+  <data name="LogRegistryBackupSuccess" xml:space="preserve">
+    <value>元の DeviceForm 値 ({0}) を {1} にバックアップしました。</value>
+  </data>
+  <data name="LogRegistryBackupMarkedForDelete" xml:space="preserve">
+    <value>元の DeviceForm 値が存在しないことが検出されました。復元マーカーが作成されました。</value>
+  </data>
+  <data name="LogRegistrySetSuccess" xml:space="preserve">
+    <value>レジストリが正常に 46 (0x2E) に設定されました。</value>
+  </data>
+  <data name="LogEnablingFeatures" xml:space="preserve">
+    <value>機能 ID: {0} を有効にしています...</value>
+  </data>
+  <data name="LogFeaturesEnabledSuccess" xml:space="preserve">
+    <value>機能が正常に有効になりました。</value>
+  </data>
+  <data name="LogEnableComplete" xml:space="preserve">
+    <value>--- 有効化プロセス完了 ---</value>
+  </data>
+  <data name="PromptRestartCaptionSuccess" xml:space="preserve">
+    <value>有効化成功</value>
+  </data>
+  <data name="PromptRestartCaptionDisableSuccess" xml:space="preserve">
+    <value>無効化成功</value>
+  </data>
+  <data name="PromptRestartMessage" xml:space="preserve">
+    <value>すべての変更が適用されました。完全に有効にするにはコンピュータを再起動する必要があります。
+
+今すぐ再起動しますか？</value>
+  </data>
+  <data name="LogUserRestartNow" xml:space="preserve">
+    <value>ユーザーは今すぐコンピュータを再起動することを選択しました。</value>
+  </data>
+  <data name="ErrorRestartFailed" xml:space="preserve">
+    <value>再起動コマンドの実行に失敗しました: {0}</value>
+  </data>
+  <data name="MessageBoxRestartFailed" xml:space="preserve">
+    <value>再起動コマンドを自動的に実行できませんでした。手動でコンピュータを再起動してください。</value>
+  </data>
+  <data name="LogUserRestartLater" xml:space="preserve">
+    <value>ユーザーは後で再起動することを選択しました。再起動が完了するまで、他の操作は実行できません。</value>
+  </data>
+  <data name="HandleExceptionMessage" xml:space="preserve">
+    <value>エラーが発生しました:
+{0}
+
+このプログラムを管理者権限で実行していることを確認してください。</value>
+  </data>
+  <data name="HandleExceptionTitle" xml:space="preserve">
+    <value>エラー</value>
+  </data>
+  <data name="LogErrorUnexpected" xml:space="preserve">
+    <value>予期せぬエラーが発生しました: {0}</value>
+  </data>
+  <data name="LogErrorAdminRights" xml:space="preserve">
+    <value>このプログラムが【管理者権限】で実行されていることを確認してください。</value>
+  </data>
+  <data name="LogBeginDisable" xml:space="preserve">
+    <value>--- 無効化プロセスを開始 ---</value>
+  </data>
+  <data name="LogDisablingFeatures" xml:space="preserve">
+    <value>機能 ID: {0} を明示的に無効にしています...</value>
+  </data>
+  <data name="LogFeaturesDisabledSuccess" xml:space="preserve">
+    <value>機能が無効状態に正常に設定されました。</value>
+  </data>
+  <data name="LogCheckingRegistryRestore" xml:space="preserve">
+    <value>DeviceForm レジストリを復元する必要があるかどうかを確認しています...</value>
+  </data>
+  <data name="LogBackupFound" xml:space="preserve">
+    <value>バックアップファイルが検出されました。復元操作を実行します。</value>
+  </data>
+  <data name="LogRegistryValueRemoved" xml:space="preserve">
+    <value>バックアップマーカーに基づいてレジストリ値 '{0}' を削除しました。</value>
+  </data>
+  <data name="LogRegistryValueRestored" xml:space="preserve">
+    <value>バックアップファイルから値を復元しました: {0}</value>
+  </data>
+  <data name="LogRegistryBackupInvalid" xml:space="preserve">
+    <value>バックアップファイルの内容が不正な形式です。安全のため、レジストリ値 '{0}' を直接削除しました。</value>
+  </data>
+  <data name="LogBackupDeleted" xml:space="preserve">
+    <value>バックアップファイルを削除しました。</value>
+  </data>
+  <data name="LogNoBackupFound" xml:space="preserve">
+    <value>バックアップファイルが見つかりませんでした。このツールはレジストリを変更していないため、復元は必要ありません。</value>
+  </data>
+  <data name="ErrorRestoringRegistry" xml:space="preserve">
+    <value>レジストリの復元中にエラーが発生しました: {0}</value>
+  </data>
+  <data name="LogDeletingTask" xml:space="preserve">
+    <value>タスク 'SetPanelDimensions' を削除しています...</value>
+  </data>
+  <data name="LogTaskDeleted" xml:space="preserve">
+    <value>タスクが削除されました。</value>
+  </data>
+  <data name="LogDisableComplete" xml:space="preserve">
+    <value>--- 無効化プロセス完了 ---</value>
+  </data>
+  <data name="ErrorAppRunning" xml:space="preserve">
+    <value>アプリケーションは既に実行中です。</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorFindFile" xml:space="preserve">
+    <value>必要なファイルが見つかりません: {0}。PhysPanelCS.exe がメインプログラムと同じディレクトリにあることを確認してください。</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorCreate" xml:space="preserve">
+    <value>タスクの作成に失敗しました: {0}</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorDelete" xml:space="preserve">
+    <value>タスクの削除に失敗しました: {0}</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorDirectoryNotFound" xml:space="preserve">
+    <value>アプリケーションのインストールディレクトリを取得できませんでした。</value>
+  </data>
+</root>

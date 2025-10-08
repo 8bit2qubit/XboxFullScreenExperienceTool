@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MainFormTitle" xml:space="preserve">
+    <value>Xbox 全屏体验工具</value>
+  </data>
+  <data name="UnknownVersion" xml:space="preserve">
+    <value>未知版本</value>
+  </data>
+  <data name="ErrorReadingVersion" xml:space="preserve">
+    <value>读取版本号并设置标题时发生错误: {0}</value>
+  </data>
+  <data name="WelcomeMessage" xml:space="preserve">
+    <value>欢迎使用 Xbox 全屏体验工具！</value>
+  </data>
+  <data name="ErrorCheckBuild" xml:space="preserve">
+    <value>检查 Windows 构建时发生未预期错误: {0}</value>
+  </data>
+  <data name="VersionIncompatible" xml:space="preserve">
+    <value>版本不兼容</value>
+  </data>
+  <data name="ErrorReadRegistry" xml:space="preserve">
+    <value>错误: 无法从注册表读取或解析当前 OS 的构建信息 (CurrentBuild 或 UBR)。</value>
+  </data>
+  <data name="YourBuildVersion" xml:space="preserve">
+    <value>您的 Windows 构建版本: {0}</value>
+  </data>
+  <data name="ErrorBuildTooLow" xml:space="preserve">
+    <value>错误：您的 Windows 构建版本 ({0}) 过低。</value>
+  </data>
+  <data name="RequiredBuild" xml:space="preserve">
+    <value>此工具需要构建版本 {0} 或更高版本。</value>
+  </data>
+  <data name="VersionOK" xml:space="preserve">
+    <value>版本符合要求。</value>
+  </data>
+  <data name="StatusChecking" xml:space="preserve">
+    <value>状态：检测中...</value>
+  </data>
+  <data name="StatusEnabled" xml:space="preserve">
+    <value>状态：已启用</value>
+  </data>
+  <data name="StatusDisabled" xml:space="preserve">
+    <value>状态：未启用</value>
+  </data>
+  <data name="StatusNeedsFix" xml:space="preserve">
+    <value>状态：需要修复 (未创建屏幕尺寸任务)</value>
+  </data>
+  <data name="StatusUnknownError" xml:space="preserve">
+    <value>状态：未知 (错误)</value>
+  </data>
+  <data name="StatusRestartPending" xml:space="preserve">
+    <value>状态：等待重启...</value>
+  </data>
+  <data name="btnEnable_Text" xml:space="preserve">
+    <value>启用 Xbox 全屏体验</value>
+  </data>
+  <data name="btnEnable_Text_Fix" xml:space="preserve">
+    <value>修复 Xbox 全屏体验</value>
+  </data>
+  <data name="btnDisable_Text" xml:space="preserve">
+    <value>禁用并还原</value>
+  </data>
+  <data name="grpActions_Text" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="grpOutput_Text" xml:space="preserve">
+    <value>运行日志</value>
+  </data>
+  <data name="ErrorCheckStatus" xml:space="preserve">
+    <value>检查状态时发生错误: {0}</value>
+  </data>
+  <data name="LogStatusCheck" xml:space="preserve">
+    <value>状态检查 -&gt; ViVe 功能: {0}, 注册表: {1}, 任务需求: {2}, 任务存在: {3}</value>
+  </data>
+  <data name="LogRegStatusFalseNotExist" xml:space="preserve">
+    <value>False (不存在)</value>
+  </data>
+  <data name="LogRegStatusTrue" xml:space="preserve">
+    <value>True (值为 46)</value>
+  </data>
+  <data name="LogRegStatusFalseWrongValue" xml:space="preserve">
+    <value>False (值为 {0})</value>
+  </data>
+  <data name="LogErrorReadingScreenSize" xml:space="preserve">
+    <value>无法读取屏幕尺寸，将无法判断是否需要计划任务。</value>
+  </data>
+  <data name="LogBeginEnable" xml:space="preserve">
+    <value>--- 开始启用流程 ---</value>
+  </data>
+  <data name="LogReadingScreenSize" xml:space="preserve">
+    <value>正在读取当前屏幕尺寸...</value>
+  </data>
+  <data name="LogScreenSizeSuccess" xml:space="preserve">
+    <value>成功读取屏幕尺寸: {0}x{1}mm。</value>
+  </data>
+  <data name="LogScreenSizeUndefined" xml:space="preserve">
+    <value>检测到未定义的屏幕尺寸 (0x0mm)，正在创建开机任务计划...</value>
+  </data>
+  <data name="LogScreenSizeTooLarge" xml:space="preserve">
+    <value>检测到屏幕尺寸 ({0:F2}") 大于 {1}" 阈值，正在创建开机任务计划...</value>
+  </data>
+  <data name="LogTaskCreated" xml:space="preserve">
+    <value>任务计划 'SetPanelDimensions' 已创建。</value>
+  </data>
+  <data name="LogTaskNotNeeded" xml:space="preserve">
+    <value>屏幕尺寸 ({0:F2}") 在 {1}" 范围内，无需创建任务计划。</value>
+  </data>
+  <data name="LogErrorReadingScreenSizeEnable" xml:space="preserve">
+    <value>读取屏幕尺寸失败，将跳过此步骤。</value>
+  </data>
+  <data name="LogBackupAndSetRegistry" xml:space="preserve">
+    <value>正在备份并设置注册表...</value>
+  </data>
+  <data name="LogRegistryBackupSuccess" xml:space="preserve">
+    <value>已备份原始 DeviceForm 数值 ({0}) 到 {1}。</value>
+  </data>
+  <data name="LogRegistryBackupMarkedForDelete" xml:space="preserve">
+    <value>检测到 DeviceForm 原始值不存在，已创建还原标记。</value>
+  </data>
+  <data name="LogRegistrySetSuccess" xml:space="preserve">
+    <value>注册表已成功设置为 46 (0x2E)。</value>
+  </data>
+  <data name="LogEnablingFeatures" xml:space="preserve">
+    <value>正在启用功能 ID: {0}...</value>
+  </data>
+  <data name="LogFeaturesEnabledSuccess" xml:space="preserve">
+    <value>功能已成功启用。</value>
+  </data>
+  <data name="LogEnableComplete" xml:space="preserve">
+    <value>--- 启用流程完成 ---</value>
+  </data>
+  <data name="PromptRestartCaptionSuccess" xml:space="preserve">
+    <value>启用成功</value>
+  </data>
+  <data name="PromptRestartCaptionDisableSuccess" xml:space="preserve">
+    <value>禁用成功</value>
+  </data>
+  <data name="PromptRestartMessage" xml:space="preserve">
+    <value>所有更改已应用，需要重新启动电脑才能完全生效。
+
+您要现在重新启动吗？</value>
+  </data>
+  <data name="LogUserRestartNow" xml:space="preserve">
+    <value>用户选择立即重新启动电脑。</value>
+  </data>
+  <data name="ErrorRestartFailed" xml:space="preserve">
+    <value>无法运行重新启动命令: {0}</value>
+  </data>
+  <data name="MessageBoxRestartFailed" xml:space="preserve">
+    <value>无法自动运行重新启动命令，请手动重新启动您的电脑。</value>
+  </data>
+  <data name="LogUserRestartLater" xml:space="preserve">
+    <value>用户选择稍后重新启动。在重新启动前，无法进行其他操作。</value>
+  </data>
+  <data name="HandleExceptionMessage" xml:space="preserve">
+    <value>发生错误:
+{0}
+
+请确认您是以系统管理员权限运行本程序。</value>
+  </data>
+  <data name="HandleExceptionTitle" xml:space="preserve">
+    <value>错误</value>
+  </data>
+  <data name="LogErrorUnexpected" xml:space="preserve">
+    <value>发生未预期的错误: {0}</value>
+  </data>
+  <data name="LogErrorAdminRights" xml:space="preserve">
+    <value>请确认本程序是否以【系统管理员权限】运行。</value>
+  </data>
+  <data name="LogBeginDisable" xml:space="preserve">
+    <value>--- 开始禁用流程 ---</value>
+  </data>
+  <data name="LogDisablingFeatures" xml:space="preserve">
+    <value>正在明确禁用功能 ID: {0}...</value>
+  </data>
+  <data name="LogFeaturesDisabledSuccess" xml:space="preserve">
+    <value>功能已成功设置为禁用状态。</value>
+  </data>
+  <data name="LogCheckingRegistryRestore" xml:space="preserve">
+    <value>正在检查是否需要还原 DeviceForm 注册表...</value>
+  </data>
+  <data name="LogBackupFound" xml:space="preserve">
+    <value>检测到备份文件，将进行还原操作。</value>
+  </data>
+  <data name="LogRegistryValueRemoved" xml:space="preserve">
+    <value>已根据备份标记，移除注册表值 '{0}'。</value>
+  </data>
+  <data name="LogRegistryValueRestored" xml:space="preserve">
+    <value>已从备份文件还原数值: {0}</value>
+  </data>
+  <data name="LogRegistryBackupInvalid" xml:space="preserve">
+    <value>备份文件内容格式不正确，为安全起见，已直接移除注册表值 '{0}'。</value>
+  </data>
+  <data name="LogBackupDeleted" xml:space="preserve">
+    <value>备份文件已删除。</value>
+  </data>
+  <data name="LogNoBackupFound" xml:space="preserve">
+    <value>未找到备份文件，表示此工具未曾修改过注册表，无需还原。</value>
+  </data>
+  <data name="ErrorRestoringRegistry" xml:space="preserve">
+    <value>还原注册表时发生错误: {0}</value>
+  </data>
+  <data name="LogDeletingTask" xml:space="preserve">
+    <value>正在删除任务计划 'SetPanelDimensions'...</value>
+  </data>
+  <data name="LogTaskDeleted" xml:space="preserve">
+    <value>任务计划已删除。</value>
+  </data>
+  <data name="LogDisableComplete" xml:space="preserve">
+    <value>--- 禁用流程完成 ---</value>
+  </data>
+  <data name="ErrorAppRunning" xml:space="preserve">
+    <value>应用程序已经在运行中。</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorFindFile" xml:space="preserve">
+    <value>找不到必要的文件: {0}。请确保 PhysPanelCS.exe 与主程序位于同一个目录。</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorCreate" xml:space="preserve">
+    <value>创建任务计划失败: {0}</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorDelete" xml:space="preserve">
+    <value>删除任务计划失败: {0}</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorDirectoryNotFound" xml:space="preserve">
+    <value>无法获取应用程序的安装目录。</value>
+  </data>
+</root>
