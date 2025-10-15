@@ -1,13 +1,13 @@
 # Xbox 全螢幕體驗工具
 
-> 🌐 [English Version](README.md)
+> 🌐 [English](README.md) | **繁體中文**
 
 <p align="center">
-<img src="app.ico" alt="Xbox 全螢幕體驗工具圖示" style="height: 150px; object-fit: contain; display: block; margin: 0 auto;">
+<img src="app.ico" alt="Xbox 全螢幕體驗工具圖示" style="width: 150px; object-fit: contain; display: block; margin: 0 auto;">
 </p>
 
 <p align="center">
-<img src="demo.zh-TW.png" alt="Xbox 全螢幕體驗工具展示" style="height: 320px; object-fit: contain; display: block; margin: 0 auto;">
+<img src="demo.zh-TW.png" alt="Xbox 全螢幕體驗工具展示" style="width: 374px; object-fit: contain; display: block; margin: 0 auto;">
 </p>
 
 <p align="center">
@@ -31,9 +31,16 @@
 
 -----
 
-## ⚠️ 重要前提：系統版本要求
+## ⚙️ 系統版本要求
 
-本工具**僅適用於 Windows 11 開發人員預覽版 (Dev Channel) 組建 `26220.6690` 或更新版本**。在不符要求的系統上，工具將提示錯誤並無法執行。請在下載前確認您的作業系統版本。
+本工具**僅適用於 Windows 11 開發人員預覽版 (Dev Channel) 組建 `26220.6690` 或更新版本**。在不符要求的系統上，工具將提示錯誤並無法執行。
+
+如果您的系統不符合需求，可參考此份完整的升級教學指南，其中引導您加入「Windows 測試人員計畫」並升級至正確的組建版本：
+* **[繁體中文指南 (Traditional Chinese Guide)](https://github.com/8bit2qubit/xbox-fullscreen-experience-guide/blob/main/README.zh-TW.md)**
+* **[简体中文指南 (Simplified Chinese Guide)](https://github.com/8bit2qubit/xbox-fullscreen-experience-guide/blob/main/README.zh-CN.md)**
+* **[英文指南 (English Guide)](https://github.com/8bit2qubit/xbox-fullscreen-experience-guide/blob/main/README.md)**
+
+請在下載前確認您的作業系統版本。
 
 **[➡️ 前往發行頁面下載最新版本](https://github.com/8bit2qubit/XboxFullscreenExperienceTool/releases/latest)**
 

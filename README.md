@@ -1,19 +1,19 @@
 # Xbox Fullscreen Experience Tool
 
-> 🌐 [中文說明 (繁體)](README.zh-TW.md)
+> 🌐 **English** | [繁體中文](README.zh-TW.md)
 
 <p align="center">
-<img src="app.ico" alt="Xbox Fullscreen Experience Tool Icon" style="height: 150px; object-fit: contain; display: block; margin: 0 auto;">
+<img src="app.ico" alt="Xbox Fullscreen Experience Tool Icon" style="width: 150px; object-fit: contain; display: block; margin: 0 auto;">
 </p>
 
 <p align="center">
-<img src="demo.png" alt="Xbox Fullscreen Experience Tool Demo" style="height: 320px; object-fit: contain; display: block; margin: 0 auto;">
+<img src="demo.png" alt="Xbox Fullscreen Experience Tool Demo" style="width: 374px; object-fit: contain; display: block; margin: 0 auto;">
 </p>
 
 <p align="center">
 <a href="https://github.com/8bit2qubit/XboxFullscreenExperienceTool/releases/latest"><img src="https://img.shields.io/github/v/release/8bit2qubit/XboxFullscreenExperienceTool?style=flat-square&color=blue" alt="Latest Release"></a>
 <a href="https://github.com/8bit2qubit/XboxFullscreenExperienceTool/releases"><img src="https://img.shields.io/github/downloads/8bit2qubit/XboxFullscreenExperienceTool/total" alt="Total Downloads"></a>
-<a href="#"><img src="https://img.shields.io/badge/tech-C%23%20%26%20.NET%208-blueviolet.svg?style=flat-square" alt="技術"></a>
+<a href="#"><img src="https://img.shields.io/badge/tech-C%23%20%26%20.NET%208-blueviolet.svg?style=flat-square" alt="Tech"></a>
 <a href="https://github.com/8bit2qubit/XboxFullscreenExperienceTool/blob/main/LICENSE"><img src="https://img.shields.io/github/license/8bit2qubit/XboxFullscreenExperienceTool" alt="License"></a>
 </p>
 
@@ -36,6 +36,12 @@ By using this tool, you acknowledge and agree to the following:
 
 This tool is **only compatible with Windows 11 Insider Dev Channel builds `26220.6690` or later**.
 If your system does not meet this requirement, the tool will display an error and exit.
+
+For a detailed walkthrough on joining the Windows Insider Program and upgrading to the correct build, refer to the following guide:
+* **[English Guide](https://github.com/8bit2qubit/xbox-fullscreen-experience-guide/blob/main/README.md)**
+* **[Traditional Chinese Guide (繁體中文指南)](https://github.com/8bit2qubit/xbox-fullscreen-experience-guide/blob/main/README.zh-TW.md)**
+* **[Simplified Chinese Guide (简体中文指南)](https://github.com/8bit2qubit/xbox-fullscreen-experience-guide/blob/main/README.zh-CN.md)**
+
 Please verify your Windows build version before downloading.
 
 **[➡️ Download the Latest Release](https://github.com/8bit2qubit/XboxFullscreenExperienceTool/releases/latest)**
