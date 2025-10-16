@@ -108,10 +108,10 @@ namespace XboxFullscreenExperienceTool
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Font = new System.Drawing.Font("Microsoft JhengHei UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblStatus.Location = new System.Drawing.Point(12, 9);
+            this.lblStatus.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblStatus.Location = new System.Drawing.Point(12, 8);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(124, 24);
+            this.lblStatus.Size = new System.Drawing.Size(105, 20);
             this.lblStatus.TabIndex = 7;
             this.lblStatus.Text = "狀態：偵測中...";
             // 
@@ -138,7 +138,8 @@ namespace XboxFullscreenExperienceTool
             this.Controls.Add(this.grpActions);
             this.MinimumSize = new System.Drawing.Size(614, 428);
             this.Name = "MainForm";
-            this.Text = "Xbox 全螢幕體驗啟用工具";
+            this.ShowIcon = false;
+            this.Text = "Xbox 全螢幕體驗工具";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.grpActions.ResumeLayout(false);
             this.grpOutput.ResumeLayout(false);

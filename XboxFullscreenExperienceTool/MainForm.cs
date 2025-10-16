@@ -222,33 +222,36 @@ namespace XboxFullscreenExperienceTool
                 bool isCoreEnabled = allFeaturesEnabled && isRegistrySet;
 
                 // isFullyConfigured: 是否達到了完美的啟用狀態。
-                // 必須滿足核心啟用，且 (如果需要排程工作，則該工作必須存在)。
-                bool isFullyConfigured = isCoreEnabled && (!isTaskRequired || isTaskPresent);
+                // 真正的完全設定是「核心功能」已啟用，且最終結果「螢幕尺寸」已符合預期 (isTaskRequired = false)。
+                bool isFullyConfigured = isCoreEnabled && !isTaskRequired;
 
                 Log(string.Format(Resources.Strings.LogStatusCheck, allFeaturesEnabled, registryStatusString, isTaskRequired, isTaskPresent));
 
                 // 根據最終狀態更新 UI
-                if (isFullyConfigured && isCoreEnabled)
+                if (isFullyConfigured)
                 {
-                    // 狀態一：完全啟用。所有設定都正確。
+                    // 狀態一：完全啟用。核心設定正確，且螢幕尺寸已被成功覆寫。
                     lblStatus.Text = Resources.Strings.StatusEnabled;
                     lblStatus.ForeColor = Color.LimeGreen;
                     btnEnable.Text = Resources.Strings.btnEnable_Text; // 總是設定文字
                     btnEnable.Enabled = false;
                     btnDisable.Enabled = true;
                 }
-                else if (isCoreEnabled && isTaskRequired && !isTaskPresent)
+                else if (isCoreEnabled && isTaskRequired)
                 {
-                    // 狀態二：需要修正。核心功能已啟用，但缺少必要的硬體修正 (排程工作)。
+                    // 狀態二：需要修正。核心功能已啟用，但缺少必要的硬體修正 (排程工作) (螢幕尺寸依然過大)。
+                    // 這精準地捕捉了所有問題情況：
+                    //   a) 工作排程從未建立。
+                    //   b) 工作排程已存在但無效或未生效 (例如，尚未重啟)。
                     lblStatus.Text = Resources.Strings.StatusNeedsFix;
                     lblStatus.ForeColor = Color.Orange;
                     btnEnable.Text = Resources.Strings.btnEnable_Text_Fix; // 改變按鈕文字以提示使用者
                     btnEnable.Enabled = true; // 允許使用者點選「修正」
                     btnDisable.Enabled = false; // 不允許使用者點選「停用」
                 }
-                else
+                else // !isCoreEnabled
                 {
-                    // 狀態三：未啟用。任何核心設定未完成。
+                    // 狀態三：未啟用。核心功能（ViVe 功能/登錄檔）未設定。
                     lblStatus.Text = Resources.Strings.StatusDisabled;
                     lblStatus.ForeColor = Color.Tomato;
                     btnEnable.Text = Resources.Strings.btnEnable_Text; // 重設按鈕文字
@@ -580,7 +583,7 @@ namespace XboxFullscreenExperienceTool
             // Version.ToString(3) 的格式是 "Major.Minor.Build"
             string versionString = Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? Resources.Strings.UnknownVersion;
             // 將標題設定為 "程式名稱 v主版號.次版號.組建編號"
-            // this.Text 的初始值是在設計工具中設定的 "Xbox 全螢幕體驗啟用工具"
+            // this.Text 的初始值是在設計工具中設定的 "Xbox 全螢幕體驗工具"
             this.Text = $"{Resources.Strings.MainFormTitle} v{versionString}";
 
             grpActions.Text = Resources.Strings.grpActions_Text;

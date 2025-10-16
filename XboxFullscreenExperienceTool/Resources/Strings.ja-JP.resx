@@ -160,7 +160,7 @@
     <value>状態：無効</value>
   </data>
   <data name="StatusNeedsFix" xml:space="preserve">
-    <value>状態：修正が必要 (画面サイズタスクが作成されていません)</value>
+    <value>状態：修正が必要 (画面サイズタスクが正しく作成されていません)</value>
   </data>
   <data name="StatusUnknownError" xml:space="preserve">
     <value>状態：不明 (エラー)</value>

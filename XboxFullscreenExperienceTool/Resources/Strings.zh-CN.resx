@@ -160,7 +160,7 @@
     <value>状态：未启用</value>
   </data>
   <data name="StatusNeedsFix" xml:space="preserve">
-    <value>状态：需要修复 (未创建屏幕尺寸任务)</value>
+    <value>状态：需要修复 (未创建正确的屏幕尺寸任务)</value>
   </data>
   <data name="StatusUnknownError" xml:space="preserve">
     <value>状态：未知 (错误)</value>

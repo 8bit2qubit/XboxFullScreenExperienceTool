@@ -160,7 +160,7 @@
     <value>상태: 비활성화됨</value>
   </data>
   <data name="StatusNeedsFix" xml:space="preserve">
-    <value>상태: 수정 필요 (화면 크기 작업이 생성되지 않음)</value>
+    <value>상태: 수정 필요 (화면 크기 작업이 올바르게 설정되지 않음)</value>
   </data>
   <data name="StatusUnknownError" xml:space="preserve">
     <value>상태: 알 수 없음 (오류)</value>

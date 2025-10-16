@@ -615,7 +615,7 @@ namespace XboxFullscreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Status: Needs fix (Screen size task not created) 的當地語系化字串。
+        ///   查詢類似 Status: Needs fix (Screen size task not set up correctly) 的當地語系化字串。
         /// </summary>
         internal static string StatusNeedsFix {
             get {

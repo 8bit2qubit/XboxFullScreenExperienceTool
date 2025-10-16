@@ -160,7 +160,7 @@
     <value>Status: Disabled</value>
   </data>
   <data name="StatusNeedsFix" xml:space="preserve">
-    <value>Status: Needs fix (Screen size task not created)</value>
+    <value>Status: Needs fix (Screen size task not set up correctly)</value>
   </data>
   <data name="StatusUnknownError" xml:space="preserve">
     <value>Status: Unknown (Error)</value>
