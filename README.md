@@ -89,6 +89,17 @@ If you find this tool helpful, your support would be a great motivation for me t
 
 -----
 
+## 🙏 Acknowledgements
+
+This project was made possible by these incredible open-source tools:
+
+* **[ViVeTool](https://github.com/thebookisclosed/ViVe)** by **@thebookisclosed**
+* **[physpanel](https://github.com/riverar/physpanel)** by **@riverar**
+
+A huge thank you for their contributions to the community.
+
+-----
+
 ## 🛠️ Local Development
 
 Follow these steps to run this project on your own machine.
