@@ -37,6 +37,17 @@ By using this tool, you acknowledge and agree to the following:
 This tool is **only compatible with Windows 11 Insider Dev Channel builds `26220.6690` or later**.
 If your system does not meet this requirement, the tool will display an error and exit.
 
+> ### **Why is the Dev Channel Required? (Please Read)**
+>
+> This is a common question. While the Xbox full screen feature is present in other builds (like Release 25H2, `26200.xxxx`), the decision to support the **Dev Channel** is strictly for quality and stability.
+>
+> * **Known Bugs:** Non-Dev builds suffer from bugs that create a poor user experience. This includes:
+>     * Instability with the **Task View**.
+>     * Issues when **closing applications** (e.g., with the 'X' button).
+>     * An exceptionally poor experience in `26200` builds prior to the `.6899` update.
+>
+> The Dev Channel offers a far more stable and mature implementation. Support for other channels will be considered if these issues are resolved in future public builds.
+
 For a detailed walkthrough on joining the Windows Insider Program and upgrading to the correct build, refer to the following guide:
 * **[English Guide](https://github.com/8bit2qubit/xbox-fullscreen-experience-guide/blob/main/README.md)**
 * **[Traditional Chinese Guide (繁體中文指南)](https://github.com/8bit2qubit/xbox-fullscreen-experience-guide/blob/main/README.zh-TW.md)**

@@ -35,6 +35,17 @@
 
 本工具**僅適用於 Windows 11 開發人員預覽版 (Dev Channel) 組建 `26220.6690` 或更新版本**。在不符要求的系統上，工具將提示錯誤並無法執行。
 
+> ### **為什麼只支援 Dev Channel？ (請務必閱讀)**
+>
+> 這是一個常見問題。雖然 Xbox 全螢幕體驗功能也存在於其他版本中 (例如 25H2 正式版 `26200.xxxx`)，但決定僅支援 **Dev Channel** 是完全基於**品質與穩定性**的考量。
+>
+> * **已知的問題 (Bug):** 非 Dev Channel 的版本存在著一些嚴重影響使用者體驗的錯誤，包括：
+>     * **「工作檢視」介面** 的不穩定。
+>     * **關閉應用程式時 (例如操作 'X' 按鈕)** 發生問題。
+>     * 在 `26200.6899` 更新之前的版本，體驗尤其糟糕。
+>
+> Dev Channel 提供了遠比其他版本更穩定、更成熟的功能實作。未來如果這些問題在公開版本中得到修復，將會考慮支援其他頻道。
+
 如果您的系統不符合需求，可參考此份完整的升級教學指南，其中引導您加入「Windows 測試人員計畫」並升級至正確的組建版本：
 * **[繁體中文指南 (Traditional Chinese Guide)](https://github.com/8bit2qubit/xbox-fullscreen-experience-guide/blob/main/README.zh-TW.md)**
 * **[简体中文指南 (Simplified Chinese Guide)](https://github.com/8bit2qubit/xbox-fullscreen-experience-guide/blob/main/README.zh-CN.md)**
