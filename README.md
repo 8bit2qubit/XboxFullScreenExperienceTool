@@ -80,11 +80,29 @@ If you find this tool helpful, your support would be a great motivation for me t
 
 ## 🚀 Quick Start
 
-1. Download the latest `.msi` package from the [**Releases Page**](https://github.com/8bit2qubit/XboxFullscreenExperienceTool/releases/latest).
-2. Run the installer (administrator privileges required).
-3. Launch the tool from the desktop shortcut.
-4. Click **“Enable Xbox Fullscreen Experience”** and **restart your PC**.
-5. To revert changes, run the tool again, click **“Disable & Restore”**, and restart.
+This tool prepares your system for the new mode. Final activation is done in Windows Settings after following these steps.
+
+### 1. Prepare Your System
+1.  Download the latest `.msi` package from the [**Releases Page**](https://github.com/8bit2qubit/XboxFullscreenExperienceTool/releases/latest).
+2.  Run the installer (administrator privileges required).
+3.  Launch the tool from the desktop shortcut and click **“Enable Xbox Fullscreen Experience”**.
+4.  **Restart your PC** for the changes to take effect.
+
+### 2. Update Core Apps
+1.  After restarting, open the **Microsoft Store**.
+2.  Go to the **Downloads** section (or **Library** in older versions of the Store).
+3.  Click **"Check for updates"** to refresh all apps. Make sure **Xbox** and **Xbox Game Bar** are fully updated.
+    > 🔄 **Tip:** You may need to run "Check for updates" **twice** to ensure everything is fully installed.
+
+### 3. Activate Full Screen Experience
+1.  Navigate to **Start → Settings → Gaming → Full screen experience**.
+2.  Set "Choose Home app" to **Xbox**.
+    - If this option is missing, return to the previous step and ensure the apps are fully updated.
+3.  Enable **"Enter full screen experience on startup"**.
+
+### **How to Revert**
+1.  Run the tool again and click **“Disable & Restore”**.
+2.  **Restart your PC** to complete the process.
 
 -----
 
