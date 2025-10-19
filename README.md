@@ -32,6 +32,20 @@ By using this tool, you acknowledge and agree to the following:
 
 -----
 
+## 💡 Future Plans & Technical Challenges
+
+### The Challenge: Perfecting the Experience on Non-Handhelds
+
+The Xbox Full Screen feature works best on small, handheld-sized screens. To enable it on other hardware, a screen size override is necessary. This is crucial for two main user groups: **desktop PCs**, which typically report undefined (0x0) physical dimensions, and **laptops**, whose screens are almost always larger than the 9.5-inch handheld threshold.
+
+The current method uses a Task Scheduler to apply this override at boot, simulating a 7-inch screen, but this creates a race condition. On a system with a fast SSD, if you log in quickly, especially using Windows Hello, the Windows Shell will initialize before the override is applied. As a result, the Shell starts with the default screen settings and fails to launch the special Xbox interface for that session.
+
+### The Robust Solution vs. The Technical Barrier
+
+The definitive solution is a kernel driver, [`PhysPanelDrv`](https://github.com/8bit2qubit/PhysPanelDrv), which applies the screen size override at the earliest stage of system boot. This completely eliminates the race condition for desktops and laptops. For this driver to be trusted by Windows, it must pass Microsoft's driver attestation process. This requires a high-trust EV Code Signing Certificate just to submit, presenting a significant technical hurdle for an independent developer. **This means `PhysPanelDrv` currently exists as a proof-of-concept rather than a publicly distributable solution.**
+
+-----
+
 ## ⚙️ System Requirements
 
 This tool is **only compatible with Windows 11 Insider Dev Channel builds `26220.6690` or later**.
