@@ -37,6 +37,16 @@ By using this tool, you acknowledge and agree to the following:
 This tool is **only compatible with Windows 11 Insider Dev Channel builds `26220.6690` or later**.
 If your system does not meet this requirement, the tool will display an error and exit.
 
+> ### **How to Read Build Numbers (Important!)**
+>
+> When checking the version, **please look at the main build number (before the dot)**. The number *after* the dot is just a minor update revision.
+>
+> * **INCOMPATIBLE:** `26100.xxxx` (Release Build 24H2)
+> * **INCOMPATIBLE:** `26200.xxxx` (Release Build 25H2)
+> * **COMPATIBLE:** `26220.6690` or later (Dev Build 25H2)
+>
+> **Example:** A build like `26200.6899` is **NOT** compatible because its main build **26200** is lower (older) than the required **26220**.
+
 > ### **Why is the Dev Channel Required? (Please Read)**
 >
 > This is a common question. While the Xbox full screen feature is present in other builds (like Release 25H2, `26200.xxxx`), the decision to support the **Dev Channel** is strictly for quality and stability.
