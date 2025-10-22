@@ -1,3 +1,6 @@
 [submodule "Modules/ViVe"]
 	path = Modules/ViVe
 	url = https://github.com/thebookisclosed/ViVe.git
+[submodule "Modules/PhysPanelDrv"]
+	path = Modules/PhysPanelDrv
+	url = https://github.com/8bit2qubit/PhysPanelDrv.git
