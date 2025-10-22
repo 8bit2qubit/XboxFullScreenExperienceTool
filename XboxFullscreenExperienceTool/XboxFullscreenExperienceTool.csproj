@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\lib\ViVe\ViVe\ViVe.csproj" />
+    <ProjectReference Include="..\Modules\ViVe\ViVe\ViVe.csproj" />
     <ProjectReference Include="..\PhysPanelLib\PhysPanelLib.csproj" />
   </ItemGroup>
 
