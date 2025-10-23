@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Version>0.0.4</Version>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,7 +29,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy &quot;$(TargetDir)*.*&quot; &quot;$(SolutionDir)XboxFullscreenExperienceTool\bin\$(ConfigurationName)\net8.0-windows\&quot; /Y /I /S" />
+    <Exec Command="xcopy &quot;$(TargetDir)*.*&quot; &quot;$(SolutionDir)XboxFullscreenExperienceTool\bin\$(Platform)\$(ConfigurationName)\net8.0-windows\&quot; /Y /I /S" />
   </Target>
 
 </Project>
