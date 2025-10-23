@@ -12,6 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.ServiceProcess.ServiceController" Version="9.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Modules\ViVe\ViVe\ViVe.csproj" />
     <ProjectReference Include="..\PhysPanelLib\PhysPanelLib.csproj" />
   </ItemGroup>

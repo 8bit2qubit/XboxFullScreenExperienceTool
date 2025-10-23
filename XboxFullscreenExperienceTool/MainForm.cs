@@ -22,6 +22,7 @@ using PhysPanelLib;
 using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
+using System.Text;
 using XboxFullscreenExperienceTool.Helpers;
 
 namespace XboxFullscreenExperienceTool
@@ -70,6 +71,11 @@ namespace XboxFullscreenExperienceTool
         /// 用於備份原始登錄檔值的檔案路徑。
         /// </summary>
         private readonly string BackupFilePath = Path.Combine(Application.StartupPath, "DeviceForm.bak");
+
+        /// <summary>
+        // 日誌檔案路徑。
+        private readonly string _logFilePath = Path.Combine(Application.StartupPath, "XboxFullscreenExperienceTool.log");
+        /// </summary>
         #endregion
 
         //======================================================================
@@ -153,25 +159,23 @@ namespace XboxFullscreenExperienceTool
         }
 
         /// <summary>
-        /// 檢查所有相關設定 (ViVe 功能、登錄檔、螢幕尺寸、排程工作) 以確定功能的目前啟用狀態，並相應地更新 UI。
+        /// 檢查所有相關設定 (ViVe 功能、登錄檔、螢幕尺寸、排程工作/驅動程式) 以確定功能的目前啟用狀態，並相應地更新 UI。
         /// 綜合性的檢查，處理多種中間狀態（例如，需要修正）。
         /// </summary>
         private void CheckCurrentStatus()
         {
             try
             {
-                // 步驟 1: 基礎核心檢查 (Core Prerequisite Checks)
-                // 1a. 檢查 ViVe 功能：確保所有必要的功能 ID 都已啟用。
-                // 使用 LINQ 的 .All() 方法來驗證陣列中的每一個 ID。
+                // 步驟 1: 基礎核心檢查 (ViVe 功能 & 登錄檔)
                 bool allFeaturesEnabled = FEATURE_IDS.All(id =>
                     FeatureManager.QueryFeatureConfiguration(id, RTL_FEATURE_CONFIGURATION_TYPE.Runtime) is RTL_FEATURE_CONFIGURATION config &&
                     config.EnabledState == RTL_FEATURE_ENABLED_STATE.Enabled);
 
-                // 1b. 檢查登錄檔：確認 DeviceForm 值是否已設定為 0x2E (46)。
+                // 檢查登錄檔：確認 DeviceForm 值是否已設定為 0x2E (46)
                 object? regValue = Registry.GetValue($"HKEY_LOCAL_MACHINE\\{REG_PATH}", REG_VALUE, null);
                 bool isRegistrySet = regValue is int intValue && intValue == 0x2E;
 
-                // 為了提供更詳細的日誌，建立一個描述登錄檔狀態的字串。
+                // 描述登錄檔狀態的邏輯
                 string registryStatusString;
                 if (regValue == null)
                 {
@@ -186,12 +190,14 @@ namespace XboxFullscreenExperienceTool
                     registryStatusString = string.Format(Resources.Strings.LogRegStatusFalseWrongValue, regValue);
                 }
 
-                // 步驟 2: 硬體相依性檢查 (Hardware-Dependent Checks)
-                // 2a. 判斷是否需要排程工作來覆寫螢幕尺寸。
+                bool isCoreEnabled = allFeaturesEnabled && isRegistrySet;
+
+                // 步驟 2: 硬體相依性檢查 (螢幕尺寸需求)
+                // 判斷是否仍需要覆寫螢幕尺寸 (0x0 或 > 9.5")
                 // 在以下兩種情況下需要：
                 //   a) 系統無法偵測到實體尺寸 (回傳 0x0mm)。
-                //   b) 偵測到的尺寸過大 (例如，平板、筆電)，超出了此功能預期的掌機尺寸範圍。
-                bool isTaskRequired = false;
+                //   b) 偵測到的尺寸過大 (例如，桌機、筆電)，超出了此功能預期的掌機尺寸範圍。
+                bool isScreenOverrideRequired = false;
                 var (success, size) = PanelManager.GetDisplaySize();
                 if (success)
                 {
@@ -199,14 +205,16 @@ namespace XboxFullscreenExperienceTool
                     bool isUndefined = size.WidthMm == 0 && size.HeightMm == 0;
                     if (isUndefined)
                     {
-                        isTaskRequired = true;
+                        isScreenOverrideRequired = true;
                     }
                     // 情況 b: 尺寸過大
                     else
                     {
-                        // 假設 INCHES_TO_MM 和 MAX_DIAGONAL_INCHES 是已定義的常數
+                        // 使用畢氏定理 (a^2 + b^2 = c^2) 計算螢幕對角線的長度 (單位：毫米 mm)
                         double diagonalMm = Math.Sqrt((size.WidthMm * size.WidthMm) + (size.HeightMm * size.HeightMm));
-                        isTaskRequired = (diagonalMm / INCHES_TO_MM) > MAX_DIAGONAL_INCHES;
+
+                        // 將毫米 (mm) 轉換為英寸 (inches)，並檢查是否超過最大限制 (9.5")
+                        isScreenOverrideRequired = (diagonalMm / INCHES_TO_MM) > MAX_DIAGONAL_INCHES;
                     }
                 }
                 else
@@ -214,50 +222,84 @@ namespace XboxFullscreenExperienceTool
                     LogError(Resources.Strings.LogErrorReadingScreenSize);
                 }
 
-                // 2b. 檢查排程工作是否實際存在。
-                bool isTaskPresent = TaskSchedulerManager.TaskExists();
+                // 步驟 3: 檢查覆寫方法是否存在 (CS Task & Drv Service)
+                bool isPhysPanelCSActive = TaskSchedulerManager.TaskExists();
+                bool isPhysPanelDrvActive = DriverManager.IsDriverServiceRunning();
+                bool isScreenOverridePresent = isPhysPanelCSActive || isPhysPanelDrvActive;
 
-                // 步驟 3: 綜合判斷與 UI 更新 (Final Logic & UI Update)
-                // isCoreEnabled: 核心的功能開關是否都已打開 (ViVe 功能 + 登錄檔)。
-                bool isCoreEnabled = allFeaturesEnabled && isRegistrySet;
-
-                // isFullyConfigured: 是否達到了完美的啟用狀態。
-                // 真正的完全設定是「核心功能」已啟用，且最終結果「螢幕尺寸」已符合預期 (isTaskRequired = false)。
-                bool isFullyConfigured = isCoreEnabled && !isTaskRequired;
-
-                Log(string.Format(Resources.Strings.LogStatusCheck, allFeaturesEnabled, registryStatusString, isTaskRequired, isTaskPresent));
-
-                // 根據最終狀態更新 UI
-                if (isFullyConfigured)
+                // 步驟 4: 檢查驅動程式模式的先決條件 (Test Signing)
+                bool isTestSigningOn = DriverManager.IsTestSigningEnabled();
+                radPhysPanelDrv.Enabled = isTestSigningOn;
+                if (!isTestSigningOn)
                 {
-                    // 狀態一：完全啟用。核心設定正確，且螢幕尺寸已被成功覆寫。
-                    lblStatus.Text = Resources.Strings.StatusEnabled;
-                    lblStatus.ForeColor = Color.LimeGreen;
-                    btnEnable.Text = Resources.Strings.btnEnable_Text; // 總是設定文字
-                    btnEnable.Enabled = false;
-                    btnDisable.Enabled = true;
+                    Log("系統未啟用測試簽章模式，PhysPanelDrv 已停用。");
                 }
-                else if (isCoreEnabled && isTaskRequired)
+
+                // 步驟 5: 綜合判斷與 UI 更新
+                string statusText;
+                Color statusColor;
+
+                // 核心邏輯判斷：
+                // 1. isCoreEnabled: ViVe 功能 + 登錄檔是否設定。
+                // 2. isScreenOverrideRequired: 呼叫 GetDisplaySize() 後，螢幕尺寸是否仍不符需求。(如果覆寫成功，此值應為 False)
+                if (isCoreEnabled)
                 {
-                    // 狀態二：需要修正。核心功能已啟用，但缺少必要的硬體修正 (排程工作) (螢幕尺寸依然過大)。
-                    // 這精準地捕捉了所有問題情況：
-                    //   a) 工作排程從未建立。
-                    //   b) 工作排程已存在但無效或未生效 (例如，尚未重啟)。
-                    lblStatus.Text = Resources.Strings.StatusNeedsFix;
-                    lblStatus.ForeColor = Color.Orange;
-                    btnEnable.Text = Resources.Strings.btnEnable_Text_Fix; // 改變按鈕文字以提示使用者
-                    btnEnable.Enabled = true; // 允許使用者點選「修正」
-                    btnDisable.Enabled = false; // 不允許使用者點選「停用」
+                    if (isScreenOverrideRequired)
+                    {
+                        // 狀態 2: 需要修正
+                        // 核心已啟用，但螢幕尺寸仍不符。
+                        // 這包含兩種情況：
+                        //   a) 從未安裝覆寫 (isScreenOverridePresent = False)
+                        //   b) 已安裝覆寫，但未生效 (損毀或安裝不正確) (isScreenOverridePresent = True)
+                        statusText = Resources.Strings.StatusNeedsFix;
+                        statusColor = Color.Orange;
+                        btnEnable.Text = Resources.Strings.btnEnable_Text_Fix;
+                        btnEnable.Enabled = true;
+                        btnDisable.Enabled = false;
+                        grpPhysPanel.Enabled = true; // 允許選擇修正方式
+
+                        // 顯示目前安裝但"無效"的選項
+                        radPhysPanelDrv.Checked = isPhysPanelDrvActive;
+                        radPhysPanelCS.Checked = isPhysPanelCSActive;
+                        if (!isScreenOverridePresent) radPhysPanelCS.Checked = true; // 預設 PhysPanelCS
+                    }
+                    else
+                    {
+                        // 狀態 1: 已啟用
+                        // 核心已啟用，且螢幕尺寸已符合需求。(無論是天生符合，或是覆寫已成功生效)
+                        statusText = isPhysPanelDrvActive ? "狀態：已啟用 (驅動程式模式)" : (isPhysPanelCSActive ? "狀態：已啟用 (排程模式)" : Resources.Strings.StatusEnabled);
+                        statusColor = Color.LimeGreen;
+
+                        radPhysPanelDrv.Checked = isPhysPanelDrvActive;
+                        radPhysPanelCS.Checked = isPhysPanelCSActive;
+                        if (!isScreenOverridePresent) radPhysPanelCS.Checked = true; // 螢幕尺寸正常，預設CS
+
+                        grpPhysPanel.Enabled = false; // 已啟用時鎖定選項
+                        btnEnable.Enabled = false;
+                        btnDisable.Enabled = true;
+                    }
                 }
                 else // !isCoreEnabled
                 {
-                    // 狀態三：未啟用。核心功能（ViVe 功能/登錄檔）未設定。
-                    lblStatus.Text = Resources.Strings.StatusDisabled;
-                    lblStatus.ForeColor = Color.Tomato;
-                    btnEnable.Text = Resources.Strings.btnEnable_Text; // 重設按鈕文字
+                    // 狀態 3: 未啟用
+                    // 核心功能 (ViVe 功能 & 登錄檔) 未設定。
+                    statusText = Resources.Strings.StatusDisabled;
+                    statusColor = Color.Tomato;
+                    btnEnable.Text = Resources.Strings.btnEnable_Text;
                     btnEnable.Enabled = true;
                     btnDisable.Enabled = false;
+                    grpPhysPanel.Enabled = true; // 允許選擇啟用方式
+
+                    // 檢查是否殘留設定
+                    radPhysPanelDrv.Checked = isPhysPanelDrvActive;
+                    radPhysPanelCS.Checked = isPhysPanelCSActive;
+                    if (!isScreenOverridePresent) radPhysPanelCS.Checked = true; // 預設 PhysPanelCS
                 }
+
+                lblStatus.Text = statusText;
+                lblStatus.ForeColor = statusColor;
+
+                Log($"狀態檢查：核心啟用={isCoreEnabled} (ViVe 功能={allFeaturesEnabled}, 登錄檔={registryStatusString}), 尺寸不符={isScreenOverrideRequired}, 覆寫存在={isScreenOverridePresent} (CS={isPhysPanelCSActive}, Drv={isPhysPanelDrvActive}), 測試簽章={isTestSigningOn}");
             }
             catch (Exception ex)
             {
@@ -274,96 +316,50 @@ namespace XboxFullscreenExperienceTool
         /// <summary>
         /// 處理「啟用」按鈕的點選事件，執行所有啟用功能的必要步驟。
         /// </summary>
-        private void btnEnable_Click(object sender, EventArgs e)
+        private async void btnEnable_Click(object sender, EventArgs e)
         {
+            // 在執行新操作前，先將目前的日誌封存備份
+            ArchiveLogFile();
+
             this.Cursor = Cursors.WaitCursor;
             try
             {
                 Log(Resources.Strings.LogBeginEnable);
 
-                // 步驟 1: 處理螢幕實體尺寸。如果尺寸未定義 (0x0) 或大於 9.5 吋，則建立開機工作來設定它。
-                Log(Resources.Strings.LogReadingScreenSize);
-                var (success, size) = PanelManager.GetDisplaySize();
-                if (success)
-                {
-                    Log(string.Format(Resources.Strings.LogScreenSizeSuccess, size.WidthMm, size.HeightMm));
-
-                    bool isUndefined = size.WidthMm == 0 && size.HeightMm == 0;
-                    bool isTooLarge = false;
-                    double diagonalInches = 0;
-
-                    if (!isUndefined)
-                    {
-                        // 使用畢氏定理計算對角線長度 (mm)
-                        double diagonalMm = Math.Sqrt((size.WidthMm * size.WidthMm) + (size.HeightMm * size.HeightMm));
-                        // 將毫米轉換為英吋
-                        diagonalInches = diagonalMm / INCHES_TO_MM;
-                        // 判斷是否大於 9.5 吋門檻
-                        isTooLarge = diagonalInches > MAX_DIAGONAL_INCHES;
-                    }
-
-                    // 如果尺寸未定義，或尺寸大於 9.5 吋，則建立工作排程
-                    if (isUndefined || isTooLarge)
-                    {
-                        if (isUndefined)
-                        {
-                            Log(Resources.Strings.LogScreenSizeUndefined);
-                        }
-                        else
-                        {
-                            Log(string.Format(Resources.Strings.LogScreenSizeTooLarge, diagonalInches, MAX_DIAGONAL_INCHES));
-                        }
-                        TaskSchedulerManager.CreateSetPanelDimensionsTask();
-                        Log(Resources.Strings.LogTaskCreated);
-                    }
-                    else
-                    {
-                        // 說明尺寸在範圍內，無需操作
-                        Log(string.Format(Resources.Strings.LogTaskNotNeeded, diagonalInches, MAX_DIAGONAL_INCHES));
-                    }
-                }
-                else
-                {
-                    LogError(Resources.Strings.LogErrorReadingScreenSizeEnable);
-                }
-
-                // 步驟 2: 備份現有的登錄檔值，然後設定新的值。
+                // --- 通用步驟：設定核心功能 ---
+                // 1. 備份並設定登錄檔
                 Log(Resources.Strings.LogBackupAndSetRegistry);
-                // 只在備份檔案不存在時才執行備份，確保只備份一次最原始的狀態
-                if (!File.Exists(BackupFilePath))
-                {
-                    object? currentValue = Registry.GetValue($"HKEY_LOCAL_MACHINE\\{REG_PATH}", REG_VALUE, null);
-                    if (currentValue != null)
-                    {
-                        // 如果值存在，將其內容寫入備份檔
-                        File.WriteAllText(BackupFilePath, currentValue.ToString() ?? "");
-                        Log(string.Format(Resources.Strings.LogRegistryBackupSuccess, currentValue, BackupFilePath));
-                    }
-                    else
-                    {
-                        // 如果值不存在，建立一個特殊的標記檔案
-                        // 這將告訴還原程序，原始狀態是「不存在」，因此需要刪除此鍵值。
-                        File.WriteAllText(BackupFilePath, "DELETE_ON_RESTORE");
-                        Log(Resources.Strings.LogRegistryBackupMarkedForDelete);
-                    }
-                }
-                Registry.SetValue($"HKEY_LOCAL_MACHINE\\{REG_PATH}", REG_VALUE, 0x2E, RegistryValueKind.DWord); // 0x2E = 46
-                Log(Resources.Strings.LogRegistrySetSuccess);
+                BackupAndSetRegistry();
 
-                // 步驟 3: 使用 ViVe Manager 啟用所需的功能 ID。
+                // 2. 啟用 ViVe 功能
                 Log(string.Format(Resources.Strings.LogEnablingFeatures, string.Join(", ", FEATURE_IDS)));
-                var updates = Array.ConvertAll(FEATURE_IDS, id => new RTL_FEATURE_CONFIGURATION_UPDATE
-                {
-                    FeatureId = id,
-                    EnabledState = RTL_FEATURE_ENABLED_STATE.Enabled,
-                    Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState,
-                    Priority = RTL_FEATURE_CONFIGURATION_PRIORITY.User
-                });
-                FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
-                FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Boot);
-                Log(Resources.Strings.LogFeaturesEnabledSuccess);
+                EnableViveFeatures();
 
-                // 流程結束
+                // --- 條件步驟：根據選擇的模式設定螢幕尺寸覆寫 ---
+                if (radPhysPanelDrv.Checked)
+                {
+                    Log("選擇驅動程式模式 (PhysPanelDrv)...");
+                    // 執行前先移除 CS 工作，避免衝突
+                    if (TaskSchedulerManager.TaskExists())
+                    {
+                        Log("偵測到舊的工作排程，正在移除...");
+                        TaskSchedulerManager.DeleteSetPanelDimensionsTask();
+                    }
+                    await Task.Run(() => DriverManager.InstallDriver(msg => Log(msg)));
+                }
+                else // radPhysPanelCS.Checked
+                {
+                    Log("選擇工作排程模式 (PhysPanelCS)...");
+                    // 執行前先移除 Drv 服務，避免衝突
+                    if (DriverManager.IsDriverServiceRunning())
+                    {
+                        Log("偵測到驅動程式服務，正在移除...");
+                        await Task.Run(() => DriverManager.UninstallDriver(msg => Log(msg)));
+                    }
+                    HandleTaskSchedulerCreation();
+                }
+
+                // --- 流程結束 ---
                 btnEnable.Enabled = false;
                 btnDisable.Enabled = false;
                 Log(Resources.Strings.LogEnableComplete, true);
@@ -371,14 +367,14 @@ namespace XboxFullscreenExperienceTool
             }
             catch (Exception ex)
             {
-                HandleException(ex); // 統一的例外處理
+                HandleException(ex);
             }
             finally
             {
-                this.Cursor = Cursors.Default; // 確保游標總是還原
+                this.Cursor = Cursors.Default;
                 if (!_restartPending)
                 {
-                    CheckCurrentStatus(); // 如果不需要重啟，則重新整理狀態
+                    CheckCurrentStatus(); // 如果不需要重新開機，則重新整理狀態
                 }
             }
         }
@@ -386,12 +382,15 @@ namespace XboxFullscreenExperienceTool
         /// <summary>
         /// 處理「停用」按鈕的點選事件。
         /// </summary>
-        private void btnDisable_Click(object sender, EventArgs e)
+        private async void btnDisable_Click(object sender, EventArgs e)
         {
+            // 在執行新操作前，先將目前的日誌封存備份
+            ArchiveLogFile();
+
             this.Cursor = Cursors.WaitCursor;
             try
             {
-                PerformDisableActions(); // 呼叫共用的停用邏輯
+                await PerformDisableActions(); // 呼叫共用的停用邏輯
 
                 btnEnable.Enabled = false;
                 btnDisable.Enabled = false;
@@ -413,14 +412,13 @@ namespace XboxFullscreenExperienceTool
         }
 
         /// <summary>
-        /// 執行停用功能的所有核心步驟，此方法被 UI 和靜默模式共用。
+        /// 執行停用功能的所有核心步驟。
         /// </summary>
-        private void PerformDisableActions()
+        private async Task PerformDisableActions()
         {
             Log(Resources.Strings.LogBeginDisable);
 
-            // 步驟 1: 明確地將 ViVe 功能設定為停用狀態。
-            // 這一步操作是安全的，因為使用者意圖就是停用該功能體驗。
+            // 步驟 1: 停用 ViVe 功能
             Log(string.Format(Resources.Strings.LogDisablingFeatures, string.Join(", ", FEATURE_IDS)));
             var updates = Array.ConvertAll(FEATURE_IDS, id => new RTL_FEATURE_CONFIGURATION_UPDATE
             {
@@ -433,7 +431,114 @@ namespace XboxFullscreenExperienceTool
             FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Boot);
             Log(Resources.Strings.LogFeaturesDisabledSuccess);
 
-            // 步驟 2: 極度安全地還原登錄檔值。
+            // 步驟 2: 還原登錄檔值
+            RestoreRegistry();
+
+            // 步驟 3: 移除所有可能的覆寫方法 (包括 CS 和 Drv)
+            if (TaskSchedulerManager.TaskExists())
+            {
+                Log(Resources.Strings.LogDeletingTask);
+                TaskSchedulerManager.DeleteSetPanelDimensionsTask();
+                Log(Resources.Strings.LogTaskDeleted);
+            }
+
+            if (DriverManager.IsDriverServiceRunning())
+            {
+                Log("正在移除 PhysPanelDrv 驅動程式...");
+                await Task.Run(() => DriverManager.UninstallDriver(msg => Log(msg)));
+            }
+        }
+
+        #region Helper Methods for Enable/Disable
+        /// <summary>
+        /// 備份現有的登錄檔值，然後設定新的值。
+        /// </summary>
+        private void BackupAndSetRegistry()
+        {
+            if (!File.Exists(BackupFilePath))
+            {
+                object? currentValue = Registry.GetValue($"HKEY_LOCAL_MACHINE\\{REG_PATH}", REG_VALUE, null);
+                if (currentValue != null)
+                {
+                    File.WriteAllText(BackupFilePath, currentValue.ToString() ?? "");
+                    Log(string.Format(Resources.Strings.LogRegistryBackupSuccess, currentValue, BackupFilePath));
+                }
+                else
+                {
+                    File.WriteAllText(BackupFilePath, "DELETE_ON_RESTORE");
+                    Log(Resources.Strings.LogRegistryBackupMarkedForDelete);
+                }
+            }
+            Registry.SetValue($"HKEY_LOCAL_MACHINE\\{REG_PATH}", REG_VALUE, 0x2E, RegistryValueKind.DWord); // 0x2E = 46
+            Log(Resources.Strings.LogRegistrySetSuccess);
+        }
+
+        /// <summary>
+        /// 啟用所需的 ViVe 功能。
+        /// </summary>
+        private void EnableViveFeatures()
+        {
+            var updates = Array.ConvertAll(FEATURE_IDS, id => new RTL_FEATURE_CONFIGURATION_UPDATE
+            {
+                FeatureId = id,
+                EnabledState = RTL_FEATURE_ENABLED_STATE.Enabled,
+                Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState,
+                Priority = RTL_FEATURE_CONFIGURATION_PRIORITY.User
+            });
+            FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
+            FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Boot);
+            Log(Resources.Strings.LogFeaturesEnabledSuccess);
+        }
+
+        /// <summary>
+        /// 處理工作排程的建立邏輯。
+        /// </summary>
+        private void HandleTaskSchedulerCreation()
+        {
+            Log(Resources.Strings.LogReadingScreenSize);
+            var (success, size) = PanelManager.GetDisplaySize();
+            if (success)
+            {
+                Log(string.Format(Resources.Strings.LogScreenSizeSuccess, size.WidthMm, size.HeightMm));
+                // 檢查尺寸是否未定義 (即寬度和高度是否同時為 0)
+                bool isUndefined = size.WidthMm == 0 && size.HeightMm == 0;
+                // 計算螢幕對角線英寸
+                // 如果 isUndefined 為 true (尺寸未定義)，則 diagonalInches 為 0
+                // 如果 isUndefined 為 false (尺寸已定義)，則使用畢氏定理計算對角線 (mm)，再除以 INCHES_TO_MM (25.4) 轉換為英寸
+                double diagonalInches = isUndefined ? 0 : Math.Sqrt((size.WidthMm * size.WidthMm) + (size.HeightMm * size.HeightMm)) / INCHES_TO_MM;
+                // 判斷螢幕尺寸是否過大 (9.5")
+                // 必須同時滿足兩個條件才算過大：
+                // 1. 尺寸必須是已定義的 (!isUndefined)
+                // 2. 且 (&&) 計算出來的對角線英寸大於最大允許值 (9.5")
+                bool isTooLarge = !isUndefined && diagonalInches > MAX_DIAGONAL_INCHES;
+
+                // 判斷螢幕尺寸是否「未定義」(isUndefined) 或「過大」(isTooLarge)
+                if (isUndefined || isTooLarge)
+                {
+                    // 如果是 (即尺寸有問題)，則需要建立排程工作來修正：
+                    // 1. 如果 isUndefined 為 true，顯示 "尺寸未定義" (LogScreenSizeUndefined)
+                    // 2. 否則 (表示 isTooLarge 為 true)，顯示 "尺寸過大" (LogScreenSizeTooLarge)，並傳入當前英寸和最大英寸
+                    Log(isUndefined ? Resources.Strings.LogScreenSizeUndefined : string.Format(Resources.Strings.LogScreenSizeTooLarge, diagonalInches, MAX_DIAGONAL_INCHES));
+                    // 呼叫 TaskSchedulerManager 來建立一個 Windows 排程工作，用於設定/修正螢幕尺寸
+                    TaskSchedulerManager.CreateSetPanelDimensionsTask();
+                    Log(Resources.Strings.LogTaskCreated);
+                }
+                else
+                {
+                    Log(string.Format(Resources.Strings.LogTaskNotNeeded, diagonalInches, MAX_DIAGONAL_INCHES));
+                }
+            }
+            else
+            {
+                LogError(Resources.Strings.LogErrorReadingScreenSizeEnable);
+            }
+        }
+
+        /// <summary>
+        /// 從備份還原登錄檔。
+        /// </summary>
+        private void RestoreRegistry()
+        {
             Log(Resources.Strings.LogCheckingRegistryRestore);
             try
             {
@@ -442,26 +547,25 @@ namespace XboxFullscreenExperienceTool
                     Log(Resources.Strings.LogBackupFound);
                     string backupContent = File.ReadAllText(BackupFilePath);
 
-                    using RegistryKey? key = Registry.LocalMachine.OpenSubKey(REG_PATH, true);
-                    if (key != null)
+                    using (RegistryKey? key = Registry.LocalMachine.OpenSubKey(REG_PATH, true))
                     {
-                        if (backupContent == "DELETE_ON_RESTORE")
+                        if (key != null)
                         {
-                            // 如果備份內容是我們的特殊標記，則刪除該值
-                            key.DeleteValue(REG_VALUE, false); // false 表示如果值不存在也不會拋出例外
-                            Log(string.Format(Resources.Strings.LogRegistryValueRemoved, REG_VALUE));
-                        }
-                        else if (int.TryParse(backupContent, out int backupValue))
-                        {
-                            // 如果是數字，則還原該數值
-                            key.SetValue(REG_VALUE, backupValue, RegistryValueKind.DWord);
-                            Log(string.Format(Resources.Strings.LogRegistryValueRestored, backupValue));
-                        }
-                        else
-                        {
-                            // 備份檔內容未知，為安全起見，同樣刪除該值
-                            key.DeleteValue(REG_VALUE, false);
-                            Log(string.Format(Resources.Strings.LogRegistryBackupInvalid, REG_VALUE));
+                            if (backupContent == "DELETE_ON_RESTORE") // 如果備份內容是特殊標記，則刪除該值
+                            {
+                                key.DeleteValue(REG_VALUE, false); // false 表示如果值不存在也不會拋出例外
+                                Log(string.Format(Resources.Strings.LogRegistryValueRemoved, REG_VALUE));
+                            }
+                            else if (int.TryParse(backupContent, out int backupValue)) // 如果是數字，則還原該數值
+                            {
+                                key.SetValue(REG_VALUE, backupValue, RegistryValueKind.DWord);
+                                Log(string.Format(Resources.Strings.LogRegistryValueRestored, backupValue));
+                            }
+                            else // 備份檔內容未知，為安全起見，同樣刪除該值
+                            {
+                                key.DeleteValue(REG_VALUE, false);
+                                Log(string.Format(Resources.Strings.LogRegistryBackupInvalid, REG_VALUE));
+                            }
                         }
                     }
                     File.Delete(BackupFilePath);
@@ -478,46 +582,39 @@ namespace XboxFullscreenExperienceTool
             {
                 LogError(string.Format(Resources.Strings.ErrorRestoringRegistry, ex.Message));
             }
-
-            // 步驟 3: 如果存在，則刪除相關的工作排程。
-            if (TaskSchedulerManager.TaskExists())
-            {
-                Log(Resources.Strings.LogDeletingTask);
-                TaskSchedulerManager.DeleteSetPanelDimensionsTask();
-                Log(Resources.Strings.LogTaskDeleted);
-            }
         }
+        #endregion
 
         //======================================================================
         // UI 流程控制 (UI Flow Control)
         //======================================================================
 
         /// <summary>
-        /// 向使用者顯示需要重新啟動的提示。
+        /// 向使用者顯示必須重新開機的通知。
+        /// 無論使用者點選「確定」還是關閉視窗，都會執行重新開機。
         /// </summary>
         /// <param name="caption">訊息方塊的標題。</param>
         private void PromptForRestart(string caption)
         {
-            var result = MessageBox.Show(
-                Resources.Strings.PromptRestartMessage,
-                caption, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            // 步驟 1: 顯示通知視窗。程式會在這裡暫停，直到視窗被關閉。
+            MessageBox.Show(
+                Resources.Strings.PromptRestartMessage, // 訊息為陳述句，例如：「設定已完成，電腦需要重新開機。」
+                caption,
+                MessageBoxButtons.OK,                   // 只提供「確定」按鈕
+                MessageBoxIcon.Information);
 
-            if (result == DialogResult.Yes)
+            // 步驟 2: 當使用者關閉視窗後 (無論是按 OK 還是 X)，程式繼續執行到這裡。
+            Log(Resources.Strings.LogUserRestartNow);
+            try
             {
-                Log(Resources.Strings.LogUserRestartNow);
-                try
-                {
-                    Process.Start("shutdown.exe", "/r /t 5"); // 5 秒後重新啟動
-                    Application.Exit();
-                }
-                catch (Exception ex)
-                {
-                    LogError(string.Format(Resources.Strings.ErrorRestartFailed, ex.Message));
-                    MessageBox.Show(Resources.Strings.MessageBoxRestartFailed, Resources.Strings.HandleExceptionTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                Process.Start("shutdown.exe", "/r /t 5"); // 5 秒後重新開機
+                Application.Exit();
             }
-            else
+            catch (Exception ex)
             {
+                LogError(string.Format(Resources.Strings.ErrorRestartFailed, ex.Message));
+                MessageBox.Show(Resources.Strings.MessageBoxRestartFailed, Resources.Strings.HandleExceptionTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // 如果失敗，才鎖定 UI
                 LockdownUIForRestart();
             }
         }
@@ -530,9 +627,10 @@ namespace XboxFullscreenExperienceTool
             _restartPending = true;
             lblStatus.Text = Resources.Strings.StatusRestartPending;
             lblStatus.ForeColor = Color.Orange;
-            btnEnable.Enabled = false; // 停用「啟用」按鈕
-            btnDisable.Enabled = false; // 停用「停用」按鈕
-            cboLanguage.Enabled = false; // 停用「語言」選單
+            btnEnable.Enabled = false;
+            btnDisable.Enabled = false;
+            cboLanguage.Enabled = false;
+            grpPhysPanel.Enabled = false;
             Log(Resources.Strings.LogUserRestartLater);
         }
 
@@ -552,27 +650,13 @@ namespace XboxFullscreenExperienceTool
             cboLanguage.Items.Add("한국어");
 
             string currentCultureName = Thread.CurrentThread.CurrentUICulture.Name;
-            if (currentCultureName.StartsWith("zh-TW", StringComparison.OrdinalIgnoreCase) || currentCultureName.StartsWith("zh-Hant", StringComparison.OrdinalIgnoreCase))
-            {
-                cboLanguage.SelectedIndex = 1; // 繁體中文
-            }
-            else if (currentCultureName.StartsWith("zh-CN", StringComparison.OrdinalIgnoreCase) || currentCultureName.StartsWith("zh-Hans", StringComparison.OrdinalIgnoreCase))
-            {
-                cboLanguage.SelectedIndex = 2; // 简体中文
-            }
-            else if (currentCultureName.StartsWith("ja-JP", StringComparison.OrdinalIgnoreCase))
-            {
-                cboLanguage.SelectedIndex = 3; // 日本語
-            }
-            else if (currentCultureName.StartsWith("ko", StringComparison.OrdinalIgnoreCase))
-            {
-                cboLanguage.SelectedIndex = 4; // 한국어
-            }
-            else
-            {
-                cboLanguage.SelectedIndex = 0; // Default to English
-            }
+            if (currentCultureName.StartsWith("zh-TW", StringComparison.OrdinalIgnoreCase) || currentCultureName.StartsWith("zh-Hant", StringComparison.OrdinalIgnoreCase)) cboLanguage.SelectedIndex = 1; // 繁體中文
+            else if (currentCultureName.StartsWith("zh-CN", StringComparison.OrdinalIgnoreCase) || currentCultureName.StartsWith("zh-Hans", StringComparison.OrdinalIgnoreCase)) cboLanguage.SelectedIndex = 2; // 简体中文
+            else if (currentCultureName.StartsWith("ja", StringComparison.OrdinalIgnoreCase)) cboLanguage.SelectedIndex = 3; // 日本語
+            else if (currentCultureName.StartsWith("ko", StringComparison.OrdinalIgnoreCase)) cboLanguage.SelectedIndex = 4; // 한국어
+            else cboLanguage.SelectedIndex = 0; // Default to English
         }
+
 
         /// <summary>
         /// 根據目前的在地化設定，更新所有 UI 控制項的文字。
@@ -586,13 +670,17 @@ namespace XboxFullscreenExperienceTool
             // this.Text 的初始值是在設計工具中設定的 "Xbox 全螢幕體驗工具"
             this.Text = $"{Resources.Strings.MainFormTitle} v{versionString}";
 
+            grpPhysPanel.Text = "螢幕尺寸覆寫方式 (適用於非掌機)";
+            radPhysPanelCS.Text = "PhysPanelCS (工作排程模式，安全性高，預設選項)";
+            radPhysPanelDrv.Text = "PhysPanelDrv (驅動程式模式，穩定性高，需啟用測試簽章)";
             grpActions.Text = Resources.Strings.grpActions_Text;
             grpOutput.Text = Resources.Strings.grpOutput_Text;
             btnDisable.Text = Resources.Strings.btnDisable_Text;
+            btnEnable.Text = Resources.Strings.btnEnable_Text;
         }
 
         /// <summary>
-        /// 重新執行所有檢查並更新日誌，通常在語言切換後呼叫。
+        /// 重新執行檢查並清除 UI 上的舊訊息。日誌會繼續附加到現有檔案。
         /// </summary>
         private void RerunChecksAndLog()
         {
@@ -615,27 +703,16 @@ namespace XboxFullscreenExperienceTool
         /// </summary>
         private void cboLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string culture = "";
-            switch (cboLanguage.SelectedIndex)
+            string culture = cboLanguage.SelectedIndex switch
             {
-                case 0:
-                    culture = "en-US";
-                    break;
-                case 1:
-                    culture = "zh-TW";
-                    break;
-                case 2:
-                    culture = "zh-CN";
-                    break;
-                case 3:
-                    culture = "ja-JP";
-                    break;
-                case 4:
-                    culture = "ko-KR";
-                    break;
-            }
+                1 => "zh-TW",
+                2 => "zh-CN",
+                3 => "ja-JP",
+                4 => "ko-KR",
+                _ => "en-US",
+            };
 
-            if (!string.IsNullOrEmpty(culture) && Thread.CurrentThread.CurrentUICulture.Name != culture)
+            if (Thread.CurrentThread.CurrentUICulture.Name != culture)
             {
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
                 UpdateUIForLanguage();
@@ -656,31 +733,121 @@ namespace XboxFullscreenExperienceTool
             try
             {
                 var mainFormInstance = new MainForm(); // 建立一個實例以存取非靜態成員和常數
-                mainFormInstance.PerformDisableActions();
+                mainFormInstance.PerformDisableActions().GetAwaiter().GetResult();
             }
             catch (Exception)
             {
-                // 在靜默模式下，不處理任何錯誤。
+                // 在靜默模式下，不處理任何錯誤
             }
         }
 
         #region Logging and Error Handling
+        /// <summary>
+        /// 將一般訊息記錄到 UI 文字方塊和日誌檔案中。
+        /// </summary>
         private void Log(string message, bool isSuccess = false)
         {
+            // 處理跨執行緒呼叫 UI
+            if (txtOutput.InvokeRequired)
+            {
+                txtOutput.Invoke(new Action(() => Log(message, isSuccess)));
+                return;
+            }
+
             string timestamp = $"[{DateTime.Now:HH:mm:ss}] ";
+            string fullMessage = timestamp + message;
+
+            // 更新 UI
             txtOutput.SelectionColor = isSuccess ? Color.LimeGreen : Color.Gainsboro;
-            txtOutput.AppendText(timestamp + message + Environment.NewLine);
+            txtOutput.AppendText(fullMessage + Environment.NewLine);
             txtOutput.ScrollToCaret();
+
+            // 將日誌寫入檔案
+            WriteToFile(fullMessage);
         }
 
+        /// <summary>
+        /// 將錯誤訊息記錄到 UI 文字方塊和日誌檔案中。
+        /// </summary>
         private void LogError(string message)
         {
+            // 處理跨執行緒呼叫 UI
+            if (txtOutput.InvokeRequired)
+            {
+                txtOutput.Invoke(new Action(() => LogError(message)));
+                return;
+            }
+
             string timestamp = $"[{DateTime.Now:HH:mm:ss}] [{Resources.Strings.HandleExceptionTitle}] ";
+            string fullMessage = timestamp + message;
+
+            // 更新 UI
             txtOutput.SelectionColor = Color.Tomato;
-            txtOutput.AppendText(timestamp + message + Environment.NewLine);
+            txtOutput.AppendText(fullMessage + Environment.NewLine);
             txtOutput.ScrollToCaret();
+
+            // 將日誌寫入檔案
+            WriteToFile(fullMessage);
         }
 
+        /// <summary>
+        /// 將格式化後的訊息附加到日誌檔案中。
+        /// </summary>
+        /// <param name="message">要寫入的完整訊息行。</param>
+        private void WriteToFile(string message)
+        {
+            try
+            {
+                // 使用 File.AppendAllText 簡潔地處理檔案不存在或需要附加內容的情況
+                // 使用 UTF8 編碼以支援多國語言
+                File.AppendAllText(_logFilePath, message + Environment.NewLine, Encoding.UTF8);
+            }
+            catch (Exception ex)
+            {
+                // 如果寫入日誌失敗 (例如權限問題)，就在 UI 上顯示一個無法寫入的提示，但不要因此中斷程式的主要功能
+                if (!txtOutput.IsDisposed)
+                {
+                    string errorTimestamp = $"[{DateTime.Now:HH:mm:ss}] [日誌記錄錯誤] ";
+                    txtOutput.SelectionColor = Color.OrangeRed;
+                    txtOutput.AppendText(errorTimestamp + $"寫入日誌檔案失敗：{ex.Message}" + Environment.NewLine);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 將目前的日誌檔案重新命名為 .bak，以便為新的操作記錄騰出空間。
+        /// </summary>
+        private void ArchiveLogFile()
+        {
+            // 如果目前的日誌檔不存在，就沒有什麼可封存的
+            if (!File.Exists(_logFilePath))
+            {
+                return;
+            }
+
+            try
+            {
+                string backupLogPath = _logFilePath + ".bak";
+
+                // 如果已存在舊的備份檔，先將其刪除
+                if (File.Exists(backupLogPath))
+                {
+                    File.Delete(backupLogPath);
+                }
+
+                // 將目前的日誌檔重新命名為備份檔
+                File.Move(_logFilePath, backupLogPath);
+            }
+            catch (Exception ex)
+            {
+                // 如果封存失敗，在 UI 上提示，但不影響主要操作
+                LogError($"無法封存舊的日誌檔案：{ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// 處理未預期的例外狀況。
+        /// </summary>
         private void HandleException(Exception ex)
         {
             LogError(string.Format(Resources.Strings.LogErrorUnexpected, ex.Message));
