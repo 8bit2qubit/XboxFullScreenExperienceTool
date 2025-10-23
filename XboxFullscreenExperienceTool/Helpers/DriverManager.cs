@@ -18,6 +18,7 @@ using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceProcess;
 using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
 
 namespace XboxFullscreenExperienceTool.Helpers
 {
@@ -29,35 +30,69 @@ namespace XboxFullscreenExperienceTool.Helpers
         private const string DRIVER_SERVICE_NAME = "PhysPanelDrv";
         private static readonly string DriverFilesPath = Path.Combine(Application.StartupPath, "PhysPanelDrv");
 
+        #region Win32 P/Invoke for NtQuerySystemInformation
+        [DllImport("ntdll.dll", SetLastError = true)]
+        private static extern int NtQuerySystemInformation(
+            int SystemInformationClass,
+            ref SYSTEM_CODE_INTEGRITY_INFORMATION SystemInformation,
+            uint SystemInformationLength,
+            out uint ReturnLength);
+
         /// <summary>
-        /// 檢查 Windows 測試簽章模式 (Test Signing Mode) 是否已啟用。
+        /// NtQuerySystemInformation 的參數：查詢系統程式碼完整性資訊
         /// </summary>
-        /// <returns>如果已啟用，返回 true；否則返回 false。</returns>
+        private const int SystemCodeIntegrityInformation = 103;
+
+        /// <summary>
+        /// CodeIntegrityOptions 的旗標：測試簽章已啟用
+        /// </summary>
+        private const uint CODEINTEGRITY_OPTION_TESTSIGN = 0x02;
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct SYSTEM_CODE_INTEGRITY_INFORMATION
+        {
+            public uint Length;
+            public uint CodeIntegrityOptions;
+        }
+        #endregion
+
+        /// <summary>
+        /// 檢查 Windows 測試簽章模式 (Test Signing Mode) 是否目前處於作用中狀態。
+        /// 使用 ntdll.dll NtQuerySystemInformation 作為可靠的檢查。
+        /// </summary>
+        /// <returns>如果目前已啟用，返回 true；否則返回 false。</returns>
         public static bool IsTestSigningEnabled()
         {
             try
             {
-                var process = new Process
-                {
-                    StartInfo = new ProcessStartInfo
-                    {
-                        FileName = "bcdedit.exe",
-                        Arguments = "",
-                        RedirectStandardOutput = true,
-                        UseShellExecute = false,
-                        CreateNoWindow = true,
-                    }
-                };
-                process.Start();
-                string output = process.StandardOutput.ReadToEnd();
-                process.WaitForExit();
+                var codeIntegrityInfo = new SYSTEM_CODE_INTEGRITY_INFORMATION();
+                uint structSize = (uint)Marshal.SizeOf(codeIntegrityInfo);
+                codeIntegrityInfo.Length = structSize;
 
-                // 尋找 "testsigning" 項目並檢查其值是否為 "Yes"
-                return Regex.IsMatch(output, @"testsigning\s+Yes", RegexOptions.IgnoreCase);
+                uint returnLength;
+
+                int status = NtQuerySystemInformation(
+                    SystemCodeIntegrityInformation, // 103
+                    ref codeIntegrityInfo,
+                    structSize,
+                    out returnLength
+                );
+
+                if (status == 0) // STATUS_SUCCESS
+                {
+                    // 檢查 TESTSIGN (0x02) 旗標是否被設定
+                    return (codeIntegrityInfo.CodeIntegrityOptions & CODEINTEGRITY_OPTION_TESTSIGN) != 0;
+                }
+                else
+                {
+                    // API 呼叫失敗
+                    return false;
+                }
             }
-            catch
+            catch (Exception)
             {
-                return false; // 如果執行 bcdedit 失敗，則假設未啟用
+                // P/Invoke 呼叫失敗
+                return false;
             }
         }
 
