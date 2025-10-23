@@ -288,7 +288,7 @@ namespace XboxFullscreenExperienceTool
                     btnEnable.Text = Resources.Strings.btnEnable_Text;
                     btnEnable.Enabled = true;
                     btnDisable.Enabled = false;
-                    grpPhysPanel.Enabled = true; // 允許選擇啟用方式
+                    grpPhysPanel.Enabled = isScreenOverrideRequired; // 只有在螢幕尺寸確實需要覆寫時，才啟用此選項群組
 
                     // 檢查是否殘留設定
                     radPhysPanelDrv.Checked = isPhysPanelDrvActive;
