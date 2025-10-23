@@ -341,4 +341,88 @@
   <data name="TaskSchedulerManagerErrorDirectoryNotFound" xml:space="preserve">
     <value>無法取得應用程式的安裝目錄。</value>
   </data>
+  <data name="ErrorCertificateFileNotFound" xml:space="preserve">
+    <value>錯誤：找不到憑證檔案 '{0}'。</value>
+  </data>
+  <data name="ErrorDriverFilesNotFound" xml:space="preserve">
+    <value>錯誤：找不到驅動程式檔案 '{0}' 或 '{1}'。</value>
+  </data>
+  <data name="LogErrorDriverInstallFailed" xml:space="preserve">
+    <value>驅動程式安裝失敗：{0}</value>
+  </data>
+  <data name="LogErrorDriverRemoveFailed" xml:space="preserve">
+    <value>驅動程式移除失敗：{0}</value>
+  </data>
+  <data name="LogErrorPrefix" xml:space="preserve">
+    <value>錯誤：{0}</value>
+  </data>
+  <data name="LogCertificateInstallSuccess" xml:space="preserve">
+    <value>憑證安裝成功。</value>
+  </data>
+  <data name="LogDeletingDriverPackage" xml:space="preserve">
+    <value>找到驅動程式套件 '{0}'，正在刪除...</value>
+  </data>
+  <data name="LogDriverInstallCommandExecuted" xml:space="preserve">
+    <value>驅動程式安裝指令已執行。</value>
+  </data>
+  <data name="LogDriverRemoveCommandExecuted" xml:space="preserve">
+    <value>驅動程式移除指令已執行。</value>
+  </data>
+  <data name="LogFindingDriverPackage" xml:space="preserve">
+    <value>正在尋找驅動程式套件 (PhysPanelDrv.inf)...</value>
+  </data>
+  <data name="LogInstallingCertificate" xml:space="preserve">
+    <value>正在安裝驅動程式憑證...</value>
+  </data>
+  <data name="LogInstallingDriverWithDevcon" xml:space="preserve">
+    <value>正在使用 devcon 安裝驅動程式...</value>
+  </data>
+  <data name="LogRemovingDriverDevice" xml:space="preserve">
+    <value>正在移除驅動程式裝置...</value>
+  </data>
+  <data name="WarningOemInfNotFound" xml:space="preserve">
+    <value>警告：找不到對應的 oem&lt;編號&gt;.inf 檔案，可能已被移除。</value>
+  </data>
+  <data name="grpPhysPanel_Text" xml:space="preserve">
+    <value>螢幕尺寸覆寫方式 (適用於非掌機)</value>
+  </data>
+  <data name="radPhysPanelCS_Text" xml:space="preserve">
+    <value>PhysPanelCS (工作排程模式，安全性高，預設選項)</value>
+  </data>
+  <data name="radPhysPanelDrv_Text" xml:space="preserve">
+    <value>PhysPanelDrv (驅動程式模式，穩定性高，需啟用測試簽章)</value>
+  </data>
+  <data name="StatusEnabledDriverMode" xml:space="preserve">
+    <value>狀態：已啟用 (驅動程式模式)</value>
+  </data>
+  <data name="StatusEnabledSchedulerMode" xml:space="preserve">
+    <value>狀態：已啟用 (排程模式)</value>
+  </data>
+  <data name="LogTestSigningDisabled" xml:space="preserve">
+    <value>系統未啟用測試簽章模式，PhysPanelDrv 選項已停用。</value>
+  </data>
+  <data name="LogChoosingDriverMode" xml:space="preserve">
+    <value>選擇驅動程式模式 (PhysPanelDrv)...</value>
+  </data>
+  <data name="LogRemovingOldTask" xml:space="preserve">
+    <value>偵測到舊的工作排程，正在移除...</value>
+  </data>
+  <data name="LogChoosingSchedulerMode" xml:space="preserve">
+    <value>選擇工作排程模式 (PhysPanelCS)...</value>
+  </data>
+  <data name="LogRemovingOldDriver" xml:space="preserve">
+    <value>偵測到驅動程式服務，正在移除...</value>
+  </data>
+  <data name="LogRemovingPhysPanelDrv" xml:space="preserve">
+    <value>正在移除 PhysPanelDrv 驅動程式...</value>
+  </data>
+  <data name="LogLoggingErrorPrefix" xml:space="preserve">
+    <value>日誌記錄錯誤</value>
+  </data>
+  <data name="ErrorWritingLogFile" xml:space="preserve">
+    <value>寫入日誌檔案失敗: {0}</value>
+  </data>
+  <data name="LogStatusCheckSummary" xml:space="preserve">
+    <value>狀態檢查：核心啟用={0} (ViVe 功能={1}, 登錄檔={2}), 螢幕覆寫需求={3}, 覆寫存在={4} (CS={5}, Drv={6}), 測試簽章={7}</value>
+  </data>
 </root>

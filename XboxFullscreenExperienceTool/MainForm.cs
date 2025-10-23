@@ -232,7 +232,7 @@ namespace XboxFullscreenExperienceTool
                 radPhysPanelDrv.Enabled = isTestSigningOn;
                 if (!isTestSigningOn)
                 {
-                    Log("系統未啟用測試簽章模式，PhysPanelDrv 已停用。");
+                    Log(Resources.Strings.LogTestSigningDisabled);
                 }
 
                 // 步驟 5: 綜合判斷與 UI 更新
@@ -267,7 +267,7 @@ namespace XboxFullscreenExperienceTool
                     {
                         // 狀態 1: 已啟用
                         // 核心已啟用，且螢幕尺寸已符合需求。(無論是天生符合，或是覆寫已成功生效)
-                        statusText = isPhysPanelDrvActive ? "狀態：已啟用 (驅動程式模式)" : (isPhysPanelCSActive ? "狀態：已啟用 (排程模式)" : Resources.Strings.StatusEnabled);
+                        statusText = isPhysPanelDrvActive ? Resources.Strings.StatusEnabledDriverMode : (isPhysPanelCSActive ? Resources.Strings.StatusEnabledSchedulerMode : Resources.Strings.StatusEnabled);
                         statusColor = Color.LimeGreen;
 
                         radPhysPanelDrv.Checked = isPhysPanelDrvActive;
@@ -299,7 +299,7 @@ namespace XboxFullscreenExperienceTool
                 lblStatus.Text = statusText;
                 lblStatus.ForeColor = statusColor;
 
-                Log($"狀態檢查：核心啟用={isCoreEnabled} (ViVe 功能={allFeaturesEnabled}, 登錄檔={registryStatusString}), 尺寸不符={isScreenOverrideRequired}, 覆寫存在={isScreenOverridePresent} (CS={isPhysPanelCSActive}, Drv={isPhysPanelDrvActive}), 測試簽章={isTestSigningOn}");
+                Log(string.Format(Resources.Strings.LogStatusCheckSummary, isCoreEnabled, allFeaturesEnabled, registryStatusString, isScreenOverrideRequired, isScreenOverridePresent, isPhysPanelCSActive, isPhysPanelDrvActive, isTestSigningOn));
             }
             catch (Exception ex)
             {
@@ -338,22 +338,22 @@ namespace XboxFullscreenExperienceTool
                 // --- 條件步驟：根據選擇的模式設定螢幕尺寸覆寫 ---
                 if (radPhysPanelDrv.Checked)
                 {
-                    Log("選擇驅動程式模式 (PhysPanelDrv)...");
+                    Log(Resources.Strings.LogChoosingDriverMode);
                     // 執行前先移除 CS 工作，避免衝突
                     if (TaskSchedulerManager.TaskExists())
                     {
-                        Log("偵測到舊的工作排程，正在移除...");
+                        Log(Resources.Strings.LogRemovingOldTask);
                         TaskSchedulerManager.DeleteSetPanelDimensionsTask();
                     }
                     await Task.Run(() => DriverManager.InstallDriver(msg => Log(msg)));
                 }
                 else // radPhysPanelCS.Checked
                 {
-                    Log("選擇工作排程模式 (PhysPanelCS)...");
+                    Log(Resources.Strings.LogChoosingSchedulerMode);
                     // 執行前先移除 Drv 服務，避免衝突
                     if (DriverManager.IsDriverServiceRunning())
                     {
-                        Log("偵測到驅動程式服務，正在移除...");
+                        Log(Resources.Strings.LogRemovingOldDriver);
                         await Task.Run(() => DriverManager.UninstallDriver(msg => Log(msg)));
                     }
                     HandleTaskSchedulerCreation();
@@ -444,7 +444,7 @@ namespace XboxFullscreenExperienceTool
 
             if (DriverManager.IsDriverServiceRunning())
             {
-                Log("正在移除 PhysPanelDrv 驅動程式...");
+                Log(Resources.Strings.LogRemovingPhysPanelDrv);
                 await Task.Run(() => DriverManager.UninstallDriver(msg => Log(msg)));
             }
         }
@@ -670,9 +670,9 @@ namespace XboxFullscreenExperienceTool
             // this.Text 的初始值是在設計工具中設定的 "Xbox 全螢幕體驗工具"
             this.Text = $"{Resources.Strings.MainFormTitle} v{versionString}";
 
-            grpPhysPanel.Text = "螢幕尺寸覆寫方式 (適用於非掌機)";
-            radPhysPanelCS.Text = "PhysPanelCS (工作排程模式，安全性高，預設選項)";
-            radPhysPanelDrv.Text = "PhysPanelDrv (驅動程式模式，穩定性高，需啟用測試簽章)";
+            grpPhysPanel.Text = Resources.Strings.grpPhysPanel_Text;
+            radPhysPanelCS.Text = Resources.Strings.radPhysPanelCS_Text;
+            radPhysPanelDrv.Text = Resources.Strings.radPhysPanelDrv_Text;
             grpActions.Text = Resources.Strings.grpActions_Text;
             grpOutput.Text = Resources.Strings.grpOutput_Text;
             btnDisable.Text = Resources.Strings.btnDisable_Text;
@@ -807,9 +807,9 @@ namespace XboxFullscreenExperienceTool
                 // 如果寫入日誌失敗 (例如權限問題)，就在 UI 上顯示一個無法寫入的提示，但不要因此中斷程式的主要功能
                 if (!txtOutput.IsDisposed)
                 {
-                    string errorTimestamp = $"[{DateTime.Now:HH:mm:ss}] [日誌記錄錯誤] ";
+                    string errorTimestamp = $"[{DateTime.Now:HH:mm:ss}] [{Resources.Strings.LogLoggingErrorPrefix}] ";
                     txtOutput.SelectionColor = Color.OrangeRed;
-                    txtOutput.AppendText(errorTimestamp + $"寫入日誌檔案失敗：{ex.Message}" + Environment.NewLine);
+                    txtOutput.AppendText(errorTimestamp + string.Format(Resources.Strings.ErrorWritingLogFile, ex.Message) + Environment.NewLine);
                 }
             }
         }

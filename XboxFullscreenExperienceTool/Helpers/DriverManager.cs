@@ -91,17 +91,17 @@ namespace XboxFullscreenExperienceTool.Helpers
                 string certPath = Path.Combine(DriverFilesPath, "PhysPanelDrv.cer");
                 if (!File.Exists(certPath))
                 {
-                    logger($"錯誤：找不到憑證檔案 '{certPath}'。");
+                    logger(string.Format(Resources.Strings.ErrorCertificateFileNotFound, certPath));
                     return false;
                 }
 
-                logger("正在安裝驅動程式憑證...");
+                logger(Resources.Strings.LogInstallingCertificate);
                 X509Store store = new X509Store(StoreName.Root, StoreLocation.LocalMachine);
                 store.Open(OpenFlags.ReadWrite);
                 X509Certificate2 cert = new X509Certificate2(certPath);
                 store.Add(cert);
                 store.Close();
-                logger("憑證安裝成功。");
+                logger(Resources.Strings.LogCertificateInstallSuccess);
 
                 // 步驟 2: 使用 devcon.exe 安裝驅動程式
                 string devconPath = Path.Combine(DriverFilesPath, "devcon.exe");
@@ -109,18 +109,18 @@ namespace XboxFullscreenExperienceTool.Helpers
 
                 if (!File.Exists(devconPath) || !File.Exists(infPath))
                 {
-                    logger($"錯誤：找不到驅動程式檔案 '{devconPath}' 或 '{infPath}'。");
+                    logger(string.Format(Resources.Strings.ErrorDriverFilesNotFound, devconPath, infPath));
                     return false;
                 }
 
-                logger("正在使用 devcon 安裝驅動程式...");
+                logger(Resources.Strings.LogInstallingDriverWithDevcon);
                 ExecuteProcess(devconPath, $"install \"{infPath}\" \"root\\{DRIVER_SERVICE_NAME}\"", logger);
-                logger("驅動程式安裝指令已執行。");
+                logger(Resources.Strings.LogDriverInstallCommandExecuted);
                 return true;
             }
             catch (Exception ex)
             {
-                logger($"驅動程式安裝失敗：{ex.Message}");
+                logger(string.Format(Resources.Strings.LogErrorDriverInstallFailed, ex.Message));
                 return false;
             }
         }
@@ -135,27 +135,27 @@ namespace XboxFullscreenExperienceTool.Helpers
             {
                 // 步驟 1: 使用 devcon.exe 移除裝置
                 string devconPath = Path.Combine(DriverFilesPath, "devcon.exe");
-                logger("正在移除驅動程式裝置...");
+                logger(Resources.Strings.LogRemovingDriverDevice);
                 ExecuteProcess(devconPath, $"remove \"root\\{DRIVER_SERVICE_NAME}\"", logger);
 
                 // 步驟 2: 尋找驅動程式套件的 oem 編號
-                logger("正在尋找驅動程式套件 (PhysPanelDrv.inf)...");
+                logger(Resources.Strings.LogFindingDriverPackage);
                 string oemFile = FindOemInf(logger);
                 if (string.IsNullOrEmpty(oemFile))
                 {
-                    logger("警告：找不到對應的 oem<編號>.inf 檔案，可能已被移除。");
+                    logger(Resources.Strings.WarningOemInfNotFound);
                     return true; // 即使找不到也視為成功
                 }
 
                 // 步驟 3: 使用 pnputil 刪除驅動程式套件
-                logger($"找到驅動程式套件 '{oemFile}'，正在刪除...");
+                logger(string.Format(Resources.Strings.LogDeletingDriverPackage, oemFile));
                 ExecuteProcess("pnputil.exe", $"/delete-driver {oemFile} /uninstall /force", logger);
-                logger("驅動程式移除指令已執行。");
+                logger(Resources.Strings.LogDriverRemoveCommandExecuted);
                 return true;
             }
             catch (Exception ex)
             {
-                logger($"驅動程式移除失敗：{ex.Message}");
+                logger(string.Format(Resources.Strings.LogErrorDriverRemoveFailed, ex.Message));
                 return false;
             }
         }
@@ -179,7 +179,7 @@ namespace XboxFullscreenExperienceTool.Helpers
                 }
             };
             process.OutputDataReceived += (sender, args) => { if (args.Data != null) logger(args.Data); };
-            process.ErrorDataReceived += (sender, args) => { if (args.Data != null) logger($"錯誤: {args.Data}"); };
+            process.ErrorDataReceived += (sender, args) => { if (args.Data != null) logger(string.Format(Resources.Strings.LogErrorPrefix, args.Data)); };
 
             process.Start();
             process.BeginOutputReadLine();

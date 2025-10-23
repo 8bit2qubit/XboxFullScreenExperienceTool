@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MainFormTitle" xml:space="preserve">
-    <value>Xbox Fullscreen Experience Tool</value>
+    <value>Xbox Full Screen Experience Tool</value>
   </data>
   <data name="UnknownVersion" xml:space="preserve">
     <value>Unknown Version</value>
@@ -127,7 +127,7 @@
     <value>Error reading version number: {0}</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>Welcome to the Xbox Fullscreen Experience Tool!</value>
+    <value>Welcome to the Xbox Full Screen Experience Tool!</value>
   </data>
   <data name="ErrorCheckBuild" xml:space="preserve">
     <value>Checking Windows build failed with an unexpected error: {0}</value>
@@ -169,10 +169,10 @@
     <value>Status: Restart pending...</value>
   </data>
   <data name="btnEnable_Text" xml:space="preserve">
-    <value>Enable Xbox Fullscreen Experience</value>
+    <value>Enable Xbox Full Screen Experience</value>
   </data>
   <data name="btnEnable_Text_Fix" xml:space="preserve">
-    <value>Fix Xbox Fullscreen Experience</value>
+    <value>Fix Xbox Full Screen Experience</value>
   </data>
   <data name="btnDisable_Text" xml:space="preserve">
     <value>Disable &amp;&amp; Restore</value>
@@ -340,5 +340,89 @@ Please ensure you are running this program with administrator privileges.</value
   </data>
   <data name="TaskSchedulerManagerErrorDirectoryNotFound" xml:space="preserve">
     <value>Could not get the application's installation directory.</value>
+  </data>
+  <data name="ErrorCertificateFileNotFound" xml:space="preserve">
+    <value>Error: Certificate file not found '{0}'.</value>
+  </data>
+  <data name="ErrorDriverFilesNotFound" xml:space="preserve">
+    <value>Error: Driver files not found '{0}' or '{1}'.</value>
+  </data>
+  <data name="LogErrorDriverInstallFailed" xml:space="preserve">
+    <value>Driver installation failed: {0}</value>
+  </data>
+  <data name="LogErrorDriverRemoveFailed" xml:space="preserve">
+    <value>Driver removal failed: {0}</value>
+  </data>
+  <data name="LogErrorPrefix" xml:space="preserve">
+    <value>Error: {0}</value>
+  </data>
+  <data name="LogCertificateInstallSuccess" xml:space="preserve">
+    <value>Certificate installed successfully.</value>
+  </data>
+  <data name="LogDeletingDriverPackage" xml:space="preserve">
+    <value>Found driver package '{0}', deleting...</value>
+  </data>
+  <data name="LogDriverInstallCommandExecuted" xml:space="preserve">
+    <value>Driver installation command executed.</value>
+  </data>
+  <data name="LogDriverRemoveCommandExecuted" xml:space="preserve">
+    <value>Driver removal command executed.</value>
+  </data>
+  <data name="LogFindingDriverPackage" xml:space="preserve">
+    <value>Finding driver package (PhysPanelDrv.inf)...</value>
+  </data>
+  <data name="LogInstallingCertificate" xml:space="preserve">
+    <value>Installing driver certificate...</value>
+  </data>
+  <data name="LogInstallingDriverWithDevcon" xml:space="preserve">
+    <value>Installing driver using devcon...</value>
+  </data>
+  <data name="LogRemovingDriverDevice" xml:space="preserve">
+    <value>Removing driver device...</value>
+  </data>
+  <data name="WarningOemInfNotFound" xml:space="preserve">
+    <value>Warning: Corresponding oem&lt;number&gt;.inf file not found, it may have already been removed.</value>
+  </data>
+  <data name="grpPhysPanel_Text" xml:space="preserve">
+    <value>Screen Size Override Method (for non-handheld devices)</value>
+  </data>
+  <data name="radPhysPanelCS_Text" xml:space="preserve">
+    <value>PhysPanelCS (Task Scheduler Mode, high security, default option)</value>
+  </data>
+  <data name="radPhysPanelDrv_Text" xml:space="preserve">
+    <value>PhysPanelDrv (Driver Mode, high stability, requires Test Signing ON)</value>
+  </data>
+  <data name="StatusEnabledDriverMode" xml:space="preserve">
+    <value>Status: Enabled (Driver Mode)</value>
+  </data>
+  <data name="StatusEnabledSchedulerMode" xml:space="preserve">
+    <value>Status: Enabled (Scheduler Mode)</value>
+  </data>
+  <data name="LogTestSigningDisabled" xml:space="preserve">
+    <value>System Test Signing mode is not enabled. PhysPanelDrv option is disabled.</value>
+  </data>
+  <data name="LogChoosingDriverMode" xml:space="preserve">
+    <value>Driver Mode (PhysPanelDrv) selected...</value>
+  </data>
+  <data name="LogRemovingOldTask" xml:space="preserve">
+    <value>Detected existing scheduled task, removing it to avoid conflicts...</value>
+  </data>
+  <data name="LogChoosingSchedulerMode" xml:space="preserve">
+    <value>Task Scheduler Mode (PhysPanelCS) selected...</value>
+  </data>
+  <data name="LogRemovingOldDriver" xml:space="preserve">
+    <value>Detected existing driver service, removing it to avoid conflicts...</value>
+  </data>
+  <data name="LogRemovingPhysPanelDrv" xml:space="preserve">
+    <value>Removing PhysPanelDrv driver...</value>
+  </data>
+  <data name="LogLoggingErrorPrefix" xml:space="preserve">
+    <value>LOGGING ERROR</value>
+  </data>
+  <data name="ErrorWritingLogFile" xml:space="preserve">
+    <value>Failed to write to the log file: {0}</value>
+  </data>
+  <data name="LogStatusCheckSummary" xml:space="preserve">
+    <value>Status Check: CoreEnabled={0} (ViVeFeatures={1}, Registry={2}), ScreenOverrideRequired={3}, OverridePresent={4} (CS={5}, Drv={6}), TestSigning={7}</value>
   </data>
 </root>

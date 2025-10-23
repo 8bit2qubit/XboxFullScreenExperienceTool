@@ -70,7 +70,7 @@ namespace XboxFullscreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Enable Xbox Fullscreen Experience 的當地語系化字串。
+        ///   查詢類似 Enable Xbox Full Screen Experience 的當地語系化字串。
         /// </summary>
         internal static string btnEnable_Text {
             get {
@@ -79,7 +79,7 @@ namespace XboxFullscreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Fix Xbox Fullscreen Experience 的當地語系化字串。
+        ///   查詢類似 Fix Xbox Full Screen Experience 的當地語系化字串。
         /// </summary>
         internal static string btnEnable_Text_Fix {
             get {
@@ -106,6 +106,15 @@ namespace XboxFullscreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Error: Certificate file not found &apos;{0}&apos;. 的當地語系化字串。
+        /// </summary>
+        internal static string ErrorCertificateFileNotFound {
+            get {
+                return ResourceManager.GetString("ErrorCertificateFileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Checking Windows build failed with an unexpected error: {0} 的當地語系化字串。
         /// </summary>
         internal static string ErrorCheckBuild {
@@ -120,6 +129,15 @@ namespace XboxFullscreenExperienceTool.Resources {
         internal static string ErrorCheckStatus {
             get {
                 return ResourceManager.GetString("ErrorCheckStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Error: Driver files not found &apos;{0}&apos; or &apos;{1}&apos;. 的當地語系化字串。
+        /// </summary>
+        internal static string ErrorDriverFilesNotFound {
+            get {
+                return ResourceManager.GetString("ErrorDriverFilesNotFound", resourceCulture);
             }
         }
         
@@ -160,6 +178,15 @@ namespace XboxFullscreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Failed to write to the log file: {0} 的當地語系化字串。
+        /// </summary>
+        internal static string ErrorWritingLogFile {
+            get {
+                return ResourceManager.GetString("ErrorWritingLogFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Actions 的當地語系化字串。
         /// </summary>
         internal static string grpActions_Text {
@@ -174,6 +201,15 @@ namespace XboxFullscreenExperienceTool.Resources {
         internal static string grpOutput_Text {
             get {
                 return ResourceManager.GetString("grpOutput_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Screen Size Override Method (for non-handheld devices) 的當地語系化字串。
+        /// </summary>
+        internal static string grpPhysPanel_Text {
+            get {
+                return ResourceManager.GetString("grpPhysPanel_Text", resourceCulture);
             }
         }
         
@@ -244,11 +280,47 @@ namespace XboxFullscreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Certificate installed successfully. 的當地語系化字串。
+        /// </summary>
+        internal static string LogCertificateInstallSuccess {
+            get {
+                return ResourceManager.GetString("LogCertificateInstallSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Checking if DeviceForm registry value needs to be restored... 的當地語系化字串。
         /// </summary>
         internal static string LogCheckingRegistryRestore {
             get {
                 return ResourceManager.GetString("LogCheckingRegistryRestore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Driver Mode (PhysPanelDrv) selected... 的當地語系化字串。
+        /// </summary>
+        internal static string LogChoosingDriverMode {
+            get {
+                return ResourceManager.GetString("LogChoosingDriverMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Task Scheduler Mode (PhysPanelCS) selected... 的當地語系化字串。
+        /// </summary>
+        internal static string LogChoosingSchedulerMode {
+            get {
+                return ResourceManager.GetString("LogChoosingSchedulerMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Found driver package &apos;{0}&apos;, deleting... 的當地語系化字串。
+        /// </summary>
+        internal static string LogDeletingDriverPackage {
+            get {
+                return ResourceManager.GetString("LogDeletingDriverPackage", resourceCulture);
             }
         }
         
@@ -280,6 +352,24 @@ namespace XboxFullscreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Driver installation command executed. 的當地語系化字串。
+        /// </summary>
+        internal static string LogDriverInstallCommandExecuted {
+            get {
+                return ResourceManager.GetString("LogDriverInstallCommandExecuted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Driver removal command executed. 的當地語系化字串。
+        /// </summary>
+        internal static string LogDriverRemoveCommandExecuted {
+            get {
+                return ResourceManager.GetString("LogDriverRemoveCommandExecuted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 --- Enable Process Complete --- 的當地語系化字串。
         /// </summary>
         internal static string LogEnableComplete {
@@ -303,6 +393,33 @@ namespace XboxFullscreenExperienceTool.Resources {
         internal static string LogErrorAdminRights {
             get {
                 return ResourceManager.GetString("LogErrorAdminRights", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Driver installation failed: {0} 的當地語系化字串。
+        /// </summary>
+        internal static string LogErrorDriverInstallFailed {
+            get {
+                return ResourceManager.GetString("LogErrorDriverInstallFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Driver removal failed: {0} 的當地語系化字串。
+        /// </summary>
+        internal static string LogErrorDriverRemoveFailed {
+            get {
+                return ResourceManager.GetString("LogErrorDriverRemoveFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Error: {0} 的當地語系化字串。
+        /// </summary>
+        internal static string LogErrorPrefix {
+            get {
+                return ResourceManager.GetString("LogErrorPrefix", resourceCulture);
             }
         }
         
@@ -348,6 +465,42 @@ namespace XboxFullscreenExperienceTool.Resources {
         internal static string LogFeaturesEnabledSuccess {
             get {
                 return ResourceManager.GetString("LogFeaturesEnabledSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Finding driver package (PhysPanelDrv.inf)... 的當地語系化字串。
+        /// </summary>
+        internal static string LogFindingDriverPackage {
+            get {
+                return ResourceManager.GetString("LogFindingDriverPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Installing driver certificate... 的當地語系化字串。
+        /// </summary>
+        internal static string LogInstallingCertificate {
+            get {
+                return ResourceManager.GetString("LogInstallingCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Installing driver using devcon... 的當地語系化字串。
+        /// </summary>
+        internal static string LogInstallingDriverWithDevcon {
+            get {
+                return ResourceManager.GetString("LogInstallingDriverWithDevcon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 LOGGING ERROR 的當地語系化字串。
+        /// </summary>
+        internal static string LogLoggingErrorPrefix {
+            get {
+                return ResourceManager.GetString("LogLoggingErrorPrefix", resourceCulture);
             }
         }
         
@@ -451,6 +604,42 @@ namespace XboxFullscreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Removing driver device... 的當地語系化字串。
+        /// </summary>
+        internal static string LogRemovingDriverDevice {
+            get {
+                return ResourceManager.GetString("LogRemovingDriverDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Detected existing driver service, removing it to avoid conflicts... 的當地語系化字串。
+        /// </summary>
+        internal static string LogRemovingOldDriver {
+            get {
+                return ResourceManager.GetString("LogRemovingOldDriver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Detected existing scheduled task, removing it to avoid conflicts... 的當地語系化字串。
+        /// </summary>
+        internal static string LogRemovingOldTask {
+            get {
+                return ResourceManager.GetString("LogRemovingOldTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Removing PhysPanelDrv driver... 的當地語系化字串。
+        /// </summary>
+        internal static string LogRemovingPhysPanelDrv {
+            get {
+                return ResourceManager.GetString("LogRemovingPhysPanelDrv", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Successfully read screen size: {0}x{1}mm. 的當地語系化字串。
         /// </summary>
         internal static string LogScreenSizeSuccess {
@@ -487,6 +676,15 @@ namespace XboxFullscreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Status Check: CoreEnabled={0} (ViVeFeatures={1}, Registry={2}), ScreenOverrideRequired={3}, OverridePresent={4} (CS={5}, Drv={6}), TestSigning={7} 的當地語系化字串。
+        /// </summary>
+        internal static string LogStatusCheckSummary {
+            get {
+                return ResourceManager.GetString("LogStatusCheckSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Task &apos;SetPanelDimensions&apos; created. 的當地語系化字串。
         /// </summary>
         internal static string LogTaskCreated {
@@ -514,6 +712,15 @@ namespace XboxFullscreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 System Test Signing mode is not enabled. PhysPanelDrv option is disabled. 的當地語系化字串。
+        /// </summary>
+        internal static string LogTestSigningDisabled {
+            get {
+                return ResourceManager.GetString("LogTestSigningDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 User chose to restart later. No further actions can be performed until restart. 的當地語系化字串。
         /// </summary>
         internal static string LogUserRestartLater {
@@ -532,7 +739,7 @@ namespace XboxFullscreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Xbox Fullscreen Experience Tool 的當地語系化字串。
+        ///   查詢類似 Xbox Full Screen Experience Tool 的當地語系化字串。
         /// </summary>
         internal static string MainFormTitle {
             get {
@@ -579,6 +786,24 @@ namespace XboxFullscreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 PhysPanelCS (Task Scheduler Mode, high security, default option) 的當地語系化字串。
+        /// </summary>
+        internal static string radPhysPanelCS_Text {
+            get {
+                return ResourceManager.GetString("radPhysPanelCS_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 PhysPanelDrv (Driver Mode, high stability, requires Test Signing ON) 的當地語系化字串。
+        /// </summary>
+        internal static string radPhysPanelDrv_Text {
+            get {
+                return ResourceManager.GetString("radPhysPanelDrv_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 This tool requires build {0} or higher. 的當地語系化字串。
         /// </summary>
         internal static string RequiredBuild {
@@ -611,6 +836,24 @@ namespace XboxFullscreenExperienceTool.Resources {
         internal static string StatusEnabled {
             get {
                 return ResourceManager.GetString("StatusEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Status: Enabled (Driver Mode) 的當地語系化字串。
+        /// </summary>
+        internal static string StatusEnabledDriverMode {
+            get {
+                return ResourceManager.GetString("StatusEnabledDriverMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Status: Enabled (Scheduler Mode) 的當地語系化字串。
+        /// </summary>
+        internal static string StatusEnabledSchedulerMode {
+            get {
+                return ResourceManager.GetString("StatusEnabledSchedulerMode", resourceCulture);
             }
         }
         
@@ -705,7 +948,16 @@ namespace XboxFullscreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Welcome to the Xbox Fullscreen Experience Tool! 的當地語系化字串。
+        ///   查詢類似 Warning: Corresponding oem&lt;number&gt;.inf file not found, it may have already been removed. 的當地語系化字串。
+        /// </summary>
+        internal static string WarningOemInfNotFound {
+            get {
+                return ResourceManager.GetString("WarningOemInfNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Welcome to the Xbox Full Screen Experience Tool! 的當地語系化字串。
         /// </summary>
         internal static string WelcomeMessage {
             get {

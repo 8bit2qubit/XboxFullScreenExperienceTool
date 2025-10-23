@@ -69,7 +69,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Release\\XboxFullscreenExperienceToolSetup.msi"
+        "OutputFilename" = "8:Release\\XboxFullScreenExperienceToolSetup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -101,7 +101,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\XboxFullscreenExperienceToolSetup.msi"
+        "OutputFilename" = "8:Release\\XboxFullScreenExperienceToolSetup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -317,7 +317,7 @@
                 {
                     "{9EF0B969-E518-4E46-987F-47570745A589}:_39719A5D53C34892B85A86FB616CE511"
                     {
-                    "Name" = "8:Xbox Fullscreen Experience Tool"
+                    "Name" = "8:Xbox Full Screen Experience Tool"
                     "AlwaysCreate" = "11:FALSE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
@@ -400,7 +400,7 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:Xbox Fullscreen Experience Tool"
+        "ProductName" = "8:Xbox Full Screen Experience Tool"
         "ProductCode" = "8:{0C114990-2C4F-4788-BEBA-09B7FB25D5B6}"
         "PackageCode" = "8:{1EA1C5AC-730D-4FB6-BF80-37FD5DCF2D42}"
         "UpgradeCode" = "8:{1FC446AC-4A81-40E7-B99E-292B8413FDBB}"
@@ -418,7 +418,7 @@
         "ARPCONTACT" = "8:8bit2qubit"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
-        "ARPURLINFOABOUT" = "8:https://github.com/8bit2qubit/XboxFullscreenExperienceTool"
+        "ARPURLINFOABOUT" = "8:https://github.com/8bit2qubit/XboxFullScreenExperienceTool"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
@@ -524,7 +524,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_4FB5DC4A56D0465EAE7A9B9996879F71"
             {
-            "Name" = "8:Xbox Fullscreen Experience Tool"
+            "Name" = "8:Xbox Full Screen Experience Tool"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -538,7 +538,7 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_FDCC55D12D1A4CD68F76FBFDA2FDF13C"
             {
-            "Name" = "8:Xbox Fullscreen Experience Tool"
+            "Name" = "8:Xbox Full Screen Experience Tool"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"

@@ -66,7 +66,7 @@ namespace XboxFullscreenExperienceTool
             if (!createdNew)
             {
                 // 如果 Mutex 已存在，顯示錯誤訊息並直接退出。
-                MessageBox.Show(Resources.Strings.ErrorAppRunning, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Resources.Strings.ErrorAppRunning, Resources.Strings.HandleExceptionTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
