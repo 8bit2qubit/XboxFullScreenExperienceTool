@@ -116,7 +116,7 @@ This tool prepares your system for the new mode. Final activation is done in Win
 2.  Run the installer (administrator privileges required).
 3.  Launch the tool from the desktop shortcut. If using a PC or laptop, select your preferred override mode.
     > **Note:** If you choose **`PhysPanelDrv`**, ensure you have completed the prerequisites listed above first.
-4.  Click **“Enable Xbox Fullscreen Experience”**.
+4.  Click **“Enable Xbox Full Screen Experience”**.
 5.  **Restart your PC** for the changes to take effect.
 
 ### 2. Update Core Apps
