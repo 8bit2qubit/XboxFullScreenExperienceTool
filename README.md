@@ -32,45 +32,50 @@ By using this tool, you acknowledge and agree to the following:
 
 -----
 
-## 💡 Future Plans & Technical Challenges
+## 💡 Screen Override for PCs & Laptops: Choosing Your Method
 
-### The Challenge: Perfecting the Experience on Non-Handhelds
+The Xbox Full Screen Experience is designed for handheld-sized screens. If you are using a **desktop PC or a laptop**, your screen is likely larger than the supported size, requiring a screen dimension override. This tool offers two methods to achieve this.
 
-The Xbox Full Screen feature works best on small, handheld-sized screens. To enable it on other hardware, a screen size override is necessary. This is crucial for two main user groups: **desktop PCs**, which typically report undefined (0x0) physical dimensions, and **laptops**, whose screens are almost always larger than the 9.5-inch handheld threshold.
+### Task Scheduler Mode: `PhysPanelCS`
+This is the default method. It is easy to use and requires no additional manual setup. It schedules a task to apply the override at boot. However, this can create a race condition on fast systems. If you log in too quickly, the Windows Shell may initialize before the override is applied, causing it to fall back to the standard desktop for that session.
 
-The current method uses a Task Scheduler to apply this override at boot, simulating a 7-inch screen, but this creates a race condition. On a system with a fast SSD, if you log in quickly, especially using Windows Hello, the Windows Shell will initialize before the override is applied. As a result, the Shell starts with the default screen settings and fails to launch the special Xbox interface for that session.
+### Driver Mode: `PhysPanelDrv`
+This advanced mode uses a custom kernel driver to apply the override at the earliest stage of system boot, which completely eliminates the race condition. This is the most robust and reliable solution for desktops and laptops.
 
-### The Robust Solution vs. The Technical Barrier
-
-The definitive solution is a kernel driver, [`PhysPanelDrv`](https://github.com/8bit2qubit/PhysPanelDrv), which applies the screen size override at the earliest stage of system boot. This completely eliminates the race condition for desktops and laptops. For this driver to be trusted by Windows, it must pass Microsoft's driver attestation process. This requires a high-trust EV Code Signing Certificate just to submit, presenting a significant technical hurdle for an independent developer. **This means `PhysPanelDrv` currently exists as a proof-of-concept rather than a publicly distributable solution.**
+> #### **Prerequisites for `PhysPanelDrv` Mode**
+>
+> Installing this **test-signed driver** requires you to manually disable Secure Boot and enable Windows Test Signing Mode.
+>
+> **Step 1: Enter BIOS/UEFI Settings**
+> 1.  Restart your computer and press the designated key during boot (usually `Del`, `F2`, `F10`, or `Esc`) to enter the BIOS/UEFI setup.
+> 2.  Find and **disable** the **Secure Boot** option.
+> 3.  Save your changes and exit.
+>
+> **Step 2: Enable Test Signing in Windows**
+> 1.  Once your computer has restarted into Windows, open Terminal (PowerShell or Command Prompt) **as an administrator**.
+> 2.  Enter the following command and press Enter:
+>     ```
+>     bcdedit /set testsigning on
+>     ```
+> 3.  Restart your computer one more time to apply the change.
+>
+> After completing these steps, you can select **`PhysPanelDrv`** in the tool.
 
 -----
 
 ## ⚙️ System Requirements
 
-This tool is **only compatible with Windows 11 Insider Dev Channel builds `26220.6690` or later**.
-If your system does not meet this requirement, the tool will display an error and exit.
+This tool is compatible with **Windows 11 Insider Release Preview Channel build `26200.7015` or later**. If your system does not meet this requirement, the tool will display an error and exit.
 
 > ### **How to Read Build Numbers (Important!)**
 >
 > When checking the version, **please look at the main build number (before the dot)**. The number *after* the dot is just a minor update revision.
 >
-> * **INCOMPATIBLE:** `26100.xxxx` (Release Build 24H2)
-> * **INCOMPATIBLE:** `26200.xxxx` (Release Build 25H2)
-> * **COMPATIBLE:** `26220.6690` or later (Dev Build 25H2)
+> *   **INCOMPATIBLE:** `26100.xxxx` (Release Build 24H2)
+> *   **COMPATIBLE:** `26200.7015` or later (Release Preview Build 25H2)
+> *   **COMPATIBLE:** `26220.6972` or later (Dev Build 25H2)
 >
-> **Example:** A build like `26200.6899` is **NOT** compatible because its main build **26200** is lower (older) than the required **26220**.
-
-> ### **Why is the Dev Channel Required? (Please Read)**
->
-> This is a common question. While the Xbox full screen feature is present in other builds (like Release 25H2, `26200.xxxx`), the decision to support the **Dev Channel** is strictly for quality and stability.
->
-> * **Known Bugs:** Non-Dev builds suffer from bugs that create a poor user experience. This includes:
->     * Instability with the **Task View**.
->     * Issues when **closing applications** (e.g., with the 'X' button).
->     * An exceptionally poor experience in `26200` builds prior to the `.6899` update.
->
-> The Dev Channel offers a far more stable and mature implementation. Support for other channels will be considered if these issues are resolved in future public builds.
+> **Example:** A build like `26200.6899` is **NOT** compatible because its revision `.6899` is lower than the required `.7015`.
 
 For a detailed walkthrough on joining the Windows Insider Program and upgrading to the correct build, refer to the following guide:
 * **[English Guide](https://github.com/8bit2qubit/xbox-fullscreen-experience-guide/blob/main/README.md)**
@@ -96,9 +101,9 @@ If you find this tool helpful, your support would be a great motivation for me t
 * **One-Click Toggle** – Simple interface to enable or disable the Xbox full screen experience.
 * **Automatic System Check** – Verifies your Windows build for compatibility at startup.
 * **Device Type Emulation** – Automatically simulates a handheld device type for activation on desktop or laptop systems.
+*   **Selectable Override Modes** – Choose between `PhysPanelCS` (Task Scheduler) or `PhysPanelDrv` (Driver) for PCs and laptops.
 * **Safe and Reversible** – All changes are fully reversible. Backups of original settings are created to ensure safe restoration.
 * **Standard Installation** – Distributed as a `.msi` installer for clean installation, management, and removal.
-* **Fully Automated Process** – Handles all steps automatically with no manual configuration required.
 
 -----
 
@@ -109,8 +114,10 @@ This tool prepares your system for the new mode. Final activation is done in Win
 ### 1. Prepare Your System
 1.  Download the latest `.msi` package from the [**Releases Page**](https://github.com/8bit2qubit/XboxFullScreenExperienceTool/releases/latest).
 2.  Run the installer (administrator privileges required).
-3.  Launch the tool from the desktop shortcut and click **“Enable Xbox Full Screen Experience”**.
-4.  **Restart your PC** for the changes to take effect.
+3.  Launch the tool from the desktop shortcut. If using a PC or laptop, select your preferred override mode.
+    > **Note:** If you choose **`PhysPanelDrv`**, ensure you have completed the prerequisites listed above first.
+4.  Click **“Enable Xbox Fullscreen Experience”**.
+5.  **Restart your PC** for the changes to take effect.
 
 ### 2. Update Core Apps
 1.  After restarting, open the **Microsoft Store**.
@@ -138,6 +145,7 @@ This tool prepares your system for the new mode. Final activation is done in Win
 * **Dependencies**:
   * **ViVeLib (ViVeTool)** – A native API wrapper for managing Windows Feature Flags. Integrated as a Git submodule from [thebookisclosed/ViVe](https://github.com/thebookisclosed/ViVe).
   * **PhysPanelLib** – A custom library for reading and writing physical panel size information via undocumented `ntdll.dll` APIs. Concept adapted from [riverar/physpanel](https://github.com/riverar/physpanel).
+  * **PhysPanelDrv** – A lightweight kernel driver for `PhysPanelDrv` (Driver Mode) that reliably overrides physical display dimensions, ensuring the system consistently simulates a handheld screen size. Integrated as a Git submodule from [8bit2qubit/PhysPanelDrv](https://github.com/8bit2qubit/PhysPanelDrv).
 * **Installer**: Visual Studio Installer Projects (MSI)
 
 -----

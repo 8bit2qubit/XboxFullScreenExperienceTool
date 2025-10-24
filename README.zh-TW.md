@@ -11,10 +11,10 @@
 </p>
 
 <p align="center">
-<a href="https://github.com/8bit2qubit/XboxFullscreenExperienceTool/releases/latest"><img src="https://img.shields.io/github/v/release/8bit2qubit/XboxFullscreenExperienceTool?style=flat-square&color=blue" alt="最新版本"></a>
-<a href="https://github.com/8bit2qubit/XboxFullscreenExperienceTool/releases"><img src="https://img.shields.io/github/downloads/8bit2qubit/XboxFullscreenExperienceTool/total" alt="總下載量"></a>
+<a href="https://github.com/8bit2qubit/XboxFullScreenExperienceTool/releases/latest"><img src="https://img.shields.io/github/v/release/8bit2qubit/XboxFullScreenExperienceTool?style=flat-square&color=blue" alt="最新版本"></a>
+<a href="https://github.com/8bit2qubit/XboxFullScreenExperienceTool/releases"><img src="https://img.shields.io/github/downloads/8bit2qubit/XboxFullScreenExperienceTool/total" alt="總下載量"></a>
 <a href="#"><img src="https://img.shields.io/badge/tech-C%23%20%26%20.NET%208-blueviolet.svg?style=flat-square" alt="技術"></a>
-<a href="https://github.com/8bit2qubit/XboxFullscreenExperienceTool/blob/main/LICENSE"><img src="https://img.shields.io/github/license/8bit2qubit/XboxFullscreenExperienceTool" alt="授權條款"></a>
+<a href="https://github.com/8bit2qubit/XboxFullScreenExperienceTool/blob/main/LICENSE"><img src="https://img.shields.io/github/license/8bit2qubit/XboxFullScreenExperienceTool" alt="授權條款"></a>
 </p>
 
 一款簡單、安全的一鍵式工具，專為啟用 Windows 11 中隱藏的 Xbox 全螢幕遊戲體驗而生。本工具將繁複的底層設定全部自動化，讓您輕鬆享受專為遊戲手把最佳化的類主機介面。
@@ -31,44 +31,50 @@
 
 -----
 
-## 💡 未來規劃與技術挑戰
+## 💡 為桌機與筆電覆寫螢幕尺寸：選擇您的模式
 
-### 挑戰：為非掌上型裝置打造完美體驗
+Xbox 全螢幕體驗專為掌機尺寸的螢幕設計。若您使用的是**桌上型或筆記型電腦**，您的螢幕尺寸很可能超過支援範圍，此時就需要覆寫螢幕的實體尺寸。本工具為此提供了兩種模式。
 
-Xbox 全螢幕功能最適合小尺寸的掌上型裝置。若要在其他硬體上啟用此功能，就必須進行螢幕尺寸覆寫。這對於兩大主要使用者族群至關重要：一是**桌上型電腦**，其通常回報未定義 (0x0) 的實體尺寸；二是**筆記型電腦**，其螢幕幾乎總是大於 9.5 吋的掌機門檻。
+### 工作排程模式: `PhysPanelCS`
+此為預設選項，它簡單易用且無須額外的手動設定。它會在開機時排程一個工作來套用覆寫。然而，這在高速系統上會產生「競爭條件」(Race Condition)。如果您登入速度過快，Windows Shell 可能會在覆寫套用前就完成初始化，導致該次工作階段退回標準桌面。
 
-目前的方法是使用「工作排程器」在開機時套用此覆寫，將螢幕模擬為 7 吋大小，但這會產生「競爭條件」(Race Condition)。在一台配備高速 SSD 的電腦上，若您快速登入（特別是使用 Windows Hello），Windows Shell 會在覆寫成功套用前就完成初始化。結果就是，系統介面會以預設的螢幕設定啟動，導致該次登入無法啟用特殊的 Xbox 介面。
+### 驅動程式模式: `PhysPanelDrv`
+此進階模式使用一個自訂核心驅動程式，在系統開機的最早階段就套用螢幕尺寸覆寫，可徹底解決競爭條件問題。對於桌機與筆電，這是最穩定可靠的解決方案。
 
-### 解決方案與瓶頸
-
-終極的解決方案是一個名為 [`PhysPanelDrv`](https://github.com/8bit2qubit/PhysPanelDrv) 的核心驅動程式，它能在系統開機的最早階段就套用螢幕尺寸覆寫，從而徹底解決桌機與筆電上的競爭條件問題。然而，為了讓 Windows 信任此驅動程式，它需要來自高信譽來源的數位簽章，例如「EV 程式碼簽署憑證」（用以提交給微軟的證明流程），這對於獨立開發者而言是一個重大的技術障礙。**這意味著 `PhysPanelDrv` 目前是以概念驗證 (proof-of-concept) 的形式存在，而不是一個可公開發布的解決方案。**
+> #### **`PhysPanelDrv` 模式的前置作業**
+>
+> 安裝此**使用測試簽章的驅動程式**需要您手動停用「安全啟動」並啟用 Windows 的「測試簽署模式」。
+>
+> **步驟一：進入 BIOS 設定**
+> 1.  重新啟動電腦，在開機時按下指定按鍵 (通常是 `Del`, `F2`, `F10`, 或 `Esc`) 進入 BIOS/UEFI 設定。
+> 2.  找到並**關閉 Secure Boot (安全啟動)** 選項。
+> 3.  儲存設定並離開。
+>
+> **步驟二：啟用測試簽章**
+> 1.  電腦重啟進入 Windows 後，使用**系統管理員權限**打開終端機 (PowerShell 或 CMD)。
+> 2.  輸入以下指令，然後按下 Enter：
+>     ```
+>     bcdedit /set testsigning on
+>     ```
+> 3.  完成後，再次重新開機。
+>
+> 完成以上步驟後，您就可以在工具中選取 **`PhysPanelDrv`**。
 
 -----
 
 ## ⚙️ 系統版本要求
 
-本工具**僅適用於 Windows 11 開發人員預覽版 (Dev Channel) 組建 `26220.6690` 或更新版本**。在不符要求的系統上，工具將提示錯誤並無法執行。
+本工具適用於 **Windows 11 Release Preview Channel 組建 `26200.7015` 或更新版本**。在不符要求的系統上，工具將提示錯誤並無法執行。
 
 > ### **如何判讀版本號 (非常重要！)**
 >
 > 當檢查版本時，**請務必查看小數點前的「主要版本號」**。小數點後的數字僅代表次要更新。
 >
-> * **不相容:** `26100.xxxx` (Release Build 24H2)
-> * **不相容:** `26200.xxxx` (Release Build 25H2)
-> * **相容:** `26220.6690` 或更新版本 (Dev Build 25H2)
+> *   **不相容:** `26100.xxxx` (Release Build 24H2)
+> *   **相容:** `26200.7015` 或更新版本 (Release Preview Build 25H2)
+> *   **相容:** `26220.6972` 或更新版本 (Dev Build 25H2)
 >
-> **範例：** `26200.6899` 這樣的版本是**不相容**的，因為它的主要版本號 **26200** 小於 (舊於) 所要求的 **26220**。
-
-> ### **為什麼只支援 Dev Channel？ (請務必閱讀)**
->
-> 這是一個常見問題。雖然 Xbox 全螢幕體驗功能也存在於其他版本中 (例如 25H2 正式版 `26200.xxxx`)，但決定僅支援 **Dev Channel** 是完全基於**品質與穩定性**的考量。
->
-> * **已知的問題 (Bug):** 非 Dev Channel 的版本存在著一些嚴重影響使用者體驗的錯誤，包括：
->     * **「工作檢視」介面** 的不穩定。
->     * **關閉應用程式時 (例如操作 'X' 按鈕)** 發生問題。
->     * 在 `26200.6899` 更新之前的版本，體驗尤其糟糕。
->
-> Dev Channel 提供了遠比其他版本更穩定、更成熟的功能實作。未來如果這些問題在公開版本中得到修復，將會考慮支援其他頻道。
+> **範例：** `26200.6899` 這樣的版本是**不相容**的，因為它的次要版本號 `.6899` 小於 (舊於) 所要求的 `.7015`。
 
 如果您的系統不符合需求，可參考此份完整的升級教學指南，其中引導您加入「Windows 測試人員計畫」並升級至正確的組建版本：
 * **[繁體中文指南 (Traditional Chinese Guide)](https://github.com/8bit2qubit/xbox-fullscreen-experience-guide/blob/main/README.zh-TW.md)**
@@ -77,7 +83,7 @@ Xbox 全螢幕功能最適合小尺寸的掌上型裝置。若要在其他硬體
 
 請在下載前確認您的作業系統版本。
 
-**[➡️ 前往發行頁面下載最新版本](https://github.com/8bit2qubit/XboxFullscreenExperienceTool/releases/latest)**
+**[➡️ 前往發行頁面下載最新版本](https://github.com/8bit2qubit/XboxFullScreenExperienceTool/releases/latest)**
 
 -----
 
@@ -94,9 +100,9 @@ Xbox 全螢幕功能最適合小尺寸的掌上型裝置。若要在其他硬體
 *   **一鍵切換**：提供直觀的介面，只需點選一次即可啟用或停用 Xbox 全螢幕體驗。
 *   **自動系統檢查**：啟動時自動驗證您的 Windows 組建版本，確保符合執行要求。
 *   **硬體類型模擬**：若您使用桌上型或筆記型電腦，工具會自動將裝置類型模擬為掌機，以滿足啟用條件。
+*   **可選覆寫模式**：為桌機與筆電提供 `PhysPanelCS` (工作排程模式) 或 `PhysPanelDrv` (驅動程式模式) 選項。
 *   **安全且完全可逆**：所有變更都會在停用或解除安裝時被還原。工具會備份初始設定，確保您的系統能無損恢復原狀。
 *   **標準化安裝**：提供標準的 `.msi` 安裝檔，便於版本管理與乾淨解除安裝。
-*   **全流程自動化**：所有步驟皆由工具自動完成，無需手動介入。
 
 -----
 
@@ -105,10 +111,12 @@ Xbox 全螢幕功能最適合小尺寸的掌上型裝置。若要在其他硬體
 本工具用於準備您的系統環境，最終的啟用步驟需要依照以下流程在 Windows 設定中完成。
 
 ### 1. 準備您的系統
-1.  從 **[發行頁面](https://github.com/8bit2qubit/XboxFullscreenExperienceTool/releases/latest)** 下載最新的 `.msi` 安裝檔。
+1.  從 **[發行頁面](https://github.com/8bit2qubit/XboxFullScreenExperienceTool/releases/latest)** 下載最新的 `.msi` 安裝檔。
 2.  執行安裝程式（過程需要系統管理員權限）。
-3.  從桌面捷徑啟動工具，並點選 `啟用 Xbox 全螢幕體驗` 按鈕。
-4.  **重新啟動**您的電腦以套用變更。
+3.  從桌面捷徑啟動工具。若使用桌機或筆電，請選擇您偏好的覆寫模式。
+    > **注意：** 如果您選擇 **`PhysPanelDrv`**，請務必先完成上述的前置作業。
+4.  點選 `啟用 Xbox 全螢幕體驗` 按鈕。
+5.  **重新啟動**您的電腦以套用變更。
 
 ### 2. 更新核心應用程式
 1.  電腦重啟後，開啟 **Microsoft Store**。
@@ -136,6 +144,7 @@ Xbox 全螢幕功能最適合小尺寸的掌上型裝置。若要在其他硬體
 *   **相依函式庫**:
     *   **ViVeLib (ViVeTool)**: 一個用於操控 Windows 功能組態 (Feature Flags) 的原生 API 封裝函式庫。以 Git Submodule 方式整合，原始碼來自 [thebookisclosed/ViVe](https://github.com/thebookisclosed/ViVe)，特此感謝。
     *   **PhysPanelLib**: 封裝 `ntdll.dll` 未公開 API，用以讀寫實體顯示面板 (Physical Panel) 尺寸資訊的函式庫。為本專案自研，其概念參考自 [riverar/physpanel](https://github.com/riverar/physpanel) 的 Rust 實作，特此感謝。
+    *   **PhysPanelDrv**: 一個輕量級的核心驅動程式，用於「驅動程式模式」以覆寫實體顯示面板尺寸，能可靠地模擬掌機螢幕大小。以 Git Submodule 方式整合，原始碼來自 [8bit2qubit/PhysPanelDrv](https://github.com/8bit2qubit/PhysPanelDrv)。
 *   **安裝套件**: Visual Studio Installer Projects (MSI)
 
 -----
@@ -158,8 +167,8 @@ Xbox 全螢幕功能最適合小尺寸的掌上型裝置。若要在其他硬體
 1.  **複製儲存庫**
 
     ```bash
-    git clone https://github.com/8bit2qubit/XboxFullscreenExperienceTool.git
-    cd XboxFullscreenExperienceTool
+    git clone https://github.com/8bit2qubit/XboxFullScreenExperienceTool.git
+    cd XboxFullScreenExperienceTool
     ```
 
 2.  **初始化子模組**
@@ -170,18 +179,18 @@ Xbox 全螢幕功能最適合小尺寸的掌上型裝置。若要在其他硬體
     ```
 
 3.  **在 Visual Studio 中開啟**
-    使用 Visual Studio 開啟 `XboxFullscreenExperienceTool.sln` 方案檔。
+    使用 Visual Studio 開啟 `XboxFullScreenExperienceTool.sln` 方案檔。
 
 4.  **執行以進行開發**
     在 Visual Studio 中，將組建組態設定為 `Debug`，然後按下 `F5` 來建置並執行應用程式。
 
 5.  **建置以用於生產**
-    當您準備好部署時，將組建組態切換至 `Release` 並建置方案。成品將會生成在 `XboxFullscreenExperienceTool/bin/Release` 資料夾下。
+    當您準備好部署時，將組建組態切換至 `Release` 並建置方案。成品將會生成在 `XboxFullScreenExperienceTool/bin/Release` 資料夾下。
 
 -----
 
 ## 📄 授權條款
 
-本專案採用 [GNU General Public License v3.0 (GPL-3.0)](https://github.com/8bit2qubit/XboxFullscreenExperienceTool/blob/main/LICENSE) 授權。
+本專案採用 [GNU General Public License v3.0 (GPL-3.0)](https://github.com/8bit2qubit/XboxFullScreenExperienceTool/blob/main/LICENSE) 授權。
 
 這意味著您可以自由地使用、修改與散佈本軟體，但任何基於此專案的衍生作品在散佈時，**也必須採用相同的 GPL-3.0 授權，並提供完整的原始碼**。更多詳情，請參閱 [GPL-3.0 官方條款](https://www.gnu.org/licenses/gpl-3.0.html)。
