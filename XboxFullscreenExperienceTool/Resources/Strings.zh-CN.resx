@@ -446,4 +446,7 @@
   <data name="LogErrorDriverInstallCancelled" xml:space="preserve">
     <value>驱动程序安装失败或已被用户取消。 (退出代码: {0})</value>
   </data>
+  <data name="LogLargeScreenForceCS" xml:space="preserve">
+    <value>侦测到屏幕尺寸大于 9.5 英寸。为确保兼容性，已将覆写模式限制为“任务计划 (CS)”模式。</value>
+  </data>
 </root>

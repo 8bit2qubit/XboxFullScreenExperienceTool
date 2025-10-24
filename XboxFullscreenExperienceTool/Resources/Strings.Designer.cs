@@ -532,6 +532,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Detected a screen size larger than 9.5 inches. To ensure compatibility, the override mode has been restricted to &apos;Task Scheduler (CS)&apos; mode. 的當地語系化字串。
+        /// </summary>
+        internal static string LogLargeScreenForceCS {
+            get {
+                return ResourceManager.GetString("LogLargeScreenForceCS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 LOGGING ERROR 的當地語系化字串。
         /// </summary>
         internal static string LogLoggingErrorPrefix {

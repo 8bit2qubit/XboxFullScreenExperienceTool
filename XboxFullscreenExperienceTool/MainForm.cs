@@ -38,6 +38,13 @@ namespace XboxFullScreenExperienceTool
         //======================================================================
 
         #region Constants
+        /// <summary>
+        /// 功能旗標：是否要在螢幕尺寸大於 9.5" 的裝置上強制停用驅動程式 (Drv) 模式。
+        /// 設定為 true: 啟用限制 (預設，更安全)。
+        /// 設定為 false: 取消限制，允許大螢幕裝置也嘗試使用 Drv 模式 (用於測試或進階使用者)。
+        /// </summary>
+        private const bool RESTRICT_DRV_MODE_ON_LARGE_SCREEN = true;
+
         // --- 版本要求 ---
         /// <summary>
         /// 啟用此功能所需的最低 Windows 主要組建版本號。
@@ -198,23 +205,28 @@ namespace XboxFullScreenExperienceTool
                 //   a) 系統無法偵測到實體尺寸 (回傳 0x0mm)。
                 //   b) 偵測到的尺寸過大 (例如，桌機、筆電)，超出了此功能預期的掌機尺寸範圍。
                 bool isScreenOverrideRequired = false;
+                bool isScreenTooLarge = false; // 用於判斷螢幕是否過大
                 var (success, size) = PanelManager.GetDisplaySize();
                 if (success)
                 {
                     // 情況 a: 尺寸未定義
                     bool isUndefined = size.WidthMm == 0 && size.HeightMm == 0;
-                    if (isUndefined)
+                    if (isUndefined) // 這是 0" 的情況
                     {
                         isScreenOverrideRequired = true;
                     }
-                    // 情況 b: 尺寸過大
+                    // 情況 b: 尺寸有定義，現在來判斷是否過大
                     else
                     {
                         // 使用畢氏定理 (a^2 + b^2 = c^2) 計算螢幕對角線的長度 (單位：毫米 mm)
                         double diagonalMm = Math.Sqrt((size.WidthMm * size.WidthMm) + (size.HeightMm * size.HeightMm));
 
                         // 將毫米 (mm) 轉換為英寸 (inches)，並檢查是否超過最大限制 (9.5")
-                        isScreenOverrideRequired = (diagonalMm / INCHES_TO_MM) > MAX_DIAGONAL_INCHES;
+                        if ((diagonalMm / INCHES_TO_MM) > MAX_DIAGONAL_INCHES)
+                        {
+                            isScreenOverrideRequired = true;
+                            isScreenTooLarge = true; // 在這裡才將 isScreenTooLarge 設為 true
+                        }
                     }
                 }
                 else
@@ -227,12 +239,35 @@ namespace XboxFullScreenExperienceTool
                 bool isPhysPanelDrvActive = DriverManager.IsDriverServiceRunning();
                 bool isScreenOverridePresent = isPhysPanelCSActive || isPhysPanelDrvActive;
 
-                // 步驟 4: 檢查驅動程式模式的先決條件 (Test Signing)
+                // 步驟 4: 檢查並設定覆寫模式的可用性 (檢查驅動程式模式的先決條件 (Test Signing))
+
+                // 條件 A: 檢查測試簽章模式是否啟用
                 bool isTestSigningOn = DriverManager.IsTestSigningEnabled();
-                radPhysPanelDrv.Enabled = isTestSigningOn;
+
+                // 條件 B: 根據功能旗標和螢幕尺寸，判斷是否存在螢幕尺寸限制
+                // 只有在「旗標為 true」且「螢幕需要覆寫 (即 > 9.5")」時，限制才生效
+                bool isScreenSizeRestricted = RESTRICT_DRV_MODE_ON_LARGE_SCREEN && isScreenTooLarge;
+
+                // 綜合判斷：Drv 模式只有在「測試簽章已啟用」且「沒有螢幕尺寸限制」時才可用
+                bool isDrvModeAvailable = isTestSigningOn && !isScreenSizeRestricted;
+
+                radPhysPanelDrv.Enabled = isDrvModeAvailable;
+
+                // 根據條件記錄日誌
                 if (!isTestSigningOn)
                 {
                     Log(Resources.Strings.LogTestSigningDisabled);
+                }
+                // 只有在限制實際生效時才記錄日誌
+                if (isScreenSizeRestricted)
+                {
+                    Log(Resources.Strings.LogLargeScreenForceCS);
+                }
+
+                // 安全機制：如果 Drv 模式因任何限制而變為不可用，則強制切換回 CS 模式
+                if (!isDrvModeAvailable)
+                {
+                    radPhysPanelCS.Checked = true;
                 }
 
                 // 步驟 5: 綜合判斷與 UI 更新
@@ -257,7 +292,7 @@ namespace XboxFullScreenExperienceTool
                             statusText = Resources.Strings.StatusDriverErrorNeedsDisable;
                             statusColor = Color.Red; // 使用更醒目的紅色來表示嚴重錯誤
 
-                            btnEnable.Enabled = false;      // 禁用「修正」按鈕
+                            btnEnable.Enabled = false;      // 停用「修正」按鈕
                             btnDisable.Enabled = true;      // 啟用「停用」按鈕，這是唯一允許的操作
                             grpPhysPanel.Enabled = false;   // 鎖定覆寫選項，防止使用者切換模式
                             radPhysPanelDrv.Checked = true; // 保持顯示當前是驅動模式

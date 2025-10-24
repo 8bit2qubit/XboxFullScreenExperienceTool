@@ -446,4 +446,7 @@
   <data name="LogErrorDriverInstallCancelled" xml:space="preserve">
     <value>ドライバーのインストールが失敗したか、ユーザーによってキャンセルされました。 (終了コード: {0})</value>
   </data>
+  <data name="LogLargeScreenForceCS" xml:space="preserve">
+    <value>9.5インチを超える画面サイズが検出されました。互換性を確保するため、オーバーライドモードは「タスクスケジューラ (CS)」モードに制限されています。</value>
+  </data>
 </root>

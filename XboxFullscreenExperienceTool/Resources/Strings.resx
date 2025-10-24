@@ -446,4 +446,7 @@ Please ensure you are running this program with administrator privileges.</value
   <data name="LogErrorDriverInstallCancelled" xml:space="preserve">
     <value>Driver installation failed or was cancelled by the user. (Exit code: {0})</value>
   </data>
+  <data name="LogLargeScreenForceCS" xml:space="preserve">
+    <value>Detected a screen size larger than 9.5 inches. To ensure compatibility, the override mode has been restricted to 'Task Scheduler (CS)' mode.</value>
+  </data>
 </root>
