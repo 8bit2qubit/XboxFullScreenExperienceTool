@@ -23,9 +23,9 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
-using XboxFullscreenExperienceTool.Helpers;
+using XboxFullScreenExperienceTool.Helpers;
 
-namespace XboxFullscreenExperienceTool
+namespace XboxFullScreenExperienceTool
 {
     /// <summary>
     /// 代表 Xbox 全螢幕體驗工具的主視窗。
@@ -74,7 +74,7 @@ namespace XboxFullscreenExperienceTool
 
         /// <summary>
         // 日誌檔案路徑。
-        private readonly string _logFilePath = Path.Combine(Application.StartupPath, "XboxFullscreenExperienceTool.log");
+        private readonly string _logFilePath = Path.Combine(Application.StartupPath, "XboxFullScreenExperienceTool.log");
         /// </summary>
         #endregion
 

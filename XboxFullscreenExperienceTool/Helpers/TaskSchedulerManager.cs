@@ -17,7 +17,7 @@
 using System.Diagnostics;
 using System.Reflection;
 
-namespace XboxFullscreenExperienceTool.Helpers
+namespace XboxFullScreenExperienceTool.Helpers
 {
     /// <summary>
     /// 提供用於管理特定 Windows 工作排程器工作的靜態輔助方法。
@@ -97,7 +97,7 @@ namespace XboxFullscreenExperienceTool.Helpers
             string xmlContent = $@"<?xml version=""1.0"" encoding=""UTF-16""?>
 <Task version=""1.2"" xmlns=""http://schemas.microsoft.com/windows/2004/02/mit/task"">
   <RegistrationInfo>
-    <Author>XboxFullscreenExperienceTool</Author>
+    <Author>XboxFullScreenExperienceTool</Author>
     <URI>\{TASK_NAME}</URI>
   </RegistrationInfo>
   <Triggers>

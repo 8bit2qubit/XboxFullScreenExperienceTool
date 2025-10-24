@@ -1,23 +1,23 @@
-# Xbox Fullscreen Experience Tool
+# Xbox Full Screen Experience Tool
 
 > 🌐 **English** | [繁體中文](README.zh-TW.md)
 
 <p align="center">
-<img src="app.ico" alt="Xbox Fullscreen Experience Tool Icon" style="width: 150px; object-fit: contain; display: block; margin: 0 auto;">
+<img src="app.ico" alt="Xbox Full Screen Experience Tool Icon" style="width: 150px; object-fit: contain; display: block; margin: 0 auto;">
 </p>
 
 <p align="center">
-<img src="demo.png" alt="Xbox Fullscreen Experience Tool Demo" style="width: 374px; object-fit: contain; display: block; margin: 0 auto;">
+<img src="demo.png" alt="Xbox Full Screen Experience Tool Demo" style="width: 374px; object-fit: contain; display: block; margin: 0 auto;">
 </p>
 
 <p align="center">
-<a href="https://github.com/8bit2qubit/XboxFullscreenExperienceTool/releases/latest"><img src="https://img.shields.io/github/v/release/8bit2qubit/XboxFullscreenExperienceTool?style=flat-square&color=blue" alt="Latest Release"></a>
-<a href="https://github.com/8bit2qubit/XboxFullscreenExperienceTool/releases"><img src="https://img.shields.io/github/downloads/8bit2qubit/XboxFullscreenExperienceTool/total" alt="Total Downloads"></a>
+<a href="https://github.com/8bit2qubit/XboxFullScreenExperienceTool/releases/latest"><img src="https://img.shields.io/github/v/release/8bit2qubit/XboxFullScreenExperienceTool?style=flat-square&color=blue" alt="Latest Release"></a>
+<a href="https://github.com/8bit2qubit/XboxFullScreenExperienceTool/releases"><img src="https://img.shields.io/github/downloads/8bit2qubit/XboxFullScreenExperienceTool/total" alt="Total Downloads"></a>
 <a href="#"><img src="https://img.shields.io/badge/tech-C%23%20%26%20.NET%208-blueviolet.svg?style=flat-square" alt="Tech"></a>
-<a href="https://github.com/8bit2qubit/XboxFullscreenExperienceTool/blob/main/LICENSE"><img src="https://img.shields.io/github/license/8bit2qubit/XboxFullscreenExperienceTool" alt="License"></a>
+<a href="https://github.com/8bit2qubit/XboxFullScreenExperienceTool/blob/main/LICENSE"><img src="https://img.shields.io/github/license/8bit2qubit/XboxFullScreenExperienceTool" alt="License"></a>
 </p>
 
-A lightweight and secure one-click utility designed to enable **Windows 11’s hidden Xbox fullscreen gaming experience**.
+A lightweight and secure one-click utility designed to enable **Windows 11’s hidden Xbox full screen gaming experience**.
 This tool automates all underlying configurations, providing a seamless, console-like interface optimized for gamepads.
 
 ## ⚠️ **Warning: Please Read Before Proceeding**
@@ -79,7 +79,7 @@ For a detailed walkthrough on joining the Windows Insider Program and upgrading 
 
 Please verify your Windows build version before downloading.
 
-**[➡️ Download the Latest Release](https://github.com/8bit2qubit/XboxFullscreenExperienceTool/releases/latest)**
+**[➡️ Download the Latest Release](https://github.com/8bit2qubit/XboxFullScreenExperienceTool/releases/latest)**
 
 -----
 
@@ -93,7 +93,7 @@ If you find this tool helpful, your support would be a great motivation for me t
 
 ## ✨ Features
 
-* **One-Click Toggle** – Simple interface to enable or disable the Xbox fullscreen experience.
+* **One-Click Toggle** – Simple interface to enable or disable the Xbox full screen experience.
 * **Automatic System Check** – Verifies your Windows build for compatibility at startup.
 * **Device Type Emulation** – Automatically simulates a handheld device type for activation on desktop or laptop systems.
 * **Safe and Reversible** – All changes are fully reversible. Backups of original settings are created to ensure safe restoration.
@@ -107,9 +107,9 @@ If you find this tool helpful, your support would be a great motivation for me t
 This tool prepares your system for the new mode. Final activation is done in Windows Settings after following these steps.
 
 ### 1. Prepare Your System
-1.  Download the latest `.msi` package from the [**Releases Page**](https://github.com/8bit2qubit/XboxFullscreenExperienceTool/releases/latest).
+1.  Download the latest `.msi` package from the [**Releases Page**](https://github.com/8bit2qubit/XboxFullScreenExperienceTool/releases/latest).
 2.  Run the installer (administrator privileges required).
-3.  Launch the tool from the desktop shortcut and click **“Enable Xbox Fullscreen Experience”**.
+3.  Launch the tool from the desktop shortcut and click **“Enable Xbox Full Screen Experience”**.
 4.  **Restart your PC** for the changes to take effect.
 
 ### 2. Update Core Apps
@@ -160,8 +160,8 @@ Follow these steps to run this project on your own machine.
 1.  **Clone the Repository**
 
     ```bash
-    git clone https://github.com/8bit2qubit/XboxFullscreenExperienceTool.git
-    cd XboxFullscreenExperienceTool
+    git clone https://github.com/8bit2qubit/XboxFullScreenExperienceTool.git
+    cd XboxFullScreenExperienceTool
     ```
 
 2.  **Initialize Submodules**
@@ -172,18 +172,18 @@ Follow these steps to run this project on your own machine.
     ```
 
 3.  **Open in Visual Studio**
-    Open the `XboxFullscreenExperienceTool.sln` solution file with Visual Studio.
+    Open the `XboxFullScreenExperienceTool.sln` solution file with Visual Studio.
 
 4.  **Run for Development**
     In Visual Studio, set the build configuration to `Debug` and press `F5` to build and run the application.
 
 5.  **Build for Production**
-    When you are ready to deploy, switch the build configuration to `Release` and build the solution. The output will be generated in the `XboxFullscreenExperienceTool/bin/Release` folder.
+    When you are ready to deploy, switch the build configuration to `Release` and build the solution. The output will be generated in the `XboxFullScreenExperienceTool/bin/Release` folder.
 
 -----
 
 ## 📄 License
 
-This project is licensed under the [GNU General Public License v3.0 (GPL-3.0)](https://github.com/8bit2qubit/XboxFullscreenExperienceTool/blob/main/LICENSE).
+This project is licensed under the [GNU General Public License v3.0 (GPL-3.0)](https://github.com/8bit2qubit/XboxFullScreenExperienceTool/blob/main/LICENSE).
 
 This means you are free to use, modify, and distribute this software, but any derivative works based on this project must also be distributed under the **same GPL-3.0 license and provide the complete source code**. For more details, please see the [official GPL-3.0 terms](https://www.gnu.org/licenses/gpl-3.0.html).

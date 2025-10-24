@@ -20,7 +20,7 @@ using System.ServiceProcess;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
 
-namespace XboxFullscreenExperienceTool.Helpers
+namespace XboxFullScreenExperienceTool.Helpers
 {
     /// <summary>
     /// 管理 PhysPanelDrv 驅動程式的安裝、移除與狀態檢查。

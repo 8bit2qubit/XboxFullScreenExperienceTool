@@ -16,7 +16,7 @@
 
 using System.Globalization;
 
-namespace XboxFullscreenExperienceTool
+namespace XboxFullScreenExperienceTool
 {
     /// <summary>
     /// 應用程式的主進入點與初始化邏輯。
@@ -32,7 +32,7 @@ namespace XboxFullscreenExperienceTool
         /// 用於確保應用程式單一執行個體的 Mutex (互斥鎖) 全域名稱。
         /// 這個名稱在作業系統中必須是唯一的，以防止與其他應用程式衝突。
         /// </summary>
-        private const string AppMutexName = "XboxFullscreenExperienceTool-SingleInstanceMutex-8bit2qubit";
+        private const string AppMutexName = "XboxFullScreenExperienceTool-SingleInstanceMutex-8bit2qubit";
 
         /// <summary>
         /// 持有的 Mutex 實例，用於在應用程式生命週期內鎖定，並在結束時釋放。
