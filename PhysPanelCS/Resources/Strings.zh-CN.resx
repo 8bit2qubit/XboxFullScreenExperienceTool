@@ -162,4 +162,22 @@
   <data name="UnknownVersion" xml:space="preserve">
     <value>未知版本</value>
   </data>
+  <data name="AttemptingStartKeyboard" xml:space="preserve">
+    <value>正在尝试启动触摸键盘...</value>
+  </data>
+  <data name="KeyboardStartCommandSuccess" xml:space="preserve">
+    <value>键盘启动命令已成功发送。</value>
+  </data>
+  <data name="ErrorFailedToStartKeyboard" xml:space="preserve">
+    <value>错误：启动键盘失败。详细信息：{0}</value>
+  </data>
+  <data name="StartKeyboardDescription" xml:space="preserve">
+    <value>  startkeyboard     启动或切换 Windows 触摸键盘。</value>
+  </data>
+  <data name="StartKeyboardExample" xml:space="preserve">
+    <value>  PhysPanelCS.exe startkeyboard</value>
+  </data>
+  <data name="ErrorNtStatusErrorCode" xml:space="preserve">
+    <value>   NTSTATUS 错误码: 0x{0:X8}</value>
+  </data>
 </root>

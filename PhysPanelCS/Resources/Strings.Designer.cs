@@ -61,6 +61,15 @@ namespace PhysPanelCS.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Attempting to start the touch keyboard... 的當地語系化字串。
+        /// </summary>
+        internal static string AttemptingStartKeyboard {
+            get {
+                return ResourceManager.GetString("AttemptingStartKeyboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Commands: 的當地語系化字串。
         /// </summary>
         internal static string Commands {
@@ -88,11 +97,29 @@ namespace PhysPanelCS.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Error: Failed to start keyboard. Details: {0} 的當地語系化字串。
+        /// </summary>
+        internal static string ErrorFailedToStartKeyboard {
+            get {
+                return ResourceManager.GetString("ErrorFailedToStartKeyboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Error: Could not get display dimensions. 的當地語系化字串。
         /// </summary>
         internal static string ErrorGetFailed {
             get {
                 return ResourceManager.GetString("ErrorGetFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似    NTSTATUS Error Code: 0x{0:X8} 的當地語系化字串。
+        /// </summary>
+        internal static string ErrorNtStatusErrorCode {
+            get {
+                return ResourceManager.GetString("ErrorNtStatusErrorCode", resourceCulture);
             }
         }
         
@@ -151,6 +178,15 @@ namespace PhysPanelCS.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Keyboard start command sent successfully. 的當地語系化字串。
+        /// </summary>
+        internal static string KeyboardStartCommandSuccess {
+            get {
+                return ResourceManager.GetString("KeyboardStartCommandSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似   set &lt;width&gt; &lt;height&gt;     Set new physical dimensions (in millimeters). 的當地語系化字串。
         /// </summary>
         internal static string SetDescription {
@@ -174,6 +210,24 @@ namespace PhysPanelCS.Resources {
         internal static string SetSuccess {
             get {
                 return ResourceManager.GetString("SetSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似   startkeyboard            Starts or toggles the Windows touch keyboard. 的當地語系化字串。
+        /// </summary>
+        internal static string StartKeyboardDescription {
+            get {
+                return ResourceManager.GetString("StartKeyboardDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似   PhysPanelCS.exe startkeyboard 的當地語系化字串。
+        /// </summary>
+        internal static string StartKeyboardExample {
+            get {
+                return ResourceManager.GetString("StartKeyboardExample", resourceCulture);
             }
         }
         

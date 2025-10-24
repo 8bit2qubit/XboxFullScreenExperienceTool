@@ -162,4 +162,22 @@
   <data name="UnknownVersion" xml:space="preserve">
     <value>Unknown Version</value>
   </data>
+  <data name="AttemptingStartKeyboard" xml:space="preserve">
+    <value>Attempting to start the touch keyboard...</value>
+  </data>
+  <data name="KeyboardStartCommandSuccess" xml:space="preserve">
+    <value>Keyboard start command sent successfully.</value>
+  </data>
+  <data name="ErrorFailedToStartKeyboard" xml:space="preserve">
+    <value>Error: Failed to start keyboard. Details: {0}</value>
+  </data>
+  <data name="StartKeyboardDescription" xml:space="preserve">
+    <value>  startkeyboard            Starts or toggles the Windows touch keyboard.</value>
+  </data>
+  <data name="StartKeyboardExample" xml:space="preserve">
+    <value>  PhysPanelCS.exe startkeyboard</value>
+  </data>
+  <data name="ErrorNtStatusErrorCode" xml:space="preserve">
+    <value>   NTSTATUS Error Code: 0x{0:X8}</value>
+  </data>
 </root>
