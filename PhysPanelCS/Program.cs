@@ -16,7 +16,7 @@
 
 using System.Globalization;
 using System.Reflection;
-using PhysPanelLib; // 引入自訂的函式庫
+using PhysPanelLib;
 
 namespace PhysPanelCS
 {
@@ -42,7 +42,7 @@ namespace PhysPanelCS
             if (args.Length < 1)
             {
                 PrintUsage();
-                return 1; // 1 通常代表用法錯誤
+                return 1; // 1 代表用法錯誤
             }
 
             string action = args[0].ToLowerInvariant(); // 將命令轉為小寫以方便比較
@@ -52,6 +52,8 @@ namespace PhysPanelCS
                     return HandleGet();
                 case "set":
                     return HandleSet(args);
+                case "startkeyboard":
+                    return HandleStartKeyboard();
                 default:
                     Console.Error.WriteLine(string.Format(Resources.Strings.ErrorUnknownCommand, args[0]));
                     PrintUsage();
@@ -112,9 +114,28 @@ namespace PhysPanelCS
             }
             else
             {
-                // 這是關鍵提示，因為修改 WNF 狀態通常需要更高的權限。
+                // 這是關鍵提示，因為修改 WNF 狀態需要更高的 SYSTEM 權限。
                 Console.Error.WriteLine(Resources.Strings.ErrorSetFailed);
                 return -1; // -1 代表執行期間發生錯誤
+            }
+        }
+
+        /// <summary>
+        /// 處理 'startkeyboard' 命令：啟動軟體鍵盤。
+        /// </summary>
+        private static int HandleStartKeyboard()
+        {
+            try
+            {
+                Console.WriteLine("正在嘗試啟動觸控鍵盤...");
+                PanelManager.StartTouchKeyboard();
+                Console.WriteLine("鍵盤啟動指令已成功傳送。");
+                return 0; // 成功
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"錯誤：啟動鍵盤失敗。詳細資訊：{ex.Message}");
+                return -1; // 執行失敗
             }
         }
 
@@ -140,10 +161,12 @@ namespace PhysPanelCS
             Console.WriteLine(Resources.Strings.Commands);
             Console.WriteLine(Resources.Strings.GetDescription);
             Console.WriteLine(Resources.Strings.SetDescription);
+            Console.WriteLine("  startkeyboard     啟動或切換 Windows 觸控鍵盤。");
             Console.WriteLine();
             Console.WriteLine(Resources.Strings.Examples);
             Console.WriteLine(Resources.Strings.GetExample);
             Console.WriteLine(Resources.Strings.SetExample);
+            Console.WriteLine("  PhysPanelCS.exe startkeyboard");
             Console.WriteLine();
         }
     }
