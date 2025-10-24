@@ -342,10 +342,10 @@ Please ensure you are running this program with administrator privileges.</value
     <value>Could not get the application's installation directory.</value>
   </data>
   <data name="ErrorCertificateFileNotFound" xml:space="preserve">
-    <value>Error: Certificate file not found '{0}'.</value>
+    <value>Error: Certificate file '{0}' not found.</value>
   </data>
   <data name="ErrorDriverFilesNotFound" xml:space="preserve">
-    <value>Error: Driver files not found '{0}' or '{1}'.</value>
+    <value>Error: Driver files '{0}' or '{1}' not found.</value>
   </data>
   <data name="LogErrorDriverInstallFailed" xml:space="preserve">
     <value>Driver installation failed: {0}</value>
@@ -396,7 +396,7 @@ Please ensure you are running this program with administrator privileges.</value
     <value>Status: Enabled (Driver Mode)</value>
   </data>
   <data name="StatusEnabledSchedulerMode" xml:space="preserve">
-    <value>Status: Enabled (Scheduler Mode)</value>
+    <value>Status: Enabled (Task Scheduler Mode)</value>
   </data>
   <data name="LogTestSigningDisabled" xml:space="preserve">
     <value>System Test Signing mode is not enabled. PhysPanelDrv option is disabled.</value>

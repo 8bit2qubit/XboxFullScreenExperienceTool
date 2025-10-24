@@ -106,7 +106,7 @@ namespace XboxFullscreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Error: Certificate file not found &apos;{0}&apos;. 的當地語系化字串。
+        ///   查詢類似 Error: Certificate file &apos;{0}&apos; not found. 的當地語系化字串。
         /// </summary>
         internal static string ErrorCertificateFileNotFound {
             get {
@@ -133,7 +133,7 @@ namespace XboxFullscreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Error: Driver files not found &apos;{0}&apos; or &apos;{1}&apos;. 的當地語系化字串。
+        ///   查詢類似 Error: Driver files &apos;{0}&apos; or &apos;{1}&apos; not found. 的當地語系化字串。
         /// </summary>
         internal static string ErrorDriverFilesNotFound {
             get {
@@ -849,7 +849,7 @@ namespace XboxFullscreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Status: Enabled (Scheduler Mode) 的當地語系化字串。
+        ///   查詢類似 Status: Enabled (Task Scheduler Mode) 的當地語系化字串。
         /// </summary>
         internal static string StatusEnabledSchedulerMode {
             get {

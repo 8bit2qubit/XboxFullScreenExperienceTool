@@ -154,7 +154,7 @@
     <value>Error: Invalid parameters for 'set' command.</value>
   </data>
   <data name="ErrorSetFailed" xml:space="preserve">
-    <value>Error: Could not set display dimensions. This operation may require SYSTEM user privileges.</value>
+    <value>Error: Could not set display dimensions. This operation requires SYSTEM user privileges.</value>
   </data>
   <data name="SetSuccess" xml:space="preserve">
     <value>Set successfully.</value>

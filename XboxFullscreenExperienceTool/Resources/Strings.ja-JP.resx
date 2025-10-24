@@ -341,4 +341,88 @@
   <data name="TaskSchedulerManagerErrorDirectoryNotFound" xml:space="preserve">
     <value>アプリケーションのインストールディレクトリを取得できませんでした。</value>
   </data>
+  <data name="ErrorCertificateFileNotFound" xml:space="preserve">
+    <value>エラー: 証明書ファイル '{0}' が見つかりません。</value>
+  </data>
+  <data name="ErrorDriverFilesNotFound" xml:space="preserve">
+    <value>エラー: ドライバーファイル '{0}' または '{1}' が見つかりません。</value>
+  </data>
+  <data name="LogErrorDriverInstallFailed" xml:space="preserve">
+    <value>ドライバーのインストールに失敗しました: {0}</value>
+  </data>
+  <data name="LogErrorDriverRemoveFailed" xml:space="preserve">
+    <value>ドライバーの削除に失敗しました: {0}</value>
+  </data>
+  <data name="LogErrorPrefix" xml:space="preserve">
+    <value>エラー: {0}</value>
+  </data>
+  <data name="LogCertificateInstallSuccess" xml:space="preserve">
+    <value>証明書は正常にインストールされました。</value>
+  </data>
+  <data name="LogDeletingDriverPackage" xml:space="preserve">
+    <value>ドライバーパッケージ '{0}' が見つかりました。削除しています...</value>
+  </data>
+  <data name="LogDriverInstallCommandExecuted" xml:space="preserve">
+    <value>ドライバーのインストールコマンドが実行されました。</value>
+  </data>
+  <data name="LogDriverRemoveCommandExecuted" xml:space="preserve">
+    <value>ドライバーの削除コマンドが実行されました。</value>
+  </data>
+  <data name="LogFindingDriverPackage" xml:space="preserve">
+    <value>ドライバーパッケージ (PhysPanelDrv.inf) を検索しています...</value>
+  </data>
+  <data name="LogInstallingCertificate" xml:space="preserve">
+    <value>ドライバー証明書をインストールしています...</value>
+  </data>
+  <data name="LogInstallingDriverWithDevcon" xml:space="preserve">
+    <value>devcon を使用してドライバーをインストールしています...</value>
+  </data>
+  <data name="LogRemovingDriverDevice" xml:space="preserve">
+    <value>ドライバーデバイスを削除しています...</value>
+  </data>
+  <data name="WarningOemInfNotFound" xml:space="preserve">
+    <value>警告: 対応する oem&lt;番号&gt;.inf ファイルが見つかりません。すでに削除されている可能性があります。</value>
+  </data>
+  <data name="grpPhysPanel_Text" xml:space="preserve">
+    <value>画面サイズの上書き方式 (非ハンドヘルドデバイス向け)</value>
+  </data>
+  <data name="radPhysPanelCS_Text" xml:space="preserve">
+    <value>PhysPanelCS (タスクスケジューラモード、高セキュリティ、既定)</value>
+  </data>
+  <data name="radPhysPanelDrv_Text" xml:space="preserve">
+    <value>PhysPanelDrv (ドライバーモード、高安定性、テスト署名オン必須)</value>
+  </data>
+  <data name="StatusEnabledDriverMode" xml:space="preserve">
+    <value>状態: 有効 (ドライバーモード)</value>
+  </data>
+  <data name="StatusEnabledSchedulerMode" xml:space="preserve">
+    <value>状態: 有効 (タスクスケジューラモード)</value>
+  </data>
+  <data name="LogTestSigningDisabled" xml:space="preserve">
+    <value>システムのテスト署名モードが有効になっていません。PhysPanelDrv オプションは無効化されます。</value>
+  </data>
+  <data name="LogChoosingDriverMode" xml:space="preserve">
+    <value>ドライバーモード (PhysPanelDrv) を選択しました...</value>
+  </data>
+  <data name="LogRemovingOldTask" xml:space="preserve">
+    <value>既存のスケジュールタスクを検出しました。競合を避けるために削除します...</value>
+  </data>
+  <data name="LogChoosingSchedulerMode" xml:space="preserve">
+    <value>タスクスケジューラモード (PhysPanelCS) を選択しました...</value>
+  </data>
+  <data name="LogRemovingOldDriver" xml:space="preserve">
+    <value>既存のドライバーサービスを検出しました。競合を避けるために削除します...</value>
+  </data>
+  <data name="LogRemovingPhysPanelDrv" xml:space="preserve">
+    <value>PhysPanelDrv ドライバーを削除しています...</value>
+  </data>
+  <data name="LogLoggingErrorPrefix" xml:space="preserve">
+    <value>ログ記録エラー</value>
+  </data>
+  <data name="ErrorWritingLogFile" xml:space="preserve">
+    <value>ログファイルへの書き込みに失敗しました: {0}</value>
+  </data>
+  <data name="LogStatusCheckSummary" xml:space="preserve">
+    <value>状態チェック: コア有効={0} (ViVe機能={1}, レジストリ={2}), 画面上書き要={3}, 上書き存在={4} (CS={5}, Drv={6}), テスト署名={7}</value>
+  </data>
 </root>

@@ -396,7 +396,7 @@
     <value>狀態：已啟用 (驅動程式模式)</value>
   </data>
   <data name="StatusEnabledSchedulerMode" xml:space="preserve">
-    <value>狀態：已啟用 (排程模式)</value>
+    <value>狀態：已啟用 (工作排程模式)</value>
   </data>
   <data name="LogTestSigningDisabled" xml:space="preserve">
     <value>系統未啟用測試簽章模式，PhysPanelDrv 選項已停用。</value>
@@ -423,6 +423,6 @@
     <value>寫入日誌檔案失敗: {0}</value>
   </data>
   <data name="LogStatusCheckSummary" xml:space="preserve">
-    <value>狀態檢查：核心啟用={0} (ViVe 功能={1}, 登錄檔={2}), 螢幕覆寫需求={3}, 覆寫存在={4} (CS={5}, Drv={6}), 測試簽章={7}</value>
+    <value>狀態檢查：核心啟用={0} (ViVe功能={1}, 登錄檔={2}), 螢幕覆寫需求={3}, 覆寫存在={4} (CS={5}, Drv={6}), 測試簽章={7}</value>
   </data>
 </root>

@@ -154,7 +154,7 @@
     <value>错误：'set' 命令的参数格式不正确。</value>
   </data>
   <data name="ErrorSetFailed" xml:space="preserve">
-    <value>错误：无法设置显示器尺寸。此操作可能需要以 SYSTEM 用户权限执行。</value>
+    <value>错误：无法设置显示器尺寸。此操作需要以 SYSTEM 用户权限运行。</value>
   </data>
   <data name="SetSuccess" xml:space="preserve">
     <value>设置成功。</value>

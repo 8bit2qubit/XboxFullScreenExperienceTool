@@ -154,7 +154,7 @@
     <value>エラー：'set' コマンドのパラメータ形式が正しくありません。</value>
   </data>
   <data name="ErrorSetFailed" xml:space="preserve">
-    <value>エラー：ディスプレイサイズを設定できませんでした。この操作にはSYSTEMユーザー権限が必要な場合があります。</value>
+    <value>エラー：ディスプレイサイズを設定できませんでした。この操作にはSYSTEMユーザー権限が必要です。</value>
   </data>
   <data name="SetSuccess" xml:space="preserve">
     <value>設定に成功しました。</value>

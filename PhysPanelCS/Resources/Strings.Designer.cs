@@ -97,7 +97,7 @@ namespace PhysPanelCS.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Error: Could not set display dimensions. This operation may require SYSTEM user privileges. 的當地語系化字串。
+        ///   查詢類似 Error: Could not set display dimensions. This operation requires SYSTEM user privileges. 的當地語系化字串。
         /// </summary>
         internal static string ErrorSetFailed {
             get {
