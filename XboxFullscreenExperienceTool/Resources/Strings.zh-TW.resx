@@ -425,4 +425,25 @@
   <data name="LogStatusCheckSummary" xml:space="preserve">
     <value>狀態檢查：核心啟用={0} (ViVe功能={1}, 登錄檔={2}), 螢幕覆寫需求={3}, 覆寫存在={4} (CS={5}, Drv={6}), 測試簽章={7}</value>
   </data>
+  <data name="StatusDriverErrorNeedsDisable" xml:space="preserve">
+    <value>驅動模式錯誤，請停用以進行還原</value>
+  </data>
+  <data name="LogDriverInstallCancelled" xml:space="preserve">
+    <value>驅動程式安裝已被使用者取消或失敗。操作已中止。</value>
+  </data>
+  <data name="LogErrorDriverRemoveFailedDuringSwitch" xml:space="preserve">
+    <value>在切換模式時移除現有驅動程式失敗，但仍會繼續設定新的模式。</value>
+  </data>
+  <data name="LogErrorDriverRemoveFailedGeneral" xml:space="preserve">
+    <value>移除驅動程式失敗，可能需要手動清理。</value>
+  </data>
+  <data name="LogOperationFailedRollingBack" xml:space="preserve">
+    <value>操作失敗，正在還原變更...</value>
+  </data>
+  <data name="LogRollbackComplete" xml:space="preserve">
+    <value>還原完成。系統未做任何變更。</value>
+  </data>
+  <data name="LogErrorDriverInstallCancelled" xml:space="preserve">
+    <value>驅動程式安裝失敗或已被使用者取消。 (結束代碼: {0})</value>
+  </data>
 </root>

@@ -149,7 +149,15 @@ namespace XboxFullScreenExperienceTool.Helpers
                 }
 
                 logger(Resources.Strings.LogInstallingDriverWithDevcon);
-                ExecuteProcess(devconPath, $"install \"{infPath}\" \"root\\{DRIVER_SERVICE_NAME}\"", logger);
+                // 執行 devcon.exe 並捕獲其結束代碼
+                int exitCode = ExecuteProcess(devconPath, $"install \"{infPath}\" \"root\\{DRIVER_SERVICE_NAME}\"", logger);
+
+                // 檢查結束代碼。0 代表成功。非 0 代表失敗或使用者取消。
+                if (exitCode != 0)
+                {
+                    logger(string.Format(Resources.Strings.LogErrorDriverInstallCancelled, exitCode));
+                    return false;
+                }
                 logger(Resources.Strings.LogDriverInstallCommandExecuted);
                 return true;
             }
@@ -198,7 +206,7 @@ namespace XboxFullScreenExperienceTool.Helpers
         /// <summary>
         /// 執行外部處理程序並記錄其輸出。
         /// </summary>
-        private static void ExecuteProcess(string fileName, string arguments, Action<string> logger)
+        private static int ExecuteProcess(string fileName, string arguments, Action<string> logger)
         {
             var process = new Process
             {
@@ -210,7 +218,8 @@ namespace XboxFullScreenExperienceTool.Helpers
                     RedirectStandardError = true,
                     UseShellExecute = false,
                     CreateNoWindow = true,
-                    WorkingDirectory = DriverFilesPath
+                    WorkingDirectory = DriverFilesPath,
+                    Verb = "runas"
                 }
             };
             process.OutputDataReceived += (sender, args) => { if (args.Data != null) logger(args.Data); };
@@ -220,6 +229,8 @@ namespace XboxFullScreenExperienceTool.Helpers
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
             process.WaitForExit();
+            // 回傳處理程序的結束代碼
+            return process.ExitCode;
         }
 
         /// <summary>

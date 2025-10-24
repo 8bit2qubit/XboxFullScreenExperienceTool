@@ -247,21 +247,39 @@ namespace XboxFullScreenExperienceTool
                     if (isScreenOverrideRequired)
                     {
                         // 狀態 2: 需要修正
-                        // 核心已啟用，但螢幕尺寸仍不符。
-                        // 這包含兩種情況：
-                        //   a) 從未安裝覆寫 (isScreenOverridePresent = False)
-                        //   b) 已安裝覆寫，但未生效 (損毀或安裝不正確) (isScreenOverridePresent = True)
-                        statusText = Resources.Strings.StatusNeedsFix;
-                        statusColor = Color.Orange;
-                        btnEnable.Text = Resources.Strings.btnEnable_Text_Fix;
-                        btnEnable.Enabled = true;
-                        btnDisable.Enabled = false;
-                        grpPhysPanel.Enabled = true; // 允許選擇修正方式
+                        // 核心已啟用，但螢幕尺寸仍不符
+                        // 根據使用者回報：當驅動程式安裝後未正常工作時，應用程式會進入此「需要修正」狀態
+                        // 此時若讓使用者點選「修正」，會導致重複安裝驅動，且無法解決問題
+                        // 正確的處理方式是引導使用者先「停用」功能，將系統還原到乾淨狀態再重試
+                        if (isPhysPanelDrvActive)
+                        {
+                            // 偵測到是驅動程式模式 (Drv) 處於無效狀態
+                            statusText = Resources.Strings.StatusDriverErrorNeedsDisable;
+                            statusColor = Color.Red; // 使用更醒目的紅色來表示嚴重錯誤
 
-                        // 顯示目前安裝但"無效"的選項
-                        radPhysPanelDrv.Checked = isPhysPanelDrvActive;
-                        radPhysPanelCS.Checked = isPhysPanelCSActive;
-                        if (!isScreenOverridePresent) radPhysPanelCS.Checked = true; // 預設 PhysPanelCS
+                            btnEnable.Enabled = false;      // 禁用「修正」按鈕
+                            btnDisable.Enabled = true;      // 啟用「停用」按鈕，這是唯一允許的操作
+                            grpPhysPanel.Enabled = false;   // 鎖定覆寫選項，防止使用者切換模式
+                            radPhysPanelDrv.Checked = true; // 保持顯示當前是驅動模式
+                        }
+                        else
+                        {
+                            // 非驅動程式模式下的「需要修正」狀態 (例如排程工作損壞或從未安裝覆寫)
+                            statusText = Resources.Strings.StatusNeedsFix;
+                            statusColor = Color.Orange;
+                            btnEnable.Text = Resources.Strings.btnEnable_Text_Fix;
+                            btnEnable.Enabled = true;
+
+                            // 停用按鈕必須是 false，否則使用者會有兩個可選按鈕
+                            btnDisable.Enabled = false;
+
+                            grpPhysPanel.Enabled = true; // 允許選擇修正方式
+
+                            // 顯示目前安裝但"無效"的選項
+                            radPhysPanelDrv.Checked = isPhysPanelDrvActive;
+                            radPhysPanelCS.Checked = isPhysPanelCSActive;
+                            if (!isScreenOverridePresent) radPhysPanelCS.Checked = true; // 預設 PhysPanelCS
+                        }
                     }
                     else
                     {
@@ -322,6 +340,13 @@ namespace XboxFullScreenExperienceTool
             ArchiveLogFile();
 
             this.Cursor = Cursors.WaitCursor;
+
+            // 在開始長時間操作之前，立即鎖定所有 UI 互動
+            btnEnable.Enabled = false;
+            btnDisable.Enabled = false;
+            grpPhysPanel.Enabled = false;
+            cboLanguage.Enabled = false;
+
             try
             {
                 Log(Resources.Strings.LogBeginEnable);
@@ -335,6 +360,9 @@ namespace XboxFullScreenExperienceTool
                 Log(string.Format(Resources.Strings.LogEnablingFeatures, string.Join(", ", FEATURE_IDS)));
                 EnableViveFeatures();
 
+                // --- 步驟 3: 條件步驟：設定螢幕尺寸覆寫 ---
+                bool operationSuccess = true; // 預設為成功
+
                 // --- 條件步驟：根據選擇的模式設定螢幕尺寸覆寫 ---
                 if (radPhysPanelDrv.Checked)
                 {
@@ -345,7 +373,15 @@ namespace XboxFullScreenExperienceTool
                         Log(Resources.Strings.LogRemovingOldTask);
                         TaskSchedulerManager.DeleteSetPanelDimensionsTask();
                     }
-                    await Task.Run(() => DriverManager.InstallDriver(msg => Log(msg)));
+
+                    // 呼叫安裝方法並接收其回傳值
+                    bool installSuccess = await Task.Run(() => DriverManager.InstallDriver(msg => Log(msg)));
+
+                    // 檢查安裝是否成功。如果使用者點選了 "不安裝"，此處會收到 false
+                    if (!installSuccess)
+                    {
+                        operationSuccess = false; // 標記操作失敗
+                    }
                 }
                 else // radPhysPanelCS.Checked
                 {
@@ -359,11 +395,26 @@ namespace XboxFullScreenExperienceTool
                     HandleTaskSchedulerCreation();
                 }
 
-                // --- 流程結束 ---
-                btnEnable.Enabled = false;
-                btnDisable.Enabled = false;
-                Log(Resources.Strings.LogEnableComplete, true);
-                PromptForRestart(Resources.Strings.PromptRestartCaptionSuccess);
+                // --- 步驟 4: 流程總結與處理 ---
+                if (operationSuccess)
+                {
+                    // --- 成功路徑 ---
+                    btnEnable.Enabled = false;
+                    btnDisable.Enabled = false;
+                    Log(Resources.Strings.LogEnableComplete, true);
+                    PromptForRestart(Resources.Strings.PromptRestartCaptionSuccess);
+                }
+                else
+                {
+                    // --- 失敗路徑：執行還原 (Rollback) ---
+                    LogError(Resources.Strings.LogOperationFailedRollingBack);
+
+                    // 以相反的順序還原變更
+                    RestoreRegistry();
+                    DisableViveFeatures();
+
+                    LogError(Resources.Strings.LogRollbackComplete);
+                }
             }
             catch (Exception ex)
             {
@@ -374,7 +425,7 @@ namespace XboxFullScreenExperienceTool
                 this.Cursor = Cursors.Default;
                 if (!_restartPending)
                 {
-                    CheckCurrentStatus(); // 如果不需要重新開機，則重新整理狀態
+                    CheckCurrentStatus(); // 如果不需要重新開機，則重新整理狀態。無論成功、失敗還原，最後都重新整理一次狀態。
                 }
             }
         }
@@ -388,6 +439,13 @@ namespace XboxFullScreenExperienceTool
             ArchiveLogFile();
 
             this.Cursor = Cursors.WaitCursor;
+
+            // 在開始長時間操作之前，立即鎖定所有 UI 互動
+            btnEnable.Enabled = false;
+            btnDisable.Enabled = false;
+            grpPhysPanel.Enabled = false;
+            cboLanguage.Enabled = false;
+
             try
             {
                 await PerformDisableActions(); // 呼叫共用的停用邏輯
@@ -419,17 +477,7 @@ namespace XboxFullScreenExperienceTool
             Log(Resources.Strings.LogBeginDisable);
 
             // 步驟 1: 停用 ViVe 功能
-            Log(string.Format(Resources.Strings.LogDisablingFeatures, string.Join(", ", FEATURE_IDS)));
-            var updates = Array.ConvertAll(FEATURE_IDS, id => new RTL_FEATURE_CONFIGURATION_UPDATE
-            {
-                FeatureId = id,
-                EnabledState = RTL_FEATURE_ENABLED_STATE.Disabled,
-                Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState,
-                Priority = RTL_FEATURE_CONFIGURATION_PRIORITY.User
-            });
-            FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
-            FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Boot);
-            Log(Resources.Strings.LogFeaturesDisabledSuccess);
+            DisableViveFeatures();
 
             // 步驟 2: 還原登錄檔值
             RestoreRegistry();
@@ -445,7 +493,13 @@ namespace XboxFullScreenExperienceTool
             if (DriverManager.IsDriverServiceRunning())
             {
                 Log(Resources.Strings.LogRemovingPhysPanelDrv);
-                await Task.Run(() => DriverManager.UninstallDriver(msg => Log(msg)));
+                // 檢查 Uninstall 的結果
+                bool uninstallSuccess = await Task.Run(() => DriverManager.UninstallDriver(msg => Log(msg)));
+                if (!uninstallSuccess)
+                {
+                    // 如果移除失敗，只記錄錯誤，不停用流程，因為其他清理步驟 (如還原登錄檔) 更重要
+                    LogError(Resources.Strings.LogErrorDriverRemoveFailedGeneral);
+                }
             }
         }
 
@@ -582,6 +636,24 @@ namespace XboxFullScreenExperienceTool
             {
                 LogError(string.Format(Resources.Strings.ErrorRestoringRegistry, ex.Message));
             }
+        }
+
+        /// <summary>
+        /// 停用所需的 ViVe 功能。此方法從 PerformDisableActions 中提取出來以便重複使用。
+        /// </summary>
+        private void DisableViveFeatures()
+        {
+            Log(string.Format(Resources.Strings.LogDisablingFeatures, string.Join(", ", FEATURE_IDS)));
+            var updates = Array.ConvertAll(FEATURE_IDS, id => new RTL_FEATURE_CONFIGURATION_UPDATE
+            {
+                FeatureId = id,
+                EnabledState = RTL_FEATURE_ENABLED_STATE.Disabled,
+                Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState,
+                Priority = RTL_FEATURE_CONFIGURATION_PRIORITY.User
+            });
+            FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
+            FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Boot);
+            Log(Resources.Strings.LogFeaturesDisabledSuccess);
         }
         #endregion
 

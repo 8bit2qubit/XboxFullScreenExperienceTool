@@ -425,4 +425,25 @@ Please ensure you are running this program with administrator privileges.</value
   <data name="LogStatusCheckSummary" xml:space="preserve">
     <value>Status Check: CoreEnabled={0} (ViVeFeatures={1}, Registry={2}), ScreenOverrideRequired={3}, OverridePresent={4} (CS={5}, Drv={6}), TestSigning={7}</value>
   </data>
+  <data name="StatusDriverErrorNeedsDisable" xml:space="preserve">
+    <value>Driver Mode Error: Please Disable to Restore</value>
+  </data>
+  <data name="LogDriverInstallCancelled" xml:space="preserve">
+    <value>Driver installation was cancelled by the user or failed. The operation has been aborted.</value>
+  </data>
+  <data name="LogErrorDriverRemoveFailedDuringSwitch" xml:space="preserve">
+    <value>Failed to remove the existing driver while switching modes, but will proceed with setting up the new mode.</value>
+  </data>
+  <data name="LogErrorDriverRemoveFailedGeneral" xml:space="preserve">
+    <value>Failed to remove the driver. Manual cleanup may be required.</value>
+  </data>
+  <data name="LogOperationFailedRollingBack" xml:space="preserve">
+    <value>Operation failed, rolling back changes...</value>
+  </data>
+  <data name="LogRollbackComplete" xml:space="preserve">
+    <value>Rollback complete. No changes were made to the system.</value>
+  </data>
+  <data name="LogErrorDriverInstallCancelled" xml:space="preserve">
+    <value>Driver installation failed or was cancelled by the user. (Exit code: {0})</value>
+  </data>
 </root>

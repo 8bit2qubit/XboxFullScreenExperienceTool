@@ -425,4 +425,25 @@
   <data name="LogStatusCheckSummary" xml:space="preserve">
     <value>状態チェック: コア有効={0} (ViVe機能={1}, レジストリ={2}), 画面上書き要={3}, 上書き存在={4} (CS={5}, Drv={6}), テスト署名={7}</value>
   </data>
+  <data name="StatusDriverErrorNeedsDisable" xml:space="preserve">
+    <value>ドライバーモードエラー：無効化して復元してください</value>
+  </data>
+  <data name="LogDriverInstallCancelled" xml:space="preserve">
+    <value>ドライバーのインストールがユーザーによってキャンセルされたか、失敗しました。操作は中止されました。</value>
+  </data>
+  <data name="LogErrorDriverRemoveFailedDuringSwitch" xml:space="preserve">
+    <value>モードの切り替え中に既存のドライバーの削除に失敗しましたが、新しいモードの設定は続行されます。</value>
+  </data>
+  <data name="LogErrorDriverRemoveFailedGeneral" xml:space="preserve">
+    <value>ドライバーの削除に失敗しました。手動でのクリーンアップが必要になる場合があります。</value>
+  </data>
+  <data name="LogOperationFailedRollingBack" xml:space="preserve">
+    <value>操作に失敗しました。変更を元に戻しています...</value>
+  </data>
+  <data name="LogRollbackComplete" xml:space="preserve">
+    <value>ロールバックが完了しました。システムに変更はありませんでした。</value>
+  </data>
+  <data name="LogErrorDriverInstallCancelled" xml:space="preserve">
+    <value>ドライバーのインストールが失敗したか、ユーザーによってキャンセルされました。 (終了コード: {0})</value>
+  </data>
 </root>

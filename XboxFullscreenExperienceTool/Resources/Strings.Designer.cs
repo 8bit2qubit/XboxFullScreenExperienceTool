@@ -352,6 +352,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Driver installation was cancelled by the user or failed. The operation has been aborted. 的當地語系化字串。
+        /// </summary>
+        internal static string LogDriverInstallCancelled {
+            get {
+                return ResourceManager.GetString("LogDriverInstallCancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Driver installation command executed. 的當地語系化字串。
         /// </summary>
         internal static string LogDriverInstallCommandExecuted {
@@ -397,6 +406,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Driver installation failed or was cancelled by the user. (Exit code: {0}) 的當地語系化字串。
+        /// </summary>
+        internal static string LogErrorDriverInstallCancelled {
+            get {
+                return ResourceManager.GetString("LogErrorDriverInstallCancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Driver installation failed: {0} 的當地語系化字串。
         /// </summary>
         internal static string LogErrorDriverInstallFailed {
@@ -411,6 +429,24 @@ namespace XboxFullScreenExperienceTool.Resources {
         internal static string LogErrorDriverRemoveFailed {
             get {
                 return ResourceManager.GetString("LogErrorDriverRemoveFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Failed to remove the existing driver while switching modes, but will proceed with setting up the new mode. 的當地語系化字串。
+        /// </summary>
+        internal static string LogErrorDriverRemoveFailedDuringSwitch {
+            get {
+                return ResourceManager.GetString("LogErrorDriverRemoveFailedDuringSwitch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Failed to remove the driver. Manual cleanup may be required. 的當地語系化字串。
+        /// </summary>
+        internal static string LogErrorDriverRemoveFailedGeneral {
+            get {
+                return ResourceManager.GetString("LogErrorDriverRemoveFailedGeneral", resourceCulture);
             }
         }
         
@@ -510,6 +546,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         internal static string LogNoBackupFound {
             get {
                 return ResourceManager.GetString("LogNoBackupFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Operation failed, rolling back changes... 的當地語系化字串。
+        /// </summary>
+        internal static string LogOperationFailedRollingBack {
+            get {
+                return ResourceManager.GetString("LogOperationFailedRollingBack", resourceCulture);
             }
         }
         
@@ -636,6 +681,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         internal static string LogRemovingPhysPanelDrv {
             get {
                 return ResourceManager.GetString("LogRemovingPhysPanelDrv", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Rollback complete. No changes were made to the system. 的當地語系化字串。
+        /// </summary>
+        internal static string LogRollbackComplete {
+            get {
+                return ResourceManager.GetString("LogRollbackComplete", resourceCulture);
             }
         }
         
@@ -827,6 +881,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         internal static string StatusDisabled {
             get {
                 return ResourceManager.GetString("StatusDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Driver Mode Error: Please Disable to Restore 的當地語系化字串。
+        /// </summary>
+        internal static string StatusDriverErrorNeedsDisable {
+            get {
+                return ResourceManager.GetString("StatusDriverErrorNeedsDisable", resourceCulture);
             }
         }
         
