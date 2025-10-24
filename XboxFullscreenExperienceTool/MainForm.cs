@@ -42,11 +42,11 @@ namespace XboxFullScreenExperienceTool
         /// <summary>
         /// 啟用此功能所需的最低 Windows 主要組建版本號。
         /// </summary>
-        private const int REQUIRED_BUILD = 26220;
+        private const int REQUIRED_BUILD = 26200;
         /// <summary>
         /// 在最低主要組建版本下，所需的最低修訂 (UBR) 號。
         /// </summary>
-        private const int REQUIRED_REVISION = 6690;
+        private const int REQUIRED_REVISION = 7015;
         /// <summary>
         /// 需要透過 ViVe 工具啟用的功能 ID 陣列。
         /// </summary>

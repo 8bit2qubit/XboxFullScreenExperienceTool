@@ -205,7 +205,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Screen Size Override Method (for non-handheld devices) 的當地語系化字串。
+        ///   查詢類似 Screen Dimension Override Method (for non-handheld devices) 的當地語系化字串。
         /// </summary>
         internal static string grpPhysPanel_Text {
             get {
@@ -424,7 +424,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Failed to read screen size, unable to determine if a scheduled task is needed. 的當地語系化字串。
+        ///   查詢類似 Failed to read screen dimension, unable to determine if a scheduled task is needed. 的當地語系化字串。
         /// </summary>
         internal static string LogErrorReadingScreenSize {
             get {
@@ -433,7 +433,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Failed to read screen size, skipping this step. 的當地語系化字串。
+        ///   查詢類似 Failed to read screen dimension, skipping this step. 的當地語系化字串。
         /// </summary>
         internal static string LogErrorReadingScreenSizeEnable {
             get {
@@ -514,7 +514,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Reading current screen size... 的當地語系化字串。
+        ///   查詢類似 Reading current screen dimension... 的當地語系化字串。
         /// </summary>
         internal static string LogReadingScreenSize {
             get {
@@ -640,7 +640,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Successfully read screen size: {0}x{1}mm. 的當地語系化字串。
+        ///   查詢類似 Successfully read screen dimension: {0}x{1}mm. 的當地語系化字串。
         /// </summary>
         internal static string LogScreenSizeSuccess {
             get {
@@ -649,7 +649,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Screen size ({0:F2}&quot;) is larger than the {1}&quot; threshold, creating startup task... 的當地語系化字串。
+        ///   查詢類似 Screen dimension ({0:F2}&quot;) is larger than the {1}&quot; threshold, creating startup task... 的當地語系化字串。
         /// </summary>
         internal static string LogScreenSizeTooLarge {
             get {
@@ -658,7 +658,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Undefined screen size (0x0mm) detected, creating startup task... 的當地語系化字串。
+        ///   查詢類似 Undefined screen dimension (0x0mm) detected, creating startup task... 的當地語系化字串。
         /// </summary>
         internal static string LogScreenSizeUndefined {
             get {
@@ -703,7 +703,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Screen size ({0:F2}&quot;) is within the {1}&quot; range, no task needed. 的當地語系化字串。
+        ///   查詢類似 Screen dimension ({0:F2}&quot;) is within the {1}&quot; range, no task needed. 的當地語系化字串。
         /// </summary>
         internal static string LogTaskNotNeeded {
             get {
@@ -858,7 +858,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Status: Needs fix (Screen size task not set up correctly) 的當地語系化字串。
+        ///   查詢類似 Status: Needs fix (Screen dimension task not set up correctly) 的當地語系化字串。
         /// </summary>
         internal static string StatusNeedsFix {
             get {

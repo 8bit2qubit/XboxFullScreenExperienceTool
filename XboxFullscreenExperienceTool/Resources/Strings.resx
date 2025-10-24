@@ -160,7 +160,7 @@
     <value>Status: Disabled</value>
   </data>
   <data name="StatusNeedsFix" xml:space="preserve">
-    <value>Status: Needs fix (Screen size task not set up correctly)</value>
+    <value>Status: Needs fix (Screen dimension task not set up correctly)</value>
   </data>
   <data name="StatusUnknownError" xml:space="preserve">
     <value>Status: Unknown (Error)</value>
@@ -199,31 +199,31 @@
     <value>False (Value is {0})</value>
   </data>
   <data name="LogErrorReadingScreenSize" xml:space="preserve">
-    <value>Failed to read screen size, unable to determine if a scheduled task is needed.</value>
+    <value>Failed to read screen dimension, unable to determine if a scheduled task is needed.</value>
   </data>
   <data name="LogBeginEnable" xml:space="preserve">
     <value>--- Starting Enable Process ---</value>
   </data>
   <data name="LogReadingScreenSize" xml:space="preserve">
-    <value>Reading current screen size...</value>
+    <value>Reading current screen dimension...</value>
   </data>
   <data name="LogScreenSizeSuccess" xml:space="preserve">
-    <value>Successfully read screen size: {0}x{1}mm.</value>
+    <value>Successfully read screen dimension: {0}x{1}mm.</value>
   </data>
   <data name="LogScreenSizeUndefined" xml:space="preserve">
-    <value>Undefined screen size (0x0mm) detected, creating startup task...</value>
+    <value>Undefined screen dimension (0x0mm) detected, creating startup task...</value>
   </data>
   <data name="LogScreenSizeTooLarge" xml:space="preserve">
-    <value>Screen size ({0:F2}") is larger than the {1}" threshold, creating startup task...</value>
+    <value>Screen dimension ({0:F2}") is larger than the {1}" threshold, creating startup task...</value>
   </data>
   <data name="LogTaskCreated" xml:space="preserve">
     <value>Task 'SetPanelDimensions' created.</value>
   </data>
   <data name="LogTaskNotNeeded" xml:space="preserve">
-    <value>Screen size ({0:F2}") is within the {1}" range, no task needed.</value>
+    <value>Screen dimension ({0:F2}") is within the {1}" range, no task needed.</value>
   </data>
   <data name="LogErrorReadingScreenSizeEnable" xml:space="preserve">
-    <value>Failed to read screen size, skipping this step.</value>
+    <value>Failed to read screen dimension, skipping this step.</value>
   </data>
   <data name="LogBackupAndSetRegistry" xml:space="preserve">
     <value>Backing up and setting registry...</value>
@@ -384,7 +384,7 @@ Please ensure you are running this program with administrator privileges.</value
     <value>Warning: Corresponding oem&lt;number&gt;.inf file not found, it may have already been removed.</value>
   </data>
   <data name="grpPhysPanel_Text" xml:space="preserve">
-    <value>Screen Size Override Method (for non-handheld devices)</value>
+    <value>Screen Dimension Override Method (for non-handheld devices)</value>
   </data>
   <data name="radPhysPanelCS_Text" xml:space="preserve">
     <value>PhysPanelCS (Task Scheduler Mode, high security, default option)</value>

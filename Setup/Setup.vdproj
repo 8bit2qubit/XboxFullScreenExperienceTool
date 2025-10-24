@@ -368,8 +368,8 @@
             "{836E08B8-0285-4809-BA42-01DB6754A45D}:_EAF5BE14BB4B4FCAAEF159BC78417B37"
             {
             "Name" = "8:Condition%d1"
-            "Condition" = "8:WINBUILD >= 26220 AND NOT WINREV < 6690"
-            "Message" = "8:This tool requires Windows 11 version 26220.6690 or later."
+            "Condition" = "8:WINBUILD >= 26200 AND NOT WINREV < 7015"
+            "Message" = "8:This tool requires Windows 11 version 26200.7015 or later."
             "InstallUrl" = "8:"
             }
         }
@@ -400,9 +400,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:Xbox Full Screen Experience Tool"
-        "ProductCode" = "8:{0C114990-2C4F-4788-BEBA-09B7FB25D5B6}"
-        "PackageCode" = "8:{1EA1C5AC-730D-4FB6-BF80-37FD5DCF2D42}"
+        "ProductName" = "8:Xbox FullScreen Experience Tool"
+        "ProductCode" = "8:{7719F90C-42AB-4826-B97A-CFEF37D9BA52}"
+        "PackageCode" = "8:{9433FE82-842E-4321-AD40-AF705A080D21}"
         "UpgradeCode" = "8:{1FC446AC-4A81-40E7-B99E-292B8413FDBB}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
