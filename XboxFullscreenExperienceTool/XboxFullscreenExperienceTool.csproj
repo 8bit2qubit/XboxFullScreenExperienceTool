@@ -7,7 +7,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Version>0.0.8</Version>
+    <Version>0.0.9</Version>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
