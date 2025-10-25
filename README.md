@@ -34,15 +34,23 @@ By using this tool, you acknowledge and agree to the following:
 
 ## 💡 Screen Override for PCs & Laptops: Choosing Your Method
 
-The Xbox Full Screen Experience is designed for handheld-sized screens. If you are using a **desktop PC or a laptop**, your screen is likely larger than the supported size, requiring a screen dimension override. This tool offers two methods to achieve this.
+The Xbox Full Screen Experience is designed for handheld-sized screens. If your device is not a handheld, a screen dimension override is required. This tool offers two distinct methods, and now automatically guides you to the appropriate choice based on your device type.
 
 ### Task Scheduler Mode: `PhysPanelCS`
 This is the default method. It is easy to use and requires no additional manual setup. It schedules a task to apply the override at boot. However, this can create a race condition on fast systems. If you log in too quickly, the Windows Shell may initialize before the override is applied, causing it to fall back to the standard desktop for that session.
 
 ### Driver Mode: `PhysPanelDrv`
-This advanced mode uses a custom kernel driver to apply the override at the earliest stage of system boot, which completely eliminates the race condition. This is the most robust and reliable solution for desktops and laptops.
+This advanced mode uses a custom kernel driver to apply the override at the earliest stage of system boot, which completely eliminates the race condition. This is the most robust and reliable solution for desktops.
+
+### Which Mode Should You Use?
+
+*   **For Desktop PCs**: You can choose between **`PhysPanelCS`** and `PhysPanelDrv`. For the most reliable experience, `PhysPanelDrv` is the recommended choice.
+*   **For Laptops**: The tool will automatically restrict you to **`PhysPanelCS`**. This is a safety measure to ensure maximum compatibility. The driver mode option will be disabled.
+*   **For Handheld Devices**: No override is needed! The mode selection UI will be disabled entirely.
 
 > #### **Prerequisites for `PhysPanelDrv` Mode**
+>
+> ⚠️ **Important:** These steps are only necessary for **desktop PC users** who wish to use the `PhysPanelDrv` mode.
 >
 > Installing this **test-signed driver** requires you to manually disable Secure Boot and enable Windows Test Signing Mode.
 >
@@ -101,7 +109,7 @@ If you find this tool helpful, your support would be a great motivation for me t
 * **One-Click Toggle** – Simple interface to enable or disable the Xbox full screen experience.
 * **Automatic System Check** – Verifies your Windows build for compatibility at startup.
 * **Device Type Emulation** – Automatically simulates a handheld device type for activation on desktop or laptop systems.
-*   **Selectable Override Modes** – Choose between `PhysPanelCS` (Task Scheduler) or `PhysPanelDrv` (Driver) for PCs and laptops.
+*   **Automatic Mode Selection** – Detects your device type (Desktop, Laptop, Handheld) and provides the appropriate override options.
 * **Safe and Reversible** – All changes are fully reversible. Backups of original settings are created to ensure safe restoration.
 * **Standard Installation** – Distributed as a `.msi` installer for clean installation, management, and removal.
 
