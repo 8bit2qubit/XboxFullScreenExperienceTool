@@ -173,15 +173,6 @@ namespace PhysPanelLib
                 false);
         }
 
-        /// <summary>
-        /// 直接觸發 Windows 觸控鍵盤的顯示/隱藏。
-        /// 這是為 'startkeyboard' 命令提供的專用介面。
-        /// </summary>
-        public static void StartTouchKeyboard()
-        {
-            KeyboardManager.ShowKeyboard();
-        }
-
         //======================================================================
         // 私有回呼方法 (Private Callback Method)
         //======================================================================

@@ -20,115 +20,105 @@ using System.Runtime.InteropServices;
 namespace PhysPanelLib
 {
     /// <summary>
-    /// 提供與 Windows 觸控鍵盤 (TabTip.exe) 互動的功能。
-    /// 優先使用 COM。如果失敗，則啟動處理程序（如果需要），
-    /// 然後在逾時時間內持續輪詢，直到 COM 服務恢復可用，最後再發送顯示命令。
+    /// 表示找不到 TabTip.exe 執行檔時發生的錯誤。
     /// </summary>
-    internal static class KeyboardManager
+    public class TabTipNotFoundException : Exception
     {
-        #region COM Definitions
-        private const string CLSID_UIHostNoLaunch = "4CE576FA-83DC-4F88-951C-9D0782B4E376";
+        // 提供一個標準的建構函式
+        public TabTipNotFoundException(string message) : base(message) { }
+    }
+
+    /// <summary>
+    /// 表示啟動或透過 COM 啟用觸控鍵盤失敗時發生的錯誤。
+    /// </summary>
+    public class TabTipActivationException : Exception
+    {
+        // 提供一個標準的建構函式，可以包含內部錯誤訊息
+        public TabTipActivationException(string message, Exception innerException) : base(message, innerException) { }
+    }
+
+    /// <summary>
+    /// 提供與 Windows 觸控鍵盤 (TabTip.exe) 互動的功能。
+    /// </summary>
+    public static class KeyboardManager
+    {
+        #region Win32 & COM Definitions
+        [ComImport, Guid("4CE576FA-83DC-4F88-951C-9D0782B4E376")]
+        private class TipInvocation { }
+
         [ComImport, Guid("37c994e7-432b-4834-a2f7-dce1f13b834b"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         private interface ITipInvocation { void Toggle(IntPtr hwnd); }
-        [ComImport, Guid(CLSID_UIHostNoLaunch)]
-        private class TipInvocation { }
         #endregion
+
+        private const string TabTipProcessName = "TabTip";
+        private const string TabTipFileName = "TabTip.exe";
+        private const int KeyboardReadyDelayMs = 5000; // 鍵盤啟動後的準備延遲時間
 
         private static readonly Lazy<string?> TabTipPath = new Lazy<string?>(() =>
         {
-            string progFiles = Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFiles);
-            string path = Path.Combine(progFiles, @"microsoft shared\ink\TabTip.exe");
+            string commonProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFiles);
+            string path = Path.Combine(commonProgramFiles, @"Microsoft Shared\ink", TabTipFileName);
             return File.Exists(path) ? path : null;
         });
 
         /// <summary>
-        /// 觸發 Windows 軟體鍵盤的顯示/隱藏，包含完整的恢復邏輯。
+        /// 確保觸控鍵盤處於「收起」狀態，並使其處理程序在背景待命。
+        /// 如果鍵盤已在執行，此方法不會執行任何操作。
         /// </summary>
-        public static void ShowKeyboard()
+        /// <exception cref="FileNotFoundException">當找不到 TabTip.exe 時拋出。</exception>
+        /// <exception cref="InvalidOperationException">當啟動程序或透過 COM 操作鍵盤失敗時拋出。</exception>
+        public static void StartTouchKeyboard()
+        {
+            // 如果處理程序已在執行，直接返回
+            if (Process.GetProcessesByName(TabTipProcessName).Any())
+            {
+                return; // 已經在執行，直接返回
+            }
+
+            // 如果找不到 TabTip.exe 的路徑，記錄錯誤並返回
+            if (string.IsNullOrEmpty(TabTipPath.Value))
+            {
+                // 拋出一個明確的錯誤，而不是靜默失敗
+                throw new TabTipNotFoundException($"{TabTipFileName} executable not found in its expected path.");
+            }
+
+            try
+            {
+                // 步驟 1: 啟動 TabTip.exe 處理程序
+                var startInfo = new ProcessStartInfo(TabTipPath.Value) { UseShellExecute = true };
+                Process.Start(startInfo);
+
+                // 等待鍵盤視窗出現
+                Thread.Sleep(KeyboardReadyDelayMs);
+
+                // 步驟 2: 透過 COM 介面將其隱藏
+                HideKeyboard();
+            }
+            catch (Exception ex)
+            {
+                // 將底層的錯誤包裝成一個新的例外並拋出
+                throw new TabTipActivationException($"Failed to start or toggle {TabTipFileName}.", ex);
+            }
+        }
+
+        /// <summary>
+        /// 使用 COM 互通來切換觸控鍵盤的顯示狀態。
+        /// </summary>
+        private static void HideKeyboard()
         {
             ITipInvocation? tipInvocation = null;
             try
             {
-                // 主要策略：嘗試直接透過 COM 啟用並 Toggle
                 tipInvocation = (ITipInvocation)new TipInvocation();
-                tipInvocation.Toggle(IntPtr.Zero);
+                tipInvocation.Toggle(IntPtr.Zero); // 執行 "切換" 來隱藏它
             }
-            catch (COMException)
+            finally // 即使 COM 呼叫失敗，也要確保釋放物件
             {
-                // 後備恢復策略：當 COM 服務無響應時 (例如 TabTip.exe 被結束工作後)
-                try
-                {
-                    // 步驟 1: 確保處理程序正在執行 (使用 ShellExecute 以取得正確權限)
-                    EnsureTabTipProcessIsRunning();
-
-                    // 步驟 2: 輪詢 COM 服務，直到它準備就緒
-                    tipInvocation = PollForComService(TimeSpan.FromSeconds(5));
-
-                    // 步驟 3: 如果成功取得 COM 物件，發送命令
-                    if (tipInvocation != null)
-                    {
-                        tipInvocation.Toggle(IntPtr.Zero);
-                    }
-                }
-                catch
-                {
-                    // 恢復模式中的任何錯誤都靜默處理，以防主程式崩潰
-                }
-            }
-            finally
-            {
-                // 無論成功或失敗，如果 COM 物件被成功建立，就必須釋放它
                 if (tipInvocation != null)
                 {
                     Marshal.ReleaseComObject(tipInvocation);
                 }
             }
-        }
-
-        /// <summary>
-        /// 確保 TabTip.exe 處理程序正在執行。如果沒有，則使用 ShellExecute 啟動它。
-        /// </summary>
-        private static void EnsureTabTipProcessIsRunning()
-        {
-            if (Process.GetProcessesByName("TabTip").Any())
-            {
-                return; // 已經在執行
-            }
-
-            if (!string.IsNullOrEmpty(TabTipPath.Value))
-            {
-                // 必須使用 ShellExecute 來請求 Windows Shell 啟動這個受保護的元件，
-                // 這樣才能繞過 "需要提升權限" 的錯誤。
-                var startInfo = new ProcessStartInfo(TabTipPath.Value)
-                {
-                    UseShellExecute = true
-                };
-                Process.Start(startInfo);
-            }
-        }
-
-        /// <summary>
-        /// 在指定的時間內，持續輪詢 COM 服務，嘗試建立 TipInvocation 物件。
-        /// 這是為了應對處理程序啟動後 COM 服務需要時間初始化的情況。
-        /// </summary>
-        /// <returns>成功時返回 ITipInvocation 物件，逾時則返回 null。</returns>
-        private static ITipInvocation? PollForComService(TimeSpan timeout)
-        {
-            var stopwatch = Stopwatch.StartNew();
-            while (stopwatch.Elapsed < timeout)
-            {
-                try
-                {
-                    // 反覆嘗試建立 COM 物件，直到成功
-                    return (ITipInvocation)new TipInvocation();
-                }
-                catch (COMException)
-                {
-                    // 如果失敗，等待一小段時間再重試
-                    Thread.Sleep(250);
-                }
-            }
-            return null; // 逾時
         }
     }
 }

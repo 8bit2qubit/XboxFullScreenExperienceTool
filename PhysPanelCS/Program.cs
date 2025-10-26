@@ -134,11 +134,23 @@ namespace PhysPanelCS
             try
             {
                 Console.WriteLine(Resources.Strings.AttemptingStartKeyboard);
-                PanelManager.StartTouchKeyboard();
+                KeyboardManager.StartTouchKeyboard();
                 Console.WriteLine(Resources.Strings.KeyboardStartCommandSuccess);
                 return 0; // 成功
             }
-            catch (Exception ex)
+            catch (TabTipNotFoundException) // 捕捉特定錯誤：找不到檔案
+            {
+                Console.Error.WriteLine(Resources.Strings.ErrorTabTipNotFound);
+                return -1; // 執行失敗
+            }
+            catch (TabTipActivationException) // 捕捉特定錯誤：啟用失敗
+            {
+                Console.Error.WriteLine(Resources.Strings.ErrorTabTipActivationFailed);
+                // (可選) 如果需要，可以印出更詳細的內部錯誤訊息供偵錯使用
+                // Console.Error.WriteLine($"  > Details: {ex.InnerException?.Message}");
+                return -1; // 執行失敗
+            }
+            catch (Exception ex) // 捕捉所有其他預期之外的錯誤
             {
                 Console.Error.WriteLine(string.Format(Resources.Strings.ErrorFailedToStartKeyboard, ex.Message));
                 return -1; // 執行失敗

@@ -180,4 +180,10 @@
   <data name="ErrorNtStatusErrorCode" xml:space="preserve">
     <value>   NTSTATUS 오류 코드: 0x{0:X8}</value>
   </data>
+  <data name="ErrorTabTipNotFound" xml:space="preserve">
+    <value>오류: Windows 터치 키보드 실행 파일(TabTip.exe)을 찾을 수 없습니다.</value>
+  </data>
+  <data name="ErrorTabTipActivationFailed" xml:space="preserve">
+    <value>오류: 터치 키보드를 활성화하지 못했습니다. 시스템 구성 요소가 올바른지 확인하십시오.</value>
+  </data>
 </root>

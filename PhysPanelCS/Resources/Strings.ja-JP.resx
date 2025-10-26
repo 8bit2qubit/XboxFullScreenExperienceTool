@@ -142,19 +142,19 @@
     <value>  PhysPanelCS set 155 87</value>
   </data>
   <data name="ErrorUnknownCommand" xml:space="preserve">
-    <value>エラー：不明なコマンド '{0}'</value>
+    <value>エラー: 不明なコマンド '{0}'</value>
   </data>
   <data name="ErrorGetFailed" xml:space="preserve">
-    <value>エラー：ディスプレイサイズを取得できませんでした。</value>
+    <value>エラー: ディスプレイサイズを取得できませんでした。</value>
   </data>
   <data name="CurrentSize" xml:space="preserve">
     <value>現在のサイズ: {0}x{1}mm ({2:F2}インチ)</value>
   </data>
   <data name="ErrorSetInvalid" xml:space="preserve">
-    <value>エラー：'set' コマンドのパラメータ形式が正しくありません。</value>
+    <value>エラー: 'set' コマンドのパラメータ形式が正しくありません。</value>
   </data>
   <data name="ErrorSetFailed" xml:space="preserve">
-    <value>エラー：ディスプレイサイズを設定できませんでした。この操作にはSYSTEMユーザー権限が必要です。</value>
+    <value>エラー: ディスプレイサイズを設定できませんでした。この操作にはSYSTEMユーザー権限が必要です。</value>
   </data>
   <data name="SetSuccess" xml:space="preserve">
     <value>設定に成功しました。</value>
@@ -179,5 +179,11 @@
   </data>
   <data name="ErrorNtStatusErrorCode" xml:space="preserve">
     <value>   NTSTATUS エラーコード: 0x{0:X8}</value>
+  </data>
+  <data name="ErrorTabTipNotFound" xml:space="preserve">
+    <value>エラー: Windows タッチ キーボードの実行ファイル (TabTip.exe) が見つかりません。</value>
+  </data>
+  <data name="ErrorTabTipActivationFailed" xml:space="preserve">
+    <value>エラー: タッチキーボードの有効化に失敗しました。システムコンポーネントが正常であることを確認してください。</value>
   </data>
 </root>

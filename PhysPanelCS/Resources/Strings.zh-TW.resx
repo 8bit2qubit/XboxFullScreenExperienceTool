@@ -142,19 +142,19 @@
     <value>  PhysPanelCS set 155 87</value>
   </data>
   <data name="ErrorUnknownCommand" xml:space="preserve">
-    <value>錯誤：未知的命令 '{0}'</value>
+    <value>錯誤: 未知的命令 '{0}'</value>
   </data>
   <data name="ErrorGetFailed" xml:space="preserve">
-    <value>錯誤：無法取得顯示器尺寸。</value>
+    <value>錯誤: 無法取得顯示器尺寸。</value>
   </data>
   <data name="CurrentSize" xml:space="preserve">
     <value>目前的尺寸: {0}x{1}mm ({2:F2}")</value>
   </data>
   <data name="ErrorSetInvalid" xml:space="preserve">
-    <value>錯誤：'set' 命令的參數格式不正確。</value>
+    <value>錯誤: 'set' 命令的參數格式不正確。</value>
   </data>
   <data name="ErrorSetFailed" xml:space="preserve">
-    <value>錯誤：無法設定顯示器尺寸。此操作需要以 SYSTEM 使用者權限執行。</value>
+    <value>錯誤: 無法設定顯示器尺寸。此操作需要以 SYSTEM 使用者權限執行。</value>
   </data>
   <data name="SetSuccess" xml:space="preserve">
     <value>設定成功。</value>
@@ -169,7 +169,7 @@
     <value>鍵盤啟動指令已成功傳送。</value>
   </data>
   <data name="ErrorFailedToStartKeyboard" xml:space="preserve">
-    <value>錯誤：啟動鍵盤失敗。詳細資訊：{0}</value>
+    <value>錯誤: 啟動鍵盤失敗。詳細資訊: {0}</value>
   </data>
   <data name="StartKeyboardDescription" xml:space="preserve">
     <value>  startkeyboard     啟動或切換 Windows 觸控鍵盤。</value>
@@ -179,5 +179,11 @@
   </data>
   <data name="ErrorNtStatusErrorCode" xml:space="preserve">
     <value>   NTSTATUS 錯誤碼: 0x{0:X8}</value>
+  </data>
+  <data name="ErrorTabTipNotFound" xml:space="preserve">
+    <value>錯誤: 找不到 Windows 觸控鍵盤執行檔 (TabTip.exe)。</value>
+  </data>
+  <data name="ErrorTabTipActivationFailed" xml:space="preserve">
+    <value>錯誤: 啟動或啟用觸控鍵盤失敗。請確認系統元件是否正常。</value>
   </data>
 </root>

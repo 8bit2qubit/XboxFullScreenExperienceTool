@@ -142,6 +142,24 @@ namespace PhysPanelCS.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Error: Failed to activate the touch keyboard. Please ensure system components are intact. 的當地語系化字串。
+        /// </summary>
+        internal static string ErrorTabTipActivationFailed {
+            get {
+                return ResourceManager.GetString("ErrorTabTipActivationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Error: The Windows touch keyboard executable (TabTip.exe) was not found. 的當地語系化字串。
+        /// </summary>
+        internal static string ErrorTabTipNotFound {
+            get {
+                return ResourceManager.GetString("ErrorTabTipNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Error: Unknown command &apos;{0}&apos; 的當地語系化字串。
         /// </summary>
         internal static string ErrorUnknownCommand {

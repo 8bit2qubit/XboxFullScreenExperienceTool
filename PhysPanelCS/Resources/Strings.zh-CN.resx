@@ -142,19 +142,19 @@
     <value>  PhysPanelCS set 155 87</value>
   </data>
   <data name="ErrorUnknownCommand" xml:space="preserve">
-    <value>错误：未知的命令 '{0}'</value>
+    <value>错误: 未知的命令 '{0}'</value>
   </data>
   <data name="ErrorGetFailed" xml:space="preserve">
-    <value>错误：无法获取显示器尺寸。</value>
+    <value>错误: 无法获取显示器尺寸。</value>
   </data>
   <data name="CurrentSize" xml:space="preserve">
     <value>当前尺寸: {0}x{1}mm ({2:F2}")</value>
   </data>
   <data name="ErrorSetInvalid" xml:space="preserve">
-    <value>错误：'set' 命令的参数格式不正确。</value>
+    <value>错误: 'set' 命令的参数格式不正确。</value>
   </data>
   <data name="ErrorSetFailed" xml:space="preserve">
-    <value>错误：无法设置显示器尺寸。此操作需要以 SYSTEM 用户权限运行。</value>
+    <value>错误: 无法设置显示器尺寸。此操作需要以 SYSTEM 用户权限运行。</value>
   </data>
   <data name="SetSuccess" xml:space="preserve">
     <value>设置成功。</value>
@@ -169,7 +169,7 @@
     <value>键盘启动命令已成功发送。</value>
   </data>
   <data name="ErrorFailedToStartKeyboard" xml:space="preserve">
-    <value>错误：启动键盘失败。详细信息：{0}</value>
+    <value>错误: 启动键盘失败。详细信息: {0}</value>
   </data>
   <data name="StartKeyboardDescription" xml:space="preserve">
     <value>  startkeyboard     启动或切换 Windows 触摸键盘。</value>
@@ -179,5 +179,11 @@
   </data>
   <data name="ErrorNtStatusErrorCode" xml:space="preserve">
     <value>   NTSTATUS 错误码: 0x{0:X8}</value>
+  </data>
+  <data name="ErrorTabTipNotFound" xml:space="preserve">
+    <value>错误: 找不到 Windows 触摸键盘可执行文件 (TabTip.exe)。</value>
+  </data>
+  <data name="ErrorTabTipActivationFailed" xml:space="preserve">
+    <value>错误: 启动或启用触摸键盘失败。请确认系统组件是否正常。</value>
   </data>
 </root>
