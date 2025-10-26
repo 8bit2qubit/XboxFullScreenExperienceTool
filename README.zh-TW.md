@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-<img src="demo.zh-TW.png" alt="Xbox 全螢幕體驗工具展示" style="width: 374px; object-fit: contain; display: block; margin: 0 auto;">
+<img src="demo.zh-TW.png" alt="Xbox 全螢幕體驗工具展示" style="width: 521px; object-fit: contain; display: block; margin: 0 auto;">
 </p>
 
 <p align="center">
@@ -107,6 +107,7 @@ Xbox 全螢幕體驗專為掌機尺寸的螢幕設計。若您的裝置不是掌
 
 *   **一鍵切換**：提供直觀的介面，只需點選一次即可啟用或停用 Xbox 全螢幕體驗。
 *   **自動系統檢查**：啟動時自動驗證您的 Windows 組建版本，確保符合執行要求。
+*   **自動修復鍵盤**：自動於登入時啟動螢幕鍵盤，解決非觸控裝置因系統限制而無法使用控制器輸入文字的問題。
 *   **硬體類型模擬**：若您使用桌上型或筆記型電腦，工具會自動將裝置類型模擬為掌機，以滿足啟用條件。
 *   **自動模式選擇**：自動偵測您的裝置類型（桌機、筆電、掌機），並提供最適當的覆寫選項。
 *   **安全且完全可逆**：所有變更都會在停用或解除安裝時被還原。工具會備份初始設定，確保您的系統能無損恢復原狀。

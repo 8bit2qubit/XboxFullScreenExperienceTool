@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-<img src="demo.png" alt="Xbox Full Screen Experience Tool Demo" style="width: 374px; object-fit: contain; display: block; margin: 0 auto;">
+<img src="demo.png" alt="Xbox Full Screen Experience Tool Demo" style="width: 521px; object-fit: contain; display: block; margin: 0 auto;">
 </p>
 
 <p align="center">
@@ -108,8 +108,9 @@ If you find this tool helpful, your support would be a great motivation for me t
 
 * **One-Click Toggle** – Simple interface to enable or disable the Xbox full screen experience.
 * **Automatic System Check** – Verifies your Windows build for compatibility at startup.
+* **Automatic Keyboard Fix** – Fixes the missing on-screen keyboard on non-touch PCs by automatically preparing it at logon, ensuring seamless text input with a controller.
 * **Device Type Emulation** – Automatically simulates a handheld device type for activation on desktop or laptop systems.
-*   **Automatic Mode Selection** – Detects your device type (Desktop, Laptop, Handheld) and provides the appropriate override options.
+* **Automatic Mode Selection** – Detects your device type (Desktop, Laptop, Handheld) and provides the appropriate override options.
 * **Safe and Reversible** – All changes are fully reversible. Backups of original settings are created to ensure safe restoration.
 * **Standard Installation** – Distributed as a `.msi` installer for clean installation, management, and removal.
 

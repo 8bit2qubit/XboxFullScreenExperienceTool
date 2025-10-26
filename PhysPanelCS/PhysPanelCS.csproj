@@ -5,7 +5,7 @@
     <TargetFramework>net8.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>0.0.5</Version>
+    <Version>0.0.6</Version>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
