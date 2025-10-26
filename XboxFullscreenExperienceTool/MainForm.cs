@@ -236,7 +236,7 @@ namespace XboxFullScreenExperienceTool
 
                 // 步驟 3: 檢查覆寫方法是否存在 (CS Task & Drv Service)
                 bool isPhysPanelCSActive = TaskSchedulerManager.TaskExists();
-                bool isPhysPanelDrvActive = DriverManager.IsDriverServiceRunning();
+                bool isPhysPanelDrvActive = DriverManager.IsDriverServiceInstalled();
                 bool isScreenOverridePresent = isPhysPanelCSActive || isPhysPanelDrvActive;
 
                 // 步驟 4: 檢查並設定覆寫模式的可用性 (檢查驅動程式模式的先決條件 (Test Signing))
@@ -422,7 +422,7 @@ namespace XboxFullScreenExperienceTool
                 {
                     Log(Resources.Strings.LogChoosingSchedulerMode);
                     // 執行前先移除 Drv 服務，避免衝突
-                    if (DriverManager.IsDriverServiceRunning())
+                    if (DriverManager.IsDriverServiceInstalled())
                     {
                         Log(Resources.Strings.LogRemovingOldDriver);
                         await Task.Run(() => DriverManager.UninstallDriver(msg => Log(msg)));
@@ -445,8 +445,17 @@ namespace XboxFullScreenExperienceTool
                     LogError(Resources.Strings.LogOperationFailedRollingBack);
 
                     // 以相反的順序還原變更
-                    RestoreRegistry();
+                    // 步驟 1: 如果是驅動程式安裝失敗，則執行移除程序以清除殘留的裝置節點
+                    if (radPhysPanelDrv.Checked)
+                    {
+                        await Task.Run(() => DriverManager.UninstallDriver(msg => Log(msg)));
+                    }
+
+                    // 步驟 2: 停用 ViVe 功能
                     DisableViveFeatures();
+
+                    // 步驟 3: 還原登錄檔
+                    RestoreRegistry();
 
                     LogError(Resources.Strings.LogRollbackComplete);
                 }
@@ -525,7 +534,7 @@ namespace XboxFullScreenExperienceTool
                 Log(Resources.Strings.LogTaskDeleted);
             }
 
-            if (DriverManager.IsDriverServiceRunning())
+            if (DriverManager.IsDriverServiceInstalled())
             {
                 Log(Resources.Strings.LogRemovingPhysPanelDrv);
                 // 檢查 Uninstall 的結果

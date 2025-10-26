@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+using Microsoft.Win32;
 using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceProcess;
@@ -92,6 +93,30 @@ namespace XboxFullScreenExperienceTool.Helpers
             catch (Exception)
             {
                 // P/Invoke 呼叫失敗
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 檢查 PhysPanelDrv 驅動程式的服務是否存在 (已安裝)。
+        /// 直接檢查服務定義的登錄機碼。
+        /// </summary>
+        /// <returns>如果服務已安裝，返回 true。</returns>
+        public static bool IsDriverServiceInstalled()
+        {
+            try
+            {
+                // 直接查詢登錄表中服務的定義，判斷服務是否「存在」
+                // 無論服務是 Running, Stopped 還是 Disabled，只要安裝過，這裡就會有機碼
+                using (var key = Registry.LocalMachine.OpenSubKey($"SYSTEM\\CurrentControlSet\\Services\\{DRIVER_SERVICE_NAME}"))
+                {
+                    // 如果 key 不是 null，表示機碼存在，即服務已安裝
+                    return key != null;
+                }
+            }
+            catch
+            {
+                // 發生任何讀取登錄表的錯誤都視為未安裝
                 return false;
             }
         }
