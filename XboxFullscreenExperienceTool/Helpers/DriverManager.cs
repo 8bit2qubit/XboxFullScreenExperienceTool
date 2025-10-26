@@ -29,7 +29,7 @@ namespace XboxFullScreenExperienceTool.Helpers
     public static class DriverManager
     {
         private const string DRIVER_SERVICE_NAME = "PhysPanelDrv";
-        private static readonly string DriverFilesPath = Path.Combine(Application.StartupPath, "PhysPanelDrv");
+        private static readonly string DriverFilesPath = Path.Combine(AppPathManager.InstallPath, "PhysPanelDrv");
 
         #region Win32 P/Invoke for NtQuerySystemInformation
         [DllImport("ntdll.dll", SetLastError = true)]
@@ -197,14 +197,14 @@ namespace XboxFullScreenExperienceTool.Helpers
         /// 執行驅動程式的完整移除流程。
         /// </summary>
         /// <param name="logger">用於記錄進度的回呼函式。</param>
-        public static bool UninstallDriver(Action<string> logger)
+        public static bool UninstallDriver(Action<string> logger, bool isSilent = false)
         {
             try
             {
                 // 步驟 1: 使用 devcon.exe 移除裝置
                 string devconPath = Path.Combine(DriverFilesPath, "devcon.exe");
                 logger(Resources.Strings.LogRemovingDriverDevice);
-                ExecuteProcess(devconPath, $"remove \"root\\{DRIVER_SERVICE_NAME}\"", logger);
+                ExecuteProcess(devconPath, $"remove \"root\\{DRIVER_SERVICE_NAME}\"", logger, isSilent);
 
                 // 步驟 2: 尋找驅動程式套件的 oem 編號
                 logger(Resources.Strings.LogFindingDriverPackage);
@@ -217,7 +217,7 @@ namespace XboxFullScreenExperienceTool.Helpers
 
                 // 步驟 3: 使用 pnputil 刪除驅動程式套件
                 logger(string.Format(Resources.Strings.LogDeletingDriverPackage, oemFile));
-                ExecuteProcess("pnputil.exe", $"/delete-driver {oemFile} /uninstall /force", logger);
+                ExecuteProcess("pnputil.exe", $"/delete-driver {oemFile} /uninstall /force", logger, isSilent);
                 logger(Resources.Strings.LogDriverRemoveCommandExecuted);
                 return true;
             }
@@ -231,7 +231,7 @@ namespace XboxFullScreenExperienceTool.Helpers
         /// <summary>
         /// 執行外部處理程序並記錄其輸出。
         /// </summary>
-        private static int ExecuteProcess(string fileName, string arguments, Action<string> logger)
+        private static int ExecuteProcess(string fileName, string arguments, Action<string> logger, bool isSilent = false)
         {
             var process = new Process
             {
@@ -244,7 +244,7 @@ namespace XboxFullScreenExperienceTool.Helpers
                     UseShellExecute = false,
                     CreateNoWindow = true,
                     WorkingDirectory = DriverFilesPath,
-                    Verb = "runas"
+                    Verb = isSilent ? "" : "runas"
                 }
             };
             process.OutputDataReceived += (sender, args) => { if (args.Data != null) logger(args.Data); };

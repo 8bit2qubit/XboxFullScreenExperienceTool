@@ -919,9 +919,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 All changes have been applied. A restart is required for them to take full effect.
-        ///
-        ///Would you like to restart now? 的當地語系化字串。
+        ///   查詢類似 The settings have been applied successfully. Your computer must be restarted for the changes to take effect. 的當地語系化字串。
         /// </summary>
         internal static string PromptRestartMessage {
             get {
@@ -953,6 +951,24 @@ namespace XboxFullScreenExperienceTool.Resources {
         internal static string RequiredBuild {
             get {
                 return ResourceManager.GetString("RequiredBuild", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Xbox Full Screen Experience Tool is restarting the computer to complete the configuration. 的當地語系化字串。
+        /// </summary>
+        internal static string ShutdownReasonEnable {
+            get {
+                return ResourceManager.GetString("ShutdownReasonEnable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Xbox Full Screen Experience Tool needs to reboot to complete uninstallation. 的當地語系化字串。
+        /// </summary>
+        internal static string ShutdownReasonUninstall {
+            get {
+                return ResourceManager.GetString("ShutdownReasonUninstall", resourceCulture);
             }
         }
         

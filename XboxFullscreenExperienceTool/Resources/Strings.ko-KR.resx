@@ -253,9 +253,7 @@
     <value>비활성화 성공</value>
   </data>
   <data name="PromptRestartMessage" xml:space="preserve">
-    <value>모든 변경 사항이 적용되었습니다. 완전히 적용하려면 컴퓨터를 다시 시작해야 합니다.
-
-지금 다시 시작하시겠습니까?</value>
+    <value>설정이 성공적으로 적용되었습니다. 변경 사항을 적용하려면 컴퓨터를 다시 시작해야 합니다.</value>
   </data>
   <data name="LogUserRestartNow" xml:space="preserve">
     <value>사용자가 지금 컴퓨터를 다시 시작하기로 선택했습니다.</value>
@@ -481,5 +479,11 @@
   </data>
   <data name="LogKeyboardTaskDeleted" xml:space="preserve">
     <value>'StartTouchKeyboardOnLogon' 예약된 작업이 삭제되었습니다。</value>
+  </data>
+  <data name="ShutdownReasonEnable" xml:space="preserve">
+    <value>Xbox Full Screen Experience Tool이 구성을 완료하기 위해 컴퓨터를 다시 시작하고 있습니다.</value>
+  </data>
+  <data name="ShutdownReasonUninstall" xml:space="preserve">
+    <value>Xbox Full Screen Experience Tool을(를) 제거하려면 다시 시작해야 합니다.</value>
   </data>
 </root>

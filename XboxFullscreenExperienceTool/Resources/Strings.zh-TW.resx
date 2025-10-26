@@ -253,9 +253,7 @@
     <value>停用成功</value>
   </data>
   <data name="PromptRestartMessage" xml:space="preserve">
-    <value>所有變更已套用，需要重新啟動電腦才能完全生效。
-
-您要現在重新啟動嗎？</value>
+    <value>設定已成功套用。您的電腦必須重新啟動，變更才會生效。</value>
   </data>
   <data name="LogUserRestartNow" xml:space="preserve">
     <value>使用者選擇立即重新啟動電腦。</value>
@@ -481,5 +479,11 @@
   </data>
   <data name="LogKeyboardTaskDeleted" xml:space="preserve">
     <value>工作排程 'StartTouchKeyboardOnLogon' 已刪除。</value>
+  </data>
+  <data name="ShutdownReasonEnable" xml:space="preserve">
+    <value>Xbox Full Screen Experience Tool 正在重新啟動電腦以完成設定。</value>
+  </data>
+  <data name="ShutdownReasonUninstall" xml:space="preserve">
+    <value>Xbox Full Screen Experience Tool 需要重新開機以完成解除安裝。</value>
   </data>
 </root>

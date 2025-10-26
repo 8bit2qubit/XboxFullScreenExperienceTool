@@ -42,10 +42,7 @@ namespace XboxFullScreenExperienceTool.Helpers
         /// <exception cref="DirectoryNotFoundException">如果無法確定應用程式的執行目錄，則擲出此例外狀況。</exception>
         private static string GetPhysPanelPath()
         {
-            // 取得目前執行中組件 (此 DLL 或 EXE) 的完整路徑
-            string assemblyLocation = Assembly.GetExecutingAssembly().Location;
-            // 從完整路徑中提取目錄部分
-            string? assemblyDirectory = Path.GetDirectoryName(assemblyLocation);
+            string assemblyDirectory = AppPathManager.InstallPath;
 
             // 健全性檢查，確保目錄路徑有效
             if (string.IsNullOrEmpty(assemblyDirectory))

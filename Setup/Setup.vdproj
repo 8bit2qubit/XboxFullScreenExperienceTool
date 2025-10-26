@@ -140,7 +140,7 @@
             "Object" = "8:_272BC26B262F4E3D899B0F10EE3BA06C"
             "FileType" = "3:2"
             "InstallAction" = "3:4"
-            "Arguments" = "8:/silentdisable"
+            "Arguments" = "8:/silentdisable /installpath=\"[TARGETDIR]\\\""
             "EntryPoint" = "8:"
             "Sequence" = "3:1"
             "Identifier" = "8:_AF2CE6BE_B9C1_4433_B5E3_B1FE6E43963D"

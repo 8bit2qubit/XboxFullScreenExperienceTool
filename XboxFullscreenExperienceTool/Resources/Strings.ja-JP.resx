@@ -253,9 +253,7 @@
     <value>無効化成功</value>
   </data>
   <data name="PromptRestartMessage" xml:space="preserve">
-    <value>すべての変更が適用されました。完全に有効にするにはコンピュータを再起動する必要があります。
-
-今すぐ再起動しますか？</value>
+    <value>設定は正常に適用されました。変更を有効にするには、コンピューターを再起動する必要があります。</value>
   </data>
   <data name="LogUserRestartNow" xml:space="preserve">
     <value>ユーザーは今すぐコンピュータを再起動することを選択しました。</value>
@@ -481,5 +479,11 @@
   </data>
   <data name="LogKeyboardTaskDeleted" xml:space="preserve">
     <value>スケジュールされたタスク 'StartTouchKeyboardOnLogon' が削除されました。</value>
+  </data>
+  <data name="ShutdownReasonEnable" xml:space="preserve">
+    <value>Xbox Full Screen Experience Tool は、構成を完了するためにコンピューターを再起動しています。</value>
+  </data>
+  <data name="ShutdownReasonUninstall" xml:space="preserve">
+    <value>Xbox Full Screen Experience Tool は、アンインストールを完了するために再起動が必要です。</value>
   </data>
 </root>

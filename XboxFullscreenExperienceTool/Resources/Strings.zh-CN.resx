@@ -253,9 +253,7 @@
     <value>禁用成功</value>
   </data>
   <data name="PromptRestartMessage" xml:space="preserve">
-    <value>所有更改已应用，需要重新启动电脑才能完全生效。
-
-您要现在重新启动吗？</value>
+    <value>设置已成功应用。您的计算机必须重新启动，更改才会生效。</value>
   </data>
   <data name="LogUserRestartNow" xml:space="preserve">
     <value>用户选择立即重新启动电脑。</value>
@@ -481,5 +479,11 @@
   </data>
   <data name="LogKeyboardTaskDeleted" xml:space="preserve">
     <value>任务计划 'StartTouchKeyboardOnLogon' 已删除。</value>
+  </data>
+  <data name="ShutdownReasonEnable" xml:space="preserve">
+    <value>Xbox Full Screen Experience Tool 正在重新启动计算机以完成配置。</value>
+  </data>
+  <data name="ShutdownReasonUninstall" xml:space="preserve">
+    <value>Xbox Full Screen Experience Tool 需要重新启动以完成卸载。</value>
   </data>
 </root>

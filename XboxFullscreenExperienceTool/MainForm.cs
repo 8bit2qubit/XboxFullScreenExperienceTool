@@ -85,6 +85,131 @@ namespace XboxFullScreenExperienceTool
         /// </summary>
         #endregion
 
+        #region Silent Action Handler
+        /// <summary>
+        /// 提供一組完全靜態的方法，用於在非互動式環境 (如靜默解除安裝) 中執行核心操作。
+        /// 這個類別絕對不能參考 MainForm 的任何實例成員或 UI 控制項。
+        /// </summary>
+        public static class SilentActionHandler
+        {
+            // 執行所需的核心常數
+            private static readonly uint[] FEATURE_IDS = { 52580392, 50902630 };
+            private const string REG_PATH_PARENT = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion";
+            private const string REG_PATH = REG_PATH_PARENT + @"\OEM";
+            private const string REG_VALUE = "DeviceForm";
+            private static string BackupFilePath => Path.Combine(Helpers.AppPathManager.InstallPath, "DeviceForm.bak");
+
+            /// <summary>
+            /// 執行完整的靜默停用和清理流程。
+            /// </summary>
+            /// <param name="logger">一個用於記錄進度的委派。</param>
+            /// <returns>如果所有操作都成功，則為 true；否則為 false。</returns>
+            public static async Task<bool> PerformUninstallCleanup(Action<string> logger)
+            {
+                logger("Starting silent cleanup process.");
+                bool allSucceeded = true;
+
+                try
+                {
+                    allSucceeded &= DisableViveFeatures(logger);
+                    allSucceeded &= RestoreRegistry(logger);
+
+                    if (TaskSchedulerManager.TaskExists())
+                    {
+                        logger("Deleting SetPanelDimensions task...");
+                        TaskSchedulerManager.DeleteSetPanelDimensionsTask();
+                    }
+                    if (TaskSchedulerManager.StartKeyboardTaskExists())
+                    {
+                        logger("Deleting StartTouchKeyboardOnLogon task...");
+                        TaskSchedulerManager.DeleteStartKeyboardTask();
+                    }
+
+                    if (DriverManager.IsDriverServiceInstalled())
+                    {
+                        logger("Uninstalling PhysPanelDrv driver...");
+                        bool driverSuccess = await Task.Run(() => DriverManager.UninstallDriver(logger, isSilent: true));
+                        if (!driverSuccess) { allSucceeded = false; }
+                        logger(driverSuccess ? "Driver uninstall command executed." : "Driver uninstall command FAILED.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger($"FATAL EXCEPTION during cleanup: {ex.Message}");
+                    allSucceeded = false;
+                }
+
+                logger($"Silent cleanup process finished. Overall success: {allSucceeded}");
+                return allSucceeded;
+            }
+
+            private static bool DisableViveFeatures(Action<string> logger)
+            {
+                try
+                {
+                    logger($"Disabling features: {string.Join(", ", FEATURE_IDS)}");
+                    var updates = Array.ConvertAll(FEATURE_IDS, id => new RTL_FEATURE_CONFIGURATION_UPDATE
+                    {
+                        FeatureId = id,
+                        EnabledState = RTL_FEATURE_ENABLED_STATE.Disabled,
+                        Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState,
+                        Priority = RTL_FEATURE_CONFIGURATION_PRIORITY.User
+                    });
+                    FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
+                    FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Boot);
+                    logger("Features disabled successfully.");
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    logger($"ERROR disabling ViVe features: {ex.Message}");
+                    return false;
+                }
+            }
+
+            private static bool RestoreRegistry(Action<string> logger)
+            {
+                try
+                {
+                    logger("Attempting to restore registry...");
+                    if (File.Exists(BackupFilePath))
+                    {
+                        logger($"Backup file found at '{BackupFilePath}'.");
+                        string backupContent = File.ReadAllText(BackupFilePath);
+                        using (RegistryKey? key = Registry.LocalMachine.OpenSubKey(REG_PATH, true))
+                        {
+                            if (key != null)
+                            {
+                                if (backupContent == "DELETE_ON_RESTORE")
+                                {
+                                    key.DeleteValue(REG_VALUE, false);
+                                    logger($"Registry value '{REG_VALUE}' removed.");
+                                }
+                                else if (int.TryParse(backupContent, out int val))
+                                {
+                                    key.SetValue(REG_VALUE, val, RegistryValueKind.DWord);
+                                    logger($"Registry value restored to '{val}'.");
+                                }
+                            }
+                        }
+                        File.Delete(BackupFilePath);
+                        logger("Backup file deleted.");
+                    }
+                    else
+                    {
+                        logger("No backup file found. No registry action taken.");
+                    }
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    logger($"ERROR restoring registry: {ex.Message}");
+                    return false;
+                }
+            }
+        }
+        #endregion
+
         //======================================================================
         // 狀態旗標 (State Flags)
         //======================================================================
@@ -551,12 +676,20 @@ namespace XboxFullScreenExperienceTool
             // 步驟 2: 還原登錄檔值
             RestoreRegistry();
 
-            // 步驟 3: 移除所有可能的覆寫方法 (包括 CS 和 Drv)
+            // 步驟 3: 移除鍵盤啟動工作
+            if (TaskSchedulerManager.StartKeyboardTaskExists())
+            {
+                Log(Resources.Strings.LogDeletingKeyboardTask);
+                TaskSchedulerManager.DeleteStartKeyboardTask();
+                Log(Resources.Strings.LogKeyboardTaskDeleted, true);
+            }
+
+            // 步驟 4: 移除所有可能的覆寫方法 (包括 CS 和 Drv)
             if (TaskSchedulerManager.TaskExists())
             {
                 Log(Resources.Strings.LogDeletingTask);
                 TaskSchedulerManager.DeleteSetPanelDimensionsTask();
-                Log(Resources.Strings.LogPanelTaskDeleted);
+                Log(Resources.Strings.LogPanelTaskDeleted, true);
             }
 
             if (DriverManager.IsDriverServiceInstalled())
@@ -748,7 +881,9 @@ namespace XboxFullScreenExperienceTool
             Log(Resources.Strings.LogUserRestartNow);
             try
             {
-                Process.Start("shutdown.exe", "/r /t 5"); // 5 秒後重新開機
+                // 5 秒後重新開機
+                string shutdownArgs = $"/r /t 5 /c \"{Resources.Strings.ShutdownReasonEnable}\" /d p:4:1";
+                Process.Start("shutdown.exe", shutdownArgs);
                 Application.Exit();
             }
             catch (Exception ex)
