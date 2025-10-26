@@ -142,7 +142,7 @@
     <value>您的 Windows 組建版本: {0}</value>
   </data>
   <data name="ErrorBuildTooLow" xml:space="preserve">
-    <value>錯誤：您的 Windows 組建版本 ({0}) 過低。</value>
+    <value>錯誤: 您的 Windows 組建版本 ({0}) 過低。</value>
   </data>
   <data name="RequiredBuild" xml:space="preserve">
     <value>此工具需要組建版本 {0} 或更高版本。</value>
@@ -151,22 +151,22 @@
     <value>版本符合要求。</value>
   </data>
   <data name="StatusChecking" xml:space="preserve">
-    <value>狀態：偵測中...</value>
+    <value>狀態: 偵測中...</value>
   </data>
   <data name="StatusEnabled" xml:space="preserve">
-    <value>狀態：已啟用</value>
+    <value>狀態: 已啟用</value>
   </data>
   <data name="StatusDisabled" xml:space="preserve">
-    <value>狀態：未啟用</value>
+    <value>狀態: 未啟用</value>
   </data>
   <data name="StatusNeedsFix" xml:space="preserve">
-    <value>狀態：需要修正 (未建立正確的螢幕尺寸工作)</value>
+    <value>狀態: 需要修正 (未建立正確的螢幕尺寸工作)</value>
   </data>
   <data name="StatusUnknownError" xml:space="preserve">
-    <value>狀態：未知 (錯誤)</value>
+    <value>狀態: 未知 (錯誤)</value>
   </data>
   <data name="StatusRestartPending" xml:space="preserve">
-    <value>狀態：等待重新啟動...</value>
+    <value>狀態: 等待重新啟動...</value>
   </data>
   <data name="btnEnable_Text" xml:space="preserve">
     <value>啟用 Xbox 全螢幕體驗</value>
@@ -342,19 +342,19 @@
     <value>無法取得應用程式的安裝目錄。</value>
   </data>
   <data name="ErrorCertificateFileNotFound" xml:space="preserve">
-    <value>錯誤：找不到憑證檔案 '{0}'。</value>
+    <value>錯誤: 找不到憑證檔案 '{0}'。</value>
   </data>
   <data name="ErrorDriverFilesNotFound" xml:space="preserve">
-    <value>錯誤：找不到驅動程式檔案 '{0}' 或 '{1}'。</value>
+    <value>錯誤: 找不到驅動程式檔案 '{0}' 或 '{1}'。</value>
   </data>
   <data name="LogErrorDriverInstallFailed" xml:space="preserve">
-    <value>驅動程式安裝失敗：{0}</value>
+    <value>驅動程式安裝失敗: {0}</value>
   </data>
   <data name="LogErrorDriverRemoveFailed" xml:space="preserve">
-    <value>驅動程式移除失敗：{0}</value>
+    <value>驅動程式移除失敗: {0}</value>
   </data>
   <data name="LogErrorPrefix" xml:space="preserve">
-    <value>錯誤：{0}</value>
+    <value>錯誤: {0}</value>
   </data>
   <data name="LogCertificateInstallSuccess" xml:space="preserve">
     <value>憑證安裝成功。</value>
@@ -381,7 +381,7 @@
     <value>正在移除驅動程式裝置...</value>
   </data>
   <data name="WarningOemInfNotFound" xml:space="preserve">
-    <value>警告：找不到對應的 oem&lt;編號&gt;.inf 檔案，可能已被移除。</value>
+    <value>警告: 找不到對應的 oem&lt;編號&gt;.inf 檔案，可能已被移除。</value>
   </data>
   <data name="grpPhysPanel_Text" xml:space="preserve">
     <value>螢幕尺寸覆寫方式 (適用於非掌機)</value>
@@ -393,10 +393,10 @@
     <value>PhysPanelDrv (驅動程式模式，穩定性高，需啟用測試簽章)</value>
   </data>
   <data name="StatusEnabledDriverMode" xml:space="preserve">
-    <value>狀態：已啟用 (驅動程式模式)</value>
+    <value>狀態: 已啟用 (驅動程式模式)</value>
   </data>
   <data name="StatusEnabledSchedulerMode" xml:space="preserve">
-    <value>狀態：已啟用 (工作排程模式)</value>
+    <value>狀態: 已啟用 (工作排程模式)</value>
   </data>
   <data name="LogTestSigningDisabled" xml:space="preserve">
     <value>系統未啟用測試簽章模式，PhysPanelDrv 選項已停用。</value>
@@ -423,7 +423,7 @@
     <value>寫入日誌檔案失敗: {0}</value>
   </data>
   <data name="LogStatusCheckSummary" xml:space="preserve">
-    <value>狀態檢查：核心啟用={0} (ViVe功能={1}, 登錄檔={2}), 螢幕覆寫需求={3}, 覆寫存在={4} (CS={5}, Drv={6}), 測試簽章={7}</value>
+    <value>狀態檢查: 核心啟用={0} (ViVe功能={1}, 登錄檔={2}), 螢幕覆寫需求={3}, 覆寫存在={4} (CS={5}, Drv={6}), 測試簽章={7}</value>
   </data>
   <data name="StatusDriverErrorNeedsDisable" xml:space="preserve">
     <value>驅動模式錯誤，請停用以進行還原</value>
@@ -448,5 +448,38 @@
   </data>
   <data name="LogLargeScreenForceCS" xml:space="preserve">
     <value>偵測到螢幕尺寸大於 9.5 英吋。為確保相容性，已將覆寫模式限制為「工作排程 (CS)」模式。</value>
+  </data>
+  <data name="chkStartKeyboardOnLogon_Text" xml:space="preserve">
+    <value>在登入時啟動觸控鍵盤</value>
+  </data>
+  <data name="LogCreatingKeyboardTask" xml:space="preserve">
+    <value>正在建立「登入時啟動鍵盤」的工作排程...</value>
+  </data>
+  <data name="LogDeletingKeyboardTask" xml:space="preserve">
+    <value>正在刪除「登入時啟動鍵盤」的工作排程...</value>
+  </data>
+  <data name="ErrorKeyboardTask" xml:space="preserve">
+    <value>修改鍵盤啟動工作排程時發生錯誤。錯誤: {0}</value>
+  </data>
+  <data name="LogTouchSupportStatus" xml:space="preserve">
+    <value>偵測到觸控支援狀態: {0}</value>
+  </data>
+  <data name="TooltipTouchEnabled" xml:space="preserve">
+    <value>您的系統已原生支援觸控，Windows 將自動管理觸控鍵盤的顯示。</value>
+  </data>
+  <data name="TooltipTouchDisabled" xml:space="preserve">
+    <value>您的系統未偵測到觸控支援。您可以啟用此選項，以在登入時自動為控制器體驗啟動觸控鍵盤。</value>
+  </data>
+  <data name="LogPanelTaskCreated" xml:space="preserve">
+    <value>工作排程 'SetPanelDimensions' 已建立。</value>
+  </data>
+  <data name="LogPanelTaskDeleted" xml:space="preserve">
+    <value>工作排程 'SetPanelDimensions' 已刪除。</value>
+  </data>
+  <data name="LogKeyboardTaskCreated" xml:space="preserve">
+    <value>工作排程 'StartTouchKeyboardOnLogon' 已建立。</value>
+  </data>
+  <data name="LogKeyboardTaskDeleted" xml:space="preserve">
+    <value>工作排程 'StartTouchKeyboardOnLogon' 已刪除。</value>
   </data>
 </root>

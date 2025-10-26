@@ -142,7 +142,7 @@
     <value>お使いの Windows ビルドバージョン: {0}</value>
   </data>
   <data name="ErrorBuildTooLow" xml:space="preserve">
-    <value>エラー：お使いの Windows ビルドバージョン ({0}) は低すぎます。</value>
+    <value>エラー: お使いの Windows ビルドバージョン ({0}) は低すぎます。</value>
   </data>
   <data name="RequiredBuild" xml:space="preserve">
     <value>このツールにはビルドバージョン {0} 以降が必要です。</value>
@@ -151,22 +151,22 @@
     <value>バージョンは要件を満たしています。</value>
   </data>
   <data name="StatusChecking" xml:space="preserve">
-    <value>状態：検出中...</value>
+    <value>状態: 検出中...</value>
   </data>
   <data name="StatusEnabled" xml:space="preserve">
-    <value>状態：有効</value>
+    <value>状態: 有効</value>
   </data>
   <data name="StatusDisabled" xml:space="preserve">
-    <value>状態：無効</value>
+    <value>状態: 無効</value>
   </data>
   <data name="StatusNeedsFix" xml:space="preserve">
-    <value>状態：修正が必要 (画面サイズタスクが正しく作成されていません)</value>
+    <value>状態: 修正が必要 (画面サイズタスクが正しく作成されていません)</value>
   </data>
   <data name="StatusUnknownError" xml:space="preserve">
-    <value>状態：不明 (エラー)</value>
+    <value>状態: 不明 (エラー)</value>
   </data>
   <data name="StatusRestartPending" xml:space="preserve">
-    <value>状態：再起動待ち...</value>
+    <value>状態: 再起動待ち...</value>
   </data>
   <data name="btnEnable_Text" xml:space="preserve">
     <value>Xbox 全画面表示エクスペリエンスを有効にする</value>
@@ -426,7 +426,7 @@
     <value>状態チェック: コア有効={0} (ViVe機能={1}, レジストリ={2}), 画面上書き要={3}, 上書き存在={4} (CS={5}, Drv={6}), テスト署名={7}</value>
   </data>
   <data name="StatusDriverErrorNeedsDisable" xml:space="preserve">
-    <value>ドライバーモードエラー：無効化して復元してください</value>
+    <value>ドライバーモードエラー: 無効化して復元してください</value>
   </data>
   <data name="LogDriverInstallCancelled" xml:space="preserve">
     <value>ドライバーのインストールがユーザーによってキャンセルされたか、失敗しました。操作は中止されました。</value>
@@ -448,5 +448,38 @@
   </data>
   <data name="LogLargeScreenForceCS" xml:space="preserve">
     <value>9.5インチを超える画面サイズが検出されました。互換性を確保するため、オーバーライドモードは「タスクスケジューラ (CS)」モードに制限されています。</value>
+  </data>
+  <data name="chkStartKeyboardOnLogon_Text" xml:space="preserve">
+    <value>ログオン時にタッチキーボードを起動する</value>
+  </data>
+  <data name="LogCreatingKeyboardTask" xml:space="preserve">
+    <value>ログオン時にキーボードを起動するためのスケジュール済みタスクを作成しています...</value>
+  </data>
+  <data name="LogDeletingKeyboardTask" xml:space="preserve">
+    <value>ログオン時にキーボードを起動するためのスケジュール済みタスクを削除しています...</value>
+  </data>
+  <data name="ErrorKeyboardTask" xml:space="preserve">
+    <value>キーボード起動タスクの変更に失敗しました。エラー: {0}</value>
+  </data>
+  <data name="LogTouchSupportStatus" xml:space="preserve">
+    <value>タッチサポートの検出状態: {0}</value>
+  </data>
+  <data name="TooltipTouchEnabled" xml:space="preserve">
+    <value>お使いのシステムはネイティブでタッチをサポートしています。タッチキーボードの表示はWindowsによって自動的に管理されます。</value>
+  </data>
+  <data name="TooltipTouchDisabled" xml:space="preserve">
+    <value>お使いのシステムでタッチサポートは検出されませんでした。これを有効にすると、ログオン時にコントローラー優先の体験のためにタッチキーボードを自動的に起動できます。</value>
+  </data>
+  <data name="LogPanelTaskCreated" xml:space="preserve">
+    <value>スケジュールされたタスク 'SetPanelDimensions' が作成されました。</value>
+  </data>
+  <data name="LogPanelTaskDeleted" xml:space="preserve">
+    <value>スケジュールされたタスク 'SetPanelDimensions' が削除されました。</value>
+  </data>
+  <data name="LogKeyboardTaskCreated" xml:space="preserve">
+    <value>スケジュールされたタスク 'StartTouchKeyboardOnLogon' が作成されました。</value>
+  </data>
+  <data name="LogKeyboardTaskDeleted" xml:space="preserve">
+    <value>スケジュールされたタスク 'StartTouchKeyboardOnLogon' が削除されました。</value>
   </data>
 </root>

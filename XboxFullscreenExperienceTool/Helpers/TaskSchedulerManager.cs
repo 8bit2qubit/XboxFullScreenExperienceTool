@@ -31,6 +31,11 @@ namespace XboxFullScreenExperienceTool.Helpers
         private const string TASK_NAME = "SetPanelDimensions";
 
         /// <summary>
+        /// 定義用於在登入時啟動觸控鍵盤的工作排程的唯一名稱。
+        /// </summary>
+        private const string KEYBOARD_TASK_NAME = "StartTouchKeyboardOnLogon";
+
+        /// <summary>
         /// 組合並傳回 `PhysPanelCS.exe` 工具的完整路徑。
         /// </summary>
         /// <returns>假設 `PhysPanelCS.exe` 與主程式位於同一目錄下的絕對路徑。</returns>
@@ -77,6 +82,29 @@ namespace XboxFullScreenExperienceTool.Helpers
             // 任何非 0 的代碼都表示找不到工作或發生錯誤。
             return process.ExitCode == 0;
         }
+
+        /// <summary>
+        /// 檢查用於啟動鍵盤的工作排程是否存在。
+        /// </summary>
+        /// <returns>如果工作存在，則為 <c>true</c>；否則為 <c>false</c>。</returns>
+        public static bool StartKeyboardTaskExists()
+        {
+            var process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "schtasks.exe",
+                    Arguments = $"/query /tn \"{KEYBOARD_TASK_NAME}\"",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true
+                }
+            };
+            process.Start();
+            process.WaitForExit();
+            return process.ExitCode == 0;
+        }
+
 
         /// <summary>
         /// 建立或覆寫一個在系統啟動時執行的工作排程。
@@ -165,6 +193,79 @@ namespace XboxFullScreenExperienceTool.Helpers
         }
 
         /// <summary>
+        /// 建立一個在使用者登入時啟動觸控鍵盤的工作排程。
+        /// </summary>
+        public static void CreateStartKeyboardTask()
+        {
+            string physPanelPath = GetPhysPanelPath();
+            if (!File.Exists(physPanelPath))
+            {
+                throw new FileNotFoundException(string.Format(Resources.Strings.TaskSchedulerManagerErrorFindFile, physPanelPath));
+            }
+
+            // 此 XML 為使用者層級工作設計：無 UserId，觸發器為 LogonTrigger
+            string xmlContent = $@"<?xml version=""1.0"" encoding=""UTF-16""?>
+<Task version=""1.2"" xmlns=""http://schemas.microsoft.com/windows/2004/02/mit/task"">
+  <RegistrationInfo>
+    <Author>XboxFullScreenExperienceTool</Author>
+    <URI>\{KEYBOARD_TASK_NAME}</URI>
+  </RegistrationInfo>
+  <Triggers>
+    <LogonTrigger>
+      <Enabled>true</Enabled>
+    </LogonTrigger>
+  </Triggers>
+  <Principals>
+    <Principal id=""Author"">
+      <RunLevel>LeastPrivilege</RunLevel>
+    </Principal>
+  </Principals>
+  <Settings>
+    <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+    <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+    <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+    <AllowHardTerminate>true</AllowHardTerminate>
+    <StartWhenAvailable>false</StartWhenAvailable>
+    <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
+    <Enabled>true</Enabled>
+    <Hidden>false</Hidden>
+    <Priority>7</Priority>
+  </Settings>
+  <Actions Context=""Author"">
+    <Exec>
+      <Command>""{physPanelPath}""</Command>
+      <Arguments>startkeyboard</Arguments>
+    </Exec>
+  </Actions>
+</Task>";
+
+            var tempXmlFile = Path.GetTempFileName();
+            File.WriteAllText(tempXmlFile, xmlContent);
+
+            var process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "schtasks.exe",
+                    Arguments = $"/create /tn \"{KEYBOARD_TASK_NAME}\" /xml \"{tempXmlFile}\" /f",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    CreateNoWindow = true
+                }
+            };
+            process.Start();
+            string err = process.StandardError.ReadToEnd();
+            process.WaitForExit();
+            File.Delete(tempXmlFile);
+
+            if (process.ExitCode != 0)
+            {
+                throw new Exception(string.Format(Resources.Strings.TaskSchedulerManagerErrorCreate, err));
+            }
+        }
+
+        /// <summary>
         /// 刪除由這個類別管理的 'SetPanelDimensions' 工作排程。
         /// </summary>
         /// <exception cref="Exception">如果刪除失敗並傳回非預期的錯誤代碼，則擲出此例外狀況。</exception>
@@ -192,6 +293,33 @@ namespace XboxFullScreenExperienceTool.Helpers
             // 1: 找不到指定的工作。
             // 在邏輯中，如果工作本來就不存在，也算是達成了「確保工作不存在」的目標，因此不應視為錯誤。
             // 只有當結束代碼大於 1 時，才表示發生了真正的錯誤。
+            if (process.ExitCode > 1)
+            {
+                throw new Exception(string.Format(Resources.Strings.TaskSchedulerManagerErrorDelete, err));
+            }
+        }
+
+        /// <summary>
+        /// 刪除用於啟動鍵盤的工作排程。
+        /// </summary>
+        public static void DeleteStartKeyboardTask()
+        {
+            var process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "schtasks.exe",
+                    Arguments = $"/delete /tn \"{KEYBOARD_TASK_NAME}\" /f",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    CreateNoWindow = true
+                }
+            };
+            process.Start();
+            string err = process.StandardError.ReadToEnd();
+            process.WaitForExit();
+
             if (process.ExitCode > 1)
             {
                 throw new Exception(string.Format(Resources.Strings.TaskSchedulerManagerErrorDelete, err));

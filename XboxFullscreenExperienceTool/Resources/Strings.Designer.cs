@@ -88,6 +88,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Start touch keyboard on logon  的當地語系化字串。
+        /// </summary>
+        internal static string chkStartKeyboardOnLogon_Text {
+            get {
+                return ResourceManager.GetString("chkStartKeyboardOnLogon_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Application is already running. 的當地語系化字串。
         /// </summary>
         internal static string ErrorAppRunning {
@@ -138,6 +147,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         internal static string ErrorDriverFilesNotFound {
             get {
                 return ResourceManager.GetString("ErrorDriverFilesNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Failed to modify the keyboard startup task. Error: {0} 的當地語系化字串。
+        /// </summary>
+        internal static string ErrorKeyboardTask {
+            get {
+                return ResourceManager.GetString("ErrorKeyboardTask", resourceCulture);
             }
         }
         
@@ -316,11 +334,29 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Creating scheduled task to start keyboard on logon... 的當地語系化字串。
+        /// </summary>
+        internal static string LogCreatingKeyboardTask {
+            get {
+                return ResourceManager.GetString("LogCreatingKeyboardTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Found driver package &apos;{0}&apos;, deleting... 的當地語系化字串。
         /// </summary>
         internal static string LogDeletingDriverPackage {
             get {
                 return ResourceManager.GetString("LogDeletingDriverPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Deleting scheduled task for starting keyboard on logon... 的當地語系化字串。
+        /// </summary>
+        internal static string LogDeletingKeyboardTask {
+            get {
+                return ResourceManager.GetString("LogDeletingKeyboardTask", resourceCulture);
             }
         }
         
@@ -532,6 +568,24 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Scheduled task &apos;StartTouchKeyboardOnLogon&apos; has been created. 的當地語系化字串。
+        /// </summary>
+        internal static string LogKeyboardTaskCreated {
+            get {
+                return ResourceManager.GetString("LogKeyboardTaskCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Scheduled task &apos;StartTouchKeyboardOnLogon&apos; has been deleted. 的當地語系化字串。
+        /// </summary>
+        internal static string LogKeyboardTaskDeleted {
+            get {
+                return ResourceManager.GetString("LogKeyboardTaskDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Detected a screen size larger than 9.5 inches. To ensure compatibility, the override mode has been restricted to &apos;Task Scheduler (CS)&apos; mode. 的當地語系化字串。
         /// </summary>
         internal static string LogLargeScreenForceCS {
@@ -564,6 +618,24 @@ namespace XboxFullScreenExperienceTool.Resources {
         internal static string LogOperationFailedRollingBack {
             get {
                 return ResourceManager.GetString("LogOperationFailedRollingBack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Scheduled task &apos;SetPanelDimensions&apos; has been created. 的當地語系化字串。
+        /// </summary>
+        internal static string LogPanelTaskCreated {
+            get {
+                return ResourceManager.GetString("LogPanelTaskCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Scheduled task &apos;SetPanelDimensions&apos; has been deleted. 的當地語系化字串。
+        /// </summary>
+        internal static string LogPanelTaskDeleted {
+            get {
+                return ResourceManager.GetString("LogPanelTaskDeleted", resourceCulture);
             }
         }
         
@@ -784,6 +856,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Touch support detected: {0} 的當地語系化字串。
+        /// </summary>
+        internal static string LogTouchSupportStatus {
+            get {
+                return ResourceManager.GetString("LogTouchSupportStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 User chose to restart later. No further actions can be performed until restart. 的當地語系化字串。
         /// </summary>
         internal static string LogUserRestartLater {
@@ -989,6 +1070,24 @@ namespace XboxFullScreenExperienceTool.Resources {
         internal static string TaskSchedulerManagerErrorFindFile {
             get {
                 return ResourceManager.GetString("TaskSchedulerManagerErrorFindFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 No touch support detected on your system. You can enable this to automatically launch the touch keyboard on logon for a controller-first experience. 的當地語系化字串。
+        /// </summary>
+        internal static string TooltipTouchDisabled {
+            get {
+                return ResourceManager.GetString("TooltipTouchDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Your system has native touch support. Windows will manage the touch keyboard display automatically. 的當地語系化字串。
+        /// </summary>
+        internal static string TooltipTouchEnabled {
+            get {
+                return ResourceManager.GetString("TooltipTouchEnabled", resourceCulture);
             }
         }
         

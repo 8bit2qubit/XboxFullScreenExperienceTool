@@ -34,6 +34,7 @@ namespace XboxFullScreenExperienceTool
             this.btnEnable = new System.Windows.Forms.Button();
             this.btnDisable = new System.Windows.Forms.Button();
             this.grpActions = new System.Windows.Forms.GroupBox();
+            this.chkStartKeyboardOnLogon = new System.Windows.Forms.CheckBox();
             this.grpOutput = new System.Windows.Forms.GroupBox();
             this.txtOutput = new System.Windows.Forms.RichTextBox();
             this.lblStatus = new System.Windows.Forms.Label();
@@ -41,6 +42,7 @@ namespace XboxFullScreenExperienceTool
             this.grpPhysPanel = new System.Windows.Forms.GroupBox();
             this.radPhysPanelDrv = new System.Windows.Forms.RadioButton();
             this.radPhysPanelCS = new System.Windows.Forms.RadioButton();
+            this.toolTip = new System.Windows.Forms.ToolTip();
             this.grpActions.SuspendLayout();
             this.grpOutput.SuspendLayout();
             this.grpPhysPanel.SuspendLayout();
@@ -74,14 +76,26 @@ namespace XboxFullScreenExperienceTool
             // 
             this.grpActions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpActions.Controls.Add(this.chkStartKeyboardOnLogon);
             this.grpActions.Controls.Add(this.btnDisable);
             this.grpActions.Controls.Add(this.btnEnable);
             this.grpActions.Location = new System.Drawing.Point(12, 122);
             this.grpActions.Name = "grpActions";
-            this.grpActions.Size = new System.Drawing.Size(574, 95);
+            this.grpActions.Size = new System.Drawing.Size(574, 120);
             this.grpActions.TabIndex = 5;
             this.grpActions.TabStop = false;
             this.grpActions.Text = "操作";
+            // 
+            // chkStartKeyboardOnLogon
+            // 
+            this.chkStartKeyboardOnLogon.AutoSize = true;
+            this.chkStartKeyboardOnLogon.Location = new System.Drawing.Point(19, 88);
+            this.chkStartKeyboardOnLogon.Name = "chkStartKeyboardOnLogon";
+            this.chkStartKeyboardOnLogon.Size = new System.Drawing.Size(212, 19);
+            this.chkStartKeyboardOnLogon.TabIndex = 5;
+            this.chkStartKeyboardOnLogon.Text = "在登入時啟動觸控鍵盤";
+            this.chkStartKeyboardOnLogon.UseVisualStyleBackColor = true;
+            this.chkStartKeyboardOnLogon.CheckedChanged += new System.EventHandler(this.chkStartKeyboardOnLogon_CheckedChanged);
             // 
             // grpOutput
             // 
@@ -89,7 +103,7 @@ namespace XboxFullScreenExperienceTool
             | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grpOutput.Controls.Add(this.txtOutput);
-            this.grpOutput.Location = new System.Drawing.Point(12, 223);
+            this.grpOutput.Location = new System.Drawing.Point(12, 248);
             this.grpOutput.Name = "grpOutput";
             this.grpOutput.Size = new System.Drawing.Size(574, 154);
             this.grpOutput.TabIndex = 6;
@@ -170,18 +184,19 @@ namespace XboxFullScreenExperienceTool
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(598, 389);
+            this.ClientSize = new System.Drawing.Size(598, 414);
             this.Controls.Add(this.grpPhysPanel);
             this.Controls.Add(this.cboLanguage);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.grpOutput);
             this.Controls.Add(this.grpActions);
-            this.MinimumSize = new System.Drawing.Size(614, 428);
+            this.MinimumSize = new System.Drawing.Size(614, 453);
             this.Name = "MainForm";
             this.ShowIcon = false;
             this.Text = "Xbox 全螢幕體驗工具";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.grpActions.ResumeLayout(false);
+            this.grpActions.PerformLayout();
             this.grpOutput.ResumeLayout(false);
             this.grpPhysPanel.ResumeLayout(false);
             this.grpPhysPanel.PerformLayout();
@@ -199,5 +214,7 @@ namespace XboxFullScreenExperienceTool
         private System.Windows.Forms.GroupBox grpPhysPanel;
         private System.Windows.Forms.RadioButton radPhysPanelDrv;
         private System.Windows.Forms.RadioButton radPhysPanelCS;
+        private System.Windows.Forms.CheckBox chkStartKeyboardOnLogon;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }

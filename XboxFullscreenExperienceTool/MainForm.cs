@@ -94,6 +94,7 @@ namespace XboxFullScreenExperienceTool
         /// 在此狀態下，UI 應被鎖定以防止進一步的操作。
         /// </summary>
         private bool _restartPending = false;
+        private bool _isInitializing = true;
 
         //======================================================================
         // 表單事件 (Form Events)
@@ -112,6 +113,7 @@ namespace XboxFullScreenExperienceTool
         {
             UpdateUIForLanguage(); // 根據選定的語言更新 UI 文字
             RerunChecksAndLog();   // 執行所有初始檢查並記錄結果
+            _isInitializing = false; // 初始化完成
         }
 
         //======================================================================
@@ -171,6 +173,7 @@ namespace XboxFullScreenExperienceTool
         /// </summary>
         private void CheckCurrentStatus()
         {
+            _isInitializing = true;
             try
             {
                 // 步驟 1: 基礎核心檢查 (ViVe 功能 & 登錄檔)
@@ -238,6 +241,22 @@ namespace XboxFullScreenExperienceTool
                 bool isPhysPanelCSActive = TaskSchedulerManager.TaskExists();
                 bool isPhysPanelDrvActive = DriverManager.IsDriverServiceInstalled();
                 bool isScreenOverridePresent = isPhysPanelCSActive || isPhysPanelDrvActive;
+
+                // 步驟 3.5: 設定鍵盤啟動選項的可用性
+                bool hasTouchSupport = HardwareHelper.IsTouchScreenAvailable();
+                chkStartKeyboardOnLogon.Enabled = !hasTouchSupport; // 如果沒有觸控，則啟用此選項
+                chkStartKeyboardOnLogon.Checked = TaskSchedulerManager.StartKeyboardTaskExists();
+
+                // 設定 ToolTip 提示，向使用者解釋為何選項被停用
+                if (hasTouchSupport)
+                {
+                    toolTip.SetToolTip(chkStartKeyboardOnLogon, Resources.Strings.TooltipTouchEnabled);
+                }
+                else
+                {
+                    toolTip.SetToolTip(chkStartKeyboardOnLogon, Resources.Strings.TooltipTouchDisabled);
+                }
+                Log(string.Format(Resources.Strings.LogTouchSupportStatus, hasTouchSupport));
 
                 // 步驟 4: 檢查並設定覆寫模式的可用性 (檢查驅動程式模式的先決條件 (Test Signing))
 
@@ -360,6 +379,10 @@ namespace XboxFullScreenExperienceTool
                 lblStatus.ForeColor = Color.OrangeRed;
                 LogError(string.Format(Resources.Strings.ErrorCheckStatus, ex.Message));
             }
+            finally
+            {
+                _isInitializing = false;
+            }
         }
 
         //======================================================================
@@ -381,6 +404,7 @@ namespace XboxFullScreenExperienceTool
             btnDisable.Enabled = false;
             grpPhysPanel.Enabled = false;
             cboLanguage.Enabled = false;
+            chkStartKeyboardOnLogon.Enabled = false;
 
             try
             {
@@ -489,6 +513,7 @@ namespace XboxFullScreenExperienceTool
             btnDisable.Enabled = false;
             grpPhysPanel.Enabled = false;
             cboLanguage.Enabled = false;
+            chkStartKeyboardOnLogon.Enabled = false;
 
             try
             {
@@ -531,7 +556,7 @@ namespace XboxFullScreenExperienceTool
             {
                 Log(Resources.Strings.LogDeletingTask);
                 TaskSchedulerManager.DeleteSetPanelDimensionsTask();
-                Log(Resources.Strings.LogTaskDeleted);
+                Log(Resources.Strings.LogPanelTaskDeleted);
             }
 
             if (DriverManager.IsDriverServiceInstalled())
@@ -619,7 +644,7 @@ namespace XboxFullScreenExperienceTool
                     Log(isUndefined ? Resources.Strings.LogScreenSizeUndefined : string.Format(Resources.Strings.LogScreenSizeTooLarge, diagonalInches, MAX_DIAGONAL_INCHES));
                     // 呼叫 TaskSchedulerManager 來建立一個 Windows 排程工作，用於設定/修正螢幕尺寸
                     TaskSchedulerManager.CreateSetPanelDimensionsTask();
-                    Log(Resources.Strings.LogTaskCreated);
+                    Log(Resources.Strings.LogPanelTaskCreated);
                 }
                 else
                 {
@@ -747,6 +772,7 @@ namespace XboxFullScreenExperienceTool
             btnDisable.Enabled = false;
             cboLanguage.Enabled = false;
             grpPhysPanel.Enabled = false;
+            chkStartKeyboardOnLogon.Enabled = false;
             Log(Resources.Strings.LogUserRestartLater);
         }
 
@@ -793,6 +819,7 @@ namespace XboxFullScreenExperienceTool
             grpOutput.Text = Resources.Strings.grpOutput_Text;
             btnDisable.Text = Resources.Strings.btnDisable_Text;
             btnEnable.Text = Resources.Strings.btnEnable_Text;
+            chkStartKeyboardOnLogon.Text = Resources.Strings.chkStartKeyboardOnLogon_Text;
         }
 
         /// <summary>
@@ -833,6 +860,49 @@ namespace XboxFullScreenExperienceTool
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
                 UpdateUIForLanguage();
                 RerunChecksAndLog();
+            }
+        }
+
+        /// <summary>
+        /// 當「在登入時啟動觸控鍵盤」核取方塊的狀態變更時觸發。
+        /// </summary>
+        private void chkStartKeyboardOnLogon_CheckedChanged(object sender, EventArgs e)
+        {
+            // 如果是在程式初始化期間設定狀態，則不執行任何動作
+            if (_isInitializing) return;
+
+            // 暫時停用控制項並顯示等待游標
+            chkStartKeyboardOnLogon.Enabled = false;
+            this.Cursor = Cursors.WaitCursor;
+
+            try
+            {
+                if (chkStartKeyboardOnLogon.Checked)
+                {
+                    Log(Resources.Strings.LogCreatingKeyboardTask);
+                    TaskSchedulerManager.CreateStartKeyboardTask();
+                    Log(Resources.Strings.LogKeyboardTaskCreated, true);
+                }
+                else
+                {
+                    Log(Resources.Strings.LogDeletingKeyboardTask);
+                    TaskSchedulerManager.DeleteStartKeyboardTask();
+                    Log(Resources.Strings.LogKeyboardTaskDeleted, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogError(string.Format(Resources.Strings.ErrorKeyboardTask, ex.Message));
+                // 如果發生錯誤，將核取方塊還原到先前的狀態
+                _isInitializing = true;
+                chkStartKeyboardOnLogon.Checked = !chkStartKeyboardOnLogon.Checked;
+                _isInitializing = false;
+            }
+            finally
+            {
+                // 無論成功或失敗，都恢復游標並重新啟用控制項
+                this.Cursor = Cursors.Default;
+                chkStartKeyboardOnLogon.Enabled = true;
             }
         }
 
