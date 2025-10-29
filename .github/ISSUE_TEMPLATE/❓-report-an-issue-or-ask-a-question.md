@@ -11,12 +11,12 @@ assignees: ''
 
 **Please check all boxes (change [ ] to [x]).**
 
-* [ ] I have **read the entire** [**README**](https://github.com/8bit2qubit/XboxFullscreenExperienceTool?tab=readme-ov-file), especially the following sections:
+* [ ] I have **read the entire** [**README**](https://github.com/8bit2qubit/XboxFullScreenExperienceTool?tab=readme-ov-file), especially the following sections:
     * **"System Requirements"** (I confirm my build is one of the **COMPATIBLE** builds: `26200.7015+` or `26220.6972+`. **`26100.xxxx` is NOT compatible.**)
     * **"Screen Override for PCs & Laptops"** (I understand the difference between `PhysPanelCS` / `PhysPanelDrv` and the race condition)
-* [ ] I understand this tool is an **Enabler / Activation Utility / Configuration Tool** and not the implementer of the Full Screen Experience (FSE) feature. I understand FSE itself **is a Shell Replacement** that *replaces* the normal Windows desktop/taskbar (as explained in [Issue #8](https://github.com/8bit2qubit/XboxFullscreenExperienceTool/issues/8)), and FSE's behavior is not a bug in this tool.
+* [ ] I understand this tool is an **Enabler / Activation Utility / Configuration Tool** and not the implementer of the Full Screen Experience (FSE) feature. I understand FSE itself **is a Shell Replacement** that *replaces* the normal Windows desktop/taskbar, and FSE's behavior is not a bug in this tool.
 * [ ] If I am seeing a "Grey Screen," I have already tried going to the **Microsoft Store** to update all apps (especially Xbox and Game Bar).
-* [ ] I have searched the [**existing Issues**](https://github.com/8bit2qubit/XboxFullscreenExperienceTool/issues) to ensure my problem is not already reported.
+* [ ] I have searched the [**existing Issues**](https://github.com/8bit2qubit/XboxFullScreenExperienceTool/issues) to ensure my problem is not already reported.
 
 ---
 
