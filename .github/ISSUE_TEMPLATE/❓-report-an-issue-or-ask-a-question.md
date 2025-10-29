@@ -35,6 +35,7 @@ assignees: ''
 **3. Which "Screen Override Mode" are you currently using?**
 * [ ] **Task Scheduler Mode (`PhysPanelCS`)** (Default)
 * [ ] **Driver Mode (`PhysPanelDrv`)** (Advanced)
+* [ ] **N/A (Not Applicable)** (My device is a Handheld, or this is not relevant)
 
 ---
 
