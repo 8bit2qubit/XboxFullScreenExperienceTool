@@ -18,6 +18,8 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PhysPanelDrv", "Modules\PhysPanelDrv\PhysPanelDrv\PhysPanelDrv.vcxproj", "{746C39C7-E78F-3015-CF55-4B3136C36124}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PhysPanelCPP", "PhysPanelCPP\PhysPanelCPP.vcxproj", "{4F928868-F002-4836-A776-560850D2DBC1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +106,18 @@ Global
 		{746C39C7-E78F-3015-CF55-4B3136C36124}.Release|x64.ActiveCfg = Release|x64
 		{746C39C7-E78F-3015-CF55-4B3136C36124}.Release|x64.Build.0 = Release|x64
 		{746C39C7-E78F-3015-CF55-4B3136C36124}.Release|x64.Deploy.0 = Release|x64
+		{4F928868-F002-4836-A776-560850D2DBC1}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{4F928868-F002-4836-A776-560850D2DBC1}.Debug|Any CPU.Build.0 = Debug|x64
+		{4F928868-F002-4836-A776-560850D2DBC1}.Debug|ARM64.ActiveCfg = Debug|x64
+		{4F928868-F002-4836-A776-560850D2DBC1}.Debug|ARM64.Build.0 = Debug|x64
+		{4F928868-F002-4836-A776-560850D2DBC1}.Debug|x64.ActiveCfg = Debug|x64
+		{4F928868-F002-4836-A776-560850D2DBC1}.Debug|x64.Build.0 = Debug|x64
+		{4F928868-F002-4836-A776-560850D2DBC1}.Release|Any CPU.ActiveCfg = Release|x64
+		{4F928868-F002-4836-A776-560850D2DBC1}.Release|Any CPU.Build.0 = Release|x64
+		{4F928868-F002-4836-A776-560850D2DBC1}.Release|ARM64.ActiveCfg = Release|x64
+		{4F928868-F002-4836-A776-560850D2DBC1}.Release|ARM64.Build.0 = Release|x64
+		{4F928868-F002-4836-A776-560850D2DBC1}.Release|x64.ActiveCfg = Release|x64
+		{4F928868-F002-4836-A776-560850D2DBC1}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
