@@ -181,9 +181,9 @@
     <value>   NTSTATUS 錯誤碼: 0x{0:X8}</value>
   </data>
   <data name="ErrorTabTipNotFound" xml:space="preserve">
-    <value>錯誤: 找不到 Windows 觸控鍵盤執行檔 (TabTip.exe)。</value>
+    <value>錯誤: 在預期路徑中找不到觸控鍵盤執行檔 (TabTip.exe)。</value>
   </data>
   <data name="ErrorTabTipActivationFailed" xml:space="preserve">
-    <value>錯誤: 啟動或啟用觸控鍵盤失敗。請確認系統元件是否正常。</value>
+    <value>錯誤: 啟用、通訊或隱藏觸控鍵盤失敗。如果桌面環境載入緩慢，此問題可能會在系統啟動時發生。</value>
   </data>
 </root>

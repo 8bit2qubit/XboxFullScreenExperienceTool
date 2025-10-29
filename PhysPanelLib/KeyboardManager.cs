@@ -34,7 +34,7 @@ namespace PhysPanelLib
     public class TabTipActivationException : Exception
     {
         // 提供一個標準的建構函式，可以包含內部錯誤訊息
-        public TabTipActivationException(string message, Exception innerException) : base(message, innerException) { }
+        public TabTipActivationException(string message, Exception? innerException) : base(message, innerException) { }
     }
 
     /// <summary>
@@ -52,7 +52,12 @@ namespace PhysPanelLib
 
         private const string TabTipProcessName = "TabTip";
         private const string TabTipFileName = "TabTip.exe";
-        private const int KeyboardReadyDelayMs = 5000; // 鍵盤啟動後的準備延遲時間
+        private const string ShellProcessName = "explorer";
+        private static readonly TimeSpan ShellReadyTimeout = TimeSpan.FromSeconds(30);
+        private static readonly TimeSpan ComServiceTimeout = TimeSpan.FromSeconds(10);
+
+        // 在啟動鍵盤後加入的延遲，給予足夠的反應時間。
+        private const int PostLaunchDelayMs = 5000;
 
         private static readonly Lazy<string?> TabTipPath = new Lazy<string?>(() =>
         {
@@ -63,16 +68,14 @@ namespace PhysPanelLib
 
         /// <summary>
         /// 確保觸控鍵盤處於「收起」狀態，並使其處理程序在背景待命。
-        /// 如果鍵盤已在執行，此方法不會執行任何操作。
+        /// 此方法包含等待 explorer.exe 就緒的邏輯，適用於系統登入時執行。
         /// </summary>
-        /// <exception cref="FileNotFoundException">當找不到 TabTip.exe 時拋出。</exception>
-        /// <exception cref="InvalidOperationException">當啟動程序或透過 COM 操作鍵盤失敗時拋出。</exception>
         public static void StartTouchKeyboard()
         {
             // 如果處理程序已在執行，直接返回
             if (Process.GetProcessesByName(TabTipProcessName).Any())
             {
-                return; // 已經在執行，直接返回
+                return; // 處理程序已在執行，直接返回
             }
 
             // 如果找不到 TabTip.exe 的路徑，記錄錯誤並返回
@@ -84,41 +87,85 @@ namespace PhysPanelLib
 
             try
             {
-                // 步驟 1: 啟動 TabTip.exe 處理程序
+                // 步驟 1: 等待 explorer.exe 準備就緒
+                if (!WaitForExplorerProcess(ShellReadyTimeout))
+                {
+                    throw new TabTipActivationException($"Timed out waiting for the Windows Shell ({ShellProcessName}.exe) to start.", null);
+                }
+
+                // 步驟 2: 啟動 TabTip.exe 處理程序
                 var startInfo = new ProcessStartInfo(TabTipPath.Value) { UseShellExecute = true };
                 Process.Start(startInfo);
 
-                // 等待鍵盤視窗出現
-                Thread.Sleep(KeyboardReadyDelayMs);
+                // 步驟 3: 等待固定時間，讓系統的桌面環境完全準備好
+                Thread.Sleep(PostLaunchDelayMs);
 
-                // 步驟 2: 透過 COM 介面將其隱藏
-                HideKeyboard();
+                // 步驟 4: 輪詢 COM 服務，直到它準備就緒
+                ITipInvocation? tipInvocation = PollForComService(ComServiceTimeout);
+
+                // 步驟 5: 如果成功取得 COM 物件，發送命令將其隱藏
+                if (tipInvocation != null)
+                {
+                    try
+                    {
+                        tipInvocation.Toggle(IntPtr.Zero); // 執行 "切換" 來隱藏觸控鍵盤
+                    }
+                    finally
+                    {
+                        Marshal.ReleaseComObject(tipInvocation);
+                    }
+                }
+                else
+                {
+                    throw new TabTipActivationException($"Timed out waiting for the {TabTipFileName} COM service to become available.", null);
+                }
             }
-            catch (Exception ex)
+            catch (Exception ex) when (ex is not TabTipActivationException && ex is not TabTipNotFoundException)
             {
-                // 將底層的錯誤包裝成一個新的例外並拋出
-                throw new TabTipActivationException($"Failed to start or toggle {TabTipFileName}.", ex);
+                throw new TabTipActivationException($"An unexpected error occurred while starting or hiding {TabTipFileName}.", ex);
             }
         }
 
         /// <summary>
-        /// 使用 COM 互通來切換觸控鍵盤的顯示狀態。
+        /// 等待 explorer.exe 處理程序啟動。
+        /// 這是確保桌面環境已準備好接收 COM 命令的關鍵步驟。
         /// </summary>
-        private static void HideKeyboard()
+        /// <param name="timeout">最長等待時間。</param>
+        /// <returns>如果處理程序在超時前出現，則為 true；否則為 false。</returns>
+        private static bool WaitForExplorerProcess(TimeSpan timeout)
         {
-            ITipInvocation? tipInvocation = null;
-            try
+            var stopwatch = Stopwatch.StartNew();
+            while (stopwatch.Elapsed < timeout)
             {
-                tipInvocation = (ITipInvocation)new TipInvocation();
-                tipInvocation.Toggle(IntPtr.Zero); // 執行 "切換" 來隱藏它
-            }
-            finally // 即使 COM 呼叫失敗，也要確保釋放物件
-            {
-                if (tipInvocation != null)
+                if (Process.GetProcessesByName(ShellProcessName).Any())
                 {
-                    Marshal.ReleaseComObject(tipInvocation);
+                    return true; // 找到了
+                }
+                Thread.Sleep(500); // 每半秒檢查一次
+            }
+            return false; // 超時
+        }
+
+        /// <summary>
+        /// 在指定的時間內，持續輪詢 COM 服務，嘗試建立 TipInvocation 物件。
+        /// 這是為了應對處理程序啟動後 COM 服務需要時間初始化的情況。
+        /// </summary>
+        /// <returns>成功時返回 ITipInvocation 物件，逾時則返回 null。</returns>
+        private static ITipInvocation? PollForComService(TimeSpan timeout)
+        {
+            var stopwatch = Stopwatch.StartNew();
+            while (stopwatch.Elapsed < timeout)
+            {
+                try
+                {
+                    return (ITipInvocation)new TipInvocation();
+                }
+                catch (COMException)
+                {
+                    Thread.Sleep(250); // 等待一小段時間再重試
                 }
             }
+            return null;
         }
     }
 }

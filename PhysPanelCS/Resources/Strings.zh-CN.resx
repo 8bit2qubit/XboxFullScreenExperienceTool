@@ -181,9 +181,9 @@
     <value>   NTSTATUS 错误码: 0x{0:X8}</value>
   </data>
   <data name="ErrorTabTipNotFound" xml:space="preserve">
-    <value>错误: 找不到 Windows 触摸键盘可执行文件 (TabTip.exe)。</value>
+    <value>错误: 在预期路径中找不到触摸键盘可执行文件 (TabTip.exe)。</value>
   </data>
   <data name="ErrorTabTipActivationFailed" xml:space="preserve">
-    <value>错误: 启动或启用触摸键盘失败。请确认系统组件是否正常。</value>
+    <value>错误: 激活、通信或隐藏触摸键盘失败。如果桌面环境加载缓慢，此问题可能会在系统启动时发生。</value>
   </data>
 </root>

@@ -142,7 +142,7 @@ namespace PhysPanelCS.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Error: Failed to activate the touch keyboard. Please ensure system components are intact. 的當地語系化字串。
+        ///   查詢類似 Error: Failed to activate, communicate with, or hide the touch keyboard. This can happen during system startup if the desktop environment is slow to load. 的當地語系化字串。
         /// </summary>
         internal static string ErrorTabTipActivationFailed {
             get {
@@ -151,7 +151,7 @@ namespace PhysPanelCS.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Error: The Windows touch keyboard executable (TabTip.exe) was not found. 的當地語系化字串。
+        ///   查詢類似 Error: The touch keyboard executable (TabTip.exe) was not found in its expected path. 的當地語系化字串。
         /// </summary>
         internal static string ErrorTabTipNotFound {
             get {

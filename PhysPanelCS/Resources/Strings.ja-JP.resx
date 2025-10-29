@@ -181,9 +181,9 @@
     <value>   NTSTATUS エラーコード: 0x{0:X8}</value>
   </data>
   <data name="ErrorTabTipNotFound" xml:space="preserve">
-    <value>エラー: Windows タッチ キーボードの実行ファイル (TabTip.exe) が見つかりません。</value>
+    <value>エラー: 予期されたパスにタッチキーボードの実行可能ファイル (TabTip.exe) が見つかりませんでした。</value>
   </data>
   <data name="ErrorTabTipActivationFailed" xml:space="preserve">
-    <value>エラー: タッチキーボードの有効化に失敗しました。システムコンポーネントが正常であることを確認してください。</value>
+    <value>エラー: タッチキーボードの有効化、通信、または非表示に失敗しました。デスクトップ環境の読み込みが遅い場合、システムの起動中にこの問題が発生することがあります。</value>
   </data>
 </root>

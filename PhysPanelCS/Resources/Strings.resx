@@ -181,9 +181,9 @@
     <value>   NTSTATUS Error Code: 0x{0:X8}</value>
   </data>
   <data name="ErrorTabTipNotFound" xml:space="preserve">
-    <value>Error: The Windows touch keyboard executable (TabTip.exe) was not found.</value>
+    <value>Error: The touch keyboard executable (TabTip.exe) was not found in its expected path.</value>
   </data>
   <data name="ErrorTabTipActivationFailed" xml:space="preserve">
-    <value>Error: Failed to activate the touch keyboard. Please ensure system components are intact.</value>
+    <value>Error: Failed to activate, communicate with, or hide the touch keyboard. This can happen during system startup if the desktop environment is slow to load.</value>
   </data>
 </root>
