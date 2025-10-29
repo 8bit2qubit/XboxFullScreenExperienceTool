@@ -32,25 +32,25 @@ By using this tool, you acknowledge and agree to the following:
 
 -----
 
-## 💡 Screen Override for PCs & Laptops: Choosing Your Method
+## 💡 Screen Dimension Override for Desktop PCs & Laptops
 
 The Xbox Full Screen Experience is designed for handheld-sized screens. If your device is not a handheld, a screen dimension override is required. This tool offers two distinct methods, and now automatically guides you to the appropriate choice based on your device type.
 
-### Task Scheduler Mode: `PhysPanelCS`
-This is the default method. It is easy to use and requires no additional manual setup. It schedules a task to apply the override at boot. However, this can create a race condition on fast systems. If you log in too quickly, the Windows Shell may initialize before the override is applied, causing it to fall back to the standard desktop for that session.
+### Task Scheduler Mode: `PhysPanelCS` (Recommended)
+This is the **default and recommended** method. It is easy to use and requires no additional manual setup. As of `v0.0.11`, this method has been enhanced to **resolve the previous race condition**, making it highly reliable for all devices, including desktops and laptops.
 
-### Driver Mode: `PhysPanelDrv`
-This advanced mode uses a custom kernel driver to apply the override at the earliest stage of system boot, which completely eliminates the race condition. This is the most robust and reliable solution for desktops.
+### Driver Mode: `PhysPanelDrv` (Alternative)
+This is an **alternative advanced mode** that uses a custom kernel driver to apply the override at the earliest stage of system boot. This method is an option for users who may still encounter issues with the default `PhysPanelCS` mode, but it **requires disabling Secure Boot** and **enabling Test Signing** (see prerequisites below).
 
 ### Which Mode Should You Use?
 
-*   **For Desktop PCs**: You can choose between **`PhysPanelCS`** and `PhysPanelDrv`. For the most reliable experience, `PhysPanelDrv` is the recommended choice.
-*   **For Laptops**: The tool will automatically restrict you to **`PhysPanelCS`**. This is a safety measure to ensure maximum compatibility. The driver mode option will be disabled.
+*   **For All Users (Desktops & Laptops)**: Start with **`PhysPanelCS`**. This is the recommended, safest, and most reliable method for most users.
+*   **For Desktop PCs (Alternative)**: If you experience any issues with the default mode, **`PhysPanelDrv`** is available as a fallback. It requires the prerequisites listed below.
 *   **For Handheld Devices**: No override is needed! The mode selection UI will be disabled entirely.
 
-> #### **Prerequisites for `PhysPanelDrv` Mode**
+> #### **Prerequisites for `PhysPanelDrv` Mode (Alternative)**
 >
-> ⚠️ **Important:** These steps are only necessary for **desktop PC users** who wish to use the `PhysPanelDrv` mode.
+> ⚠️ **Important:** These steps are only necessary for **desktop PC users** who need to use the **alternative** `PhysPanelDrv` mode.
 >
 > Installing this **test-signed driver** requires you to manually disable Secure Boot and enable Windows Test Signing Mode.
 >
@@ -124,8 +124,8 @@ This tool prepares your system for the new mode. Final activation is done in Win
 ### 1. Prepare Your System
 1.  Download the latest `.msi` package from the [**Releases Page**](https://github.com/8bit2qubit/XboxFullScreenExperienceTool/releases/latest).
 2.  Run the installer (administrator privileges required).
-3.  Launch the tool from the desktop shortcut. If using a PC or laptop, select your preferred override mode.
-    > **Note:** If you choose **`PhysPanelDrv`**, ensure you have completed the prerequisites listed above first.
+3.  Launch the tool from the desktop shortcut. If using a PC or laptop, the tool will automatically select the recommended **`PhysPanelCS`** mode.
+    > **Note:** If you are a desktop user and wish to use the alternative **`PhysPanelDrv`** mode, you can select it manually. Ensure you have completed the prerequisites listed above first.
 4.  Click **“Enable Xbox Full Screen Experience”**.
 5.  **Restart your PC** for the changes to take effect.
 

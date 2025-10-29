@@ -109,12 +109,12 @@ namespace XboxFullScreenExperienceTool
                     // 只有在清理成功後才觸發重新開機
                     if (cleanupSuccess)
                     {
-                        silentLogger("Cleanup successful. Initiating system reboot in 15 seconds.");
+                        silentLogger("Cleanup successful. Initiating system reboot in 5 seconds.");
                         try
                         {
                             // 使用 shutdown.exe 命令
                             // /r: 重新開機
-                            // /t 15: 等待 5 秒 (給使用者一點緩衝時間，也可以設為 0)
+                            // /t 5: 等待 5 秒 (給使用者一點緩衝時間，也可以設為 0)
                             // /c "..." : 在關機對話方塊中顯示的註解
                             // /d p:4:1 : 記錄關機原因為「應用程式：維護 (計畫內)」
                             string shutdownArgs = $"/r /t 5 /c \"{Resources.Strings.ShutdownReasonUninstall}\" /d p:4:1";

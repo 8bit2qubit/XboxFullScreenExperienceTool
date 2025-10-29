@@ -27,6 +27,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_310A09ED4CA04A54BE915C4B7D48A4BD"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_645EF83ADAA20DF7BCF3129C3E2F843E"
+        "OwnerKey" = "8:_310A09ED4CA04A54BE915C4B7D48A4BD"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_6F8DCBF62B9942CDB08338B5EA016EB9"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -51,13 +63,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E38EFD43363E42358706E249A32DB9CF"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_CA7FD15336EACFB4221A22FCF944C2A9"
+        "OwnerKey" = "8:_310A09ED4CA04A54BE915C4B7D48A4BD"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_FED00365D1094CBEA11BDAA3A5B514E6"
+        "MsmKey" = "8:_E38EFD43363E42358706E249A32DB9CF"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -200,6 +212,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_645EF83ADAA20DF7BCF3129C3E2F843E"
+            {
+            "SourcePath" = "8:VERSION.dll"
+            "TargetName" = "8:VERSION.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_A21001F12A454D16804E24C24E60D4FC"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6F8DCBF62B9942CDB08338B5EA016EB9"
             {
             "SourcePath" = "8:..\\XboxFullScreenExperienceTool\\bin\\x64\\Release\\net8.0-windows\\PhysPanelDrv\\physpaneldrv.cat"
@@ -278,6 +310,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CA7FD15336EACFB4221A22FCF944C2A9"
+            {
+            "SourcePath" = "8:ntdll.dll"
+            "TargetName" = "8:ntdll.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_A21001F12A454D16804E24C24E60D4FC"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E38EFD43363E42358706E249A32DB9CF"
@@ -401,15 +453,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Xbox FullScreen Experience Tool"
-        "ProductCode" = "8:{855D41FD-0B08-4B79-B935-8F57D6E64584}"
-        "PackageCode" = "8:{BC353C85-4078-4663-8A25-BE12D593A120}"
+        "ProductCode" = "8:{A965ECBA-A089-4FD8-AE59-A3782799BDE3}"
+        "PackageCode" = "8:{251051E1-FB81-404F-915C-6F61BB66B051}"
         "UpgradeCode" = "8:{1FC446AC-4A81-40E7-B99E-292B8413FDBB}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:0.0.10"
+        "ProductVersion" = "8:0.0.11"
         "Manufacturer" = "8:8bit2qubit"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -977,9 +1029,9 @@
                 {
                 }
             }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E28718E4561D417BB75F9E2D9D51D245"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_310A09ED4CA04A54BE915C4B7D48A4BD"
             {
-            "SourcePath" = "8:"
+            "SourcePath" = "8:..\\PhysPanelCPP\\bin\\x64\\Release\\PhysPanelCS.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_A21001F12A454D16804E24C24E60D4FC"
@@ -998,8 +1050,8 @@
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:LocalizedResourceDlls"
-            "OutputProjectGuid" = "8:{ACF957B5-59E4-4F92-B330-4D7EB60CECC4}"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{4F928868-F002-4836-A776-560850D2DBC1}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {
@@ -1028,34 +1080,6 @@
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:LocalizedResourceDlls"
             "OutputProjectGuid" = "8:{9BFB49D3-FED5-44F4-ADCD-EFA34FA059B8}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_FED00365D1094CBEA11BDAA3A5B514E6"
-            {
-            "SourcePath" = "8:..\\PhysPanelCS\\obj\\x64\\Release\\net8.0-windows\\apphost.exe"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A21001F12A454D16804E24C24E60D4FC"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:PublishItems"
-            "OutputProjectGuid" = "8:{ACF957B5-59E4-4F92-B330-4D7EB60CECC4}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {
