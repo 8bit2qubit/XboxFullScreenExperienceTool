@@ -1,0 +1,134 @@
+name: "❓ Report an Issue or Ask a Question"
+description: Report reproducible issues or ask questions *after* checking all docs.
+title: "[Issue]: "
+labels:
+  - question
+assignees: []
+body:
+  - type: checkboxes
+    id: required-checks
+    attributes:
+      label: "⚠️ Step 1: Required Checks"
+      description: "Please check all boxes."
+      options:
+        - label: >-
+            I have **read the entire**
+            [**README**](https://github.com/8bit2qubit/XboxFullScreenExperienceTool?tab=readme-ov-file),
+            especially the following sections:
+
+            *   **"System Requirements"** (I confirm my build is one of the
+            **COMPATIBLE** builds: `26200.7015+` or `26220.6972+`. **`26100.xxxx`
+            is NOT compatible.**)
+
+            *   **"Screen Override for PCs & Laptops"** (I understand the
+            difference between `PhysPanelCS` / `PhysPanelDrv` and the race
+            condition)
+          required: true
+        - label: >-
+            I understand this tool is an **Enabler / Activation Utility /
+            Configuration Tool** and not the implementer of the Full Screen
+            Experience (FSE) feature. I understand FSE itself **is a Shell
+            Replacement** that *replaces* the normal Windows desktop/taskbar,
+            and FSE's behavior is not a bug in this tool.
+          required: true
+        - label: >-
+            If I am seeing a "Grey Screen," I have already tried going to the
+            **Microsoft Store** to update all apps (especially Xbox and Game
+            Bar).
+          required: true
+        - label: >-
+            I have searched the [**existing
+            Issues**](https://github.com/8bit2qubit/XboxFullScreenExperienceTool/issues)
+            to ensure my problem is not already reported.
+          required: true
+  - type: markdown
+    attributes:
+      value: "---"
+  - type: markdown
+    attributes:
+      value: "### 📋 Step 2: Your Environment"
+  - type: dropdown
+    id: pc-type
+    attributes:
+      label: "1. What is your PC Type?"
+      options:
+        - Desktop
+        - Laptop
+        - Handheld
+    validations:
+      required: true
+  - type: input
+    id: pc-model
+    attributes:
+      label: "PC Model"
+      description: '(e.g., Dell XPS 15, ROG Ally X, or "Custom-built Desktop")'
+      placeholder: "Answer:"
+    validations:
+      required: true
+  - type: input
+    id: os-build
+    attributes:
+      label: "2. What is your full Windows OS Build number?"
+      description: "(Start > Settings > System > About)"
+      placeholder: "e.g., 26200.7019"
+    validations:
+      required: true
+  - type: dropdown
+    id: screen-override-mode
+    attributes:
+      label: "3. Which \"Screen Override Mode\" are you currently using?"
+      options:
+        - Task Scheduler Mode (`PhysPanelCS`) (Default)
+        - Driver Mode (`PhysPanelDrv`) (Advanced)
+        - N/A (Not Applicable) (My device is a Handheld, or this is not relevant)
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: "---"
+  - type: markdown
+    attributes:
+      value: "### 📝 Step 3: Issue Details"
+  - type: textarea
+    id: issue-description
+    attributes:
+      label: "1. Describe your issue or question:"
+      description: "(A clear and concise description of what the problem is.)"
+      placeholder: "Answer:"
+    validations:
+      required: true
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: "2. Steps to Reproduce (if applicable):"
+      description: "(If you are reporting a reproducible problem, list the steps.)"
+      placeholder: |
+        1. Boot the PC.
+        2. Observed the standard desktop loaded instead of FSE...
+        3. ...
+    validations:
+      required: false
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: "3. Expected Behavior:"
+      description: "(What did you expect to happen?)"
+      placeholder: "Answer:"
+    validations:
+      required: true
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: "4. Actual Behavior:"
+      description: "(What actually happened?)"
+      placeholder: "Answer:"
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: "5. Screenshots / Video:"
+      description: "(If possible, attach screenshots or error messages.)"
+      placeholder: "Answer:"
+    validations:
+      required: false
