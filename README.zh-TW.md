@@ -51,7 +51,7 @@ Xbox 全螢幕體驗專為掌機尺寸的螢幕設計。若您的裝置不是掌
 >
 > ⚠️ **重要提示：** 這些步驟僅適用於希望使用 `PhysPanelDrv` 模式的 **桌上型電腦使用者**。
 >
-> 安裝此**使用測試簽章的驅動程式**需要您手動停用「安全啟動」並啟用 Windows 的「測試簽署模式」。
+> 安裝此**使用測試簽章的驅動程式**需要您手動停用「安全啟動」並啟用 Windows 的「測試簽章模式」。
 >
 > **步驟一：進入 BIOS 設定**
 > 1.  重新啟動電腦，在開機時按下指定按鍵 (通常是 `Del`, `F2`, `F10`, 或 `Esc`) 進入 BIOS/UEFI 設定。
@@ -72,19 +72,20 @@ Xbox 全螢幕體驗專為掌機尺寸的螢幕設計。若您的裝置不是掌
 
 ## ⚙️ 系統版本要求
 
-本工具適用於 **Windows 11 Release Preview Channel 組建 `26200.7015` 或更新版本**。在不符要求的系統上，工具將提示錯誤並無法執行。
+本工具適用於 **Windows 11 25H2 組建版本 `26200.7015` 或更新版本**。在不符要求的系統上，工具將提示錯誤並無法執行。
 
 > ### **如何判讀版本號 (非常重要！)**
 >
 > 當檢查版本時，**請務必查看小數點前的「主要版本號」**。小數點後的數字僅代表次要更新。
 >
 > *   **不相容:** `26100.xxxx` (Release Build 24H2)
+> *   **相容:** `26200.7019` 或更新版本 (Release Build 25H2)
 > *   **相容:** `26200.7015` 或更新版本 (Release Preview Build 25H2)
 > *   **相容:** `26220.6972` 或更新版本 (Dev Build 25H2)
 >
 > **範例：** `26200.6899` 這樣的版本是**不相容**的，因為它的次要版本號 `.6899` 小於 (舊於) 所要求的 `.7015`。
 
-如果您的系統不符合需求，可參考此份完整的升級教學指南，其中引導您加入「Windows 測試人員計畫」並升級至正確的組建版本：
+如果您的系統不符合需求，可參考此份完整的升級教學指南來升級至正確的組建版本：
 * **[繁體中文指南 (Traditional Chinese Guide)](https://github.com/8bit2qubit/xbox-fullscreen-experience-guide/blob/main/README.zh-TW.md)**
 * **[简体中文指南 (Simplified Chinese Guide)](https://github.com/8bit2qubit/xbox-fullscreen-experience-guide/blob/main/README.zh-CN.md)**
 * **[英文指南 (English Guide)](https://github.com/8bit2qubit/xbox-fullscreen-experience-guide/blob/main/README.md)**

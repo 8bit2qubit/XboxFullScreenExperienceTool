@@ -73,19 +73,20 @@ This advanced mode uses a custom kernel driver to apply the override at the earl
 
 ## ⚙️ System Requirements
 
-This tool is compatible with **Windows 11 Insider Release Preview Channel build `26200.7015` or later**. If your system does not meet this requirement, the tool will display an error and exit.
+This tool is compatible with **Windows 11 25H2 builds `26200.7015` or later**. If your system does not meet this requirement, the tool will display an error and exit.
 
 > ### **How to Read Build Numbers (Important!)**
 >
 > When checking the version, **please look at the main build number (before the dot)**. The number *after* the dot is just a minor update revision.
 >
 > *   **INCOMPATIBLE:** `26100.xxxx` (Release Build 24H2)
+> *   **COMPATIBLE:** `26200.7019` or later (Release Build 25H2)
 > *   **COMPATIBLE:** `26200.7015` or later (Release Preview Build 25H2)
 > *   **COMPATIBLE:** `26220.6972` or later (Dev Build 25H2)
 >
 > **Example:** A build like `26200.6899` is **NOT** compatible because its revision `.6899` is lower than the required `.7015`.
 
-For a detailed walkthrough on joining the Windows Insider Program and upgrading to the correct build, refer to the following guide:
+For a detailed walkthrough on upgrading to the correct build, refer to the following guide:
 * **[English Guide](https://github.com/8bit2qubit/xbox-fullscreen-experience-guide/blob/main/README.md)**
 * **[Traditional Chinese Guide (繁體中文指南)](https://github.com/8bit2qubit/xbox-fullscreen-experience-guide/blob/main/README.zh-TW.md)**
 * **[Simplified Chinese Guide (简体中文指南)](https://github.com/8bit2qubit/xbox-fullscreen-experience-guide/blob/main/README.zh-CN.md)**
