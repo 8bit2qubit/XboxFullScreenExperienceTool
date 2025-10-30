@@ -12,34 +12,22 @@ body:
       description: "Please check all boxes."
       options:
         - label: >-
-            I have **read the entire**
-            [**README**](https://github.com/8bit2qubit/XboxFullScreenExperienceTool?tab=readme-ov-file),
-            especially the following sections:
+            I have **read the entire** [**README**](https://github.com/8bit2qubit/XboxFullScreenExperienceTool?tab=readme-ov-file), especially the following sections:
 
-            *   **"System Requirements"** (I confirm my build is one of the
-            **COMPATIBLE** builds: `26200.7015+` or `26220.6972+`. **`26100.xxxx`
-            is NOT compatible.**)
+            *   **"System Requirements"** (I confirm my build is one of the **COMPATIBLE** builds: `26200.7015+` or `26220.6972+`. **`26100.xxxx` is NOT compatible.**)
 
-            *   **"Screen Override for PCs & Laptops"** (I understand the
-            difference between `PhysPanelCS` / `PhysPanelDrv` and the race
-            condition)
+            *   **"Screen Dimension Override for Desktop PCs & Laptops"** (I understand the difference between `PhysPanelCS` / `PhysPanelDrv`)
+
+            *   **"Quick Start"** (I have followed the installation and initial setup steps.)
           required: true
         - label: >-
-            I understand this tool is an **Enabler / Activation Utility /
-            Configuration Tool** and not the implementer of the Full Screen
-            Experience (FSE) feature. I understand FSE itself **is a Shell
-            Replacement** that *replaces* the normal Windows desktop/taskbar,
-            and FSE's behavior is not a bug in this tool.
+            I understand this tool is an **Enabler / Activation Utility / Configuration Tool** and not the implementer of the Full Screen Experience (FSE) feature. I understand FSE itself **is a Shell Replacement** that *replaces* the normal Windows desktop/taskbar, and FSE's behavior is not a bug in this tool.
           required: true
         - label: >-
-            If I am seeing a "Grey Screen," I have already tried going to the
-            **Microsoft Store** to update all apps (especially Xbox and Game
-            Bar).
+            I have already tried going to the **Microsoft Store** to update all apps (especially Xbox and Game Bar).
           required: true
         - label: >-
-            I have searched the [**existing
-            Issues**](https://github.com/8bit2qubit/XboxFullScreenExperienceTool/issues)
-            to ensure my problem is not already reported.
+            I have searched the [**existing Issues**](https://github.com/8bit2qubit/XboxFullScreenExperienceTool/issues) to ensure my problem is not already reported.
           required: true
   - type: markdown
     attributes:
@@ -74,9 +62,9 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: screen-override-mode
+    id: screen-dimension-override-mode
     attributes:
-      label: "3. Which \"Screen Override Mode\" are you currently using?"
+      label: "3. Which \"Screen Dimension Override Mode\" are you currently using?"
       options:
         - Task Scheduler Mode (`PhysPanelCS`) (Default)
         - Driver Mode (`PhysPanelDrv`) (Advanced)
@@ -92,7 +80,7 @@ body:
   - type: textarea
     id: issue-description
     attributes:
-      label: "1. Describe your issue or question:"
+      label: "4. Describe your issue or question:"
       description: "(A clear and concise description of what the problem is.)"
       placeholder: "Answer:"
     validations:
@@ -100,7 +88,7 @@ body:
   - type: textarea
     id: steps-to-reproduce
     attributes:
-      label: "2. Steps to Reproduce (if applicable):"
+      label: "5. Steps to Reproduce (if applicable):"
       description: "(If you are reporting a reproducible problem, list the steps.)"
       placeholder: |
         1. Boot the PC.
@@ -111,7 +99,7 @@ body:
   - type: textarea
     id: expected-behavior
     attributes:
-      label: "3. Expected Behavior:"
+      label: "6. Expected Behavior:"
       description: "(What did you expect to happen?)"
       placeholder: "Answer:"
     validations:
@@ -119,7 +107,7 @@ body:
   - type: textarea
     id: actual-behavior
     attributes:
-      label: "4. Actual Behavior:"
+      label: "7. Actual Behavior:"
       description: "(What actually happened?)"
       placeholder: "Answer:"
     validations:
@@ -127,7 +115,7 @@ body:
   - type: textarea
     id: screenshots
     attributes:
-      label: "5. Screenshots / Video:"
+      label: "8. Screenshots / Video:"
       description: "(If possible, attach screenshots or error messages.)"
       placeholder: "Answer:"
     validations:
