@@ -1,4 +1,4 @@
-// Xbox Fullscreen Experience Tool
+// Xbox Full Screen Experience Tool
 // Copyright (C) 2025 8bit2qubit
 
 // This program is free software: you can redistribute it and/or modify
