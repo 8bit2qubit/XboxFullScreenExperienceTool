@@ -12,7 +12,7 @@ body:
       description: "Please check all boxes."
       options:
         - label: >-
-            I have **read the entire** [**README**](https://github.com/8bit2qubit/XboxFullScreenExperienceTool?tab=readme-ov-file), especially the following sections:
+            I have **read the entire** [**README**](https://github.com/8bit2qubit/XboxFullScreenExperienceTool?tab=readme-ov-file#readme), especially the following sections:
 
             *   **"System Requirements"** (I confirm my build is one of the **COMPATIBLE** builds: `26200.7015+` or `26220.6972+`. **`26100.xxxx` is NOT compatible.**)
 
