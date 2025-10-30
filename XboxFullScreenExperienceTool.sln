@@ -5,6 +5,7 @@ VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XboxFullScreenExperienceTool", "XboxFullScreenExperienceTool\XboxFullScreenExperienceTool.csproj", "{9BFB49D3-FED5-44F4-ADCD-EFA34FA059B8}"
 	ProjectSection(ProjectDependencies) = postProject
+		{4F928868-F002-4836-A776-560850D2DBC1} = {4F928868-F002-4836-A776-560850D2DBC1}
 		{746C39C7-E78F-3015-CF55-4B3136C36124} = {746C39C7-E78F-3015-CF55-4B3136C36124}
 	EndProjectSection
 EndProject
