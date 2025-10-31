@@ -22,7 +22,8 @@
 void PrintUsage() {
     std::wstring version = GetAppVersion();
     std::wcout << std::endl;
-    std::wcout << L"Xbox Full Screen Experience Tool v" << version << std::endl;
+    std::wcout << L"Xbox Full Screen Experience Tool" << std::endl;
+    std::wcout << L"PhysPanelCPP Utility v" << version << std::endl;
     std::wcout << L"Copyright (C) 2025 8bit2qubit" << std::endl;
     std::wcout << L"-----------------------------------------------------" << std::endl;
     std::wcout << L"Usage: PhysPanelCPP <command> [arguments...]" << std::endl;
