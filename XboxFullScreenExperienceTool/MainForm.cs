@@ -43,17 +43,17 @@ namespace XboxFullScreenExperienceTool
         /// 設定為 true: 啟用限制 (預設，更安全)。
         /// 設定為 false: 取消限制，允許大螢幕裝置也嘗試使用 Drv 模式 (用於測試或進階使用者)。
         /// </summary>
-        private const bool RESTRICT_DRV_MODE_ON_LARGE_SCREEN = true;
+        private const bool RESTRICT_DRV_MODE_ON_LARGE_SCREEN = false;
 
         // --- 版本要求 ---
         /// <summary>
         /// 啟用此功能所需的最低 Windows 主要組建版本號。
         /// </summary>
-        private const int REQUIRED_BUILD = 26200;
+        private const int REQUIRED_BUILD = 26100;
         /// <summary>
         /// 在最低主要組建版本下，所需的最低修訂 (UBR) 號。
         /// </summary>
-        private const int REQUIRED_REVISION = 7015;
+        private const int REQUIRED_REVISION = 7019;
         /// <summary>
         /// 需要透過 ViVe 工具啟用的功能 ID 陣列。
         /// </summary>
@@ -276,7 +276,18 @@ namespace XboxFullScreenExperienceTool
                     string requirementString = $"{REQUIRED_BUILD}.{REQUIRED_REVISION}";
                     Log(string.Format(Resources.Strings.ErrorBuildTooLow, versionString));
                     Log(string.Format(Resources.Strings.RequiredBuild, requirementString));
-                    MessageBox.Show(string.Format(Resources.Strings.RequiredBuild, requirementString), Resources.Strings.VersionIncompatible, MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    string message = string.Format(Resources.Strings.ErrorBuildTooLow, versionString) +
+                                     "\n\n" +
+                                     string.Format(Resources.Strings.RequiredBuild, requirementString) +
+                                     "\n\n" +
+                                     Resources.Strings.UpdateWindowsPrompt;
+
+                    MessageBox.Show(message,
+                                    Resources.Strings.VersionIncompatible,
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning);
+
                     return false;
                 }
 

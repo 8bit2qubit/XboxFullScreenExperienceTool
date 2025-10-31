@@ -486,4 +486,7 @@
   <data name="ShutdownReasonUninstall" xml:space="preserve">
     <value>Xbox Full Screen Experience Tool は、アンインストールを完了するために再起動が必要です。</value>
   </data>
+  <data name="UpdateWindowsPrompt" xml:space="preserve">
+    <value>Windows Update を実行してシステムを最新バージョンに更新してから、もう一度お試しください。</value>
+  </data>
 </root>

@@ -1117,6 +1117,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Please run Windows Update to update your system to the latest version and try again. 的當地語系化字串。
+        /// </summary>
+        internal static string UpdateWindowsPrompt {
+            get {
+                return ResourceManager.GetString("UpdateWindowsPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Version Incompatible 的當地語系化字串。
         /// </summary>
         internal static string VersionIncompatible {

@@ -420,8 +420,8 @@
             "{836E08B8-0285-4809-BA42-01DB6754A45D}:_EAF5BE14BB4B4FCAAEF159BC78417B37"
             {
             "Name" = "8:Condition%d1"
-            "Condition" = "8:WINBUILD >= 26200 AND NOT WINREV < 7015"
-            "Message" = "8:This tool requires Windows 11 version 26200.7015 or later."
+            "Condition" = "8:WINBUILD >= 26100 AND NOT WINREV < 7019"
+            "Message" = "8:This tool requires Windows 11 version 26100.7019 or later."
             "InstallUrl" = "8:"
             }
         }

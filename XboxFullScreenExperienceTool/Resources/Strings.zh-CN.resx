@@ -486,4 +486,7 @@
   <data name="ShutdownReasonUninstall" xml:space="preserve">
     <value>Xbox Full Screen Experience Tool 需要重新启动以完成卸载。</value>
   </data>
+  <data name="UpdateWindowsPrompt" xml:space="preserve">
+    <value>请运行 Windows Update 将您的系统更新至最新版本后再试。</value>
+  </data>
 </root>

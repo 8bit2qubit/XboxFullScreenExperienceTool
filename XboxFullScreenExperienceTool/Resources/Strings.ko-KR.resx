@@ -486,4 +486,7 @@
   <data name="ShutdownReasonUninstall" xml:space="preserve">
     <value>Xbox Full Screen Experience Tool을(를) 제거하려면 다시 시작해야 합니다.</value>
   </data>
+  <data name="UpdateWindowsPrompt" xml:space="preserve">
+    <value>Windows Update를 실행하여 시스템을 최신 버전으로 업데이트한 후 다시 시도하십시오.</value>
+  </data>
 </root>
