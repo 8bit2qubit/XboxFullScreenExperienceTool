@@ -385,10 +385,10 @@ Please ensure you are running this program with administrator privileges.</value
     <value>Screen Dimension Override Method (for non-handheld devices)</value>
   </data>
   <data name="radPhysPanelCS_Text" xml:space="preserve">
-    <value>PhysPanelCS (Task Scheduler Mode, high security, default option)</value>
+    <value>PhysPanelCS (Task Scheduler Mode, Recommended default, No extra setup required)</value>
   </data>
   <data name="radPhysPanelDrv_Text" xml:space="preserve">
-    <value>PhysPanelDrv (Driver Mode, high stability, requires Test Signing ON)</value>
+    <value>PhysPanelDrv (Driver Mode, Alternative, Requires disabling Secure Boot &amp;&amp; enabling Test Signing)</value>
   </data>
   <data name="StatusEnabledDriverMode" xml:space="preserve">
     <value>Status: Enabled (Driver Mode)</value>

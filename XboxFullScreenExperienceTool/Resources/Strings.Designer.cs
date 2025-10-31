@@ -928,7 +928,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 PhysPanelCS (Task Scheduler Mode, high security, default option) 的當地語系化字串。
+        ///   查詢類似 PhysPanelCS (Task Scheduler Mode, Recommended default, No extra setup required) 的當地語系化字串。
         /// </summary>
         internal static string radPhysPanelCS_Text {
             get {
@@ -937,7 +937,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 PhysPanelDrv (Driver Mode, high stability, requires Test Signing ON) 的當地語系化字串。
+        ///   查詢類似 PhysPanelDrv (Driver Mode, Alternative, Requires disabling Secure Boot &amp;&amp; enabling Test Signing) 的當地語系化字串。
         /// </summary>
         internal static string radPhysPanelDrv_Text {
             get {

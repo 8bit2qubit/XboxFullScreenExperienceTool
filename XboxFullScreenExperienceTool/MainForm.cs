@@ -1041,6 +1041,29 @@ namespace XboxFullScreenExperienceTool
             }
         }
 
+        /// <summary>
+        /// 當「狀態」被點選兩下時，顯示版權資訊。
+        /// </summary>
+        private void lblStatus_DoubleClick(object sender, EventArgs e)
+        {
+            try
+            {
+                string base64Copyright = "Q29weXJpZ2h0IMKpIDIwMjUgOGJpdDJxdWJpdCAo6YeO55CGKSBhbmQgY29udHJpYnV0b3JzCmh0dHBzOi8vZ2l0aHViLmNvbS84Yml0MnF1Yml0L1hib3hGdWxsU2NyZWVuRXhwZXJpZW5jZVRvb2wKTGljZW5zZWQgdW5kZXIgdGhlIEdOVSBHUEwtMy4wIExpY2Vuc2Uu";
+
+                byte[] bytes = Convert.FromBase64String(base64Copyright);
+                string copyrightText = System.Text.Encoding.UTF8.GetString(bytes);
+
+                MessageBox.Show(copyrightText,
+                                "Copyright",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error displaying copyright information.", "Error");
+            }
+        }
+
         //======================================================================
         // 靜默模式 (Silent Mode)
         //======================================================================

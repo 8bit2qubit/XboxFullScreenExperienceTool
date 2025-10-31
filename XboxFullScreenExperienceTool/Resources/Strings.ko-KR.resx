@@ -385,10 +385,10 @@
     <value>화면 크기 재정의 방식 (비 휴대용 장치용)</value>
   </data>
   <data name="radPhysPanelCS_Text" xml:space="preserve">
-    <value>PhysPanelCS (작업 스케줄러 모드, 높은 보안, 기본값)</value>
+    <value>PhysPanelCS (작업 스케줄러 모드, 권장 기본값, 추가 설정 필요 없음)</value>
   </data>
   <data name="radPhysPanelDrv_Text" xml:space="preserve">
-    <value>PhysPanelDrv (드라이버 모드, 높은 안정성, 테스트 서명 활성화 필요)</value>
+    <value>PhysPanelDrv (드라이버 모드, 고급 대안, 보안 부팅 비활성화 및 테스트 서명 활성화 필요)</value>
   </data>
   <data name="StatusEnabledDriverMode" xml:space="preserve">
     <value>상태: 활성화됨 (드라이버 모드)</value>

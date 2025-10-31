@@ -55,7 +55,7 @@ namespace XboxFullScreenExperienceTool
             this.btnEnable.Location = new System.Drawing.Point(19, 29);
             this.btnEnable.Name = "btnEnable";
             this.btnEnable.Size = new System.Drawing.Size(260, 50);
-            this.btnEnable.TabIndex = 3;
+            this.btnEnable.TabIndex = 5;
             this.btnEnable.Text = "啟用 Xbox 全螢幕體驗";
             this.btnEnable.UseVisualStyleBackColor = true;
             this.btnEnable.Click += new System.EventHandler(this.btnEnable_Click);
@@ -67,32 +67,33 @@ namespace XboxFullScreenExperienceTool
             this.btnDisable.Location = new System.Drawing.Point(295, 29);
             this.btnDisable.Name = "btnDisable";
             this.btnDisable.Size = new System.Drawing.Size(260, 50);
-            this.btnDisable.TabIndex = 4;
+            this.btnDisable.TabIndex = 6;
             this.btnDisable.Text = "停用並還原";
             this.btnDisable.UseVisualStyleBackColor = true;
             this.btnDisable.Click += new System.EventHandler(this.btnDisable_Click);
             // 
             // grpActions
             // 
-            this.grpActions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpActions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.grpActions.Controls.Add(this.chkStartKeyboardOnLogon);
+            this.grpActions.Controls.Add(this.cboLanguage);
             this.grpActions.Controls.Add(this.btnDisable);
             this.grpActions.Controls.Add(this.btnEnable);
             this.grpActions.Location = new System.Drawing.Point(12, 122);
             this.grpActions.Name = "grpActions";
             this.grpActions.Size = new System.Drawing.Size(574, 120);
-            this.grpActions.TabIndex = 5;
+            this.grpActions.TabIndex = 4;
             this.grpActions.TabStop = false;
             this.grpActions.Text = "操作";
             // 
             // chkStartKeyboardOnLogon
             // 
+            this.chkStartKeyboardOnLogon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkStartKeyboardOnLogon.AutoSize = true;
             this.chkStartKeyboardOnLogon.Location = new System.Drawing.Point(19, 88);
             this.chkStartKeyboardOnLogon.Name = "chkStartKeyboardOnLogon";
             this.chkStartKeyboardOnLogon.Size = new System.Drawing.Size(212, 19);
-            this.chkStartKeyboardOnLogon.TabIndex = 5;
+            this.chkStartKeyboardOnLogon.TabIndex = 7;
             this.chkStartKeyboardOnLogon.Text = "在登入時啟動觸控鍵盤";
             this.chkStartKeyboardOnLogon.UseVisualStyleBackColor = true;
             this.chkStartKeyboardOnLogon.CheckedChanged += new System.EventHandler(this.chkStartKeyboardOnLogon_CheckedChanged);
@@ -106,7 +107,7 @@ namespace XboxFullScreenExperienceTool
             this.grpOutput.Location = new System.Drawing.Point(12, 248);
             this.grpOutput.Name = "grpOutput";
             this.grpOutput.Size = new System.Drawing.Size(574, 154);
-            this.grpOutput.TabIndex = 6;
+            this.grpOutput.TabIndex = 9;
             this.grpOutput.TabStop = false;
             this.grpOutput.Text = "執行日誌";
             // 
@@ -120,7 +121,7 @@ namespace XboxFullScreenExperienceTool
             this.txtOutput.Name = "txtOutput";
             this.txtOutput.ReadOnly = true;
             this.txtOutput.Size = new System.Drawing.Size(568, 133);
-            this.txtOutput.TabIndex = 0;
+            this.txtOutput.TabIndex = 10;
             this.txtOutput.Text = "";
             // 
             // lblStatus
@@ -130,16 +131,17 @@ namespace XboxFullScreenExperienceTool
             this.lblStatus.Location = new System.Drawing.Point(12, 8);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(105, 20);
-            this.lblStatus.TabIndex = 7;
+            this.lblStatus.TabIndex = 0;
             this.lblStatus.Text = "狀態：偵測中...";
+            this.lblStatus.DoubleClick += new System.EventHandler(this.lblStatus_DoubleClick);
             // 
             // cboLanguage
             // 
-            this.cboLanguage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboLanguage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cboLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboLanguage.Font = new System.Drawing.Font("Microsoft JhengHei UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.cboLanguage.FormattingEnabled = true;
-            this.cboLanguage.Location = new System.Drawing.Point(466, 8);
+            this.cboLanguage.Location = new System.Drawing.Point(434, 88);
             this.cboLanguage.Name = "cboLanguage";
             this.cboLanguage.Size = new System.Drawing.Size(121, 27);
             this.cboLanguage.TabIndex = 8;
@@ -154,7 +156,7 @@ namespace XboxFullScreenExperienceTool
             this.grpPhysPanel.Location = new System.Drawing.Point(12, 41);
             this.grpPhysPanel.Name = "grpPhysPanel";
             this.grpPhysPanel.Size = new System.Drawing.Size(574, 75);
-            this.grpPhysPanel.TabIndex = 9;
+            this.grpPhysPanel.TabIndex = 1;
             this.grpPhysPanel.TabStop = false;
             this.grpPhysPanel.Text = "螢幕尺寸覆寫方式 (適用於非掌機)";
             // 
@@ -164,8 +166,8 @@ namespace XboxFullScreenExperienceTool
             this.radPhysPanelDrv.Location = new System.Drawing.Point(19, 48);
             this.radPhysPanelDrv.Name = "radPhysPanelDrv";
             this.radPhysPanelDrv.Size = new System.Drawing.Size(378, 16);
-            this.radPhysPanelDrv.TabIndex = 1;
-            this.radPhysPanelDrv.Text = "PhysPanelDrv (驅動程式模式，穩定性高，需啟用測試簽章";
+            this.radPhysPanelDrv.TabIndex = 3;
+            this.radPhysPanelDrv.Text = "PhysPanelDrv (驅動程式模式，進階替代方案，需停用安全啟動並啟用測試簽章)";
             this.radPhysPanelDrv.UseVisualStyleBackColor = true;
             // 
             // radPhysPanelCS
@@ -175,9 +177,9 @@ namespace XboxFullScreenExperienceTool
             this.radPhysPanelCS.Location = new System.Drawing.Point(19, 22);
             this.radPhysPanelCS.Name = "radPhysPanelCS";
             this.radPhysPanelCS.Size = new System.Drawing.Size(326, 16);
-            this.radPhysPanelCS.TabIndex = 0;
+            this.radPhysPanelCS.TabIndex = 2;
             this.radPhysPanelCS.TabStop = true;
-            this.radPhysPanelCS.Text = "PhysPanelCS (工作排程模式，安全性高，預設選項)";
+            this.radPhysPanelCS.Text = "PhysPanelCS (工作排程模式，預設建議方案，無需額外設定)";
             this.radPhysPanelCS.UseVisualStyleBackColor = true;
             // 
             // MainForm
@@ -186,12 +188,12 @@ namespace XboxFullScreenExperienceTool
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(598, 414);
             this.Controls.Add(this.grpPhysPanel);
-            this.Controls.Add(this.cboLanguage);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.grpOutput);
             this.Controls.Add(this.grpActions);
             this.MinimumSize = new System.Drawing.Size(614, 453);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.ShowIcon = false;
             this.Text = "Xbox 全螢幕體驗工具";
             this.Load += new System.EventHandler(this.MainForm_Load);

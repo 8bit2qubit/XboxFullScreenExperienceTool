@@ -385,10 +385,10 @@
     <value>螢幕尺寸覆寫方式 (適用於非掌機)</value>
   </data>
   <data name="radPhysPanelCS_Text" xml:space="preserve">
-    <value>PhysPanelCS (工作排程模式，安全性高，預設選項)</value>
+    <value>PhysPanelCS (工作排程模式，預設建議方案，無需額外設定)</value>
   </data>
   <data name="radPhysPanelDrv_Text" xml:space="preserve">
-    <value>PhysPanelDrv (驅動程式模式，穩定性高，需啟用測試簽章)</value>
+    <value>PhysPanelDrv (驅動程式模式，進階替代方案，需停用安全啟動並啟用測試簽章)</value>
   </data>
   <data name="StatusEnabledDriverMode" xml:space="preserve">
     <value>狀態: 已啟用 (驅動程式模式)</value>

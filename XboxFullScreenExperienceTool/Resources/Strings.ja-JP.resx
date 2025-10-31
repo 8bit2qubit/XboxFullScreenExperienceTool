@@ -385,10 +385,10 @@
     <value>画面サイズの上書き方式 (非ハンドヘルドデバイス向け)</value>
   </data>
   <data name="radPhysPanelCS_Text" xml:space="preserve">
-    <value>PhysPanelCS (タスクスケジューラモード、高セキュリティ、既定)</value>
+    <value>PhysPanelCS (タスクスケジューラモード, 推奨デフォルト, 追加設定不要)</value>
   </data>
   <data name="radPhysPanelDrv_Text" xml:space="preserve">
-    <value>PhysPanelDrv (ドライバーモード、高安定性、テスト署名オン必須)</value>
+    <value>PhysPanelDrv (ドライバーモード, 高度な代替オプション, セキュアブートの無効化とテスト署名の有効化が必要)</value>
   </data>
   <data name="StatusEnabledDriverMode" xml:space="preserve">
     <value>状態: 有効 (ドライバーモード)</value>
