@@ -7,7 +7,15 @@
 	<!-- 啟用不安全程式碼區塊，以便與原生指標進行互動 -->
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	<Version>0.0.7</Version>
-	<Platforms>AnyCPU;x64</Platforms>
+	<Platforms>x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DebugType>none</DebugType>
   </PropertyGroup>
 
 </Project>

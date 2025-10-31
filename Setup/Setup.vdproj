@@ -117,7 +117,7 @@
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
-        "Compression" = "3:2"
+        "Compression" = "3:3"
         "SignOutput" = "11:FALSE"
         "CertificateFile" = "8:"
         "PrivateKeyFile" = "8:"
@@ -194,7 +194,7 @@
         {
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1AA0FB4FA3EF49F89B32EC2E6B5027C5"
             {
-            "SourcePath" = "8:..\\XboxFullScreenExperienceTool\\bin\\x64\\Release\\net8.0-windows\\PhysPanelDrv\\devcon.exe"
+            "SourcePath" = "8:..\\XboxFullScreenExperienceTool\\bin\\x64\\Release\\net8.0-windows\\win-x64\\PhysPanelDrv\\devcon.exe"
             "TargetName" = "8:devcon.exe"
             "Tag" = "8:"
             "Folder" = "8:_E2BC5E7C3AB9414DA8A520AFA3C434AF"
@@ -234,7 +234,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6F8DCBF62B9942CDB08338B5EA016EB9"
             {
-            "SourcePath" = "8:..\\XboxFullScreenExperienceTool\\bin\\x64\\Release\\net8.0-windows\\PhysPanelDrv\\physpaneldrv.cat"
+            "SourcePath" = "8:..\\XboxFullScreenExperienceTool\\bin\\x64\\Release\\net8.0-windows\\win-x64\\PhysPanelDrv\\physpaneldrv.cat"
             "TargetName" = "8:physpaneldrv.cat"
             "Tag" = "8:"
             "Folder" = "8:_E2BC5E7C3AB9414DA8A520AFA3C434AF"
@@ -254,7 +254,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_96BF5000E157433BB2866AA8A6B2A6A5"
             {
-            "SourcePath" = "8:..\\XboxFullScreenExperienceTool\\bin\\x64\\Release\\net8.0-windows\\PhysPanelDrv\\PhysPanelDrv.inf"
+            "SourcePath" = "8:..\\XboxFullScreenExperienceTool\\bin\\x64\\Release\\net8.0-windows\\win-x64\\PhysPanelDrv\\PhysPanelDrv.inf"
             "TargetName" = "8:PhysPanelDrv.inf"
             "Tag" = "8:"
             "Folder" = "8:_E2BC5E7C3AB9414DA8A520AFA3C434AF"
@@ -274,7 +274,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BAE968FAE61F4A498EB5173FA91329AC"
             {
-            "SourcePath" = "8:..\\XboxFullScreenExperienceTool\\bin\\x64\\Release\\net8.0-windows\\PhysPanelDrv\\PhysPanelDrv.sys"
+            "SourcePath" = "8:..\\XboxFullScreenExperienceTool\\bin\\x64\\Release\\net8.0-windows\\win-x64\\PhysPanelDrv\\PhysPanelDrv.sys"
             "TargetName" = "8:PhysPanelDrv.sys"
             "Tag" = "8:"
             "Folder" = "8:_E2BC5E7C3AB9414DA8A520AFA3C434AF"
@@ -294,7 +294,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C25269B61535489CAF57865953937D36"
             {
-            "SourcePath" = "8:..\\XboxFullScreenExperienceTool\\bin\\x64\\Release\\net8.0-windows\\PhysPanelDrv\\PhysPanelDrv.cer"
+            "SourcePath" = "8:..\\XboxFullScreenExperienceTool\\bin\\x64\\Release\\net8.0-windows\\win-x64\\PhysPanelDrv\\PhysPanelDrv.cer"
             "TargetName" = "8:PhysPanelDrv.cer"
             "Tag" = "8:"
             "Folder" = "8:_E2BC5E7C3AB9414DA8A520AFA3C434AF"
@@ -1003,7 +1003,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_272BC26B262F4E3D899B0F10EE3BA06C"
             {
-            "SourcePath" = "8:..\\XboxFullScreenExperienceTool\\obj\\x64\\Release\\net8.0-windows\\apphost.exe"
+            "SourcePath" = "8:..\\XboxFullScreenExperienceTool\\obj\\x64\\Release\\net8.0-windows\\win-x64\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_A21001F12A454D16804E24C24E60D4FC"
