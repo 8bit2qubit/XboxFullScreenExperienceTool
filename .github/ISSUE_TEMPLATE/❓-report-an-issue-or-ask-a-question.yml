@@ -14,7 +14,7 @@ body:
         - label: >-
             I have **read the entire** [**README**](https://github.com/8bit2qubit/XboxFullScreenExperienceTool?tab=readme-ov-file#readme), especially the following sections:
 
-            *   **"System Requirements"** (I confirm my build is one of the **COMPATIBLE** builds: `26200.7015+` or `26220.6972+`. **`26100.xxxx` is NOT compatible.**)
+            *   **"System Requirements"** (I confirm my build is one of the **COMPATIBLE** builds: `26100.7019+`, `26200.7015+` or `26220.6972+`.)
 
             *   **"Screen Dimension Override for Desktop PCs & Laptops"** (I understand the difference between `PhysPanelCS` / `PhysPanelDrv`)
 
@@ -71,6 +71,22 @@ body:
         - N/A (Not Applicable) (My device is a Handheld, or this is not relevant)
     validations:
       required: true
+  - type: dropdown
+    id: tool-version
+    attributes:
+      label: "4. Which Xbox Full Screen Experience Tool version are you using?"
+      description: "(You can see the version in the tool's title bar.)"
+      options:
+        - v0.0.12
+        - v0.0.11
+        - v0.0.10
+        - v0.0.9
+        - v0.0.8
+        - v0.0.7
+        - v0.0.6
+        - v0.0.5
+    validations:
+      required: true
   - type: markdown
     attributes:
       value: "---"
@@ -80,7 +96,7 @@ body:
   - type: textarea
     id: issue-description
     attributes:
-      label: "4. Describe your issue or question:"
+      label: "5. Describe your issue or question:"
       description: "(A clear and concise description of what the problem is.)"
       placeholder: "Answer:"
     validations:
@@ -88,7 +104,7 @@ body:
   - type: textarea
     id: steps-to-reproduce
     attributes:
-      label: "5. Steps to Reproduce (if applicable):"
+      label: "6. Steps to Reproduce (if applicable):"
       description: "(If you are reporting a reproducible problem, list the steps.)"
       placeholder: |
         1. Boot the PC.
@@ -99,7 +115,7 @@ body:
   - type: textarea
     id: expected-behavior
     attributes:
-      label: "6. Expected Behavior:"
+      label: "7. Expected Behavior:"
       description: "(What did you expect to happen?)"
       placeholder: "Answer:"
     validations:
@@ -107,7 +123,7 @@ body:
   - type: textarea
     id: actual-behavior
     attributes:
-      label: "7. Actual Behavior:"
+      label: "8. Actual Behavior:"
       description: "(What actually happened?)"
       placeholder: "Answer:"
     validations:
@@ -115,8 +131,8 @@ body:
   - type: textarea
     id: screenshots
     attributes:
-      label: "8. Screenshots / Video:"
-      description: "(If possible, attach screenshots or error messages.)"
+      label: "9. Screenshots / Videos / Error Messages / Logs"
+      description: "(Attach screenshots, videos, error messages, or provide logs if possible. Logs are located at: \"C:\\Program Files\\8bit2qubit\\Xbox FullScreen Experience Tool\\XboxFullScreenExperienceTool.log\" and \".log.bak\")"
       placeholder: "Answer:"
     validations:
       required: false
