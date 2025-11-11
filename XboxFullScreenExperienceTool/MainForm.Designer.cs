@@ -54,7 +54,7 @@ namespace XboxFullScreenExperienceTool
             this.btnEnable.ForeColor = System.Drawing.Color.DarkGreen;
             this.btnEnable.Location = new System.Drawing.Point(19, 29);
             this.btnEnable.Name = "btnEnable";
-            this.btnEnable.Size = new System.Drawing.Size(260, 50);
+            this.btnEnable.Size = new System.Drawing.Size(282, 50);
             this.btnEnable.TabIndex = 5;
             this.btnEnable.Text = "啟用 Xbox 全螢幕體驗";
             this.btnEnable.UseVisualStyleBackColor = true;
@@ -64,9 +64,9 @@ namespace XboxFullScreenExperienceTool
             // 
             this.btnDisable.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.btnDisable.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnDisable.Location = new System.Drawing.Point(295, 29);
+            this.btnDisable.Location = new System.Drawing.Point(318, 29);
             this.btnDisable.Name = "btnDisable";
-            this.btnDisable.Size = new System.Drawing.Size(260, 50);
+            this.btnDisable.Size = new System.Drawing.Size(283, 50);
             this.btnDisable.TabIndex = 6;
             this.btnDisable.Text = "停用並還原";
             this.btnDisable.UseVisualStyleBackColor = true;
@@ -81,7 +81,7 @@ namespace XboxFullScreenExperienceTool
             this.grpActions.Controls.Add(this.btnEnable);
             this.grpActions.Location = new System.Drawing.Point(12, 122);
             this.grpActions.Name = "grpActions";
-            this.grpActions.Size = new System.Drawing.Size(574, 120);
+            this.grpActions.Size = new System.Drawing.Size(619, 120);
             this.grpActions.TabIndex = 4;
             this.grpActions.TabStop = false;
             this.grpActions.Text = "操作";
@@ -106,7 +106,7 @@ namespace XboxFullScreenExperienceTool
             this.grpOutput.Controls.Add(this.txtOutput);
             this.grpOutput.Location = new System.Drawing.Point(12, 248);
             this.grpOutput.Name = "grpOutput";
-            this.grpOutput.Size = new System.Drawing.Size(574, 154);
+            this.grpOutput.Size = new System.Drawing.Size(619, 154);
             this.grpOutput.TabIndex = 9;
             this.grpOutput.TabStop = false;
             this.grpOutput.Text = "執行日誌";
@@ -120,7 +120,7 @@ namespace XboxFullScreenExperienceTool
             this.txtOutput.Location = new System.Drawing.Point(3, 18);
             this.txtOutput.Name = "txtOutput";
             this.txtOutput.ReadOnly = true;
-            this.txtOutput.Size = new System.Drawing.Size(568, 133);
+            this.txtOutput.Size = new System.Drawing.Size(613, 133);
             this.txtOutput.TabIndex = 10;
             this.txtOutput.Text = "";
             // 
@@ -141,7 +141,7 @@ namespace XboxFullScreenExperienceTool
             this.cboLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboLanguage.Font = new System.Drawing.Font("Microsoft JhengHei UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.cboLanguage.FormattingEnabled = true;
-            this.cboLanguage.Location = new System.Drawing.Point(434, 88);
+            this.cboLanguage.Location = new System.Drawing.Point(479, 88);
             this.cboLanguage.Name = "cboLanguage";
             this.cboLanguage.Size = new System.Drawing.Size(121, 27);
             this.cboLanguage.TabIndex = 8;
@@ -155,7 +155,7 @@ namespace XboxFullScreenExperienceTool
             this.grpPhysPanel.Controls.Add(this.radPhysPanelCS);
             this.grpPhysPanel.Location = new System.Drawing.Point(12, 41);
             this.grpPhysPanel.Name = "grpPhysPanel";
-            this.grpPhysPanel.Size = new System.Drawing.Size(574, 75);
+            this.grpPhysPanel.Size = new System.Drawing.Size(619, 75);
             this.grpPhysPanel.TabIndex = 1;
             this.grpPhysPanel.TabStop = false;
             this.grpPhysPanel.Text = "螢幕尺寸覆寫方式 (適用於非掌機)";
@@ -186,12 +186,12 @@ namespace XboxFullScreenExperienceTool
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(598, 414);
+            this.ClientSize = new System.Drawing.Size(643, 414);
             this.Controls.Add(this.grpPhysPanel);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.grpOutput);
             this.Controls.Add(this.grpActions);
-            this.MinimumSize = new System.Drawing.Size(614, 453);
+            this.MinimumSize = new System.Drawing.Size(659, 453);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.ShowIcon = false;
