@@ -271,9 +271,28 @@ namespace XboxFullScreenExperienceTool
                 Log(string.Format(Resources.Strings.YourBuildVersion, versionString));
 
                 // 版本比較邏輯
-                if (currentBuild < REQUIRED_BUILD || (currentBuild == REQUIRED_BUILD && currentRevision < REQUIRED_REVISION))
+                bool isCompatible = false;
+
+                if (currentBuild > 26220) // 允許未來高於 26220 的任何版本
+                {
+                    isCompatible = true;
+                }
+                else if (currentBuild == 26220)
                 {
-                    string requirementString = $"{REQUIRED_BUILD}.{REQUIRED_REVISION}";
+                    isCompatible = (currentRevision >= 6972); // 26220.6972+
+                }
+                else if (currentBuild == 26200)
+                {
+                    isCompatible = (currentRevision >= 7015); // 26200.7015+
+                }
+                else if (currentBuild == 26100)
+                {
+                    isCompatible = (currentRevision >= 7019); // 26100.7019+
+                }
+
+                if (!isCompatible)
+                {
+                    string requirementString = "26100.7019+ / 26200.7015+ / 26220.6972+";
                     Log(string.Format(Resources.Strings.ErrorBuildTooLow, versionString));
                     Log(string.Format(Resources.Strings.RequiredBuild, requirementString));
 
