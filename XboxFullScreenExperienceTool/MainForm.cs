@@ -936,15 +936,20 @@ namespace XboxFullScreenExperienceTool
             cboLanguage.Items.Add("简体中文");
             cboLanguage.Items.Add("日本語");
             cboLanguage.Items.Add("한국어");
+            cboLanguage.Items.Add("Deutsch");
+            cboLanguage.Items.Add("Français");
+            cboLanguage.Items.Add("Русский");
 
             string currentCultureName = Thread.CurrentThread.CurrentUICulture.Name;
             if (currentCultureName.StartsWith("zh-TW", StringComparison.OrdinalIgnoreCase) || currentCultureName.StartsWith("zh-Hant", StringComparison.OrdinalIgnoreCase)) cboLanguage.SelectedIndex = 1; // 繁體中文
             else if (currentCultureName.StartsWith("zh-CN", StringComparison.OrdinalIgnoreCase) || currentCultureName.StartsWith("zh-Hans", StringComparison.OrdinalIgnoreCase)) cboLanguage.SelectedIndex = 2; // 简体中文
             else if (currentCultureName.StartsWith("ja", StringComparison.OrdinalIgnoreCase)) cboLanguage.SelectedIndex = 3; // 日本語
             else if (currentCultureName.StartsWith("ko", StringComparison.OrdinalIgnoreCase)) cboLanguage.SelectedIndex = 4; // 한국어
+            else if (currentCultureName.StartsWith("de", StringComparison.OrdinalIgnoreCase)) cboLanguage.SelectedIndex = 5; // Deutsch
+            else if (currentCultureName.StartsWith("fr", StringComparison.OrdinalIgnoreCase)) cboLanguage.SelectedIndex = 6; // Français
+            else if (currentCultureName.StartsWith("ru", StringComparison.OrdinalIgnoreCase)) cboLanguage.SelectedIndex = 7; // Русский
             else cboLanguage.SelectedIndex = 0; // Default to English
         }
-
 
         /// <summary>
         /// 根據目前的在地化設定，更新所有 UI 控制項的文字。
@@ -998,6 +1003,9 @@ namespace XboxFullScreenExperienceTool
                 2 => "zh-CN",
                 3 => "ja-JP",
                 4 => "ko-KR",
+                5 => "de-DE",
+                6 => "fr-FR",
+                7 => "ru-RU",
                 _ => "en-US",
             };
 

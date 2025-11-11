@@ -1,0 +1,492 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MainFormTitle" xml:space="preserve">
+    <value>Инструмент полноэкранного режима Xbox</value>
+  </data>
+  <data name="UnknownVersion" xml:space="preserve">
+    <value>Неизвестная версия</value>
+  </data>
+  <data name="ErrorReadingVersion" xml:space="preserve">
+    <value>Ошибка при чтении номера версии: {0}</value>
+  </data>
+  <data name="WelcomeMessage" xml:space="preserve">
+    <value>Добро пожаловать в Инструмент полноэкранного режима Xbox!</value>
+  </data>
+  <data name="ErrorCheckBuild" xml:space="preserve">
+    <value>Ошибка при проверке сборки Windows: {0}</value>
+  </data>
+  <data name="VersionIncompatible" xml:space="preserve">
+    <value>Несовместимая версия</value>
+  </data>
+  <data name="ErrorReadRegistry" xml:space="preserve">
+    <value>Ошибка: Не удалось прочитать или проанализировать информацию о сборке ОС (CurrentBuild или UBR) из реестра.</value>
+  </data>
+  <data name="YourBuildVersion" xml:space="preserve">
+    <value>Ваша версия сборки Windows: {0}</value>
+  </data>
+  <data name="ErrorBuildTooLow" xml:space="preserve">
+    <value>Ошибка: Ваша версия сборки Windows ({0}) слишком старая.</value>
+  </data>
+  <data name="RequiredBuild" xml:space="preserve">
+    <value>Для этого инструмента требуется сборка {0} или выше.</value>
+  </data>
+  <data name="VersionOK" xml:space="preserve">
+    <value>Версия соответствует требованиям.</value>
+  </data>
+  <data name="StatusChecking" xml:space="preserve">
+    <value>Статус: Проверка...</value>
+  </data>
+  <data name="StatusEnabled" xml:space="preserve">
+    <value>Статус: Включен</value>
+  </data>
+  <data name="StatusDisabled" xml:space="preserve">
+    <value>Статус: Отключен</value>
+  </data>
+  <data name="StatusNeedsFix" xml:space="preserve">
+    <value>Статус: Требуется исправление (задача для размеров экрана настроена неверно)</value>
+  </data>
+  <data name="StatusUnknownError" xml:space="preserve">
+    <value>Статус: Неизвестно (Ошибка)</value>
+  </data>
+  <data name="StatusRestartPending" xml:space="preserve">
+    <value>Статус: Ожидается перезагрузка...</value>
+  </data>
+  <data name="btnEnable_Text" xml:space="preserve">
+    <value>Включить полноэкранный режим Xbox</value>
+  </data>
+  <data name="btnEnable_Text_Fix" xml:space="preserve">
+    <value>Исправить полноэкранный режим Xbox</value>
+  </data>
+  <data name="btnDisable_Text" xml:space="preserve">
+    <value>Отключить и восстановить</value>
+  </data>
+  <data name="grpActions_Text" xml:space="preserve">
+    <value>Действия</value>
+  </data>
+  <data name="grpOutput_Text" xml:space="preserve">
+    <value>Журнал</value>
+  </data>
+  <data name="ErrorCheckStatus" xml:space="preserve">
+    <value>Произошла ошибка при проверке статуса: {0}</value>
+  </data>
+  <data name="LogStatusCheck" xml:space="preserve">
+    <value>Проверка статуса -&gt; Функции ViVe: {0}, Реестр: {1}, Задача требуется: {2}, Задача существует: {3}</value>
+  </data>
+  <data name="LogRegStatusFalseNotExist" xml:space="preserve">
+    <value>False (Не существует)</value>
+  </data>
+  <data name="LogRegStatusTrue" xml:space="preserve">
+    <value>True (Значение 46)</value>
+  </data>
+  <data name="LogRegStatusFalseWrongValue" xml:space="preserve">
+    <value>False (Значение {0})</value>
+  </data>
+  <data name="LogErrorReadingScreenSize" xml:space="preserve">
+    <value>Не удалось прочитать размеры экрана, невозможно определить, требуется ли запланированная задача.</value>
+  </data>
+  <data name="LogBeginEnable" xml:space="preserve">
+    <value>--- Начало процесса включения ---</value>
+  </data>
+  <data name="LogReadingScreenSize" xml:space="preserve">
+    <value>Чтение текущих размеров экрана...</value>
+  </data>
+  <data name="LogScreenSizeSuccess" xml:space="preserve">
+    <value>Размеры экрана успешно прочитаны: {0}x{1}мм.</value>
+  </data>
+  <data name="LogScreenSizeUndefined" xml:space="preserve">
+    <value>Обнаружены неопределенные размеры экрана (0x0мм), создается задача автозапуска...</value>
+  </data>
+  <data name="LogScreenSizeTooLarge" xml:space="preserve">
+    <value>Размер экрана ({0:F2}") превышает порог в {1}", создается задача автозапуска...</value>
+  </data>
+  <data name="LogTaskCreated" xml:space="preserve">
+    <value>Задача 'SetPanelDimensions' создана.</value>
+  </data>
+  <data name="LogTaskNotNeeded" xml:space="preserve">
+    <value>Размер экрана ({0:F2}") находится в пределах {1}", задача не требуется.</value>
+  </data>
+  <data name="LogErrorReadingScreenSizeEnable" xml:space="preserve">
+    <value>Не удалось прочитать размеры экрана, этот шаг пропускается.</value>
+  </data>
+  <data name="LogBackupAndSetRegistry" xml:space="preserve">
+    <value>Резервное копирование и настройка реестра...</value>
+  </data>
+  <data name="LogRegistryBackupSuccess" xml:space="preserve">
+    <value>Исходное значение DeviceForm ({0}) сохранено в {1}.</value>
+  </data>
+  <data name="LogRegistryBackupMarkedForDelete" xml:space="preserve">
+    <value>Исходное значение DeviceForm не найдено, создан маркер восстановления.</value>
+  </data>
+  <data name="LogRegistrySetSuccess" xml:space="preserve">
+    <value>Ключ реестра успешно установлен в 46 (0x2E).</value>
+  </data>
+  <data name="LogEnablingFeatures" xml:space="preserve">
+    <value>Включение идентификаторов функций: {0}...</value>
+  </data>
+  <data name="LogFeaturesEnabledSuccess" xml:space="preserve">
+    <value>Функции успешно включены.</value>
+  </data>
+  <data name="LogEnableComplete" xml:space="preserve">
+    <value>--- Процесс включения завершен ---</value>
+  </data>
+  <data name="PromptRestartCaptionSuccess" xml:space="preserve">
+    <value>Успешно</value>
+  </data>
+  <data name="PromptRestartCaptionDisableSuccess" xml:space="preserve">
+    <value>Отключение успешно</value>
+  </data>
+  <data name="PromptRestartMessage" xml:space="preserve">
+    <value>Настройки успешно применены. Чтобы изменения вступили в силу, необходимо перезагрузить компьютер.</value>
+  </data>
+  <data name="LogUserRestartNow" xml:space="preserve">
+    <value>Пользователь выбрал перезагрузить сейчас.</value>
+  </data>
+  <data name="ErrorRestartFailed" xml:space="preserve">
+    <value>Не удалось выполнить команду перезагрузки: {0}</value>
+  </data>
+  <data name="MessageBoxRestartFailed" xml:space="preserve">
+    <value>Не удалось выполнить автоматическую перезагрузку. Пожалуйста, перезагрузите компьютер вручную.</value>
+  </data>
+  <data name="LogUserRestartLater" xml:space="preserve">
+    <value>Пользователь выбрал перезагрузить позже. До перезагрузки нельзя выполнять другие действия.</value>
+  </data>
+  <data name="HandleExceptionMessage" xml:space="preserve">
+    <value>Произошла ошибка:
+{0}
+
+Пожалуйста, убедитесь, что вы запускаете эту программу с правами администратора.</value>
+  </data>
+  <data name="HandleExceptionTitle" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
+  <data name="LogErrorUnexpected" xml:space="preserve">
+    <value>Произошла непредвиденная ошибка: {0}</value>
+  </data>
+  <data name="LogErrorAdminRights" xml:space="preserve">
+    <value>Пожалуйста, убедитесь, что эта программа запущена с [правами администратора].</value>
+  </data>
+  <data name="LogBeginDisable" xml:space="preserve">
+    <value>--- Начало процесса отключения ---</value>
+  </data>
+  <data name="LogDisablingFeatures" xml:space="preserve">
+    <value>Принудительное отключение идентификаторов функций: {0}...</value>
+  </data>
+  <data name="LogFeaturesDisabledSuccess" xml:space="preserve">
+    <value>Функции успешно переведены в отключенное состояние.</value>
+  </data>
+  <data name="LogCheckingRegistryRestore" xml:space="preserve">
+    <value>Проверка необходимости восстановления значения DeviceForm в реестре...</value>
+  </data>
+  <data name="LogBackupFound" xml:space="preserve">
+    <value>Найден файл резервной копии, приступаем к восстановлению.</value>
+  </data>
+  <data name="LogRegistryValueRemoved" xml:space="preserve">
+    <value>Значение реестра '{0}' удалено на основе маркера резервной копии.</value>
+  </data>
+  <data name="LogRegistryValueRestored" xml:space="preserve">
+    <value>Значение восстановлено из резервной копии: {0}</value>
+  </data>
+  <data name="LogRegistryBackupInvalid" xml:space="preserve">
+    <value>Содержимое файла резервной копии неверно. Безопасное удаление значения реестра '{0}'.</value>
+  </data>
+  <data name="LogBackupDeleted" xml:space="preserve">
+    <value>Файл резервной копии удален.</value>
+  </data>
+  <data name="LogNoBackupFound" xml:space="preserve">
+    <value>Файл резервной копии не найден, что означает, что этот инструмент не изменял реестр. Восстановление не требуется.</value>
+  </data>
+  <data name="ErrorRestoringRegistry" xml:space="preserve">
+    <value>Ошибка при восстановлении реестра: {0}</value>
+  </data>
+  <data name="LogDeletingTask" xml:space="preserve">
+    <value>Удаление запланированной задачи 'SetPanelDimensions'...</value>
+  </data>
+  <data name="LogTaskDeleted" xml:space="preserve">
+    <value>Запланированная задача удалена.</value>
+  </data>
+  <data name="LogDisableComplete" xml:space="preserve">
+    <value>--- Процесс отключения завершен ---</value>
+  </data>
+  <data name="ErrorAppRunning" xml:space="preserve">
+    <value>Приложение уже запущено.</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorFindFile" xml:space="preserve">
+    <value>Необходимый файл не найден: {0}. Убедитесь, что PhysPanelCS.exe находится в той же папке, что и основная программа.</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorCreate" xml:space="preserve">
+    <value>Не удалось создать запланированную задачу: {0}</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorDelete" xml:space="preserve">
+    <value>Не удалось удалить запланированную задачу: {0}</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorDirectoryNotFound" xml:space="preserve">
+    <value>Не удалось получить каталог установки приложения.</value>
+  </data>
+  <data name="ErrorCertificateFileNotFound" xml:space="preserve">
+    <value>Ошибка: Файл сертификата '{0}' не найден.</value>
+  </data>
+  <data name="ErrorDriverFilesNotFound" xml:space="preserve">
+    <value>Ошибка: Файлы драйвера '{0}' или '{1}' не найдены.</value>
+  </data>
+  <data name="LogErrorDriverInstallFailed" xml:space="preserve">
+    <value>Сбой установки драйвера: {0}</value>
+  </data>
+  <data name="LogErrorDriverRemoveFailed" xml:space="preserve">
+    <value>Сбой удаления драйвера: {0}</value>
+  </data>
+  <data name="LogErrorPrefix" xml:space="preserve">
+    <value>Ошибка: {0}</value>
+  </data>
+  <data name="LogCertificateInstallSuccess" xml:space="preserve">
+    <value>Сертификат успешно установлен.</value>
+  </data>
+  <data name="LogDeletingDriverPackage" xml:space="preserve">
+    <value>Найден пакет драйверов '{0}', удаление...</value>
+  </data>
+  <data name="LogDriverInstallCommandExecuted" xml:space="preserve">
+    <value>Команда установки драйвера выполнена.</value>
+  </data>
+  <data name="LogDriverRemoveCommandExecuted" xml:space="preserve">
+    <value>Команда удаления драйвера выполнена.</value>
+  </data>
+  <data name="LogFindingDriverPackage" xml:space="preserve">
+    <value>Поиск пакета драйверов (PhysPanelDrv.inf)...</value>
+  </data>
+  <data name="LogInstallingCertificate" xml:space="preserve">
+    <value>Установка сертификата драйвера...</value>
+  </data>
+  <data name="LogInstallingDriverWithDevcon" xml:space="preserve">
+    <value>Установка драйвера с помощью devcon...</value>
+  </data>
+  <data name="LogRemovingDriverDevice" xml:space="preserve">
+    <value>Удаление устройства драйвера...</value>
+  </data>
+  <data name="WarningOemInfNotFound" xml:space="preserve">
+    <value>Предупреждение: Соответствующий файл oem&lt;номер&gt;.inf не найден, возможно, он уже был удален.</value>
+  </data>
+  <data name="grpPhysPanel_Text" xml:space="preserve">
+    <value>Метод переопределения размеров экрана (для не портативных устройств)</value>
+  </data>
+  <data name="radPhysPanelCS_Text" xml:space="preserve">
+    <value>PhysPanelCS (Режим планировщика задач, рекомендуется по умолчанию, не требует доп. настройки)</value>
+  </data>
+  <data name="radPhysPanelDrv_Text" xml:space="preserve">
+    <value>PhysPanelDrv (Режим драйвера, альтернативный, требует отключения Secure Boot и включения тестовой подписи)</value>
+  </data>
+  <data name="StatusEnabledDriverMode" xml:space="preserve">
+    <value>Статус: Включен (Режим драйвера)</value>
+  </data>
+  <data name="StatusEnabledSchedulerMode" xml:space="preserve">
+    <value>Статус: Включен (Режим планировщика задач)</value>
+  </data>
+  <data name="LogTestSigningDisabled" xml:space="preserve">
+    <value>Режим тестовой подписи системы не включен. Опция PhysPanelDrv отключена.</value>
+  </data>
+  <data name="LogChoosingDriverMode" xml:space="preserve">
+    <value>Выбран режим драйвера (PhysPanelDrv)...</value>
+  </data>
+  <data name="LogRemovingOldTask" xml:space="preserve">
+    <value>Обнаружена существующая запланированная задача, удаляется во избежание конфликтов...</value>
+  </data>
+  <data name="LogChoosingSchedulerMode" xml:space="preserve">
+    <value>Выбран режим планировщика задач (PhysPanelCS)...</value>
+  </data>
+  <data name="LogRemovingOldDriver" xml:space="preserve">
+    <value>Обнаружена существующая служба драйвера, удаляется во избежание конфликтов...</value>
+  </data>
+  <data name="LogRemovingPhysPanelDrv" xml:space="preserve">
+    <value>Удаление драйвера PhysPanelDrv...</value>
+  </data>
+  <data name="LogLoggingErrorPrefix" xml:space="preserve">
+    <value>ОШИБКА ЗАПИСИ В ЖУРНАЛ</value>
+  </data>
+  <data name="ErrorWritingLogFile" xml:space="preserve">
+    <value>Не удалось записать в файл журнала: {0}</value>
+  </data>
+  <data name="LogStatusCheckSummary" xml:space="preserve">
+    <value>Проверка статуса: ЯдроВключено={0} (ФункцииViVe={1}, Реестр={2}), ПереопределениеЭкранаТребуется={3}, ПереопределениеПрисутствует={4} (CS={5}, Drv={6}), ТестоваяПодпись={7}</value>
+  </data>
+  <data name="StatusDriverErrorNeedsDisable" xml:space="preserve">
+    <value>Ошибка режима драйвера: Пожалуйста, отключите для восстановления</value>
+  </data>
+  <data name="LogDriverInstallCancelled" xml:space="preserve">
+    <value>Установка драйвера была отменена пользователем или завершилась сбоем. Операция прервана.</value>
+  </data>
+  <data name="LogErrorDriverRemoveFailedDuringSwitch" xml:space="preserve">
+    <value>Не удалось удалить существующий драйвер при переключении режимов, но настройка нового режима будет продолжена.</value>
+  </data>
+  <data name="LogErrorDriverRemoveFailedGeneral" xml:space="preserve">
+    <value>Не удалось удалить драйвер. Может потребоваться ручная очистка.</value>
+  </data>
+  <data name="LogOperationFailedRollingBack" xml:space="preserve">
+    <value>Операция не удалась, откат изменений...</value>
+  </data>
+  <data name="LogRollbackComplete" xml:space="preserve">
+    <value>Откат завершен. В систему не было внесено никаких изменений.</value>
+  </data>
+  <data name="LogErrorDriverInstallCancelled" xml:space="preserve">
+    <value>Установка драйвера не удалась или была отменена пользователем. (Код выхода: {0})</value>
+  </data>
+  <data name="LogLargeScreenForceCS" xml:space="preserve">
+    <value>Обнаружен экран размером более 9,5 дюймов. Для обеспечения совместимости режим переопределения ограничен режимом 'Планировщик задач (CS)'.</value>
+  </data>
+  <data name="chkStartKeyboardOnLogon_Text" xml:space="preserve">
+    <value>Запускать сенсорную клавиатуру при входе</value>
+  </data>
+  <data name="LogCreatingKeyboardTask" xml:space="preserve">
+    <value>Создание запланированной задачи для запуска клавиатуры при входе...</value>
+  </data>
+  <data name="LogDeletingKeyboardTask" xml:space="preserve">
+    <value>Удаление запланированной задачи для запуска клавиатуры при входе...</value>
+  </data>
+  <data name="ErrorKeyboardTask" xml:space="preserve">
+    <value>Не удалось изменить задачу запуска клавиатуры. Ошибка: {0}</value>
+  </data>
+  <data name="LogTouchSupportStatus" xml:space="preserve">
+    <value>Обнаружена поддержка сенсорного ввода: {0}</value>
+  </data>
+  <data name="TooltipTouchEnabled" xml:space="preserve">
+    <value>Ваша система имеет встроенную поддержку сенсорного ввода. Windows будет автоматически управлять отображением сенсорной клавиатуры.</value>
+  </data>
+  <data name="TooltipTouchDisabled" xml:space="preserve">
+    <value>В вашей системе не обнаружена поддержка сенсорного ввода. Вы можете включить эту опцию для автоматического запуска сенсорной клавиатуры при входе для удобства управления с контроллера.</value>
+  </data>
+  <data name="LogPanelTaskCreated" xml:space="preserve">
+    <value>Запланированная задача 'SetPanelDimensions' была создана.</value>
+  </data>
+  <data name="LogPanelTaskDeleted" xml:space="preserve">
+    <value>Запланированная задача 'SetPanelDimensions' была удалена.</value>
+  </data>
+  <data name="LogKeyboardTaskCreated" xml:space="preserve">
+    <value>Запланированная задача 'StartTouchKeyboardOnLogon' была создана.</value>
+  </data>
+  <data name="LogKeyboardTaskDeleted" xml:space="preserve">
+    <value>Запланированная задача 'StartTouchKeyboardOnLogon' была удалена.</value>
+  </data>
+  <data name="ShutdownReasonEnable" xml:space="preserve">
+    <value>Инструмент полноэкранного режима Xbox перезагружает компьютер для завершения настройки.</value>
+  </data>
+  <data name="ShutdownReasonUninstall" xml:space="preserve">
+    <value>Инструменту полноэкранного режима Xbox требуется перезагрузка для завершения удаления.</value>
+  </data>
+  <data name="UpdateWindowsPrompt" xml:space="preserve">
+    <value>Пожалуйста, запустите Центр обновления Windows, чтобы обновить вашу систему до последней версии, и повторите попытку.</value>
+  </data>
+</root>

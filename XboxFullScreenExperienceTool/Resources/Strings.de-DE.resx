@@ -1,0 +1,492 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MainFormTitle" xml:space="preserve">
+    <value>Xbox-Vollbildschirm-Erfahrungs-Tool</value>
+  </data>
+  <data name="UnknownVersion" xml:space="preserve">
+    <value>Unbekannte Version</value>
+  </data>
+  <data name="ErrorReadingVersion" xml:space="preserve">
+    <value>Fehler beim Lesen der Versionsnummer: {0}</value>
+  </data>
+  <data name="WelcomeMessage" xml:space="preserve">
+    <value>Willkommen beim Xbox-Vollbildschirm-Erfahrungs-Tool!</value>
+  </data>
+  <data name="ErrorCheckBuild" xml:space="preserve">
+    <value>Die Überprüfung des Windows-Builds ist mit einem unerwarteten Fehler fehlgeschlagen: {0}</value>
+  </data>
+  <data name="VersionIncompatible" xml:space="preserve">
+    <value>Version inkompatibel</value>
+  </data>
+  <data name="ErrorReadRegistry" xml:space="preserve">
+    <value>Fehler: Die aktuellen Build-Informationen des Betriebssystems (CurrentBuild oder UBR) konnten nicht aus der Registrierung gelesen oder analysiert werden.</value>
+  </data>
+  <data name="YourBuildVersion" xml:space="preserve">
+    <value>Ihre Windows-Build-Version: {0}</value>
+  </data>
+  <data name="ErrorBuildTooLow" xml:space="preserve">
+    <value>Fehler: Ihr Windows-Build ({0}) ist zu alt.</value>
+  </data>
+  <data name="RequiredBuild" xml:space="preserve">
+    <value>Dieses Tool erfordert Build {0} oder höher.</value>
+  </data>
+  <data name="VersionOK" xml:space="preserve">
+    <value>Version erfüllt die Anforderungen.</value>
+  </data>
+  <data name="StatusChecking" xml:space="preserve">
+    <value>Status: Wird geprüft...</value>
+  </data>
+  <data name="StatusEnabled" xml:space="preserve">
+    <value>Status: Aktiviert</value>
+  </data>
+  <data name="StatusDisabled" xml:space="preserve">
+    <value>Status: Deaktiviert</value>
+  </data>
+  <data name="StatusNeedsFix" xml:space="preserve">
+    <value>Status: Korrektur erforderlich (Aufgabe für Bildschirmabmessungen nicht korrekt eingerichtet)</value>
+  </data>
+  <data name="StatusUnknownError" xml:space="preserve">
+    <value>Status: Unbekannt (Fehler)</value>
+  </data>
+  <data name="StatusRestartPending" xml:space="preserve">
+    <value>Status: Neustart ausstehend...</value>
+  </data>
+  <data name="btnEnable_Text" xml:space="preserve">
+    <value>Xbox-Vollbildschirm-Erfahrung aktivieren</value>
+  </data>
+  <data name="btnEnable_Text_Fix" xml:space="preserve">
+    <value>Xbox-Vollbildschirm-Erfahrung korrigieren</value>
+  </data>
+  <data name="btnDisable_Text" xml:space="preserve">
+    <value>Deaktivieren &amp;&amp; Wiederherstellen</value>
+  </data>
+  <data name="grpActions_Text" xml:space="preserve">
+    <value>Aktionen</value>
+  </data>
+  <data name="grpOutput_Text" xml:space="preserve">
+    <value>Protokoll</value>
+  </data>
+  <data name="ErrorCheckStatus" xml:space="preserve">
+    <value>Beim Überprüfen des Status ist ein Fehler aufgetreten: {0}</value>
+  </data>
+  <data name="LogStatusCheck" xml:space="preserve">
+    <value>Statusprüfung -&gt; ViVe-Features: {0}, Registrierung: {1}, Aufgabe erforderlich: {2}, Aufgabe vorhanden: {3}</value>
+  </data>
+  <data name="LogRegStatusFalseNotExist" xml:space="preserve">
+    <value>Falsch (Nicht vorhanden)</value>
+  </data>
+  <data name="LogRegStatusTrue" xml:space="preserve">
+    <value>Wahr (Wert ist 46)</value>
+  </data>
+  <data name="LogRegStatusFalseWrongValue" xml:space="preserve">
+    <value>Falsch (Wert ist {0})</value>
+  </data>
+  <data name="LogErrorReadingScreenSize" xml:space="preserve">
+    <value>Fehler beim Lesen der Bildschirmabmessungen, es kann nicht bestimmt werden, ob eine geplante Aufgabe benötigt wird.</value>
+  </data>
+  <data name="LogBeginEnable" xml:space="preserve">
+    <value>--- Start des Aktivierungsprozesses ---</value>
+  </data>
+  <data name="LogReadingScreenSize" xml:space="preserve">
+    <value>Lese aktuelle Bildschirmabmessungen...</value>
+  </data>
+  <data name="LogScreenSizeSuccess" xml:space="preserve">
+    <value>Bildschirmabmessungen erfolgreich gelesen: {0}x{1}mm.</value>
+  </data>
+  <data name="LogScreenSizeUndefined" xml:space="preserve">
+    <value>Undefinierte Bildschirmabmessungen (0x0mm) erkannt, erstelle Startaufgabe...</value>
+  </data>
+  <data name="LogScreenSizeTooLarge" xml:space="preserve">
+    <value>Bildschirmabmessung ({0:F2}") ist größer als der Schwellenwert von {1}", erstelle Startaufgabe...</value>
+  </data>
+  <data name="LogTaskCreated" xml:space="preserve">
+    <value>Aufgabe 'SetPanelDimensions' wurde erstellt.</value>
+  </data>
+  <data name="LogTaskNotNeeded" xml:space="preserve">
+    <value>Bildschirmabmessung ({0:F2}") liegt innerhalb des Bereichs von {1}", keine Aufgabe erforderlich.</value>
+  </data>
+  <data name="LogErrorReadingScreenSizeEnable" xml:space="preserve">
+    <value>Fehler beim Lesen der Bildschirmabmessungen, dieser Schritt wird übersprungen.</value>
+  </data>
+  <data name="LogBackupAndSetRegistry" xml:space="preserve">
+    <value>Sichere und setze Registrierung...</value>
+  </data>
+  <data name="LogRegistryBackupSuccess" xml:space="preserve">
+    <value>Ursprünglicher DeviceForm-Wert ({0}) wurde nach {1} gesichert.</value>
+  </data>
+  <data name="LogRegistryBackupMarkedForDelete" xml:space="preserve">
+    <value>Ursprünglicher DeviceForm-Wert nicht gefunden, Wiederherstellungsmarkierung erstellt.</value>
+  </data>
+  <data name="LogRegistrySetSuccess" xml:space="preserve">
+    <value>Registrierungsschlüssel erfolgreich auf 46 (0x2E) gesetzt.</value>
+  </data>
+  <data name="LogEnablingFeatures" xml:space="preserve">
+    <value>Aktiviere Feature-IDs: {0}...</value>
+  </data>
+  <data name="LogFeaturesEnabledSuccess" xml:space="preserve">
+    <value>Features erfolgreich aktiviert.</value>
+  </data>
+  <data name="LogEnableComplete" xml:space="preserve">
+    <value>--- Aktivierungsprozess abgeschlossen ---</value>
+  </data>
+  <data name="PromptRestartCaptionSuccess" xml:space="preserve">
+    <value>Erfolg</value>
+  </data>
+  <data name="PromptRestartCaptionDisableSuccess" xml:space="preserve">
+    <value>Deaktivierung erfolgreich</value>
+  </data>
+  <data name="PromptRestartMessage" xml:space="preserve">
+    <value>Die Einstellungen wurden erfolgreich übernommen. Ihr Computer muss neu gestartet werden, damit die Änderungen wirksam werden.</value>
+  </data>
+  <data name="LogUserRestartNow" xml:space="preserve">
+    <value>Benutzer hat den sofortigen Neustart gewählt.</value>
+  </data>
+  <data name="ErrorRestartFailed" xml:space="preserve">
+    <value>Fehler beim Ausführen des Neustartbefehls: {0}</value>
+  </data>
+  <data name="MessageBoxRestartFailed" xml:space="preserve">
+    <value>Automatischer Neustart konnte nicht durchgeführt werden. Bitte starten Sie Ihren Computer manuell neu.</value>
+  </data>
+  <data name="LogUserRestartLater" xml:space="preserve">
+    <value>Benutzer hat gewählt, später neu zu starten. Bis zum Neustart können keine weiteren Aktionen durchgeführt werden.</value>
+  </data>
+  <data name="HandleExceptionMessage" xml:space="preserve">
+    <value>Ein Fehler ist aufgetreten:
+{0}
+
+Bitte stellen Sie sicher, dass Sie dieses Programm mit Administratorrechten ausführen.</value>
+  </data>
+  <data name="HandleExceptionTitle" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="LogErrorUnexpected" xml:space="preserve">
+    <value>Ein unerwarteter Fehler ist aufgetreten: {0}</value>
+  </data>
+  <data name="LogErrorAdminRights" xml:space="preserve">
+    <value>Bitte stellen Sie sicher, dass dieses Programm mit [Administratorrechten] ausgeführt wird.</value>
+  </data>
+  <data name="LogBeginDisable" xml:space="preserve">
+    <value>--- Start des Deaktivierungsprozesses ---</value>
+  </data>
+  <data name="LogDisablingFeatures" xml:space="preserve">
+    <value>Deaktiviere explizit Feature-IDs: {0}...</value>
+  </data>
+  <data name="LogFeaturesDisabledSuccess" xml:space="preserve">
+    <value>Features erfolgreich in den deaktivierten Zustand versetzt.</value>
+  </data>
+  <data name="LogCheckingRegistryRestore" xml:space="preserve">
+    <value>Prüfe, ob der Registrierungswert DeviceForm wiederhergestellt werden muss...</value>
+  </data>
+  <data name="LogBackupFound" xml:space="preserve">
+    <value>Sicherungsdatei gefunden, Wiederherstellung wird fortgesetzt.</value>
+  </data>
+  <data name="LogRegistryValueRemoved" xml:space="preserve">
+    <value>Registrierungswert '{0}' basierend auf der Sicherungsmarkierung entfernt.</value>
+  </data>
+  <data name="LogRegistryValueRestored" xml:space="preserve">
+    <value>Wert aus der Sicherung wiederhergestellt: {0}</value>
+  </data>
+  <data name="LogRegistryBackupInvalid" xml:space="preserve">
+    <value>Inhalt der Sicherungsdatei ist ungültig. Registrierungswert '{0}' wird sicher entfernt.</value>
+  </data>
+  <data name="LogBackupDeleted" xml:space="preserve">
+    <value>Sicherungsdatei gelöscht.</value>
+  </data>
+  <data name="LogNoBackupFound" xml:space="preserve">
+    <value>Keine Sicherungsdatei gefunden, was darauf hindeutet, dass dieses Tool die Registrierung nicht geändert hat. Keine Wiederherstellung erforderlich.</value>
+  </data>
+  <data name="ErrorRestoringRegistry" xml:space="preserve">
+    <value>Fehler beim Wiederherstellen der Registrierung: {0}</value>
+  </data>
+  <data name="LogDeletingTask" xml:space="preserve">
+    <value>Lösche geplante Aufgabe 'SetPanelDimensions'...</value>
+  </data>
+  <data name="LogTaskDeleted" xml:space="preserve">
+    <value>Geplante Aufgabe gelöscht.</value>
+  </data>
+  <data name="LogDisableComplete" xml:space="preserve">
+    <value>--- Deaktivierungsprozess abgeschlossen ---</value>
+  </data>
+  <data name="ErrorAppRunning" xml:space="preserve">
+    <value>Die Anwendung wird bereits ausgeführt.</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorFindFile" xml:space="preserve">
+    <value>Notwendige Datei nicht gefunden: {0}. Bitte stellen Sie sicher, dass sich PhysPanelCS.exe im selben Verzeichnis wie das Hauptprogramm befindet.</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorCreate" xml:space="preserve">
+    <value>Erstellen der geplanten Aufgabe fehlgeschlagen: {0}</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorDelete" xml:space="preserve">
+    <value>Löschen der geplanten Aufgabe fehlgeschlagen: {0}</value>
+  </data>
+  <data name="TaskSchedulerManagerErrorDirectoryNotFound" xml:space="preserve">
+    <value>Das Installationsverzeichnis der Anwendung konnte nicht ermittelt werden.</value>
+  </data>
+  <data name="ErrorCertificateFileNotFound" xml:space="preserve">
+    <value>Fehler: Zertifikatsdatei '{0}' nicht gefunden.</value>
+  </data>
+  <data name="ErrorDriverFilesNotFound" xml:space="preserve">
+    <value>Fehler: Treiberdateien '{0}' oder '{1}' nicht gefunden.</value>
+  </data>
+  <data name="LogErrorDriverInstallFailed" xml:space="preserve">
+    <value>Treiberinstallation fehlgeschlagen: {0}</value>
+  </data>
+  <data name="LogErrorDriverRemoveFailed" xml:space="preserve">
+    <value>Treiberentfernung fehlgeschlagen: {0}</value>
+  </data>
+  <data name="LogErrorPrefix" xml:space="preserve">
+    <value>Fehler: {0}</value>
+  </data>
+  <data name="LogCertificateInstallSuccess" xml:space="preserve">
+    <value>Zertifikat erfolgreich installiert.</value>
+  </data>
+  <data name="LogDeletingDriverPackage" xml:space="preserve">
+    <value>Treiberpaket '{0}' gefunden, wird gelöscht...</value>
+  </data>
+  <data name="LogDriverInstallCommandExecuted" xml:space="preserve">
+    <value>Treiberinstallationsbefehl ausgeführt.</value>
+  </data>
+  <data name="LogDriverRemoveCommandExecuted" xml:space="preserve">
+    <value>Treiberentfernungsbefehl ausgeführt.</value>
+  </data>
+  <data name="LogFindingDriverPackage" xml:space="preserve">
+    <value>Suche Treiberpaket (PhysPanelDrv.inf)...</value>
+  </data>
+  <data name="LogInstallingCertificate" xml:space="preserve">
+    <value>Installiere Treiberzertifikat...</value>
+  </data>
+  <data name="LogInstallingDriverWithDevcon" xml:space="preserve">
+    <value>Installiere Treiber mit devcon...</value>
+  </data>
+  <data name="LogRemovingDriverDevice" xml:space="preserve">
+    <value>Entferne Treibergerät...</value>
+  </data>
+  <data name="WarningOemInfNotFound" xml:space="preserve">
+    <value>Warnung: Entsprechende oem&lt;Nummer&gt;.inf-Datei nicht gefunden, sie wurde möglicherweise bereits entfernt.</value>
+  </data>
+  <data name="grpPhysPanel_Text" xml:space="preserve">
+    <value>Methode zur Überschreibung der Bildschirmabmessungen (für Nicht-Handheld-Geräte)</value>
+  </data>
+  <data name="radPhysPanelCS_Text" xml:space="preserve">
+    <value>PhysPanelCS (Aufgabenplanungsmodus, empfohlene Standardeinstellung, keine zusätzliche Einrichtung erforderlich)</value>
+  </data>
+  <data name="radPhysPanelDrv_Text" xml:space="preserve">
+    <value>PhysPanelDrv (Treibermodus, Alternative, erfordert Deaktivierung von Secure Boot &amp;&amp; Aktivierung von Test Signing)</value>
+  </data>
+  <data name="StatusEnabledDriverMode" xml:space="preserve">
+    <value>Status: Aktiviert (Treibermodus)</value>
+  </data>
+  <data name="StatusEnabledSchedulerMode" xml:space="preserve">
+    <value>Status: Aktiviert (Aufgabenplanungsmodus)</value>
+  </data>
+  <data name="LogTestSigningDisabled" xml:space="preserve">
+    <value>Der System-Testsignierungsmodus ist nicht aktiviert. Die PhysPanelDrv-Option ist deaktiviert.</value>
+  </data>
+  <data name="LogChoosingDriverMode" xml:space="preserve">
+    <value>Treibermodus (PhysPanelDrv) ausgewählt...</value>
+  </data>
+  <data name="LogRemovingOldTask" xml:space="preserve">
+    <value>Bestehende geplante Aufgabe erkannt, wird zur Vermeidung von Konflikten entfernt...</value>
+  </data>
+  <data name="LogChoosingSchedulerMode" xml:space="preserve">
+    <value>Aufgabenplanungsmodus (PhysPanelCS) ausgewählt...</value>
+  </data>
+  <data name="LogRemovingOldDriver" xml:space="preserve">
+    <value>Bestehender Treiberdienst erkannt, wird zur Vermeidung von Konflikten entfernt...</value>
+  </data>
+  <data name="LogRemovingPhysPanelDrv" xml:space="preserve">
+    <value>Entferne PhysPanelDrv-Treiber...</value>
+  </data>
+  <data name="LogLoggingErrorPrefix" xml:space="preserve">
+    <value>PROTOKOLLIERUNGSFEHLER</value>
+  </data>
+  <data name="ErrorWritingLogFile" xml:space="preserve">
+    <value>Fehler beim Schreiben in die Protokolldatei: {0}</value>
+  </data>
+  <data name="LogStatusCheckSummary" xml:space="preserve">
+    <value>Statusprüfung: KernAktiviert={0} (ViVeFeatures={1}, Registrierung={2}), BildschirmüberschreibungErforderlich={3}, ÜberschreibungVorhanden={4} (CS={5}, Drv={6}), Testsignierung={7}</value>
+  </data>
+  <data name="StatusDriverErrorNeedsDisable" xml:space="preserve">
+    <value>Fehler im Treibermodus: Bitte zur Wiederherstellung deaktivieren</value>
+  </data>
+  <data name="LogDriverInstallCancelled" xml:space="preserve">
+    <value>Die Treiberinstallation wurde vom Benutzer abgebrochen oder ist fehlgeschlagen. Der Vorgang wurde abgebrochen.</value>
+  </data>
+  <data name="LogErrorDriverRemoveFailedDuringSwitch" xml:space="preserve">
+    <value>Fehler beim Entfernen des vorhandenen Treibers während des Moduswechsels, aber die Einrichtung des neuen Modus wird fortgesetzt.</value>
+  </data>
+  <data name="LogErrorDriverRemoveFailedGeneral" xml:space="preserve">
+    <value>Fehler beim Entfernen des Treibers. Eine manuelle Bereinigung könnte erforderlich sein.</value>
+  </data>
+  <data name="LogOperationFailedRollingBack" xml:space="preserve">
+    <value>Vorgang fehlgeschlagen, Änderungen werden zurückgesetzt...</value>
+  </data>
+  <data name="LogRollbackComplete" xml:space="preserve">
+    <value>Zurücksetzung abgeschlossen. Es wurden keine Änderungen am System vorgenommen.</value>
+  </data>
+  <data name="LogErrorDriverInstallCancelled" xml:space="preserve">
+    <value>Treiberinstallation fehlgeschlagen oder vom Benutzer abgebrochen. (Exit-Code: {0})</value>
+  </data>
+  <data name="LogLargeScreenForceCS" xml:space="preserve">
+    <value>Eine Bildschirmgröße von mehr als 9,5 Zoll wurde erkannt. Um die Kompatibilität zu gewährleisten, wurde der Überschreibungsmodus auf den 'Aufgabenplanungsmodus (CS)' beschränkt.</value>
+  </data>
+  <data name="chkStartKeyboardOnLogon_Text" xml:space="preserve">
+    <value>Bildschirmtastatur bei Anmeldung starten</value>
+  </data>
+  <data name="LogCreatingKeyboardTask" xml:space="preserve">
+    <value>Erstelle geplante Aufgabe zum Starten der Tastatur bei Anmeldung...</value>
+  </data>
+  <data name="LogDeletingKeyboardTask" xml:space="preserve">
+    <value>Lösche geplante Aufgabe zum Starten der Tastatur bei Anmeldung...</value>
+  </data>
+  <data name="ErrorKeyboardTask" xml:space="preserve">
+    <value>Fehler beim Ändern der Startaufgabe für die Tastatur. Fehler: {0}</value>
+  </data>
+  <data name="LogTouchSupportStatus" xml:space="preserve">
+    <value>Touch-Unterstützung erkannt: {0}</value>
+  </data>
+  <data name="TooltipTouchEnabled" xml:space="preserve">
+    <value>Ihr System verfügt über native Touch-Unterstützung. Windows verwaltet die Anzeige der Bildschirmtastatur automatisch.</value>
+  </data>
+  <data name="TooltipTouchDisabled" xml:space="preserve">
+    <value>Keine Touch-Unterstützung auf Ihrem System erkannt. Sie können diese Option aktivieren, um die Bildschirmtastatur bei der Anmeldung automatisch zu starten und eine Controller-orientierte Erfahrung zu ermöglichen.</value>
+  </data>
+  <data name="LogPanelTaskCreated" xml:space="preserve">
+    <value>Geplante Aufgabe 'SetPanelDimensions' wurde erstellt.</value>
+  </data>
+  <data name="LogPanelTaskDeleted" xml:space="preserve">
+    <value>Geplante Aufgabe 'SetPanelDimensions' wurde gelöscht.</value>
+  </data>
+  <data name="LogKeyboardTaskCreated" xml:space="preserve">
+    <value>Geplante Aufgabe 'StartTouchKeyboardOnLogon' wurde erstellt.</value>
+  </data>
+  <data name="LogKeyboardTaskDeleted" xml:space="preserve">
+    <value>Geplante Aufgabe 'StartTouchKeyboardOnLogon' wurde gelöscht.</value>
+  </data>
+  <data name="ShutdownReasonEnable" xml:space="preserve">
+    <value>Das Xbox-Vollbildschirm-Erfahrungs-Tool startet den Computer neu, um die Konfiguration abzuschließen.</value>
+  </data>
+  <data name="ShutdownReasonUninstall" xml:space="preserve">
+    <value>Das Xbox-Vollbildschirm-Erfahrungs-Tool muss neu gestartet werden, um die Deinstallation abzuschließen.</value>
+  </data>
+  <data name="UpdateWindowsPrompt" xml:space="preserve">
+    <value>Bitte führen Sie Windows Update aus, um Ihr System auf die neueste Version zu aktualisieren, und versuchen Sie es erneut.</value>
+  </data>
+</root>
