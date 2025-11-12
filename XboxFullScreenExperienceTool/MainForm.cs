@@ -407,16 +407,16 @@ namespace XboxFullScreenExperienceTool
                 bool isPhysPanelCSActive = TaskSchedulerManager.TaskExists();
                 bool isPhysPanelDrvActive = DriverManager.IsDriverServiceInstalled();
                 bool isScreenOverridePresent = isPhysPanelCSActive || isPhysPanelDrvActive;
-                // 步驟 3.5: 設定鍵盤啟動選項的可用性 (非 UI) 
+                // 步驟 4: 設定鍵盤啟動選項的可用性 (非 UI) 
                 bool hasTouchSupport = HardwareHelper.IsTouchScreenAvailable();
                 bool isStartKeyboardTaskActive = TaskSchedulerManager.StartKeyboardTaskExists();
-                // 步驟 4: 檢查並設定覆寫模式的可用性 (非 UI) (檢查驅動程式模式的先決條件 (Test Signing))
+                // 步驟 5: 檢查並設定覆寫模式的可用性 (非 UI) (檢查驅動程式模式的先決條件 (Test Signing))
                 bool isTestSigningOn = DriverManager.IsTestSigningEnabled(); // 檢查測試簽章模式是否啟用
                 bool isScreenSizeRestricted = RESTRICT_DRV_MODE_ON_LARGE_SCREEN && isScreenTooLarge; // 根據功能旗標和螢幕尺寸，判斷是否存在螢幕尺寸限制
                                                                                                      // 只有在「旗標為 true」且「螢幕需要覆寫 (即 > 9.5")」時，限制才生效
                 bool isDrvModeAvailable = isTestSigningOn && !isScreenSizeRestricted; // 綜合判斷：Drv 模式只有在「測試簽章已啟用」且「沒有螢幕尺寸限制」時才可用
 
-                // 步驟 4: 狀態判斷 (非 UI) 
+                // 步驟 6: 狀態判斷 (非 UI) 
                 // (先在背景執行緒準備好所有 UI 應該顯示的狀態)
                 string statusText;
                 Color statusColor;
@@ -489,7 +489,7 @@ namespace XboxFullScreenExperienceTool
                     if (!isScreenOverridePresent) radPhysPanelCSChecked = true; // 預設 PhysPanelCS
                 }
 
-                // 步驟 5: 將所有 UI 更新封裝到 this.Invoke 中
+                // 步驟 7: 將所有 UI 更新封裝到 this.Invoke 中
                 // (一次性將所有計算結果傳回 UI 執行緒進行更新)
                 this.Invoke((Action)(() =>
                 {
@@ -519,7 +519,7 @@ namespace XboxFullScreenExperienceTool
                     radPhysPanelCS.Checked = radPhysPanelCSChecked;
                 }));
 
-                // 步驟 6: 記錄日誌 (Log/LogError 方法已有 InvokeRequired 保護，是 thread-safe)
+                // 步驟 8: 記錄日誌 (Log/LogError 方法已有 InvokeRequired 保護，是 thread-safe)
                 Log(string.Format(Resources.Strings.LogTouchSupportStatus, hasTouchSupport));
                 // 根據條件記錄日誌
                 if (!isTestSigningOn)
@@ -1055,7 +1055,7 @@ namespace XboxFullScreenExperienceTool
         {
             if (_isInitializing) return;
 
-            string culture = cboLanguage.SelectedIndex switch
+            string cultureName = cboLanguage.SelectedIndex switch
             {
                 1 => "zh-TW",
                 2 => "zh-CN",
@@ -1067,8 +1067,16 @@ namespace XboxFullScreenExperienceTool
                 _ => "en-US",
             };
 
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
-            UpdateUIForLanguage();
+            var newCulture = new CultureInfo(cultureName);
+
+            // 1. 設定「目前」執行緒 (UI 執行緒) 的語言
+            Thread.CurrentThread.CurrentUICulture = newCulture;
+
+            // 2. 強制設定 Resources.Strings 類別的靜態 Culture 屬性
+            // 這會覆寫所有執行緒的預設行為，確保 Log 和 MessageBox 也使用新語言
+            Resources.Strings.Culture = newCulture;
+
+            UpdateUIForLanguage();
 
             _isInitializing = true;
             await RerunChecksAndLog(); // 呼叫修改後的 async 版本
