@@ -236,9 +236,26 @@ namespace XboxFullScreenExperienceTool
         /// </summary>
         private void MainForm_Load(object sender, EventArgs e)
         {
-            UpdateUIForLanguage(); // 根據選定的語言更新 UI 文字
-            RerunChecksAndLog();   // 執行所有初始檢查並記錄結果
-            _isInitializing = false; // 初始化完成
+            // 步驟 1: 立即鎖定所有 UI 互動，作為初始狀態
+            this.Cursor = Cursors.WaitCursor;
+            btnEnable.Enabled = false;
+            btnDisable.Enabled = false;
+            grpPhysPanel.Enabled = false;
+            chkStartKeyboardOnLogon.Enabled = false;
+            cboLanguage.Enabled = false;
+
+            // 步驟 2: 根據選定的語言更新 UI 文字
+            UpdateUIForLanguage();
+        }
+
+        /// <summary>
+        /// 表單顯示後才執行的非同步初始化邏輯。
+        /// </summary>
+        private async void MainForm_Shown(object sender, EventArgs e)
+        {
+            _isInitializing = true;
+            await RerunChecksAndLog(); // 執行所有初始檢查並記錄結果
+            _isInitializing = false; // 待所有檢查完成後，才算初始化完畢
         }
 
         //======================================================================
@@ -325,13 +342,13 @@ namespace XboxFullScreenExperienceTool
         /// <summary>
         /// 檢查所有相關設定 (ViVe 功能、登錄檔、螢幕尺寸、排程工作/驅動程式) 以確定功能的目前啟用狀態，並相應地更新 UI。
         /// 綜合性的檢查，處理多種中間狀態（例如，需要修正）。
+        /// 此方法現在被設計為在背景執行緒上執行。
         /// </summary>
         private void CheckCurrentStatus()
         {
-            _isInitializing = true;
             try
             {
-                // 步驟 1: 基礎核心檢查 (ViVe 功能 & 登錄檔)
+                // 步驟 1: 基礎核心檢查 (非 UI) (ViVe 功能 & 登錄檔)
                 bool allFeaturesEnabled = FEATURE_IDS.All(id =>
                     FeatureManager.QueryFeatureConfiguration(id, RTL_FEATURE_CONFIGURATION_TYPE.Runtime) is RTL_FEATURE_CONFIGURATION config &&
                     config.EnabledState == RTL_FEATURE_ENABLED_STATE.Enabled);
@@ -343,17 +360,11 @@ namespace XboxFullScreenExperienceTool
                 // 描述登錄檔狀態的邏輯
                 string registryStatusString;
                 if (regValue == null)
-                {
                     registryStatusString = Resources.Strings.LogRegStatusFalseNotExist;
-                }
                 else if (isRegistrySet)
-                {
                     registryStatusString = Resources.Strings.LogRegStatusTrue;
-                }
                 else
-                {
                     registryStatusString = string.Format(Resources.Strings.LogRegStatusFalseWrongValue, regValue);
-                }
 
                 bool isCoreEnabled = allFeaturesEnabled && isRegistrySet;
 
@@ -392,61 +403,26 @@ namespace XboxFullScreenExperienceTool
                     LogError(Resources.Strings.LogErrorReadingScreenSize);
                 }
 
-                // 步驟 3: 檢查覆寫方法是否存在 (CS Task & Drv Service)
+                // 步驟 3: 檢查覆寫方法是否存在 (非 UI) (CS Task & Drv Service)
                 bool isPhysPanelCSActive = TaskSchedulerManager.TaskExists();
                 bool isPhysPanelDrvActive = DriverManager.IsDriverServiceInstalled();
                 bool isScreenOverridePresent = isPhysPanelCSActive || isPhysPanelDrvActive;
-
-                // 步驟 3.5: 設定鍵盤啟動選項的可用性
+                // 步驟 3.5: 設定鍵盤啟動選項的可用性 (非 UI) 
                 bool hasTouchSupport = HardwareHelper.IsTouchScreenAvailable();
-                chkStartKeyboardOnLogon.Enabled = !hasTouchSupport; // 如果沒有觸控，則啟用此選項
-                chkStartKeyboardOnLogon.Checked = TaskSchedulerManager.StartKeyboardTaskExists();
+                bool isStartKeyboardTaskActive = TaskSchedulerManager.StartKeyboardTaskExists();
+                // 步驟 4: 檢查並設定覆寫模式的可用性 (非 UI) (檢查驅動程式模式的先決條件 (Test Signing))
+                bool isTestSigningOn = DriverManager.IsTestSigningEnabled(); // 檢查測試簽章模式是否啟用
+                bool isScreenSizeRestricted = RESTRICT_DRV_MODE_ON_LARGE_SCREEN && isScreenTooLarge; // 根據功能旗標和螢幕尺寸，判斷是否存在螢幕尺寸限制
+                                                                                                     // 只有在「旗標為 true」且「螢幕需要覆寫 (即 > 9.5")」時，限制才生效
+                bool isDrvModeAvailable = isTestSigningOn && !isScreenSizeRestricted; // 綜合判斷：Drv 模式只有在「測試簽章已啟用」且「沒有螢幕尺寸限制」時才可用
 
-                // 設定 ToolTip 提示，向使用者解釋為何選項被停用
-                if (hasTouchSupport)
-                {
-                    toolTip.SetToolTip(chkStartKeyboardOnLogon, Resources.Strings.TooltipTouchEnabled);
-                }
-                else
-                {
-                    toolTip.SetToolTip(chkStartKeyboardOnLogon, Resources.Strings.TooltipTouchDisabled);
-                }
-                Log(string.Format(Resources.Strings.LogTouchSupportStatus, hasTouchSupport));
-
-                // 步驟 4: 檢查並設定覆寫模式的可用性 (檢查驅動程式模式的先決條件 (Test Signing))
-
-                // 條件 A: 檢查測試簽章模式是否啟用
-                bool isTestSigningOn = DriverManager.IsTestSigningEnabled();
-
-                // 條件 B: 根據功能旗標和螢幕尺寸，判斷是否存在螢幕尺寸限制
-                // 只有在「旗標為 true」且「螢幕需要覆寫 (即 > 9.5")」時，限制才生效
-                bool isScreenSizeRestricted = RESTRICT_DRV_MODE_ON_LARGE_SCREEN && isScreenTooLarge;
-
-                // 綜合判斷：Drv 模式只有在「測試簽章已啟用」且「沒有螢幕尺寸限制」時才可用
-                bool isDrvModeAvailable = isTestSigningOn && !isScreenSizeRestricted;
-
-                radPhysPanelDrv.Enabled = isDrvModeAvailable;
-
-                // 根據條件記錄日誌
-                if (!isTestSigningOn)
-                {
-                    Log(Resources.Strings.LogTestSigningDisabled);
-                }
-                // 只有在限制實際生效時才記錄日誌
-                if (isScreenSizeRestricted)
-                {
-                    Log(Resources.Strings.LogLargeScreenForceCS);
-                }
-
-                // 安全機制：如果 Drv 模式因任何限制而變為不可用，則強制切換回 CS 模式
-                if (!isDrvModeAvailable)
-                {
-                    radPhysPanelCS.Checked = true;
-                }
-
-                // 步驟 5: 綜合判斷與 UI 更新
+                // 步驟 4: 狀態判斷 (非 UI) 
+                // (先在背景執行緒準備好所有 UI 應該顯示的狀態)
                 string statusText;
                 Color statusColor;
+                string btnEnableText = Resources.Strings.btnEnable_Text; // 預設值
+                bool btnEnableEnabled, btnDisableEnabled, grpPhysPanelEnabled;
+                bool radPhysPanelDrvChecked = false, radPhysPanelCSChecked = true; // 預設值
 
                 // 核心邏輯判斷：
                 // 1. isCoreEnabled: ViVe 功能 + 登錄檔是否設定。
@@ -465,29 +441,23 @@ namespace XboxFullScreenExperienceTool
                             // 偵測到是驅動程式模式 (Drv) 處於無效狀態
                             statusText = Resources.Strings.StatusDriverErrorNeedsDisable;
                             statusColor = Color.Red; // 使用更醒目的紅色來表示嚴重錯誤
-
-                            btnEnable.Enabled = false;      // 停用「修正」按鈕
-                            btnDisable.Enabled = true;      // 啟用「停用」按鈕，這是唯一允許的操作
-                            grpPhysPanel.Enabled = false;   // 鎖定覆寫選項，防止使用者切換模式
-                            radPhysPanelDrv.Checked = true; // 保持顯示當前是驅動模式
+                            btnEnableEnabled = false; // 停用「修正」按鈕
+                            btnDisableEnabled = true; // 啟用「停用」按鈕，這是唯一允許的操作
+                            grpPhysPanelEnabled = false; // 鎖定覆寫選項，防止使用者切換模式
+                            radPhysPanelDrvChecked = true; // 保持顯示目前是驅動模式
                         }
                         else
                         {
                             // 非驅動程式模式下的「需要修正」狀態 (例如排程工作損壞或從未安裝覆寫)
                             statusText = Resources.Strings.StatusNeedsFix;
-                            statusColor = Color.Orange;
-                            btnEnable.Text = Resources.Strings.btnEnable_Text_Fix;
-                            btnEnable.Enabled = true;
-
-                            // 停用按鈕必須是 false，否則使用者會有兩個可選按鈕
-                            btnDisable.Enabled = false;
-
-                            grpPhysPanel.Enabled = true; // 允許選擇修正方式
-
-                            // 顯示目前安裝但"無效"的選項
-                            radPhysPanelDrv.Checked = isPhysPanelDrvActive;
-                            radPhysPanelCS.Checked = isPhysPanelCSActive;
-                            if (!isScreenOverridePresent) radPhysPanelCS.Checked = true; // 預設 PhysPanelCS
+                            statusColor = Color.Orange; // 使用更醒目的橘色來表示修正操作
+                            btnEnableText = Resources.Strings.btnEnable_Text_Fix;
+                            btnEnableEnabled = true; // 啟用「修正」按鈕
+                            btnDisableEnabled = true; // 啟用「停用」按鈕，同時提供完全停用的操作
+                            grpPhysPanelEnabled = true; // 啟用覆寫選項，允許選擇修正方式
+                            radPhysPanelDrvChecked = isPhysPanelDrvActive;
+                            radPhysPanelCSChecked = isPhysPanelCSActive;
+                            if (!isScreenOverridePresent) radPhysPanelCSChecked = true; // 預設 PhysPanelCS
                         }
                     }
                     else
@@ -496,14 +466,12 @@ namespace XboxFullScreenExperienceTool
                         // 核心已啟用，且螢幕尺寸已符合需求。(無論是天生符合，或是覆寫已成功生效)
                         statusText = isPhysPanelDrvActive ? Resources.Strings.StatusEnabledDriverMode : (isPhysPanelCSActive ? Resources.Strings.StatusEnabledSchedulerMode : Resources.Strings.StatusEnabled);
                         statusColor = Color.LimeGreen;
-
-                        radPhysPanelDrv.Checked = isPhysPanelDrvActive;
-                        radPhysPanelCS.Checked = isPhysPanelCSActive;
-                        if (!isScreenOverridePresent) radPhysPanelCS.Checked = true; // 螢幕尺寸正常，預設CS
-
-                        grpPhysPanel.Enabled = false; // 已啟用時鎖定選項
-                        btnEnable.Enabled = false;
-                        btnDisable.Enabled = true;
+                        radPhysPanelDrvChecked = isPhysPanelDrvActive;
+                        radPhysPanelCSChecked = isPhysPanelCSActive;
+                        if (!isScreenOverridePresent) radPhysPanelCSChecked = true; // 螢幕尺寸正常，預設 PhysPanelCS
+                        grpPhysPanelEnabled = false; // 已啟用時鎖定選項
+                        btnEnableEnabled = false; // 停用「啟用」按鈕
+                        btnDisableEnabled = true; // 啟用「停用」按鈕
                     }
                 }
                 else // !isCoreEnabled
@@ -512,31 +480,72 @@ namespace XboxFullScreenExperienceTool
                     // 核心功能 (ViVe 功能 & 登錄檔) 未設定。
                     statusText = Resources.Strings.StatusDisabled;
                     statusColor = Color.Tomato;
-                    btnEnable.Text = Resources.Strings.btnEnable_Text;
-                    btnEnable.Enabled = true;
-                    btnDisable.Enabled = false;
-                    grpPhysPanel.Enabled = isScreenOverrideRequired; // 只有在螢幕尺寸確實需要覆寫時，才啟用此選項群組
-
-                    // 檢查是否殘留設定
-                    radPhysPanelDrv.Checked = isPhysPanelDrvActive;
-                    radPhysPanelCS.Checked = isPhysPanelCSActive;
-                    if (!isScreenOverridePresent) radPhysPanelCS.Checked = true; // 預設 PhysPanelCS
+                    btnEnableText = Resources.Strings.btnEnable_Text;
+                    btnEnableEnabled = true; // 啟用「啟用」按鈕
+                    btnDisableEnabled = false; // 停用「停用」按鈕
+                    grpPhysPanelEnabled = isScreenOverrideRequired; // 只有在螢幕尺寸確實需要覆寫時，才啟用此選項群組
+                    radPhysPanelDrvChecked = isPhysPanelDrvActive;
+                    radPhysPanelCSChecked = isPhysPanelCSActive;
+                    if (!isScreenOverridePresent) radPhysPanelCSChecked = true; // 預設 PhysPanelCS
                 }
 
-                lblStatus.Text = statusText;
-                lblStatus.ForeColor = statusColor;
+                // 步驟 5: 將所有 UI 更新封裝到 this.Invoke 中
+                // (一次性將所有計算結果傳回 UI 執行緒進行更新)
+                this.Invoke((Action)(() =>
+                {
+                    // 設定鍵盤啟動選項的可用性
+                    chkStartKeyboardOnLogon.Enabled = !hasTouchSupport; // 如果沒有觸控，則啟用此選項
+                    chkStartKeyboardOnLogon.Checked = isStartKeyboardTaskActive;
 
+                    // 設定 ToolTip 提示，向使用者解釋為何選項被停用
+                    if (hasTouchSupport)
+                        toolTip.SetToolTip(chkStartKeyboardOnLogon, Resources.Strings.TooltipTouchEnabled);
+                    else
+                        toolTip.SetToolTip(chkStartKeyboardOnLogon, Resources.Strings.TooltipTouchDisabled);
+
+                    radPhysPanelDrv.Enabled = isDrvModeAvailable;
+                    // 安全機制：如果 Drv 模式因任何限制而變為不可用，則強制切換回 CS 模式
+                    if (!isDrvModeAvailable)
+                        radPhysPanelCS.Checked = true;
+
+                    // 設定從步驟 4 邏輯中計算出來的值
+                    lblStatus.Text = statusText;
+                    lblStatus.ForeColor = statusColor;
+                    btnEnable.Text = btnEnableText;
+                    btnEnable.Enabled = btnEnableEnabled;
+                    btnDisable.Enabled = btnDisableEnabled;
+                    grpPhysPanel.Enabled = grpPhysPanelEnabled;
+                    radPhysPanelDrv.Checked = radPhysPanelDrvChecked;
+                    radPhysPanelCS.Checked = radPhysPanelCSChecked;
+                }));
+
+                // 步驟 6: 記錄日誌 (Log/LogError 方法已有 InvokeRequired 保護，是 thread-safe)
+                Log(string.Format(Resources.Strings.LogTouchSupportStatus, hasTouchSupport));
+                // 根據條件記錄日誌
+                if (!isTestSigningOn)
+                {
+                    Log(Resources.Strings.LogTestSigningDisabled);
+                }
+                // 只有在限制實際生效時才記錄日誌
+                if (isScreenSizeRestricted)
+                {
+                    Log(Resources.Strings.LogLargeScreenForceCS);
+                }
                 Log(string.Format(Resources.Strings.LogStatusCheckSummary, isCoreEnabled, allFeaturesEnabled, registryStatusString, isScreenOverrideRequired, isScreenOverridePresent, isPhysPanelCSActive, isPhysPanelDrvActive, isTestSigningOn));
             }
             catch (Exception ex)
             {
-                lblStatus.Text = Resources.Strings.StatusUnknownError;
-                lblStatus.ForeColor = Color.OrangeRed;
+                // 發生例外時，也要使用 Invoke 更新 UI
+                this.Invoke((Action)(() =>
+                {
+                    lblStatus.Text = Resources.Strings.StatusUnknownError;
+                    lblStatus.ForeColor = Color.OrangeRed;
+                }));
                 LogError(string.Format(Resources.Strings.ErrorCheckStatus, ex.Message));
             }
             finally
             {
-                _isInitializing = false;
+                // _isInitializing = false; // 不再需要
             }
         }
 
@@ -648,7 +657,7 @@ namespace XboxFullScreenExperienceTool
                 this.Cursor = Cursors.Default;
                 if (!_restartPending)
                 {
-                    CheckCurrentStatus(); // 如果不需要重新開機，則重新整理狀態。無論成功、失敗還原，最後都重新整理一次狀態。
+                    await RerunChecksAndLog(); // 如果不需要重新開機，則重新整理狀態。無論成功、失敗還原，最後都重新整理一次狀態。
                 }
             }
         }
@@ -688,7 +697,7 @@ namespace XboxFullScreenExperienceTool
                 this.Cursor = Cursors.Default;
                 if (!_restartPending)
                 {
-                    CheckCurrentStatus();
+                    await RerunChecksAndLog();
                 }
             }
         }
@@ -982,7 +991,8 @@ namespace XboxFullScreenExperienceTool
             // this.Text 的初始值是在設計工具中設定的 "Xbox 全螢幕體驗工具"
             this.Text = $"{Resources.Strings.MainFormTitle} v{versionString}";
 
-            grpPhysPanel.Text = Resources.Strings.grpPhysPanel_Text;
+            lblStatus.Text = Resources.Strings.StatusChecking; // "狀態：偵測中...";
+            grpPhysPanel.Text = Resources.Strings.grpPhysPanel_Text; 
             radPhysPanelCS.Text = Resources.Strings.radPhysPanelCS_Text;
             radPhysPanelDrv.Text = Resources.Strings.radPhysPanelDrv_Text;
             grpActions.Text = Resources.Strings.grpActions_Text;
@@ -995,27 +1005,56 @@ namespace XboxFullScreenExperienceTool
         /// <summary>
         /// 重新執行檢查並清除 UI 上的舊訊息。日誌會繼續附加到現有檔案。
         /// </summary>
-        private void RerunChecksAndLog()
+        private async Task RerunChecksAndLog()
         {
-            txtOutput.Clear();
+            // 步驟 1: (再次)鎖定所有 UI 互動 (確保切換語言時也會鎖定)
+            this.Cursor = Cursors.WaitCursor;
+            btnEnable.Enabled = false;
+            btnDisable.Enabled = false;
+            grpPhysPanel.Enabled = false;
+            chkStartKeyboardOnLogon.Enabled = false;
+            cboLanguage.Enabled = false;
 
-            // 步驟 1: 進行關鍵的前置檢查，確保 OS 版本符合要求。
-            if (!CheckWindowsBuild())
+            try
             {
-                // 如果版本不符，CheckWindowsBuild 內部已顯示錯誤訊息，此處直接關閉應用程式。
-                Application.Exit();
-                return;
+                txtOutput.Clear();
+
+                // 步驟 2: 進行關鍵的前置檢查，確保 OS 版本符合要求 (在 UI 執行緒上)。
+                if (!CheckWindowsBuild())
+                {
+                    // 如果版本不符，CheckWindowsBuild 內部已顯示錯誤訊息，此處直接關閉應用程式。
+                    Application.Exit();
+                    return;
+                }
+                Log(Resources.Strings.WelcomeMessage);
+
+                // 步驟 3: 執行耗時的非同步檢查 (使用 await Task.Run 等待背景執行緒的 CheckCurrentStatus 完成)
+                await Task.Run(() => CheckCurrentStatus());
             }
-            Log(Resources.Strings.WelcomeMessage);
-            // 步驟 2: 檢查目前系統狀態並更新 UI。
-            CheckCurrentStatus();
+            catch (Exception ex)
+            {
+                // 處理 RerunChecksAndLog 執行期間的意外錯誤
+                HandleException(ex);
+            }
+            finally
+            {
+                // 步驟 4: 無論成功或失敗，都恢復游標和語言選單
+                this.Cursor = Cursors.Default;
+                cboLanguage.Enabled = true; // 重新啟用語言選單
+
+                // 注意：btnEnable, btnDisable, grpPhysPanel, chkStartKeyboardOnLogon
+                // 的 Enabled 狀態由 CheckCurrentStatus 內部的 Invoke 決定，
+                // 所以這裡不需要也不應該將它們設為 true。
+            }
         }
 
         /// <summary>
         /// 處理語言下拉選單的選擇變更事件。
         /// </summary>
-        private void cboLanguage_SelectedIndexChanged(object sender, EventArgs e)
+        private async void cboLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (_isInitializing) return;
+
             string culture = cboLanguage.SelectedIndex switch
             {
                 1 => "zh-TW",
@@ -1028,12 +1067,12 @@ namespace XboxFullScreenExperienceTool
                 _ => "en-US",
             };
 
-            if (Thread.CurrentThread.CurrentUICulture.Name != culture)
-            {
-                Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
-                UpdateUIForLanguage();
-                RerunChecksAndLog();
-            }
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
+            UpdateUIForLanguage();
+
+            _isInitializing = true;
+            await RerunChecksAndLog(); // 呼叫修改後的 async 版本
+            _isInitializing = false;
         }
 
         /// <summary>
@@ -1041,6 +1080,14 @@ namespace XboxFullScreenExperienceTool
         /// </summary>
         private void chkStartKeyboardOnLogon_CheckedChanged(object sender, EventArgs e)
         {
+            // 由於 CheckCurrentStatus 是在背景執行緒中設定 CheckBox 狀態，
+            // 需要確保 _isInitializing 旗標的讀取也是在 UI 執行緒上
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action(() => chkStartKeyboardOnLogon_CheckedChanged(sender, e)));
+                return;
+            }
+
             // 如果是在程式初始化期間設定狀態，則不執行任何動作
             if (_isInitializing) return;
 

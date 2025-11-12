@@ -197,6 +197,7 @@ namespace XboxFullScreenExperienceTool
             this.ShowIcon = false;
             this.Text = "Xbox 全螢幕體驗工具";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.grpActions.ResumeLayout(false);
             this.grpActions.PerformLayout();
             this.grpOutput.ResumeLayout(false);
