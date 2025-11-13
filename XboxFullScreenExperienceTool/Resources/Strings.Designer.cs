@@ -88,7 +88,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Start touch keyboard on logon  的當地語系化字串。
+        ///   查詢類似 Start gamepad keyboard on logon 的當地語系化字串。
         /// </summary>
         internal static string chkStartKeyboardOnLogon_Text {
             get {
@@ -151,7 +151,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Failed to modify the keyboard startup task. Error: {0} 的當地語系化字串。
+        ///   查詢類似 Failed to modify the gamepad keyboard startup task. Error: {0} 的當地語系化字串。
         /// </summary>
         internal static string ErrorKeyboardTask {
             get {
@@ -334,7 +334,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Creating scheduled task to start keyboard on logon... 的當地語系化字串。
+        ///   查詢類似 Creating scheduled task to start gamepad keyboard on logon... 的當地語系化字串。
         /// </summary>
         internal static string LogCreatingKeyboardTask {
             get {
@@ -352,7 +352,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Deleting scheduled task for starting keyboard on logon... 的當地語系化字串。
+        ///   查詢類似 Deleting scheduled task for starting gamepad keyboard on logon... 的當地語系化字串。
         /// </summary>
         internal static string LogDeletingKeyboardTask {
             get {
@@ -1090,7 +1090,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 No touch support detected on your system. You can enable this to automatically launch the touch keyboard on logon for a controller-first experience. 的當地語系化字串。
+        ///   查詢類似 No touch support detected on your system. You can enable this to automatically launch the gamepad keyboard on logon for a controller-first experience. 的當地語系化字串。
         /// </summary>
         internal static string TooltipTouchDisabled {
             get {
@@ -1099,7 +1099,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Your system has native touch support. Windows will manage the touch keyboard display automatically. 的當地語系化字串。
+        ///   查詢類似 Your system has native touch support. Windows will manage the gamepad keyboard display automatically. 的當地語系化字串。
         /// </summary>
         internal static string TooltipTouchEnabled {
             get {

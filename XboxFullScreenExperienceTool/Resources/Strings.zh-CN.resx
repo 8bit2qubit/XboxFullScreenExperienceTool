@@ -448,25 +448,25 @@
     <value>侦测到屏幕尺寸大于 9.5 英寸。为确保兼容性，已将覆写模式限制为“任务计划 (CS)”模式。</value>
   </data>
   <data name="chkStartKeyboardOnLogon_Text" xml:space="preserve">
-    <value>登录时启动触摸键盘</value>
+    <value>登录时启动游戏控制器键盘</value>
   </data>
   <data name="LogCreatingKeyboardTask" xml:space="preserve">
-    <value>正在创建“登录时启动键盘”的任务计划...</value>
+    <value>正在创建“登录时启动游戏控制器键盘”的任务计划...</value>
   </data>
   <data name="LogDeletingKeyboardTask" xml:space="preserve">
-    <value>正在删除“登录时启动键盘”的任务计划...</value>
+    <value>正在删除“登录时启动游戏控制器键盘”的任务计划...</value>
   </data>
   <data name="ErrorKeyboardTask" xml:space="preserve">
-    <value>修改键盘启动任务计划时出错。错误: {0}</value>
+    <value>修改游戏控制器键盘启动任务计划时出错。错误: {0}</value>
   </data>
   <data name="LogTouchSupportStatus" xml:space="preserve">
     <value>检测到触摸支持状态: {0}</value>
   </data>
   <data name="TooltipTouchEnabled" xml:space="preserve">
-    <value>您的系统已原生支持触摸，Windows 将自动管理触摸键盘的显示。</value>
+    <value>您的系统已原生支持触摸，Windows 将自动管理游戏控制器键盘的显示。</value>
   </data>
   <data name="TooltipTouchDisabled" xml:space="preserve">
-    <value>您的系统未检测到触摸支持。您可以启用此选项，以便在登录时自动为控制器体验启动触摸键盘。</value>
+    <value>您的系统未检测到触摸支持。您可以启用此选项，以便在登录时自动为控制器体验启动游戏控制器键盘。</value>
   </data>
   <data name="LogPanelTaskCreated" xml:space="preserve">
     <value>任务计划 'SetPanelDimensions' 已创建。</value>

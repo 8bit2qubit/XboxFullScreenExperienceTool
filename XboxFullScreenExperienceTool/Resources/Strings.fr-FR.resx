@@ -448,25 +448,25 @@ Veuillez vous assurer que vous exécutez ce programme avec les privilèges d'adm
     <value>Une taille d'écran supérieure à 9,5 pouces a été détectée. Pour garantir la compatibilité, le mode de substitution a été limité au mode 'Planificateur de tâches (CS)'.</value>
   </data>
   <data name="chkStartKeyboardOnLogon_Text" xml:space="preserve">
-    <value>Démarrer le clavier tactile à l'ouverture de session</value>
+    <value>Démarrer le clavier pour manette à l'ouverture de session</value>
   </data>
   <data name="LogCreatingKeyboardTask" xml:space="preserve">
-    <value>Création de la tâche planifiée pour démarrer le clavier à l'ouverture de session...</value>
+    <value>Création de la tâche planifiée pour démarrer le clavier pour manette à l'ouverture de session...</value>
   </data>
   <data name="LogDeletingKeyboardTask" xml:space="preserve">
-    <value>Suppression de la tâche planifiée pour démarrer le clavier à l'ouverture de session...</value>
+    <value>Suppression de la tâche planifiée pour démarrer le clavier pour manette à l'ouverture de session...</value>
   </data>
   <data name="ErrorKeyboardTask" xml:space="preserve">
-    <value>Échec de la modification de la tâche de démarrage du clavier. Erreur : {0}</value>
+    <value>Échec de la modification de la tâche de démarrage du clavier pour manette. Erreur : {0}</value>
   </data>
   <data name="LogTouchSupportStatus" xml:space="preserve">
     <value>Support tactile détecté : {0}</value>
   </data>
   <data name="TooltipTouchEnabled" xml:space="preserve">
-    <value>Votre système dispose d'un support tactile natif. Windows gérera automatiquement l'affichage du clavier tactile.</value>
+    <value>Votre système dispose d'un support tactile natif. Windows gérera automatiquement l'affichage du clavier pour manette.</value>
   </data>
   <data name="TooltipTouchDisabled" xml:space="preserve">
-    <value>Aucun support tactile détecté sur votre système. Vous pouvez activer cette option pour lancer automatiquement le clavier tactile à l'ouverture de session pour une expérience axée sur la manette.</value>
+    <value>Aucun support tactile détecté sur votre système. Vous pouvez activer cette option pour lancer automatiquement le clavier pour manette à l'ouverture de session pour une expérience axée sur la manette.</value>
   </data>
   <data name="LogPanelTaskCreated" xml:space="preserve">
     <value>La tâche planifiée 'SetPanelDimensions' a été créée.</value>

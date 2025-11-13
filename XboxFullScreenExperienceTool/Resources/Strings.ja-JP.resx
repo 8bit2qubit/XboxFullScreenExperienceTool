@@ -448,25 +448,25 @@
     <value>9.5インチを超える画面サイズが検出されました。互換性を確保するため、オーバーライドモードは「タスクスケジューラ (CS)」モードに制限されています。</value>
   </data>
   <data name="chkStartKeyboardOnLogon_Text" xml:space="preserve">
-    <value>ログオン時にタッチキーボードを起動する</value>
+    <value>ログオン時にゲームパッドキーボードを起動する</value>
   </data>
   <data name="LogCreatingKeyboardTask" xml:space="preserve">
-    <value>ログオン時にキーボードを起動するためのスケジュール済みタスクを作成しています...</value>
+    <value>ログオン時にゲームパッドキーボードを起動するためのスケジュール済みタスクを作成しています...</value>
   </data>
   <data name="LogDeletingKeyboardTask" xml:space="preserve">
-    <value>ログオン時にキーボードを起動するためのスケジュール済みタスクを削除しています...</value>
+    <value>ログオン時にゲームパッドキーボードを起動するためのスケジュール済みタスクを削除しています...</value>
   </data>
   <data name="ErrorKeyboardTask" xml:space="preserve">
-    <value>キーボード起動タスクの変更に失敗しました。エラー: {0}</value>
+    <value>ゲームパッドキーボード起動タスクの変更に失敗しました。エラー: {0}</value>
   </data>
   <data name="LogTouchSupportStatus" xml:space="preserve">
     <value>タッチサポートの検出状態: {0}</value>
   </data>
   <data name="TooltipTouchEnabled" xml:space="preserve">
-    <value>お使いのシステムはネイティブでタッチをサポートしています。タッチキーボードの表示はWindowsによって自動的に管理されます。</value>
+    <value>お使いのシステムはネイティブでタッチをサポートしています。Windowsはゲームパッドキーボードの表示を自動的に管理します。</value>
   </data>
   <data name="TooltipTouchDisabled" xml:space="preserve">
-    <value>お使いのシステムでタッチサポートは検出されませんでした。これを有効にすると、ログオン時にコントローラー優先の体験のためにタッチキーボードを自動的に起動できます。</value>
+    <value>お使いのシステムでタッチサポートは検出されませんでした。これを有効にすると、ログオン時にコントローラー優先の体験のためにゲームパッドキーボードを自動的に起動できます。</value>
   </data>
   <data name="LogPanelTaskCreated" xml:space="preserve">
     <value>スケジュールされたタスク 'SetPanelDimensions' が作成されました。</value>

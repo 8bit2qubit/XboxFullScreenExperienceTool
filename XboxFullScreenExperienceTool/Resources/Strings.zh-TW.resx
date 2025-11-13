@@ -448,25 +448,25 @@
     <value>偵測到螢幕尺寸大於 9.5 英吋。為確保相容性，已將覆寫模式限制為「工作排程 (CS)」模式。</value>
   </data>
   <data name="chkStartKeyboardOnLogon_Text" xml:space="preserve">
-    <value>在登入時啟動觸控鍵盤</value>
+    <value>在登入時啟動遊戲控制器鍵盤</value>
   </data>
   <data name="LogCreatingKeyboardTask" xml:space="preserve">
-    <value>正在建立「登入時啟動鍵盤」的工作排程...</value>
+    <value>正在建立「登入時啟動遊戲控制器鍵盤」的工作排程...</value>
   </data>
   <data name="LogDeletingKeyboardTask" xml:space="preserve">
-    <value>正在刪除「登入時啟動鍵盤」的工作排程...</value>
+    <value>正在刪除「登入時啟動遊戲控制器鍵盤」的工作排程...</value>
   </data>
   <data name="ErrorKeyboardTask" xml:space="preserve">
-    <value>修改鍵盤啟動工作排程時發生錯誤。錯誤: {0}</value>
+    <value>修改遊戲控制器鍵盤啟動工作排程時發生錯誤。錯誤: {0}</value>
   </data>
   <data name="LogTouchSupportStatus" xml:space="preserve">
     <value>偵測到觸控支援狀態: {0}</value>
   </data>
   <data name="TooltipTouchEnabled" xml:space="preserve">
-    <value>您的系統已原生支援觸控，Windows 將自動管理觸控鍵盤的顯示。</value>
+    <value>您的系統已原生支援觸控，Windows 將自動管理遊戲控制器鍵盤的顯示。</value>
   </data>
   <data name="TooltipTouchDisabled" xml:space="preserve">
-    <value>您的系統未偵測到觸控支援。您可以啟用此選項，以在登入時自動為控制器體驗啟動觸控鍵盤。</value>
+    <value>您的系統未偵測到觸控支援。您可以啟用此選項，以在登入時自動為控制器體驗啟動遊戲控制器鍵盤。</value>
   </data>
   <data name="LogPanelTaskCreated" xml:space="preserve">
     <value>工作排程 'SetPanelDimensions' 已建立。</value>

@@ -448,25 +448,25 @@ Please ensure you are running this program with administrator privileges.</value
     <value>Detected a screen size larger than 9.5 inches. To ensure compatibility, the override mode has been restricted to 'Task Scheduler (CS)' mode.</value>
   </data>
   <data name="chkStartKeyboardOnLogon_Text" xml:space="preserve">
-    <value>Start touch keyboard on logon </value>
+    <value>Start gamepad keyboard on logon</value>
   </data>
   <data name="LogCreatingKeyboardTask" xml:space="preserve">
-    <value>Creating scheduled task to start keyboard on logon...</value>
+    <value>Creating scheduled task to start gamepad keyboard on logon...</value>
   </data>
   <data name="LogDeletingKeyboardTask" xml:space="preserve">
-    <value>Deleting scheduled task for starting keyboard on logon...</value>
+    <value>Deleting scheduled task for starting gamepad keyboard on logon...</value>
   </data>
   <data name="ErrorKeyboardTask" xml:space="preserve">
-    <value>Failed to modify the keyboard startup task. Error: {0}</value>
+    <value>Failed to modify the gamepad keyboard startup task. Error: {0}</value>
   </data>
   <data name="LogTouchSupportStatus" xml:space="preserve">
     <value>Touch support detected: {0}</value>
   </data>
   <data name="TooltipTouchEnabled" xml:space="preserve">
-    <value>Your system has native touch support. Windows will manage the touch keyboard display automatically.</value>
+    <value>Your system has native touch support. Windows will manage the gamepad keyboard display automatically.</value>
   </data>
   <data name="TooltipTouchDisabled" xml:space="preserve">
-    <value>No touch support detected on your system. You can enable this to automatically launch the touch keyboard on logon for a controller-first experience.</value>
+    <value>No touch support detected on your system. You can enable this to automatically launch the gamepad keyboard on logon for a controller-first experience.</value>
   </data>
   <data name="LogPanelTaskCreated" xml:space="preserve">
     <value>Scheduled task 'SetPanelDimensions' has been created.</value>

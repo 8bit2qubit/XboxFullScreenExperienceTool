@@ -448,25 +448,25 @@ Bitte stellen Sie sicher, dass Sie dieses Programm mit Administratorrechten ausf
     <value>Eine Bildschirmgröße von mehr als 9,5 Zoll wurde erkannt. Um die Kompatibilität zu gewährleisten, wurde der Überschreibungsmodus auf den 'Aufgabenplanungsmodus (CS)' beschränkt.</value>
   </data>
   <data name="chkStartKeyboardOnLogon_Text" xml:space="preserve">
-    <value>Bildschirmtastatur bei Anmeldung starten</value>
+    <value>Gamepad-Tastatur bei Anmeldung starten</value>
   </data>
   <data name="LogCreatingKeyboardTask" xml:space="preserve">
-    <value>Erstelle geplante Aufgabe zum Starten der Tastatur bei Anmeldung...</value>
+    <value>Erstelle geplante Aufgabe zum Starten der Gamepad-Tastatur bei Anmeldung...</value>
   </data>
   <data name="LogDeletingKeyboardTask" xml:space="preserve">
-    <value>Lösche geplante Aufgabe zum Starten der Tastatur bei Anmeldung...</value>
+    <value>Lösche geplante Aufgabe zum Starten der Gamepad-Tastatur bei Anmeldung...</value>
   </data>
   <data name="ErrorKeyboardTask" xml:space="preserve">
-    <value>Fehler beim Ändern der Startaufgabe für die Tastatur. Fehler: {0}</value>
+    <value>Fehler beim Ändern der Startaufgabe für die Gamepad-Tastatur. Fehler: {0}</value>
   </data>
   <data name="LogTouchSupportStatus" xml:space="preserve">
     <value>Touch-Unterstützung erkannt: {0}</value>
   </data>
   <data name="TooltipTouchEnabled" xml:space="preserve">
-    <value>Ihr System verfügt über native Touch-Unterstützung. Windows verwaltet die Anzeige der Bildschirmtastatur automatisch.</value>
+    <value>Ihr System verfügt über native Touch-Unterstützung. Windows verwaltet die Anzeige der Gamepad-Tastatur automatisch.</value>
   </data>
   <data name="TooltipTouchDisabled" xml:space="preserve">
-    <value>Keine Touch-Unterstützung auf Ihrem System erkannt. Sie können diese Option aktivieren, um die Bildschirmtastatur bei der Anmeldung automatisch zu starten und eine Controller-orientierte Erfahrung zu ermöglichen.</value>
+    <value>Keine Touch-Unterstützung auf Ihrem System erkannt. Sie können diese Option aktivieren, um die Gamepad-Tastatur bei der Anmeldung automatisch zu starten und eine Controller-orientierte Erfahrung zu ermöglichen.</value>
   </data>
   <data name="LogPanelTaskCreated" xml:space="preserve">
     <value>Geplante Aufgabe 'SetPanelDimensions' wurde erstellt.</value>
