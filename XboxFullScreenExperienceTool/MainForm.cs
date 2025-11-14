@@ -979,8 +979,21 @@ namespace XboxFullScreenExperienceTool
             cboLanguage.Items.Add("Русский");
 
             string currentCultureName = Thread.CurrentThread.CurrentUICulture.Name;
-            if (currentCultureName.StartsWith("zh-TW", StringComparison.OrdinalIgnoreCase) || currentCultureName.StartsWith("zh-Hant", StringComparison.OrdinalIgnoreCase)) cboLanguage.SelectedIndex = 1; // 繁體中文
-            else if (currentCultureName.StartsWith("zh-CN", StringComparison.OrdinalIgnoreCase) || currentCultureName.StartsWith("zh-Hans", StringComparison.OrdinalIgnoreCase)) cboLanguage.SelectedIndex = 2; // 简体中文
+
+            if (currentCultureName.StartsWith("zh-TW", StringComparison.OrdinalIgnoreCase) ||
+                currentCultureName.StartsWith("zh-Hant", StringComparison.OrdinalIgnoreCase) ||
+                currentCultureName.StartsWith("zh-HK", StringComparison.OrdinalIgnoreCase) ||
+                currentCultureName.StartsWith("zh-MO", StringComparison.OrdinalIgnoreCase))
+            {
+                cboLanguage.SelectedIndex = 1; // 繁體中文
+            }
+            else if (currentCultureName.StartsWith("zh-CN", StringComparison.OrdinalIgnoreCase) ||
+                     currentCultureName.StartsWith("zh-Hans", StringComparison.OrdinalIgnoreCase) ||
+                     currentCultureName.StartsWith("zh-SG", StringComparison.OrdinalIgnoreCase) ||
+                     currentCultureName.StartsWith("zh-MY", StringComparison.OrdinalIgnoreCase))
+            {
+                cboLanguage.SelectedIndex = 2; // 简体中文
+            }
             else if (currentCultureName.StartsWith("ja", StringComparison.OrdinalIgnoreCase)) cboLanguage.SelectedIndex = 3; // 日本語
             else if (currentCultureName.StartsWith("ko", StringComparison.OrdinalIgnoreCase)) cboLanguage.SelectedIndex = 4; // 한국어
             else if (currentCultureName.StartsWith("de", StringComparison.OrdinalIgnoreCase)) cboLanguage.SelectedIndex = 5; // Deutsch
