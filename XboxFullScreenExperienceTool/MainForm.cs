@@ -922,7 +922,17 @@ namespace XboxFullScreenExperienceTool
             {
                 // 5 秒後重新開機
                 string shutdownArgs = $"/r /t 5 /c \"{Resources.Strings.ShutdownReasonEnable}\" /d p:4:1";
-                Process.Start("shutdown.exe", shutdownArgs);
+
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    FileName = "shutdown.exe",               // 要執行的檔案
+                    Arguments = shutdownArgs,                // 傳遞給檔案的參數
+                    CreateNoWindow = true,                   // 不要建立視窗
+                    UseShellExecute = false,                 // 必須設為 false 才能讓 CreateNoWindow 生效
+                    WindowStyle = ProcessWindowStyle.Hidden  // 再次確保隱藏
+                };
+
+                Process.Start(startInfo); // 使用設定好的 startInfo 啟動
                 Application.Exit();
             }
             catch (Exception ex)
