@@ -18,6 +18,8 @@
 #include "PanelManager.h"
 #include "KeyboardManager.h"
 #include "Utils.h"
+#include <io.h>
+#include <fcntl.h>
 
 void PrintUsage() {
     std::wstring version = GetAppVersion();
@@ -51,10 +53,12 @@ int HandleGet() {
         std::wcout << L"Current Size: Width = " << dims.WidthMm << L" mm, Height = " << dims.HeightMm
             << L" mm (Diagonal approx. " << diagonalInches << L" inches)" << std::endl;
 
+        std::wcout.flush();
         return 0;
     }
     else {
         std::wcerr << L"Error: Failed to get display size. An override may not be set." << std::endl;
+        std::wcerr.flush();
         return -1;
     }
 }
@@ -63,6 +67,7 @@ int HandleSet(int argc, wchar_t* argv[]) {
     if (argc != 4) {
         std::wcerr << L"Error: The 'set' command requires two positive integer arguments (width and height)." << std::endl;
         PrintUsage();
+        std::wcerr.flush();
         return 1;
     }
 
@@ -74,60 +79,95 @@ int HandleSet(int argc, wchar_t* argv[]) {
         NTSTATUS status = PanelManager::SetDisplaySize(newSize);
         if (status == 0) {
             std::wcout << L"Success: Display size has been set." << std::endl;
+            std::wcout.flush();
             return 0;
         }
         else {
             std::wcerr << L"Error: Failed to set display size. This operation requires SYSTEM privileges." << std::endl;
-
             std::wcerr << L"  > NTSTATUS Error Code: 0x" << std::hex << std::uppercase << status << std::endl;
+            std::wcerr.flush();
             return -1;
         }
     }
     catch (const std::invalid_argument&) {
         std::wcerr << L"Error: The 'set' command requires two positive integer arguments (width and height)." << std::endl;
         PrintUsage();
+        std::wcerr.flush();
         return 1;
     }
     catch (const std::out_of_range&) {
         std::wcerr << L"Error: The 'set' command requires two positive integer arguments (width and height)." << std::endl;
         PrintUsage();
+        std::wcerr.flush();
         return 1;
     }
 }
 
 int HandleStartKeyboard() {
     try {
-        std::wcout << L"Attempting to start the touch keyboard..." << std::endl;
         KeyboardManager::StartTouchKeyboard();
-        std::wcout << L"Success: Touch keyboard start command sent." << std::endl;
         return 0;
     }
-    catch (const TabTipNotFoundException&) {
-        std::wcerr << L"Error: Touch keyboard executable (TabTip.exe) not found." << std::endl;
-        return -1;
+    catch (const TabTipNotFoundException&) { return -1; }
+    catch (const TabTipActivationException&) { return -1; }
+    catch (const std::exception&) { return -1; }
+}
+
+bool AttachConsoleAndRedirectIO() {
+    bool consoleAttached = false;
+    if (AttachConsole(ATTACH_PARENT_PROCESS)) {
+        consoleAttached = true;
     }
-    catch (const TabTipActivationException&) {
-        std::wcerr << L"Error: Failed to activate or timed out waiting for the touch keyboard COM service." << std::endl;
-        return -1;
+    else if (AllocConsole()) {
+        consoleAttached = true;
     }
-    catch (const std::exception& ex) {
-        std::string narrowMsg = ex.what();
-        std::wstring wideMsg(narrowMsg.begin(), narrowMsg.end());
-        std::wcerr << L"Error: An unexpected error occurred while starting the touch keyboard: " << wideMsg.c_str() << std::endl;
-        return -1;
+
+    if (!consoleAttached) {
+        return false;
     }
+
+    FILE* fp_stdout, * fp_stderr;
+    freopen_s(&fp_stdout, "CONOUT$", "w", stdout);
+    freopen_s(&fp_stderr, "CONOUT$", "w", stderr);
+
+    std::wcout.clear();
+    std::wcerr.clear();
+    std::wcout.sync_with_stdio(true);
+    std::wcerr.sync_with_stdio(true);
+
+    (void)_setmode(_fileno(stdout), _O_WTEXT);
+    (void)_setmode(_fileno(stderr), _O_WTEXT);
+
+    return true;
 }
 
 int wmain(int argc, wchar_t* argv[]) {
     _wsetlocale(LC_ALL, L"");
 
-    if (argc < 2) {
-        PrintUsage();
-        return 1;
+    bool needsConsole = true;
+    std::wstring action = L"";
+
+    if (argc >= 2) {
+        action = argv[1];
+        for (auto& c : action) c = towlower(c);
+
+        if (action == L"startkeyboard") {
+            needsConsole = false;
+        }
     }
 
-    std::wstring action = argv[1];
-    for (auto& c : action) c = towlower(c);
+    bool consoleAttached = false;
+    if (needsConsole) {
+        consoleAttached = AttachConsoleAndRedirectIO();
+    }
+
+    if (argc < 2) {
+        if (consoleAttached) {
+            PrintUsage();
+            std::wcout.flush();
+        }
+        return 1;
+    }
 
     if (action == L"get") {
         return HandleGet();
@@ -139,7 +179,10 @@ int wmain(int argc, wchar_t* argv[]) {
         return HandleStartKeyboard();
     }
 
-    std::wcerr << L"Error: Unknown command '" << argv[1] << L"'." << std::endl;
-    PrintUsage();
+    if (consoleAttached) {
+        std::wcerr << L"Error: Unknown command '" << argv[1] << L"'." << std::endl;
+        PrintUsage();
+        std::wcerr.flush();
+    }
     return 1;
 }
