@@ -1040,7 +1040,15 @@ namespace XboxFullScreenExperienceTool
                     Application.Exit();
                     return;
                 }
+
+                // 取得版本號 (與 UpdateUIForLanguage 中的邏輯相同)
+                string versionString = Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? Resources.Strings.UnknownVersion;
+
+                // 顯示歡迎訊息
                 Log(Resources.Strings.WelcomeMessage);
+
+                // 顯示程式標題與版本號 (與視窗標題列的格式一致)
+                Log($"{Resources.Strings.MainFormTitle} v{versionString}");
 
                 // 步驟 3: 執行耗時的非同步檢查 (使用 await Task.Run 等待背景執行緒的 CheckCurrentStatus 完成)
                 await Task.Run(() => CheckCurrentStatus());
