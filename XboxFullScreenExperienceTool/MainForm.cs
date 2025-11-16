@@ -45,15 +45,6 @@ namespace XboxFullScreenExperienceTool
         /// </summary>
         private const bool RESTRICT_DRV_MODE_ON_LARGE_SCREEN = false;
 
-        // --- 版本要求 ---
-        /// <summary>
-        /// 啟用此功能所需的最低 Windows 主要組建版本號。
-        /// </summary>
-        private const int REQUIRED_BUILD = 26100;
-        /// <summary>
-        /// 在最低主要組建版本下，所需的最低修訂 (UBR) 號。
-        /// </summary>
-        private const int REQUIRED_REVISION = 7019;
         /// <summary>
         /// 需要透過 ViVe 工具啟用的功能 ID 陣列。
         /// </summary>
