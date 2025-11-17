@@ -232,6 +232,7 @@ namespace XboxFullScreenExperienceTool
             btnEnable.Enabled = false;
             btnDisable.Enabled = false;
             grpPhysPanel.Enabled = false;
+            chkDisableARSO.Enabled = false;
             chkStartKeyboardOnLogon.Enabled = false;
             cboLanguage.Enabled = false;
 
@@ -406,6 +407,8 @@ namespace XboxFullScreenExperienceTool
                 bool isScreenSizeRestricted = RESTRICT_DRV_MODE_ON_LARGE_SCREEN && isScreenTooLarge; // 根據功能旗標和螢幕尺寸，判斷是否存在螢幕尺寸限制
                                                                                                      // 只有在「旗標為 true」且「螢幕需要覆寫 (即 > 9.5")」時，限制才生效
                 bool isDrvModeAvailable = isTestSigningOn && !isScreenSizeRestricted; // 綜合判斷：Drv 模式只有在「測試簽章已啟用」且「沒有螢幕尺寸限制」時才可用
+                // 檢查密碼與 ARSO 狀態
+                bool isArsoDisabled = LogonPolicyHelper.IsArsoDisabled();
 
                 // 步驟 6: 狀態判斷 (非 UI) 
                 // (先在背景執行緒準備好所有 UI 應該顯示的狀態)
@@ -484,6 +487,13 @@ namespace XboxFullScreenExperienceTool
                 // (一次性將所有計算結果傳回 UI 執行緒進行更新)
                 this.Invoke((Action)(() =>
                 {
+                    // 設定 ARSO 選項
+                    chkDisableARSO.Enabled = true;
+                    chkDisableARSO.Checked = isArsoDisabled;
+
+                    // 設定提示文字
+                    toolTip.SetToolTip(chkDisableARSO, "若您在登入時無法順利進入 Xbox 全螢幕體驗，請嘗試勾選此選項。");
+
                     // 設定鍵盤啟動選項的可用性
                     chkStartKeyboardOnLogon.Enabled = !hasTouchSupport; // 如果沒有觸控，則啟用此選項
                     chkStartKeyboardOnLogon.Checked = isStartKeyboardTaskActive;
@@ -511,6 +521,7 @@ namespace XboxFullScreenExperienceTool
                 }));
 
                 // 步驟 8: 記錄日誌 (Log/LogError 方法已有 InvokeRequired 保護，是 thread-safe)
+                Log($"ARSO 停用狀態: {isArsoDisabled}"); // 偵錯用
                 Log(string.Format(Resources.Strings.LogTouchSupportStatus, hasTouchSupport));
                 // 根據條件記錄日誌
                 if (!isTestSigningOn)
@@ -1015,6 +1026,7 @@ namespace XboxFullScreenExperienceTool
             grpOutput.Text = Resources.Strings.grpOutput_Text;
             btnDisable.Text = Resources.Strings.btnDisable_Text;
             btnEnable.Text = Resources.Strings.btnEnable_Text;
+            chkDisableARSO.Text = "停用自動重新啟動登入 (ARSO) (適用於有密碼帳戶)";
             chkStartKeyboardOnLogon.Text = Resources.Strings.chkStartKeyboardOnLogon_Text;
         }
 
@@ -1105,6 +1117,41 @@ namespace XboxFullScreenExperienceTool
             _isInitializing = true;
             await RerunChecksAndLog(); // 呼叫修改後的 async 版本
             _isInitializing = false;
+        }
+
+        /// <summary>
+        /// 當「停用自動重新啟動登入」(ARSO) 核取方塊的狀態變更時觸發。
+        /// 此方法會根據核取方塊的狀態，更新登錄檔中的 DisableAutomaticRestartSignOn 值。
+        /// </summary>
+        private void chkDisableARSO_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_isInitializing) return;
+
+            // 鎖定 UI 防止連點
+            chkDisableARSO.Enabled = false;
+            this.Cursor = Cursors.WaitCursor;
+
+            try
+            {
+                bool newValue = chkDisableARSO.Checked;
+                LogonPolicyHelper.SetArsoDisabled(newValue);
+
+                string statusMsg = newValue ? "已設定為 1 (已停用)" : "已設定為 0 (已啟用)";
+                Log($"登錄檔 'DisableAutomaticRestartSignOn' {statusMsg}。", true);
+            }
+            catch (Exception ex)
+            {
+                LogError($"設定登錄檔 'DisableAutomaticRestartSignOn' 失敗：{ex.Message}");
+                // 發生錯誤時還原勾選狀態
+                _isInitializing = true;
+                chkDisableARSO.Checked = !chkDisableARSO.Checked;
+                _isInitializing = false;
+            }
+            finally
+            {
+                chkDisableARSO.Enabled = true;
+                this.Cursor = Cursors.Default;
+            }
         }
 
         /// <summary>

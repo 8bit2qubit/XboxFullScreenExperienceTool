@@ -34,6 +34,7 @@ namespace XboxFullScreenExperienceTool
             this.btnEnable = new System.Windows.Forms.Button();
             this.btnDisable = new System.Windows.Forms.Button();
             this.grpActions = new System.Windows.Forms.GroupBox();
+            this.chkDisableARSO = new System.Windows.Forms.CheckBox();
             this.chkStartKeyboardOnLogon = new System.Windows.Forms.CheckBox();
             this.grpOutput = new System.Windows.Forms.GroupBox();
             this.txtOutput = new System.Windows.Forms.RichTextBox();
@@ -76,15 +77,28 @@ namespace XboxFullScreenExperienceTool
             // 
             this.grpActions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.grpActions.Controls.Add(this.chkStartKeyboardOnLogon);
+            this.grpActions.Controls.Add(this.chkDisableARSO);
             this.grpActions.Controls.Add(this.cboLanguage);
             this.grpActions.Controls.Add(this.btnDisable);
             this.grpActions.Controls.Add(this.btnEnable);
             this.grpActions.Location = new System.Drawing.Point(12, 122);
             this.grpActions.Name = "grpActions";
-            this.grpActions.Size = new System.Drawing.Size(619, 120);
+            this.grpActions.Size = new System.Drawing.Size(619, 150);
             this.grpActions.TabIndex = 4;
             this.grpActions.TabStop = false;
             this.grpActions.Text = "操作";
+            // 
+            // chkDisableARSO
+            // 
+            this.chkDisableARSO.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chkDisableARSO.AutoSize = true;
+            this.chkDisableARSO.Location = new System.Drawing.Point(19, 118);
+            this.chkDisableARSO.Name = "chkDisableARSO";
+            this.chkDisableARSO.Size = new System.Drawing.Size(250, 19);
+            this.chkDisableARSO.TabIndex = 8;
+            this.chkDisableARSO.Text = "停用自動重新啟動登入 (ARSO) (適用於有密碼帳戶)";
+            this.chkDisableARSO.UseVisualStyleBackColor = true;
+            this.chkDisableARSO.CheckedChanged += new System.EventHandler(this.chkDisableARSO_CheckedChanged);
             // 
             // chkStartKeyboardOnLogon
             // 
@@ -94,7 +108,7 @@ namespace XboxFullScreenExperienceTool
             this.chkStartKeyboardOnLogon.Name = "chkStartKeyboardOnLogon";
             this.chkStartKeyboardOnLogon.Size = new System.Drawing.Size(212, 19);
             this.chkStartKeyboardOnLogon.TabIndex = 7;
-            this.chkStartKeyboardOnLogon.Text = "在登入時啟動觸控鍵盤";
+            this.chkStartKeyboardOnLogon.Text = "在登入時啟動遊戲控制器鍵盤";
             this.chkStartKeyboardOnLogon.UseVisualStyleBackColor = true;
             this.chkStartKeyboardOnLogon.CheckedChanged += new System.EventHandler(this.chkStartKeyboardOnLogon_CheckedChanged);
             // 
@@ -104,10 +118,10 @@ namespace XboxFullScreenExperienceTool
             | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grpOutput.Controls.Add(this.txtOutput);
-            this.grpOutput.Location = new System.Drawing.Point(12, 248);
+            this.grpOutput.Location = new System.Drawing.Point(12, 278);
             this.grpOutput.Name = "grpOutput";
-            this.grpOutput.Size = new System.Drawing.Size(619, 154);
-            this.grpOutput.TabIndex = 9;
+            this.grpOutput.Size = new System.Drawing.Size(619, 124);
+            this.grpOutput.TabIndex = 10;
             this.grpOutput.TabStop = false;
             this.grpOutput.Text = "執行日誌";
             // 
@@ -121,7 +135,7 @@ namespace XboxFullScreenExperienceTool
             this.txtOutput.Name = "txtOutput";
             this.txtOutput.ReadOnly = true;
             this.txtOutput.Size = new System.Drawing.Size(613, 133);
-            this.txtOutput.TabIndex = 10;
+            this.txtOutput.TabIndex = 11;
             this.txtOutput.Text = "";
             // 
             // lblStatus
@@ -141,10 +155,10 @@ namespace XboxFullScreenExperienceTool
             this.cboLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboLanguage.Font = new System.Drawing.Font("Microsoft JhengHei UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.cboLanguage.FormattingEnabled = true;
-            this.cboLanguage.Location = new System.Drawing.Point(479, 88);
+            this.cboLanguage.Location = new System.Drawing.Point(479, 115);
             this.cboLanguage.Name = "cboLanguage";
             this.cboLanguage.Size = new System.Drawing.Size(121, 27);
-            this.cboLanguage.TabIndex = 8;
+            this.cboLanguage.TabIndex = 9;
             this.cboLanguage.SelectedIndexChanged += new System.EventHandler(this.cboLanguage_SelectedIndexChanged);
             // 
             // grpPhysPanel
@@ -217,6 +231,7 @@ namespace XboxFullScreenExperienceTool
         private System.Windows.Forms.GroupBox grpPhysPanel;
         private System.Windows.Forms.RadioButton radPhysPanelDrv;
         private System.Windows.Forms.RadioButton radPhysPanelCS;
+        private System.Windows.Forms.CheckBox chkDisableARSO;
         private System.Windows.Forms.CheckBox chkStartKeyboardOnLogon;
         private System.Windows.Forms.ToolTip toolTip;
     }
