@@ -523,6 +523,8 @@ namespace XboxFullScreenExperienceTool
                     Log(Resources.Strings.LogLargeScreenForceCS);
                 }
                 Log(string.Format(Resources.Strings.LogStatusCheckSummary, isCoreEnabled, allFeaturesEnabled, registryStatusString, isScreenOverrideRequired, isScreenOverridePresent, isPhysPanelCSActive, isPhysPanelDrvActive, isTestSigningOn));
+                // 最終判斷的狀態文字
+                Log(statusText);
             }
             catch (Exception ex)
             {
