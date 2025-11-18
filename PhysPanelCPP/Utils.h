@@ -17,4 +17,4 @@
 #pragma once
 #include "pch.h"
 
-std::wstring GetAppVersion();
+bool GetAppVersion(wchar_t* buffer, size_t size);

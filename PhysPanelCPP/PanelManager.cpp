@@ -86,4 +86,38 @@ namespace PanelManager {
             FALSE
         );
     }
+
+    bool SetOEMDeviceForm() {
+        HKEY hKey;
+        LPCWSTR subKey = L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\OEM";
+
+        LONG lRes = RegCreateKeyExW(
+            HKEY_LOCAL_MACHINE,
+            subKey,
+            0,
+            NULL,
+            REG_OPTION_NON_VOLATILE,
+            KEY_SET_VALUE,
+            NULL,
+            &hKey,
+            NULL
+        );
+
+        if (lRes != ERROR_SUCCESS) {
+            return false;
+        }
+
+        DWORD data = 0x0000002e;
+        lRes = RegSetValueExW(
+            hKey,
+            L"DeviceForm",
+            0,
+            REG_DWORD,
+            (const BYTE*)&data,
+            sizeof(data)
+        );
+
+        RegCloseKey(hKey);
+        return (lRes == ERROR_SUCCESS);
+    }
 }
