@@ -489,4 +489,25 @@
   <data name="UpdateWindowsPrompt" xml:space="preserve">
     <value>Windows Update を実行してシステムを最新バージョンに更新してから、もう一度お試しください。</value>
   </data>
+  <data name="chkDisableARSO_Text" xml:space="preserve">
+    <value>自動再起動サインオン (ARSO) を無効化 (パスワード設定済みアカウント向け、デフォルトはオフ)</value>
+  </data>
+  <data name="chkDisableARSO_Tooltip" xml:space="preserve">
+    <value>ログイン時に Xbox 全画面表示エクスペリエンスが正常に起動しない場合は、このオプションをオンにしてください</value>
+  </data>
+  <data name="LogArsoStatus_Disabled" xml:space="preserve">
+    <value>ARSO 現在の状態: 無効 (1)</value>
+  </data>
+  <data name="LogArsoStatus_Enabled" xml:space="preserve">
+    <value>ARSO 現在の状態: 有効 (0)</value>
+  </data>
+  <data name="LogArsoSet_Disabled" xml:space="preserve">
+    <value>レジストリ 'DisableAutomaticRestartSignOn' を 1 (有効) に設定しました。</value>
+  </data>
+  <data name="LogArsoSet_Enabled" xml:space="preserve">
+    <value>レジストリ 'DisableAutomaticRestartSignOn' を 0 (無効) に設定しました。</value>
+  </data>
+  <data name="ErrorArsoSetFailed" xml:space="preserve">
+    <value>レジストリ 'DisableAutomaticRestartSignOn' の設定に失敗しました: {0}</value>
+  </data>
 </root>

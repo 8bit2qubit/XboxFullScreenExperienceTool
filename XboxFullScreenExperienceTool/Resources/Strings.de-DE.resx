@@ -489,4 +489,25 @@ Bitte stellen Sie sicher, dass Sie dieses Programm mit Administratorrechten ausf
   <data name="UpdateWindowsPrompt" xml:space="preserve">
     <value>Bitte führen Sie Windows Update aus, um Ihr System auf die neueste Version zu aktualisieren, und versuchen Sie es erneut.</value>
   </data>
+  <data name="chkDisableARSO_Text" xml:space="preserve">
+    <value>Automatische Anmeldung nach Neustart (ARSO) deaktivieren (Für Konten mit Passwort, standardmäßig aus)</value>
+  </data>
+  <data name="chkDisableARSO_Tooltip" xml:space="preserve">
+    <value>Wenn Sie beim Anmelden nicht in die Xbox-Vollbildschirm-Erfahrung gelangen, aktivieren Sie diese Option.</value>
+  </data>
+  <data name="LogArsoStatus_Disabled" xml:space="preserve">
+    <value>Aktueller ARSO-Status: Deaktiviert (1)</value>
+  </data>
+  <data name="LogArsoStatus_Enabled" xml:space="preserve">
+    <value>Aktueller ARSO-Status: Aktiviert (0)</value>
+  </data>
+  <data name="LogArsoSet_Disabled" xml:space="preserve">
+    <value>Registry 'DisableAutomaticRestartSignOn' auf 1 (Aktiviert) gesetzt.</value>
+  </data>
+  <data name="LogArsoSet_Enabled" xml:space="preserve">
+    <value>Registry 'DisableAutomaticRestartSignOn' auf 0 (Deaktiviert) gesetzt.</value>
+  </data>
+  <data name="ErrorArsoSetFailed" xml:space="preserve">
+    <value>Fehler beim Setzen der Registry 'DisableAutomaticRestartSignOn': {0}</value>
+  </data>
 </root>

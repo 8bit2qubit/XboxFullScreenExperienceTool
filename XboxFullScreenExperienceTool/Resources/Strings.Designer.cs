@@ -88,6 +88,24 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Disable Automatic Restart Sign-On (ARSO) (For accounts with password, default off) 的當地語系化字串。
+        /// </summary>
+        internal static string chkDisableARSO_Text {
+            get {
+                return ResourceManager.GetString("chkDisableARSO_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 If you cannot successfully enter Xbox Full Screen Experience when signing in, please try checking this option. 的當地語系化字串。
+        /// </summary>
+        internal static string chkDisableARSO_Tooltip {
+            get {
+                return ResourceManager.GetString("chkDisableARSO_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Start gamepad keyboard on logon 的當地語系化字串。
         /// </summary>
         internal static string chkStartKeyboardOnLogon_Text {
@@ -102,6 +120,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         internal static string ErrorAppRunning {
             get {
                 return ResourceManager.GetString("ErrorAppRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Failed to set registry &apos;DisableAutomaticRestartSignOn&apos;: {0} 的當地語系化字串。
+        /// </summary>
+        internal static string ErrorArsoSetFailed {
+            get {
+                return ResourceManager.GetString("ErrorArsoSetFailed", resourceCulture);
             }
         }
         
@@ -249,6 +276,42 @@ namespace XboxFullScreenExperienceTool.Resources {
         internal static string HandleExceptionTitle {
             get {
                 return ResourceManager.GetString("HandleExceptionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Registry &apos;DisableAutomaticRestartSignOn&apos; set to 1 (Enabled). 的當地語系化字串。
+        /// </summary>
+        internal static string LogArsoSet_Disabled {
+            get {
+                return ResourceManager.GetString("LogArsoSet_Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Registry &apos;DisableAutomaticRestartSignOn&apos; set to 0 (Disabled). 的當地語系化字串。
+        /// </summary>
+        internal static string LogArsoSet_Enabled {
+            get {
+                return ResourceManager.GetString("LogArsoSet_Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 ARSO Current Status: Disabled (1) 的當地語系化字串。
+        /// </summary>
+        internal static string LogArsoStatus_Disabled {
+            get {
+                return ResourceManager.GetString("LogArsoStatus_Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 ARSO Current Status: Enabled (0) 的當地語系化字串。
+        /// </summary>
+        internal static string LogArsoStatus_Enabled {
+            get {
+                return ResourceManager.GetString("LogArsoStatus_Enabled", resourceCulture);
             }
         }
         

@@ -489,4 +489,25 @@
   <data name="UpdateWindowsPrompt" xml:space="preserve">
     <value>Пожалуйста, запустите Центр обновления Windows, чтобы обновить вашу систему до последней версии, и повторите попытку.</value>
   </data>
+  <data name="chkDisableARSO_Text" xml:space="preserve">
+    <value>Отключить авто-вход после перезагрузки (ARSO) (Для учетных записей с паролем, по умолчанию выкл.)</value>
+  </data>
+  <data name="chkDisableARSO_Tooltip" xml:space="preserve">
+    <value>Если вы не можете войти в полноэкранный режим Xbox при входе в систему, попробуйте включить эту опцию.</value>
+  </data>
+  <data name="LogArsoStatus_Disabled" xml:space="preserve">
+    <value>Текущий статус ARSO: Отключено (1)</value>
+  </data>
+  <data name="LogArsoStatus_Enabled" xml:space="preserve">
+    <value>Текущий статус ARSO: Включено (0)</value>
+  </data>
+  <data name="LogArsoSet_Disabled" xml:space="preserve">
+    <value>Реестр 'DisableAutomaticRestartSignOn' установлен на 1 (Включено).</value>
+  </data>
+  <data name="LogArsoSet_Enabled" xml:space="preserve">
+    <value>Реестр 'DisableAutomaticRestartSignOn' установлен на 0 (Отключено).</value>
+  </data>
+  <data name="ErrorArsoSetFailed" xml:space="preserve">
+    <value>Не удалось настроить реестр 'DisableAutomaticRestartSignOn': {0}</value>
+  </data>
 </root>

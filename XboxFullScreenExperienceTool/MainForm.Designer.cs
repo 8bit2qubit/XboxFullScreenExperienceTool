@@ -96,7 +96,7 @@ namespace XboxFullScreenExperienceTool
             this.chkDisableARSO.Name = "chkDisableARSO";
             this.chkDisableARSO.Size = new System.Drawing.Size(250, 19);
             this.chkDisableARSO.TabIndex = 8;
-            this.chkDisableARSO.Text = "停用自動重新啟動登入 (ARSO) (適用於有密碼帳戶)";
+            this.chkDisableARSO.Text = "停用自動重新啟動登入 (ARSO) (適用於有設定密碼的帳戶，預設關閉)";
             this.chkDisableARSO.UseVisualStyleBackColor = true;
             this.chkDisableARSO.CheckedChanged += new System.EventHandler(this.chkDisableARSO_CheckedChanged);
             // 
@@ -155,7 +155,7 @@ namespace XboxFullScreenExperienceTool
             this.cboLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboLanguage.Font = new System.Drawing.Font("Microsoft JhengHei UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.cboLanguage.FormattingEnabled = true;
-            this.cboLanguage.Location = new System.Drawing.Point(479, 115);
+            this.cboLanguage.Location = new System.Drawing.Point(479, 88);
             this.cboLanguage.Name = "cboLanguage";
             this.cboLanguage.Size = new System.Drawing.Size(121, 27);
             this.cboLanguage.TabIndex = 9;

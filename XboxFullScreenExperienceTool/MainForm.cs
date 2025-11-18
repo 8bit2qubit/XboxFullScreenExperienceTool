@@ -211,6 +211,7 @@ namespace XboxFullScreenExperienceTool
         /// </summary>
         private bool _restartPending = false;
         private bool _isInitializing = true;
+        private bool _isUpdatingStatus = false;
 
         //======================================================================
         // 表單事件 (Form Events)
@@ -487,12 +488,14 @@ namespace XboxFullScreenExperienceTool
                 // (一次性將所有計算結果傳回 UI 執行緒進行更新)
                 this.Invoke((Action)(() =>
                 {
+                    _isUpdatingStatus = true; // 開始更新 UI
+
                     // 設定 ARSO 選項
                     chkDisableARSO.Enabled = true;
                     chkDisableARSO.Checked = isArsoDisabled;
 
                     // 設定提示文字
-                    toolTip.SetToolTip(chkDisableARSO, "若您在登入時無法順利進入 Xbox 全螢幕體驗，請嘗試勾選此選項。");
+                    toolTip.SetToolTip(chkDisableARSO, Resources.Strings.chkDisableARSO_Tooltip);
 
                     // 設定鍵盤啟動選項的可用性
                     chkStartKeyboardOnLogon.Enabled = !hasTouchSupport; // 如果沒有觸控，則啟用此選項
@@ -521,8 +524,8 @@ namespace XboxFullScreenExperienceTool
                 }));
 
                 // 步驟 8: 記錄日誌 (Log/LogError 方法已有 InvokeRequired 保護，是 thread-safe)
-                Log($"ARSO 停用狀態: {isArsoDisabled}"); // 偵錯用
                 Log(string.Format(Resources.Strings.LogTouchSupportStatus, hasTouchSupport));
+                Log(isArsoDisabled ? Resources.Strings.LogArsoStatus_Disabled : Resources.Strings.LogArsoStatus_Enabled);
                 // 根據條件記錄日誌
                 if (!isTestSigningOn)
                 {
@@ -549,7 +552,7 @@ namespace XboxFullScreenExperienceTool
             }
             finally
             {
-                // _isInitializing = false; // 不再需要
+                _isUpdatingStatus = false; // 結束更新
             }
         }
 
@@ -1026,7 +1029,7 @@ namespace XboxFullScreenExperienceTool
             grpOutput.Text = Resources.Strings.grpOutput_Text;
             btnDisable.Text = Resources.Strings.btnDisable_Text;
             btnEnable.Text = Resources.Strings.btnEnable_Text;
-            chkDisableARSO.Text = "停用自動重新啟動登入 (ARSO) (適用於有密碼帳戶)";
+            chkDisableARSO.Text = Resources.Strings.chkDisableARSO_Text;
             chkStartKeyboardOnLogon.Text = Resources.Strings.chkStartKeyboardOnLogon_Text;
         }
 
@@ -1125,7 +1128,7 @@ namespace XboxFullScreenExperienceTool
         /// </summary>
         private void chkDisableARSO_CheckedChanged(object sender, EventArgs e)
         {
-            if (_isInitializing) return;
+            if (_isInitializing || _isUpdatingStatus) return;
 
             // 鎖定 UI 防止連點
             chkDisableARSO.Enabled = false;
@@ -1136,12 +1139,11 @@ namespace XboxFullScreenExperienceTool
                 bool newValue = chkDisableARSO.Checked;
                 LogonPolicyHelper.SetArsoDisabled(newValue);
 
-                string statusMsg = newValue ? "已設定為 1 (已停用)" : "已設定為 0 (已啟用)";
-                Log($"登錄檔 'DisableAutomaticRestartSignOn' {statusMsg}。", true);
+                Log(newValue ? Resources.Strings.LogArsoSet_Disabled : Resources.Strings.LogArsoSet_Enabled, true);
             }
             catch (Exception ex)
             {
-                LogError($"設定登錄檔 'DisableAutomaticRestartSignOn' 失敗：{ex.Message}");
+                LogError(string.Format(Resources.Strings.ErrorArsoSetFailed, ex.Message));
                 // 發生錯誤時還原勾選狀態
                 _isInitializing = true;
                 chkDisableARSO.Checked = !chkDisableARSO.Checked;
@@ -1149,8 +1151,8 @@ namespace XboxFullScreenExperienceTool
             }
             finally
             {
-                chkDisableARSO.Enabled = true;
                 this.Cursor = Cursors.Default;
+                chkDisableARSO.Enabled = true;
             }
         }
 
@@ -1159,16 +1161,7 @@ namespace XboxFullScreenExperienceTool
         /// </summary>
         private void chkStartKeyboardOnLogon_CheckedChanged(object sender, EventArgs e)
         {
-            // 由於 CheckCurrentStatus 是在背景執行緒中設定 CheckBox 狀態，
-            // 需要確保 _isInitializing 旗標的讀取也是在 UI 執行緒上
-            if (this.InvokeRequired)
-            {
-                this.Invoke(new Action(() => chkStartKeyboardOnLogon_CheckedChanged(sender, e)));
-                return;
-            }
-
-            // 如果是在程式初始化期間設定狀態，則不執行任何動作
-            if (_isInitializing) return;
+            if (_isInitializing || _isUpdatingStatus) return;
 
             // 暫時停用控制項並顯示等待游標
             chkStartKeyboardOnLogon.Enabled = false;

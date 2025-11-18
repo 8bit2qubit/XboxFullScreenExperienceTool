@@ -489,4 +489,25 @@ Veuillez vous assurer que vous exécutez ce programme avec les privilèges d'adm
   <data name="UpdateWindowsPrompt" xml:space="preserve">
     <value>Veuillez exécuter Windows Update pour mettre à jour votre système vers la dernière version, puis réessayez.</value>
   </data>
+  <data name="chkDisableARSO_Text" xml:space="preserve">
+    <value>Désactiver la connexion automatique après redémarrage (ARSO) (Pour comptes avec mot de passe, désactivé par défaut)</value>
+  </data>
+  <data name="chkDisableARSO_Tooltip" xml:space="preserve">
+    <value>Si vous ne parvenez pas à accéder à l'expérience plein écran Xbox lors de la connexion, essayez de cocher cette option.</value>
+  </data>
+  <data name="LogArsoStatus_Disabled" xml:space="preserve">
+    <value>État actuel ARSO : Désactivé (1)</value>
+  </data>
+  <data name="LogArsoStatus_Enabled" xml:space="preserve">
+    <value>État actuel ARSO : Activé (0)</value>
+  </data>
+  <data name="LogArsoSet_Disabled" xml:space="preserve">
+    <value>Registre 'DisableAutomaticRestartSignOn' défini sur 1 (Activé).</value>
+  </data>
+  <data name="LogArsoSet_Enabled" xml:space="preserve">
+    <value>Registre 'DisableAutomaticRestartSignOn' défini sur 0 (Désactivé).</value>
+  </data>
+  <data name="ErrorArsoSetFailed" xml:space="preserve">
+    <value>Échec de la configuration du registre 'DisableAutomaticRestartSignOn' : {0}</value>
+  </data>
 </root>

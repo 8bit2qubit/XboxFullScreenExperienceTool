@@ -489,4 +489,25 @@
   <data name="UpdateWindowsPrompt" xml:space="preserve">
     <value>请运行 Windows Update 将您的系统更新至最新版本后再试。</value>
   </data>
+  <data name="chkDisableARSO_Text" xml:space="preserve">
+    <value>禁用自动重新启动登录 (ARSO) (适用于有设定密码的账户，默认关闭)</value>
+  </data>
+  <data name="chkDisableARSO_Tooltip" xml:space="preserve">
+    <value>若您在登录时无法顺利进入 Xbox 全屏体验，请尝试勾选此选项。</value>
+  </data>
+  <data name="LogArsoStatus_Disabled" xml:space="preserve">
+    <value>ARSO 当前状态: 已禁用 (1)</value>
+  </data>
+  <data name="LogArsoStatus_Enabled" xml:space="preserve">
+    <value>ARSO 当前状态: 已启用 (0)</value>
+  </data>
+  <data name="LogArsoSet_Disabled" xml:space="preserve">
+    <value>注册表 'DisableAutomaticRestartSignOn' 已设置为 1 (已启用)。</value>
+  </data>
+  <data name="LogArsoSet_Enabled" xml:space="preserve">
+    <value>注册表 'DisableAutomaticRestartSignOn' 已设置为 0 (已禁用)。</value>
+  </data>
+  <data name="ErrorArsoSetFailed" xml:space="preserve">
+    <value>设置注册表 'DisableAutomaticRestartSignOn' 失败：{0}</value>
+  </data>
 </root>

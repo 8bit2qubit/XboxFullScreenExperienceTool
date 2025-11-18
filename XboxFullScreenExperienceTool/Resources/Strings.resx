@@ -489,4 +489,25 @@ Please ensure you are running this program with administrator privileges.</value
   <data name="UpdateWindowsPrompt" xml:space="preserve">
     <value>Please run Windows Update to update your system to the latest version and try again.</value>
   </data>
+  <data name="chkDisableARSO_Text" xml:space="preserve">
+    <value>Disable Automatic Restart Sign-On (ARSO) (For accounts with password, default off)</value>
+  </data>
+  <data name="chkDisableARSO_Tooltip" xml:space="preserve">
+    <value>If you cannot successfully enter Xbox Full Screen Experience when signing in, please try checking this option.</value>
+  </data>
+  <data name="LogArsoStatus_Disabled" xml:space="preserve">
+    <value>ARSO Current Status: Disabled (1)</value>
+  </data>
+  <data name="LogArsoStatus_Enabled" xml:space="preserve">
+    <value>ARSO Current Status: Enabled (0)</value>
+  </data>
+  <data name="LogArsoSet_Disabled" xml:space="preserve">
+    <value>Registry 'DisableAutomaticRestartSignOn' set to 1 (Enabled).</value>
+  </data>
+  <data name="LogArsoSet_Enabled" xml:space="preserve">
+    <value>Registry 'DisableAutomaticRestartSignOn' set to 0 (Disabled).</value>
+  </data>
+  <data name="ErrorArsoSetFailed" xml:space="preserve">
+    <value>Failed to set registry 'DisableAutomaticRestartSignOn': {0}</value>
+  </data>
 </root>
