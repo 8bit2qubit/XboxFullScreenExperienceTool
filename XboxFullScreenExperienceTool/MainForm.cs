@@ -408,7 +408,7 @@ namespace XboxFullScreenExperienceTool
                 bool isScreenSizeRestricted = RESTRICT_DRV_MODE_ON_LARGE_SCREEN && isScreenTooLarge; // 根據功能旗標和螢幕尺寸，判斷是否存在螢幕尺寸限制
                                                                                                      // 只有在「旗標為 true」且「螢幕需要覆寫 (即 > 9.5")」時，限制才生效
                 bool isDrvModeAvailable = isTestSigningOn && !isScreenSizeRestricted; // 綜合判斷：Drv 模式只有在「測試簽章已啟用」且「沒有螢幕尺寸限制」時才可用
-                // 檢查密碼與 ARSO 狀態
+                // 檢查 ARSO 狀態
                 bool isArsoDisabled = LogonPolicyHelper.IsArsoDisabled();
 
                 // 步驟 6: 狀態判斷 (非 UI) 
@@ -822,7 +822,7 @@ namespace XboxFullScreenExperienceTool
                     // 2. 否則 (表示 isTooLarge 為 true)，顯示 "尺寸過大" (LogScreenSizeTooLarge)，並傳入當前英寸和最大英寸
                     Log(isUndefined ? Resources.Strings.LogScreenSizeUndefined : string.Format(Resources.Strings.LogScreenSizeTooLarge, diagonalInches, MAX_DIAGONAL_INCHES));
                     // 呼叫 TaskSchedulerManager 來建立一個 Windows 排程工作，用於設定/修正螢幕尺寸
-                    TaskSchedulerManager.CreateSetPanelDimensionsTask();
+                    TaskSchedulerManager.CreateSetPanelDimensionsTask(msg => Log(msg));
                     Log(Resources.Strings.LogPanelTaskCreated);
                 }
                 else

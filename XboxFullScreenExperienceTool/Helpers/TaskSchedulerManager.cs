@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+using Microsoft.Win32;
 using System.Diagnostics;
-using System.Reflection;
 
 namespace XboxFullScreenExperienceTool.Helpers
 {
@@ -34,6 +34,62 @@ namespace XboxFullScreenExperienceTool.Helpers
         /// 定義用於在登入時啟動觸控鍵盤的工作排程的唯一名稱。
         /// </summary>
         private const string KEYBOARD_TASK_NAME = "StartTouchKeyboardOnLogon";
+
+        /// <summary>
+        /// 根據系統製造商 (OEM) 判斷適合的執行參數，並記錄偵測結果。
+        /// 允許針對不同品牌 (如 Microsoft) 回傳特定的設定參數。
+        /// </summary>
+        /// <param name="logger">用於記錄偵測結果的回呼函式。</param>
+        /// <returns>完整的參數字串，例如 "set 155 87" 或 "set 155 87 reg"。</returns>
+        private static string GetOemArguments(Action<string> logger)
+        {
+            // 預設參數
+            const string BaseArgs = "set 155 87";
+
+            try
+            {
+                // 讀取 BIOS 資訊中的製造商欄位
+                const string KeyPath = @"HARDWARE\DESCRIPTION\System\BIOS";
+                using (RegistryKey? key = Registry.LocalMachine.OpenSubKey(KeyPath))
+                {
+                    if (key != null)
+                    {
+                        object? manufacturerObj = key.GetValue("SystemManufacturer");
+                        if (manufacturerObj is string manufacturer && !string.IsNullOrEmpty(manufacturer))
+                        {
+                            logger($"[OEM] 偵測到系統製造商: {manufacturer}");
+                            // Microsoft 裝置 (Surface 等)
+                            // 只要開頭是 Microsoft 就啟用 "reg" 參數以寫入 OEM 登錄檔
+                            if (manufacturer.StartsWith("Microsoft", StringComparison.OrdinalIgnoreCase))
+                            {
+                                logger("[OEM] 判定為 Microsoft 裝置，啟用登錄檔寫入參數。");
+                                return BaseArgs + " reg";
+                            }
+
+                            // 未來擴充: 若有其他品牌需要特定處理，可在此新增
+                            // if (manufacturer.StartsWith("Lenovo", StringComparison.OrdinalIgnoreCase))
+                            // {
+                            //     return BaseArgs; // 或其他特定參數
+                            // }
+                        }
+                        else
+                        {
+                            logger("[OEM] 無法讀取系統製造商名稱。使用預設參數。");
+                        }
+                    }
+                    else
+                    {
+                        logger("[OEM] 無法存取或找到 BIOS 資訊登錄機碼。使用預設參數。");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logger($"[OEM ERROR] 讀取製造商資訊失敗: {ex.Message}。使用預設參數。");
+            }
+
+            return BaseArgs;
+        }
 
         /// <summary>
         /// 組合並傳回 `PhysPanelCS.exe` 工具的完整路徑。
@@ -105,11 +161,12 @@ namespace XboxFullScreenExperienceTool.Helpers
 
         /// <summary>
         /// 建立或覆寫一個在系統啟動時執行的工作排程。
-        /// 此工作會以 SYSTEM 權限執行 `PhysPanelCS.exe set 155 87`。
+        /// 此工作會以 SYSTEM 權限執行 `PhysPanelCS.exe`，參數由 GetOemArguments() 決定。
         /// </summary>
+        /// <param name="logger">用於記錄過程的回呼函式。</param>
         /// <exception cref="FileNotFoundException">如果找不到 `PhysPanelCS.exe`，則擲出此例外狀況。</exception>
         /// <exception cref="Exception">如果 `schtasks.exe` 命令因任何其他原因失敗，則擲出此例外狀況。</exception>
-        public static void CreateSetPanelDimensionsTask()
+        public static void CreateSetPanelDimensionsTask(Action<string> logger)
         {
             string physPanelPath = GetPhysPanelPath();
             // 執行前檢查：確保必要的工具程式存在，若不存在則提早失敗並提供清晰的錯誤訊息。
@@ -117,6 +174,11 @@ namespace XboxFullScreenExperienceTool.Helpers
             {
                 throw new FileNotFoundException(string.Format(Resources.Strings.TaskSchedulerManagerErrorFindFile, physPanelPath));
             }
+
+            // 取得針對特定 OEM 優化的參數 (例如 Microsoft 裝置會加上 " reg")
+            string arguments = GetOemArguments(logger);
+
+            logger($"[Task] 設定工作排程參數為: {arguments}"); // 記錄最終參數
 
             // 使用 XML 定義工作排程。這種方法比使用一長串命令列參數更精確且可靠。
             string xmlContent = $@"<?xml version=""1.0"" encoding=""UTF-16""?>
@@ -155,7 +217,7 @@ namespace XboxFullScreenExperienceTool.Helpers
     <!-- 動作：要執行的命令及其參數 -->
     <Exec>
       <Command>""{physPanelPath}""</Command>
-      <Arguments>set 155 87</Arguments>
+      <Arguments>{arguments}</Arguments>
     </Exec>
   </Actions>
 </Task>";
