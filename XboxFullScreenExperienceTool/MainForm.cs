@@ -210,7 +210,16 @@ namespace XboxFullScreenExperienceTool
         /// 在此狀態下，UI 應被鎖定以防止進一步的操作。
         /// </summary>
         private bool _restartPending = false;
+
+        /// <summary>
+        /// 指示表單是否正在進行初始化或重大狀態重置（例如切換語言）。
+        /// </summary>
         private bool _isInitializing = true;
+
+        /// <summary>
+        /// 指示 UI 控制項的狀態是否正在由程式碼自動更新（例如 CheckCurrentStatus 正在將系統狀態同步到 UI）。
+        /// </summary>
+        private bool _isUpdatingStatus = false;
 
         //======================================================================
         // 表單事件 (Form Events)
@@ -484,6 +493,8 @@ namespace XboxFullScreenExperienceTool
                 // (一次性將所有計算結果傳回 UI 執行緒進行更新)
                 this.Invoke((Action)(() =>
                 {
+                    _isUpdatingStatus = true; // 開始更新 UI
+
                     // 設定鍵盤啟動選項的可用性
                     chkStartKeyboardOnLogon.Enabled = !hasTouchSupport; // 如果沒有觸控，則啟用此選項
                     chkStartKeyboardOnLogon.Checked = isStartKeyboardTaskActive;
@@ -538,7 +549,7 @@ namespace XboxFullScreenExperienceTool
             }
             finally
             {
-                // _isInitializing = false; // 不再需要
+                _isUpdatingStatus = false; // 結束更新
             }
         }
 
@@ -1112,16 +1123,7 @@ namespace XboxFullScreenExperienceTool
         /// </summary>
         private void chkStartKeyboardOnLogon_CheckedChanged(object sender, EventArgs e)
         {
-            // 由於 CheckCurrentStatus 是在背景執行緒中設定 CheckBox 狀態，
-            // 需要確保 _isInitializing 旗標的讀取也是在 UI 執行緒上
-            if (this.InvokeRequired)
-            {
-                this.Invoke(new Action(() => chkStartKeyboardOnLogon_CheckedChanged(sender, e)));
-                return;
-            }
-
-            // 如果是在程式初始化期間設定狀態，則不執行任何動作
-            if (_isInitializing) return;
+            if (_isInitializing || _isUpdatingStatus) return;
 
             // 暫時停用控制項並顯示等待游標
             chkStartKeyboardOnLogon.Enabled = false;
