@@ -27,4 +27,6 @@ namespace PanelManager {
     std::optional<Dimensions> GetDisplaySize();
 
     NTSTATUS SetDisplaySize(const Dimensions& dims);
+
+    bool SetOEMDeviceForm();
 }

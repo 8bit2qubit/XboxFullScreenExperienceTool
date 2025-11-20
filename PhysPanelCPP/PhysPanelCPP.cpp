@@ -22,24 +22,25 @@
 #include <fcntl.h>
 
 void PrintUsage() {
-    std::wstring version = GetAppVersion();
-    std::wcout << std::endl;
-    std::wcout << L"Xbox Full Screen Experience Tool" << std::endl;
-    std::wcout << L"PhysPanelCPP Utility v" << version << std::endl;
-    std::wcout << L"Copyright (C) 2025 8bit2qubit" << std::endl;
-    std::wcout << L"-----------------------------------------------------" << std::endl;
-    std::wcout << L"Usage: PhysPanelCPP <command> [arguments...]" << std::endl;
-    std::wcout << std::endl;
-    std::wcout << L"Commands:" << std::endl;
-    std::wcout << L"  get                  Get the current physical display size (in mm and inches)." << std::endl;
-    std::wcout << L"  set <width> <height> Set a new physical display size (in mm). Requires SYSTEM privileges." << std::endl;
-    std::wcout << L"  startkeyboard        Launches and prepares the touch keyboard for use." << std::endl;
-    std::wcout << std::endl;
-    std::wcout << L"Examples:" << std::endl;
-    std::wcout << L"  PhysPanelCPP get" << std::endl;
-    std::wcout << L"  PhysPanelCPP set 155 87" << std::endl;
-    std::wcout << L"  PhysPanelCPP startkeyboard" << std::endl;
-    std::wcout << std::endl;
+    wchar_t version[32];
+    GetAppVersion(version, 32);
+
+    wprintf(L"\n");
+    wprintf(L"Xbox Full Screen Experience Tool\n");
+    wprintf(L"PhysPanelCPP Utility v%s\n", version);
+    wprintf(L"Copyright (C) 2025 8bit2qubit\n");
+    wprintf(L"-----------------------------------------------------\n");
+    wprintf(L"Usage: PhysPanelCPP <command> [arguments...]\n\n");
+    wprintf(L"Commands:\n");
+    wprintf(L"  get                  Get the current physical display size (in mm and inches).\n");
+    wprintf(L"  set <w> <h> [opt]    Set display size (mm). Use 'reg' as 3rd arg to update OEM registry.\n");
+    wprintf(L"                       Requires SYSTEM privileges.\n");
+    wprintf(L"  startkeyboard        Launches and prepares the touch keyboard for use.\n\n");
+    wprintf(L"Examples:\n");
+    wprintf(L"  PhysPanelCPP get\n");
+    wprintf(L"  PhysPanelCPP set 155 87\n");
+    wprintf(L"  PhysPanelCPP set 155 87 reg\n");
+    wprintf(L"  PhysPanelCPP startkeyboard\n\n");
 }
 
 int HandleGet() {
@@ -49,57 +50,67 @@ int HandleGet() {
         double diagonalMm = std::sqrt(std::pow(dims.WidthMm, 2) + std::pow(dims.HeightMm, 2));
         double diagonalInches = diagonalMm / 25.4;
 
-        std::wcout << std::fixed << std::setprecision(2);
-        std::wcout << L"Current Size: Width = " << dims.WidthMm << L" mm, Height = " << dims.HeightMm
-            << L" mm (Diagonal approx. " << diagonalInches << L" inches)" << std::endl;
-
-        std::wcout.flush();
+        wprintf(L"Current Size: Width = %u mm, Height = %u mm (Diagonal approx. %.2f inches)\n",
+            dims.WidthMm, dims.HeightMm, diagonalInches);
         return 0;
     }
     else {
-        std::wcerr << L"Error: Failed to get display size. An override may not be set." << std::endl;
-        std::wcerr.flush();
+        fwprintf(stderr, L"Error: Failed to get display size. An override may not be set.\n");
         return -1;
     }
 }
 
 int HandleSet(int argc, wchar_t* argv[]) {
-    if (argc != 4) {
-        std::wcerr << L"Error: The 'set' command requires two positive integer arguments (width and height)." << std::endl;
+    if (argc != 4 && argc != 5) {
+        fwprintf(stderr, L"Error: The 'set' command requires width and height (optional: reg).\n");
         PrintUsage();
-        std::wcerr.flush();
         return 1;
     }
 
-    try {
-        PanelManager::Dimensions newSize;
-        newSize.WidthMm = std::stoul(argv[2]);
-        newSize.HeightMm = std::stoul(argv[3]);
+    wchar_t* endPtr = nullptr;
 
-        NTSTATUS status = PanelManager::SetDisplaySize(newSize);
-        if (status == 0) {
-            std::wcout << L"Success: Display size has been set." << std::endl;
-            std::wcout.flush();
-            return 0;
-        }
-        else {
-            std::wcerr << L"Error: Failed to set display size. This operation requires SYSTEM privileges." << std::endl;
-            std::wcerr << L"  > NTSTATUS Error Code: 0x" << std::hex << std::uppercase << status << std::endl;
-            std::wcerr.flush();
-            return -1;
-        }
-    }
-    catch (const std::invalid_argument&) {
-        std::wcerr << L"Error: The 'set' command requires two positive integer arguments (width and height)." << std::endl;
+    unsigned long w = wcstoul(argv[2], &endPtr, 10);
+    if (argv[2] == endPtr || w == 0) {
+        fwprintf(stderr, L"Error: Arguments must be positive integers.\n");
         PrintUsage();
-        std::wcerr.flush();
         return 1;
     }
-    catch (const std::out_of_range&) {
-        std::wcerr << L"Error: The 'set' command requires two positive integer arguments (width and height)." << std::endl;
+
+    unsigned long h = wcstoul(argv[3], &endPtr, 10);
+    if (argv[3] == endPtr || h == 0) {
+        fwprintf(stderr, L"Error: Arguments must be positive integers.\n");
         PrintUsage();
-        std::wcerr.flush();
         return 1;
+    }
+
+    PanelManager::Dimensions newSize;
+    newSize.WidthMm = static_cast<UINT>(w);
+    newSize.HeightMm = static_cast<UINT>(h);
+
+    NTSTATUS status = PanelManager::SetDisplaySize(newSize);
+    if (status == 0) {
+        wprintf(L"Success: Display size has been set.\n");
+
+        if (argc == 5) {
+            wchar_t* arg = argv[4];
+            if (_wcsicmp(arg, L"reg") == 0) {
+                if (PanelManager::SetOEMDeviceForm()) {
+                    wprintf(L"Success: OEM DeviceForm registry key set to 0x2e.\n");
+                }
+                else {
+                    fwprintf(stderr, L"Error: Failed to set OEM DeviceForm registry key.\n");
+                }
+            }
+            else {
+                wprintf(L"Info: Unknown argument '%s'. Registry update skipped. Use 'reg' to enable it.\n", arg);
+            }
+        }
+        return 0;
+    }
+    else {
+        fwprintf(stderr, L"Error: Failed to set display size. This operation requires SYSTEM privileges.\n");
+        fwprintf(stderr, L"  > NTSTATUS Error Code: 0x%X\n", status);
+        return -1;
     }
 }
 
@@ -130,11 +141,6 @@ bool AttachConsoleAndRedirectIO() {
     freopen_s(&fp_stdout, "CONOUT$", "w", stdout);
     freopen_s(&fp_stderr, "CONOUT$", "w", stderr);
 
-    std::wcout.clear();
-    std::wcerr.clear();
-    std::wcout.sync_with_stdio(true);
-    std::wcerr.sync_with_stdio(true);
-
     (void)_setmode(_fileno(stdout), _O_WTEXT);
     (void)_setmode(_fileno(stderr), _O_WTEXT);
 
@@ -145,14 +151,16 @@ int wmain(int argc, wchar_t* argv[]) {
     _wsetlocale(LC_ALL, L"");
 
     bool needsConsole = true;
-    std::wstring action = L"";
+    wchar_t* action = nullptr;
 
     if (argc >= 2) {
         action = argv[1];
-        for (auto& c : action) c = towlower(c);
-
-        if (action == L"startkeyboard") {
+        if (_wcsicmp(action, L"startkeyboard") == 0) {
+#if defined(_DEBUG)
+            needsConsole = true;
+#else
             needsConsole = false;
+#endif
         }
     }
 
@@ -164,25 +172,23 @@ int wmain(int argc, wchar_t* argv[]) {
     if (argc < 2) {
         if (consoleAttached) {
             PrintUsage();
-            std::wcout.flush();
         }
         return 1;
     }
 
-    if (action == L"get") {
+    if (_wcsicmp(action, L"get") == 0) {
         return HandleGet();
     }
-    if (action == L"set") {
+    if (_wcsicmp(action, L"set") == 0) {
         return HandleSet(argc, argv);
     }
-    if (action == L"startkeyboard") {
+    if (_wcsicmp(action, L"startkeyboard") == 0) {
         return HandleStartKeyboard();
     }
 
     if (consoleAttached) {
-        std::wcerr << L"Error: Unknown command '" << argv[1] << L"'." << std::endl;
+        fwprintf(stderr, L"Error: Unknown command '%s'.\n", argv[1]);
         PrintUsage();
-        std::wcerr.flush();
     }
     return 1;
 }

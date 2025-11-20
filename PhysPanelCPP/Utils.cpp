@@ -16,33 +16,42 @@
 
 #include "pch.h"
 #include "Utils.h"
+#include <vector>
 
-std::wstring GetAppVersion() {
+bool GetAppVersion(wchar_t* buffer, size_t size) {
+    if (!buffer || size == 0) return false;
+
+    swprintf_s(buffer, size, L"Unknown");
+
     wchar_t filename[MAX_PATH];
     if (GetModuleFileNameW(NULL, filename, MAX_PATH) == 0) {
-        return L"Unknown";
+        return false;
     }
 
     DWORD handle = 0;
-    DWORD size = GetFileVersionInfoSizeW(filename, &handle);
-    if (size == 0) {
-        return L"Unknown";
+    DWORD verSize = GetFileVersionInfoSizeW(filename, &handle);
+    if (verSize == 0) {
+        return false;
     }
 
-    std::vector<BYTE> buffer(size);
-    if (!GetFileVersionInfoW(filename, 0, size, buffer.data())) {
-        return L"Unknown";
+    std::vector<BYTE> verData(verSize);
+
+    if (!GetFileVersionInfoW(filename, 0, verSize, verData.data())) {
+        return false;
     }
 
     VS_FIXEDFILEINFO* fileInfo = nullptr;
     UINT len = 0;
-    if (VerQueryValueW(buffer.data(), L"\\", (LPVOID*)&fileInfo, &len)) {
+    if (VerQueryValueW(verData.data(), L"\\", (LPVOID*)&fileInfo, &len)) {
         if (len && fileInfo->dwSignature == 0xFEEF04BD) {
-            return std::to_wstring(HIWORD(fileInfo->dwProductVersionMS)) + L"." +
-                std::to_wstring(LOWORD(fileInfo->dwProductVersionMS)) + L"." +
-                std::to_wstring(HIWORD(fileInfo->dwProductVersionLS));
+            swprintf_s(buffer, size, L"%hu.%hu.%hu",
+                HIWORD(fileInfo->dwProductVersionMS),
+                LOWORD(fileInfo->dwProductVersionMS),
+                HIWORD(fileInfo->dwProductVersionLS));
+
+            return true;
         }
     }
 
-    return L"Unknown";
+    return false;
 }
