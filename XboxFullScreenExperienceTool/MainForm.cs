@@ -34,62 +34,53 @@ namespace XboxFullScreenExperienceTool
     public partial class MainForm : Form
     {
         //======================================================================
-        // 常數與設定 (Constants & Configuration)
+        // 共用常數與設定 (Shared Constants & Configuration)
         //======================================================================
 
-        #region Constants
-        /// <summary>
-        /// 功能旗標：是否要在螢幕尺寸大於 9.5" 的裝置上強制停用驅動程式 (Drv) 模式。
-        /// 設定為 true: 啟用限制 (預設，更安全)。
-        /// 設定為 false: 取消限制，允許大螢幕裝置也嘗試使用 Drv 模式 (用於測試或進階使用者)。
-        /// </summary>
-        private const bool RESTRICT_DRV_MODE_ON_LARGE_SCREEN = false;
-
+        #region Shared Configuration
         /// <summary>
         /// 需要透過 ViVe 工具啟用的功能 ID 陣列。
         /// </summary>
-        private readonly uint[] FEATURE_IDS = { 52580392, 50902630 };
-
-        // --- 螢幕尺寸限制 ---
-        /// <summary>
-        /// 觸發自動設定的螢幕對角線尺寸門檻 (英吋)。
-        /// 根據測試，尺寸大於此值 (例如 > 9.5") 的裝置需要建立工作排程來強制覆寫尺寸。
-        /// </summary>
-        private const double MAX_DIAGONAL_INCHES = 9.5;
-        /// <summary>
-        /// 英吋與毫米的轉換率。
-        /// </summary>
-        private const double INCHES_TO_MM = 25.4;
+        private static readonly uint[] FEATURE_IDS = { 52580392, 50902630 };
 
         // --- 登錄檔相關常數 ---
         private const string REG_PATH_PARENT = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion";
         private const string REG_PATH = REG_PATH_PARENT + @"\OEM";
         private const string REG_VALUE = "DeviceForm";
+
         /// <summary>
         /// 用於備份原始登錄檔值的檔案路徑。
         /// </summary>
-        private readonly string BackupFilePath = Path.Combine(Application.StartupPath, "DeviceForm.bak");
+        private static string BackupFilePath => Path.Combine(AppPathManager.InstallPath, "DeviceForm.bak");
+        #endregion
+
+        //======================================================================
+        // 實例常數 (Instance Constants)
+        //======================================================================
+
+        #region Instance Constants
+        /// <summary>
+        /// 功能旗標：是否要在螢幕尺寸大於 9.5" 的裝置上強制停用驅動程式 (Drv) 模式。
+        /// </summary>
+        private const bool RESTRICT_DRV_MODE_ON_LARGE_SCREEN = false;
+
+        // --- 螢幕尺寸限制 ---
+        private const double MAX_DIAGONAL_INCHES = 9.5;
+        private const double INCHES_TO_MM = 25.4;
 
         /// <summary>
-        // 日誌檔案路徑。
-        private readonly string _logFilePath = Path.Combine(Application.StartupPath, "XboxFullScreenExperienceTool.log");
+        /// 日誌檔案路徑 (僅 UI 模式使用，靜默模式有自己的 Logger)。
         /// </summary>
+        private readonly string _logFilePath = Path.Combine(Application.StartupPath, "XboxFullScreenExperienceTool.log");
         #endregion
 
         #region Silent Action Handler
         /// <summary>
         /// 提供一組完全靜態的方法，用於在非互動式環境 (如靜默解除安裝) 中執行核心操作。
-        /// 這個類別絕對不能參考 MainForm 的任何實例成員或 UI 控制項。
+        /// 這個類別絕對不能參考 MainForm 的任何實例成員或 UI 控制項，但可以參考外部的靜態成員。
         /// </summary>
         public static class SilentActionHandler
         {
-            // 執行所需的核心常數
-            private static readonly uint[] FEATURE_IDS = { 52580392, 50902630 };
-            private const string REG_PATH_PARENT = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion";
-            private const string REG_PATH = REG_PATH_PARENT + @"\OEM";
-            private const string REG_VALUE = "DeviceForm";
-            private static string BackupFilePath => Path.Combine(Helpers.AppPathManager.InstallPath, "DeviceForm.bak");
-
             /// <summary>
             /// 執行完整的靜默停用和清理流程。
             /// </summary>
