@@ -52,92 +52,24 @@ namespace XboxFullScreenExperienceTool
             // 這將決定應用程式啟動時預設載入的資源檔 (例如，Strings.zh-TW.resx)
             Thread.CurrentThread.CurrentUICulture = CultureInfo.InstalledUICulture;
 
-            // --- 步驟 0: 處理靜默解除安裝命令 ---
-            if (args.Length > 0 && args[0].Equals("/silentdisable", StringComparison.OrdinalIgnoreCase))
+            // ================================================================
+            // 安裝/維護模式偵測 (Install/Maintenance Mode)
+            // ================================================================
+
+            if (args.Length > 0)
             {
-                #region Uninstall Logger Configuration
-#if DEBUG
-                // 建立一個簡單的檔案記錄器，用於在靜默模式下偵錯
-                Action<string> silentLogger = (message) => {
-                    try
-                    {
-                        // 將日誌寫入一個固定的、可預測的位置
-                        Directory.CreateDirectory(@"C:\temp");
-                        File.AppendAllText(@"C:\temp\XFSET_uninstall_log.txt", $"[{DateTime.Now:HH:mm:ss}] {message}{Environment.NewLine}");
-                    }
-                    catch { /* 忽略日誌寫入失敗 */ }
-                };
-#else
-                // 在 Release 模式下，日誌記錄器什麼也不做。
-                Action<string> silentLogger = (message) => { };
-#endif
-                #endregion
+                string mode = args[0].ToLowerInvariant();
 
-                silentLogger("Silent disable command detected.");
-                silentLogger($"Build configuration: {(IsDebugBuild() ? "DEBUG" : "RELEASE")}");
-
-                // 從參數中解析安裝路徑
-                string installPath = "";
-                foreach (var arg in args)
+                // 檢查是否為維護指令 (遷移或移除)
+                if (mode == "/migrate" || mode == "/silentdisable")
                 {
-                    if (arg.StartsWith("/installpath=", StringComparison.OrdinalIgnoreCase))
-                    {
-                        installPath = arg.Substring("/installpath=".Length).Trim('"');
-                        break;
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(installPath) && Directory.Exists(installPath))
-                {
-                    // 設定全域路徑，供所有輔助類別使用
-                    AppPathManager.InstallPath = installPath;
-                    silentLogger($"Install path successfully set to: '{installPath}'");
-
-                    // 呼叫完全靜態的清理方法，並同步等待其完成
-                    bool cleanupSuccess = false; // 預設為失敗
-                    try
-                    {
-                        // 直接使用方法的布林回傳值
-                        cleanupSuccess = MainForm.SilentActionHandler.PerformUninstallCleanup(silentLogger).GetAwaiter().GetResult();
-                    }
-                    catch (Exception ex)
-                    {
-                        silentLogger($"FATAL ERROR during silent cleanup: {ex.Message}");
-                        // 發生未處理的例外時，cleanupSuccess 保持為 false
-                    }
-
-                    // 只有在清理成功後才觸發重新開機
-                    if (cleanupSuccess)
-                    {
-                        silentLogger("Cleanup successful. Initiating system reboot in 5 seconds.");
-                        try
-                        {
-                            // 使用 shutdown.exe 命令
-                            // /r: 重新開機
-                            // /t 5: 等待 5 秒 (給使用者一點緩衝時間，也可以設為 0)
-                            // /c "..." : 在關機對話方塊中顯示的註解
-                            // /d p:4:1 : 記錄關機原因為「應用程式：維護 (計畫內)」
-                            string shutdownArgs = $"/r /t 5 /c \"{Resources.Strings.ShutdownReasonUninstall}\" /d p:4:1";
-                            Process.Start("shutdown.exe", shutdownArgs);
-                        }
-                        catch (Exception ex)
-                        {
-                            silentLogger($"ERROR initiating reboot: {ex.Message}");
-                        }
-                        return 0; // 成功
-                    }
-                    else
-                    {
-                        silentLogger("Cleanup failed. Reboot is cancelled. Exiting with error code 1.");
-                        return 1; // 失敗
-                    }
-                }
-                else
-                {
-                    silentLogger($"ERROR: Install path not found or is invalid. Exiting with error code 1. Args: {string.Join(" ", args)}");
-                    return 1; // 失敗
+                    return HandleMaintenanceMode(mode, args);
                 }
             }
+
+            // ================================================================
+            // 正常應用程式啟動 (Normal App Launch)
+            // ================================================================
 
             // --- 如果不是靜默解除安裝，則執行正常的 UI 應用程式流程 ---
 
@@ -169,6 +101,97 @@ namespace XboxFullScreenExperienceTool
             // 注意：如果程式崩潰，Mutex 可能不會被釋放，但作業系統最終會清理它。
             _mutex.ReleaseMutex();
             return 0;
+        }
+
+        /// <summary>
+        /// 處理安裝期間的特殊操作 (無介面模式)
+        /// </summary>
+        private static int HandleMaintenanceMode(string mode, string[] args)
+        {
+            Action<string> logger;
+
+            // 確保 Release 編譯時完全不包含日誌路徑與寫入邏輯
+#if DEBUG
+            logger = (msg) =>
+            {
+                try
+                {
+                    string logPath = Path.Combine(Path.GetTempPath(), "XFSET_Install.log");
+                    File.AppendAllText(logPath, $"[{DateTime.Now:HH:mm:ss}] [{mode}] {msg}{Environment.NewLine}");
+                }
+                catch { /* 忽略日誌寫入失敗 */ }
+            };
+#else
+            // 在 Release 模式下，編譯為空委派，不含任何 IO 程式碼
+            logger = (msg) => { };
+#endif
+
+            logger($"Starting maintenance mode: {mode}");
+
+            // 解析安裝路徑參數 /installpath="..."
+            string installPath = "";
+            foreach (var arg in args)
+            {
+                if (arg.StartsWith("/installpath=", StringComparison.OrdinalIgnoreCase))
+                {
+                    installPath = arg.Substring("/installpath=".Length).Trim('"');
+                    break;
+                }
+            }
+
+            // 驗證安裝路徑
+            if (string.IsNullOrEmpty(installPath) || !Directory.Exists(installPath))
+            {
+                logger($"ERROR: Invalid install path: '{installPath}'");
+                return 1;
+            }
+
+            // 設定全域路徑
+            AppPathManager.InstallPath = installPath;
+            logger($"Install path set to: {installPath}");
+
+            try
+            {
+                if (mode == "/migrate")
+                {
+                    // Commit 階段：執行工作排程遷移/更新
+                    logger("Executing Task Migration...");
+                    TaskSchedulerManager.RunTaskMigration(logger);
+                    logger("Migration completed.");
+                }
+                else if (mode == "/silentdisable")
+                {
+                    // Uninstall 階段：執行清理
+                    logger("Executing Silent Disable...");
+                    // 呼叫 MainForm 中的靜默清理邏輯
+                    bool success = MainForm.SilentActionHandler.PerformUninstallCleanup(logger).GetAwaiter().GetResult();
+
+                    if (success)
+                    {
+                        // 非 Debug 模式才執行重開機
+                        if (!IsDebugBuild())
+                        {
+                            logger("Cleanup success. Requesting reboot.");
+                            // 使用 shutdown.exe 命令
+                            // /r: 重新開機
+                            // /t 5: 等待 5 秒 (給使用者一點緩衝時間，也可以設為 0)
+                            // /c "..." : 在關機對話方塊中顯示的註解
+                            // /d p:4:1 : 記錄關機原因為「應用程式：維護 (計畫內)」
+                            Process.Start("shutdown.exe", $"/r /t 5 /c \"{Resources.Strings.ShutdownReasonUninstall}\" /d p:4:1");
+                        }
+                        else
+                        {
+                            logger("Cleanup success. Reboot skipped (DEBUG mode).");
+                        }
+                    }
+                }
+                return 0; // 成功
+            }
+            catch (Exception ex)
+            {
+                logger($"FATAL ERROR: {ex.Message}");
+                return 1; // 失敗
+            }
         }
 
         /// <summary>

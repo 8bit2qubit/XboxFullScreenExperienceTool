@@ -50,7 +50,7 @@ namespace KeyboardManager {
     constexpr auto SHELL_PROCESS_NAME = L"explorer.exe";
     const auto SHELL_READY_TIMEOUT = std::chrono::seconds(30);
     const auto COM_SERVICE_TIMEOUT = std::chrono::seconds(10);
-    const auto POST_LAUNCH_DELAY = std::chrono::seconds(6);
+    const auto POST_LAUNCH_DELAY = std::chrono::seconds(7);
 
     bool IsProcessRunning(const wchar_t* processName) {
         HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);

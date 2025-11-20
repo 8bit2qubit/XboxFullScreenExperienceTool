@@ -153,7 +153,7 @@
         {
             "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_7817F9D595C94AB6BDEB29C9F1B8687E"
             {
-            "Name" = "8:發佈項目 from XboxFullScreenExperienceTool (Active)"
+            "Name" = "8:Arg_SilentDisable"
             "Condition" = "8:"
             "Object" = "8:_272BC26B262F4E3D899B0F10EE3BA06C"
             "FileType" = "3:2"
@@ -162,6 +162,20 @@
             "EntryPoint" = "8:"
             "Sequence" = "3:1"
             "Identifier" = "8:_AF2CE6BE_B9C1_4433_B5E3_B1FE6E43963D"
+            "InstallerClass" = "11:FALSE"
+            "CustomActionData" = "8:"
+            }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_E077ABABAE6F4E0EAA4F5A43CD696626"
+            {
+            "Name" = "8:Arg_Migrate"
+            "Condition" = "8:"
+            "Object" = "8:_272BC26B262F4E3D899B0F10EE3BA06C"
+            "FileType" = "3:2"
+            "InstallAction" = "3:2"
+            "Arguments" = "8:/migrate /installpath=\"[TARGETDIR]\\\""
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_B5B1710B_D902_4CB9_A6D1_6291DEA8EEE2"
             "InstallerClass" = "11:FALSE"
             "CustomActionData" = "8:"
             }
