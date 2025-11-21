@@ -469,16 +469,16 @@
     <value>お使いのシステムでタッチサポートは検出されませんでした。これを有効にすると、ログオン時にコントローラー優先の体験のためにゲームパッドキーボードを自動的に起動できます。</value>
   </data>
   <data name="LogPanelTaskCreated" xml:space="preserve">
-    <value>スケジュールされたタスク 'SetPanelDimensions' が作成されました。</value>
+    <value>スケジュールされたタスク 'XFSET-SetPanelDimensions' が作成されました。</value>
   </data>
   <data name="LogPanelTaskDeleted" xml:space="preserve">
-    <value>スケジュールされたタスク 'SetPanelDimensions' が削除されました。</value>
+    <value>スケジュールされたタスク 'XFSET-SetPanelDimensions' が削除されました。</value>
   </data>
   <data name="LogKeyboardTaskCreated" xml:space="preserve">
-    <value>スケジュールされたタスク 'StartTouchKeyboardOnLogon' が作成されました。</value>
+    <value>スケジュールされたタスク 'XFSET-StartGamepadKeyboardOnLogon' が作成されました。</value>
   </data>
   <data name="LogKeyboardTaskDeleted" xml:space="preserve">
-    <value>スケジュールされたタスク 'StartTouchKeyboardOnLogon' が削除されました。</value>
+    <value>スケジュールされたタスク 'XFSET-StartGamepadKeyboardOnLogon' が削除されました。</value>
   </data>
   <data name="ShutdownReasonEnable" xml:space="preserve">
     <value>Xbox Full Screen Experience Tool は、構成を完了するためにコンピューターを再起動しています。</value>

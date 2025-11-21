@@ -469,16 +469,16 @@
     <value>您的系统未检测到触摸支持。您可以启用此选项，以便在登录时自动为控制器体验启动游戏控制器键盘。</value>
   </data>
   <data name="LogPanelTaskCreated" xml:space="preserve">
-    <value>任务计划 'SetPanelDimensions' 已创建。</value>
+    <value>任务计划 'XFSET-SetPanelDimensions' 已创建。</value>
   </data>
   <data name="LogPanelTaskDeleted" xml:space="preserve">
-    <value>任务计划 'SetPanelDimensions' 已删除。</value>
+    <value>任务计划 'XFSET-SetPanelDimensions' 已删除。</value>
   </data>
   <data name="LogKeyboardTaskCreated" xml:space="preserve">
-    <value>任务计划 'StartTouchKeyboardOnLogon' 已创建。</value>
+    <value>任务计划 'XFSET-StartGamepadKeyboardOnLogon' 已创建。</value>
   </data>
   <data name="LogKeyboardTaskDeleted" xml:space="preserve">
-    <value>任务计划 'StartTouchKeyboardOnLogon' 已删除。</value>
+    <value>任务计划 'XFSET-StartGamepadKeyboardOnLogon' 已删除。</value>
   </data>
   <data name="ShutdownReasonEnable" xml:space="preserve">
     <value>Xbox Full Screen Experience Tool 正在重新启动计算机以完成配置。</value>

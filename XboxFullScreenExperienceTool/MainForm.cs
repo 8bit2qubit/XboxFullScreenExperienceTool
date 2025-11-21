@@ -96,15 +96,15 @@ namespace XboxFullScreenExperienceTool
                     allSucceeded &= DisableViveFeatures(logger);
                     allSucceeded &= RestoreRegistry(logger);
 
-                    if (TaskSchedulerManager.TaskExists())
+                    if (TaskSchedulerManager.SetPanelDimensionsTaskExists())
                     {
                         logger("Deleting SetPanelDimensions task...");
                         TaskSchedulerManager.DeleteSetPanelDimensionsTask();
                     }
-                    if (TaskSchedulerManager.StartKeyboardTaskExists())
+                    if (TaskSchedulerManager.StartGamepadKeyboardOnLogonTaskExists())
                     {
-                        logger("Deleting StartTouchKeyboardOnLogon task...");
-                        TaskSchedulerManager.DeleteStartKeyboardTask();
+                        logger("Deleting StartGamepadKeyboardOnLogon task...");
+                        TaskSchedulerManager.DeleteStartGamepadKeyboardOnLogonTask();
                     }
 
                     if (DriverManager.IsDriverServiceInstalled())
@@ -395,12 +395,12 @@ namespace XboxFullScreenExperienceTool
                 }
 
                 // 步驟 3: 檢查覆寫方法是否存在 (非 UI) (CS Task & Drv Service)
-                bool isPhysPanelCSActive = TaskSchedulerManager.TaskExists();
+                bool isPhysPanelCSActive = TaskSchedulerManager.SetPanelDimensionsTaskExists();
                 bool isPhysPanelDrvActive = DriverManager.IsDriverServiceInstalled();
                 bool isScreenOverridePresent = isPhysPanelCSActive || isPhysPanelDrvActive;
                 // 步驟 4: 設定鍵盤啟動選項的可用性 (非 UI) 
                 bool hasTouchSupport = HardwareHelper.IsTouchScreenAvailable();
-                bool isStartKeyboardTaskActive = TaskSchedulerManager.StartKeyboardTaskExists();
+                bool isStartKeyboardTaskActive = TaskSchedulerManager.StartGamepadKeyboardOnLogonTaskExists();
                 // 步驟 5: 檢查並設定覆寫模式的可用性 (非 UI) (檢查驅動程式模式的先決條件 (Test Signing))
                 bool isTestSigningOn = DriverManager.IsTestSigningEnabled(); // 檢查測試簽章模式是否啟用
                 bool isScreenSizeRestricted = RESTRICT_DRV_MODE_ON_LARGE_SCREEN && isScreenTooLarge; // 根據功能旗標和螢幕尺寸，判斷是否存在螢幕尺寸限制
@@ -598,7 +598,7 @@ namespace XboxFullScreenExperienceTool
                 {
                     Log(Resources.Strings.LogChoosingDriverMode);
                     // 執行前先移除 CS 工作，避免衝突
-                    if (TaskSchedulerManager.TaskExists())
+                    if (TaskSchedulerManager.SetPanelDimensionsTaskExists())
                     {
                         Log(Resources.Strings.LogRemovingOldTask);
                         TaskSchedulerManager.DeleteSetPanelDimensionsTask();
@@ -723,15 +723,15 @@ namespace XboxFullScreenExperienceTool
             RestoreRegistry();
 
             // 步驟 3: 移除鍵盤啟動工作
-            if (TaskSchedulerManager.StartKeyboardTaskExists())
+            if (TaskSchedulerManager.StartGamepadKeyboardOnLogonTaskExists())
             {
                 Log(Resources.Strings.LogDeletingKeyboardTask);
-                TaskSchedulerManager.DeleteStartKeyboardTask();
+                TaskSchedulerManager.DeleteStartGamepadKeyboardOnLogonTask();
                 Log(Resources.Strings.LogKeyboardTaskDeleted, true);
             }
 
             // 步驟 4: 移除所有可能的覆寫方法 (包括 CS 和 Drv)
-            if (TaskSchedulerManager.TaskExists())
+            if (TaskSchedulerManager.SetPanelDimensionsTaskExists())
             {
                 Log(Resources.Strings.LogDeletingTask);
                 TaskSchedulerManager.DeleteSetPanelDimensionsTask();
@@ -1166,13 +1166,13 @@ namespace XboxFullScreenExperienceTool
                 if (chkStartKeyboardOnLogon.Checked)
                 {
                     Log(Resources.Strings.LogCreatingKeyboardTask);
-                    TaskSchedulerManager.CreateStartKeyboardTask();
+                    TaskSchedulerManager.CreateStartGamepadKeyboardOnLogonTask();
                     Log(Resources.Strings.LogKeyboardTaskCreated, true);
                 }
                 else
                 {
                     Log(Resources.Strings.LogDeletingKeyboardTask);
-                    TaskSchedulerManager.DeleteStartKeyboardTask();
+                    TaskSchedulerManager.DeleteStartGamepadKeyboardOnLogonTask();
                     Log(Resources.Strings.LogKeyboardTaskDeleted, true);
                 }
             }

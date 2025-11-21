@@ -469,16 +469,16 @@ Veuillez vous assurer que vous exécutez ce programme avec les privilèges d'adm
     <value>Aucun support tactile détecté sur votre système. Vous pouvez activer cette option pour lancer automatiquement le clavier pour manette à l'ouverture de session pour une expérience axée sur la manette.</value>
   </data>
   <data name="LogPanelTaskCreated" xml:space="preserve">
-    <value>La tâche planifiée 'SetPanelDimensions' a été créée.</value>
+    <value>La tâche planifiée 'XFSET-SetPanelDimensions' a été créée.</value>
   </data>
   <data name="LogPanelTaskDeleted" xml:space="preserve">
-    <value>La tâche planifiée 'SetPanelDimensions' a été supprimée.</value>
+    <value>La tâche planifiée 'XFSET-SetPanelDimensions' a été supprimée.</value>
   </data>
   <data name="LogKeyboardTaskCreated" xml:space="preserve">
-    <value>La tâche planifiée 'StartTouchKeyboardOnLogon' a été créée.</value>
+    <value>La tâche planifiée 'XFSET-StartGamepadKeyboardOnLogon' a été créée.</value>
   </data>
   <data name="LogKeyboardTaskDeleted" xml:space="preserve">
-    <value>La tâche planifiée 'StartTouchKeyboardOnLogon' a été supprimée.</value>
+    <value>La tâche planifiée 'XFSET-StartGamepadKeyboardOnLogon' a été supprimée.</value>
   </data>
   <data name="ShutdownReasonEnable" xml:space="preserve">
     <value>L'Outil de l'expérience plein écran Xbox redémarre l'ordinateur pour terminer la configuration.</value>

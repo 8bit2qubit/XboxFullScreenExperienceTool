@@ -577,7 +577,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Scheduled task &apos;StartTouchKeyboardOnLogon&apos; has been created. 的當地語系化字串。
+        ///   查詢類似 Scheduled task &apos;XFSET-StartGamepadKeyboardOnLogon&apos; has been created. 的當地語系化字串。
         /// </summary>
         internal static string LogKeyboardTaskCreated {
             get {
@@ -586,7 +586,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Scheduled task &apos;StartTouchKeyboardOnLogon&apos; has been deleted. 的當地語系化字串。
+        ///   查詢類似 Scheduled task &apos;XFSET-StartGamepadKeyboardOnLogon&apos; has been deleted. 的當地語系化字串。
         /// </summary>
         internal static string LogKeyboardTaskDeleted {
             get {
@@ -631,7 +631,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Scheduled task &apos;SetPanelDimensions&apos; has been created. 的當地語系化字串。
+        ///   查詢類似 Scheduled task &apos;XFSET-SetPanelDimensions&apos; has been created. 的當地語系化字串。
         /// </summary>
         internal static string LogPanelTaskCreated {
             get {
@@ -640,7 +640,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Scheduled task &apos;SetPanelDimensions&apos; has been deleted. 的當地語系化字串。
+        ///   查詢類似 Scheduled task &apos;XFSET-SetPanelDimensions&apos; has been deleted. 的當地語系化字串。
         /// </summary>
         internal static string LogPanelTaskDeleted {
             get {

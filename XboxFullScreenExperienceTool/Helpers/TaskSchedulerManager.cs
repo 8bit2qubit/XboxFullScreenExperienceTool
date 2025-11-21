@@ -25,13 +25,13 @@ namespace XboxFullScreenExperienceTool.Helpers
     public static class TaskSchedulerManager
     {
         /// <summary>
-        /// 定義要管理的工作排程的唯一名稱。
+        /// 定義用於在系統啟動時設定實體顯示面板的工作排程之唯一名稱。
         /// </summary>
         private const string TASK_NAME = "XFSET-SetPanelDimensions";
         private const string OLD_TASK_NAME = "SetPanelDimensions"; // 舊版名稱，用於遷移
 
         /// <summary>
-        /// 定義用於在登入時啟動遊戲控制器鍵盤的工作排程的唯一名稱。
+        /// 定義用於在登入時啟動遊戲控制器鍵盤的工作排程之唯一名稱。
         /// </summary>
         private const string KEYBOARD_TASK_NAME = "XFSET-StartGamepadKeyboardOnLogon";
         private const string OLD_KEYBOARD_TASK_NAME = "StartTouchKeyboardOnLogon"; // 舊版名稱，用於遷移
@@ -79,8 +79,8 @@ namespace XboxFullScreenExperienceTool.Helpers
             return process.ExitCode == 0;
         }
 
-        public static bool TaskExists() => CheckTaskExists(TASK_NAME);
-        public static bool StartKeyboardTaskExists() => CheckTaskExists(KEYBOARD_TASK_NAME);
+        public static bool SetPanelDimensionsTaskExists() => CheckTaskExists(TASK_NAME);
+        public static bool StartGamepadKeyboardOnLogonTaskExists() => CheckTaskExists(KEYBOARD_TASK_NAME);
 
         /// <summary>
         /// 供安裝程式在 Commit 階段呼叫，用於遷移舊工作或更新現有工作定義。
@@ -93,7 +93,7 @@ namespace XboxFullScreenExperienceTool.Helpers
             bool oldPanelTaskExists = CheckTaskExists(OLD_TASK_NAME);
             bool newPanelTaskExists = CheckTaskExists(TASK_NAME);
 
-            // 注意：如果舊工作存在，或者新工作已經存在(需要更新 XML 設定，如參數變更)，都執行重建
+            // 注意：如果舊工作存在，或者新工作已經存在 (需要更新 XML 設定，如參數變更)，都執行重建
             if (oldPanelTaskExists || newPanelTaskExists)
             {
                 logger($"Detecting Panel Task... Old: {oldPanelTaskExists}, New: {newPanelTaskExists}. Rebuilding...");
@@ -126,7 +126,7 @@ namespace XboxFullScreenExperienceTool.Helpers
 
                 try
                 {
-                    CreateStartKeyboardTask();
+                    CreateStartGamepadKeyboardOnLogonTask();
                     logger("Keyboard Task updated successfully.");
                 }
                 catch (Exception ex)
@@ -169,7 +169,7 @@ namespace XboxFullScreenExperienceTool.Helpers
   <Principals>
     <Principal id=""Author"">
       <!-- 執行身分：S-1-5-18 (LocalSystem) -->
-      <!-- 使用最高權限 (System) 執行，確保能修改實體面板設定 -->
+      <!-- 使用最高權限 (System) 執行，確保能修改實體顯示面板設定 -->
       <UserId>S-1-5-18</UserId>
       <RunLevel>HighestAvailable</RunLevel>
     </Principal>
@@ -186,7 +186,7 @@ namespace XboxFullScreenExperienceTool.Helpers
     <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
     <Enabled>true</Enabled>
     <Hidden>false</Hidden>
-    <!-- 優先級：0 (THREAD_PRIORITY_TIME_CRITICAL)，確保開機後第一時間修改實體面板設定 -->
+    <!-- 優先級：0 (THREAD_PRIORITY_TIME_CRITICAL)，確保開機後第一時間修改實體顯示面板設定 -->
     <Priority>0</Priority>
   </Settings>
   <Actions Context=""Author"">
@@ -203,7 +203,7 @@ namespace XboxFullScreenExperienceTool.Helpers
         /// <summary>
         /// 建立或覆寫 StartGamepadKeyboardOnLogon 工作排程。
         /// </summary>
-        public static void CreateStartKeyboardTask()
+        public static void CreateStartGamepadKeyboardOnLogonTask()
         {
             string physPanelPath = GetPhysPanelPath();
             if (!File.Exists(physPanelPath))
@@ -234,7 +234,7 @@ namespace XboxFullScreenExperienceTool.Helpers
   </Principals>
   <Settings>
     <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
-    <!-- 電源設定：確保掌機在未接電源登入時也能啟動鍵盤服務 -->
+    <!-- 電源設定：確保掌機在未接電源登入時也能啟動鍵盤服務 (但掌機通常有觸控螢幕，此工作會作用不到) -->
     <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
     <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
     <AllowHardTerminate>true</AllowHardTerminate>
@@ -324,6 +324,6 @@ namespace XboxFullScreenExperienceTool.Helpers
         }
 
         public static void DeleteSetPanelDimensionsTask() => DeleteTask(TASK_NAME);
-        public static void DeleteStartKeyboardTask() => DeleteTask(KEYBOARD_TASK_NAME);
+        public static void DeleteStartGamepadKeyboardOnLogonTask() => DeleteTask(KEYBOARD_TASK_NAME);
     }
 }

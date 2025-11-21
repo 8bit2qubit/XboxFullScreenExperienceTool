@@ -469,16 +469,16 @@
     <value>В вашей системе не обнаружена поддержка сенсорного ввода. Вы можете включить эту опцию для автоматического запуска клавиатуры для геймпада при входе для удобства управления с контроллера.</value>
   </data>
   <data name="LogPanelTaskCreated" xml:space="preserve">
-    <value>Запланированная задача 'SetPanelDimensions' была создана.</value>
+    <value>Запланированная задача 'XFSET-SetPanelDimensions' была создана.</value>
   </data>
   <data name="LogPanelTaskDeleted" xml:space="preserve">
-    <value>Запланированная задача 'SetPanelDimensions' была удалена.</value>
+    <value>Запланированная задача 'XFSET-SetPanelDimensions' была удалена.</value>
   </data>
   <data name="LogKeyboardTaskCreated" xml:space="preserve">
-    <value>Запланированная задача 'StartTouchKeyboardOnLogon' была создана.</value>
+    <value>Запланированная задача 'XFSET-StartGamepadKeyboardOnLogon' была создана.</value>
   </data>
   <data name="LogKeyboardTaskDeleted" xml:space="preserve">
-    <value>Запланированная задача 'StartTouchKeyboardOnLogon' была удалена.</value>
+    <value>Запланированная задача 'XFSET-StartGamepadKeyboardOnLogon' была удалена.</value>
   </data>
   <data name="ShutdownReasonEnable" xml:space="preserve">
     <value>Инструмент полноэкранного режима Xbox перезагружает компьютер для завершения настройки.</value>

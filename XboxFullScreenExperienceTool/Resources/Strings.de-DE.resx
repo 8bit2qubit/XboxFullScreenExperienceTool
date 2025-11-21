@@ -469,16 +469,16 @@ Bitte stellen Sie sicher, dass Sie dieses Programm mit Administratorrechten ausf
     <value>Keine Touch-Unterstützung auf Ihrem System erkannt. Sie können diese Option aktivieren, um die Gamepad-Tastatur bei der Anmeldung automatisch zu starten und eine Controller-orientierte Erfahrung zu ermöglichen.</value>
   </data>
   <data name="LogPanelTaskCreated" xml:space="preserve">
-    <value>Geplante Aufgabe 'SetPanelDimensions' wurde erstellt.</value>
+    <value>Geplante Aufgabe 'XFSET-SetPanelDimensions' wurde erstellt.</value>
   </data>
   <data name="LogPanelTaskDeleted" xml:space="preserve">
-    <value>Geplante Aufgabe 'SetPanelDimensions' wurde gelöscht.</value>
+    <value>Geplante Aufgabe 'XFSET-SetPanelDimensions' wurde gelöscht.</value>
   </data>
   <data name="LogKeyboardTaskCreated" xml:space="preserve">
-    <value>Geplante Aufgabe 'StartTouchKeyboardOnLogon' wurde erstellt.</value>
+    <value>Geplante Aufgabe 'XFSET-StartGamepadKeyboardOnLogon' wurde erstellt.</value>
   </data>
   <data name="LogKeyboardTaskDeleted" xml:space="preserve">
-    <value>Geplante Aufgabe 'StartTouchKeyboardOnLogon' wurde gelöscht.</value>
+    <value>Geplante Aufgabe 'XFSET-StartGamepadKeyboardOnLogon' wurde gelöscht.</value>
   </data>
   <data name="ShutdownReasonEnable" xml:space="preserve">
     <value>Das Xbox-Vollbildschirm-Erfahrungs-Tool startet den Computer neu, um die Konfiguration abzuschließen.</value>

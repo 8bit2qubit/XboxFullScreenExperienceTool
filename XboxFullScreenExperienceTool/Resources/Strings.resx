@@ -469,16 +469,16 @@ Please ensure you are running this program with administrator privileges.</value
     <value>No touch support detected on your system. You can enable this to automatically launch the gamepad keyboard on logon for a controller-first experience.</value>
   </data>
   <data name="LogPanelTaskCreated" xml:space="preserve">
-    <value>Scheduled task 'SetPanelDimensions' has been created.</value>
+    <value>Scheduled task 'XFSET-SetPanelDimensions' has been created.</value>
   </data>
   <data name="LogPanelTaskDeleted" xml:space="preserve">
-    <value>Scheduled task 'SetPanelDimensions' has been deleted.</value>
+    <value>Scheduled task 'XFSET-SetPanelDimensions' has been deleted.</value>
   </data>
   <data name="LogKeyboardTaskCreated" xml:space="preserve">
-    <value>Scheduled task 'StartTouchKeyboardOnLogon' has been created.</value>
+    <value>Scheduled task 'XFSET-StartGamepadKeyboardOnLogon' has been created.</value>
   </data>
   <data name="LogKeyboardTaskDeleted" xml:space="preserve">
-    <value>Scheduled task 'StartTouchKeyboardOnLogon' has been deleted.</value>
+    <value>Scheduled task 'XFSET-StartGamepadKeyboardOnLogon' has been deleted.</value>
   </data>
   <data name="ShutdownReasonEnable" xml:space="preserve">
     <value>Xbox Full Screen Experience Tool is restarting the computer to complete the configuration.</value>
