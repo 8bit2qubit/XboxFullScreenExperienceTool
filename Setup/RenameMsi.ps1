@@ -24,17 +24,19 @@
 
     它會自動執行以下操作：
     1. 讀取 .vdproj 專案檔，取得 "ProductVersion" (例如 0.0.11)。
-    2. 讀取主程式 .csproj 檔案，檢查 <SelfContained> 標籤 (true/false)。
-    3. 根據建置模式決定後綴：
-       - true (獨立部署): 命名為 "-Full" (完整版)
-       - false (框架相依): 命名為 "-Lite" (輕量版)
-    4. 尋找最新產生的 .msi 檔案。
-    5. 將其重新命名 (例如：Setup-0.0.11-Full.msi)。
+    2. 讀取主程式 .csproj 檔案：
+       - 檢查 <SelfContained> (決定 Full/Lite)。
+         - true (獨立部署): 命名為 "-Full" (完整版)
+         - false (框架相依): 命名為 "-Lite" (輕量版)
+       - 檢查 <IsExperimentalBuild> (決定是否附加 Git Hash)。
+    3. 取得 Git Hash (如果需要)。
+    4. 根據建置模式決定後綴。
+    5. 尋找最新產生的 .msi 檔案，將其重新命名 (例如：Setup-0.0.11-Full.msi)。
     
     不需要任何參數，腳本會自動尋找所有需要的檔案。
 #>
 try {
-    Write-Host "--- PowerShell 自動重新命名腳本已啟動 (含建置模式偵測) ---"
+    Write-Host "--- PowerShell 自動重新命名腳本已啟動 (含建置模式、實驗版 Hash 偵測) ---"
 
     # --- 1. 讀取版本號 ---
     
@@ -68,7 +70,7 @@ try {
         exit 1
     }
 
-    # --- 2. 讀取 SelfContained 狀態 (建置模式) ---
+    # --- 2. 讀取 SelfContained 與 IsExperimentalBuild 狀態 (建置模式) ---
 
     # 定義主程式 .csproj 檔案的相對路徑
     $csprojPath = Join-Path -Path $projectDir -ChildPath "..\XboxFullScreenExperienceTool\XboxFullScreenExperienceTool.csproj"
@@ -80,25 +82,52 @@ try {
     }
 
     $isSelfContained = $false
+    $isExperimental = $false
+
     try {
         # 嘗試將 .csproj 檔案作為 XML 讀取
         $xml = [xml](Get-Content $csprojPath -Encoding UTF8)
         
-        # 使用 XPath 尋找 <SelfContained> 節點 (local-name() 可忽略命名空間)
-        $xpathNode = '//*[local-name()="SelfContained"]'
-        $node = $xml.SelectSingleNode($xpathNode)
-        
-        # 檢查節點值是否為 'true'
-        if ($node -and $node.InnerText.ToLower() -eq 'true') {
+        # 檢查 SelfContained
+        $scNode = $xml.SelectSingleNode('//*[local-name()="SelfContained"]')
+        if ($scNode -and $scNode.InnerText.ToLower() -eq 'true') {
             $isSelfContained = $true
         }
+
+        # 檢查 IsExperimentalBuild
+        $expNode = $xml.SelectSingleNode('//*[local-name()="IsExperimentalBuild"]')
+        if ($expNode -and $expNode.InnerText.ToLower() -eq 'true') {
+            $isExperimental = $true
+        }
+
     } catch {
         # 這是後備機制，如果 .csproj 檔案格式錯誤或無法讀取
         Write-Host "警告: 讀取 .csproj 檔案失敗: $($_.Exception.Message)"
-        Write-Host "將假設為 '輕量版' (false) 模式繼續。"
+        Write-Host "將使用預設值繼續。"
     }
 
-    # --- 3. 決定檔案後綴 ---
+    # --- 3. 取得 Git Hash (如果需要) ---
+    $gitHashSuffix = ""
+    if ($isExperimental) {
+        Write-Host "偵測到「實驗版」模式，正在取得 Git Hash..."
+        try {
+            # 確保在專案目錄下執行 git 指令
+            Push-Location $projectDir
+            $gitHash = git rev-parse --short HEAD
+            if ($LASTEXITCODE -eq 0 -and -not [string]::IsNullOrWhiteSpace($gitHash)) {
+                $gitHashSuffix = "-$($gitHash.Trim())"
+                Write-Host "取得 Git Hash: $gitHash"
+            } else {
+                Write-Host "警告: Git 指令執行失敗或未回傳 Hash。"
+            }
+            Pop-Location
+        } catch {
+            Write-Host "警告: 無法執行 Git 指令: $_"
+            Pop-Location
+        }
+    }
+
+    # --- 4. 決定檔案後綴 ---
     
     # 根據 SelfContained 的狀態，決定要附加到檔名的後綴
     $versionSuffix = ""
@@ -112,7 +141,12 @@ try {
         Write-Host "偵測到「輕量版」模式，將使用 '$versionSuffix' 後綴。"
     }
 
-    # --- 4. 尋找並重新命名 MSI ---
+    # 如果是實驗版，將 Hash 加在後綴尾端
+    if ($isExperimental) {
+        $versionSuffix = "$versionSuffix$gitHashSuffix"
+    }
+
+    # --- 5. 尋找並重新命名 MSI ---
 
     # 遞迴搜尋所有子資料夾 (例如 Release, Debug)
     # 並依建立時間排序，找到最新的 .msi 檔案
@@ -129,7 +163,7 @@ try {
     $baseName = $latestMsi.BaseName
     $extension = $latestMsi.Extension
     
-    # 組合出新的檔名 (例如: Setup-0.0.11-Full.msi)
+    # 組合出新的檔名 (例如: Setup-0.0.11-Lite-0b2d39b.msi)
     $newName = "$baseName-$version$versionSuffix$extension"
 
     Write-Host "正在將 '$($latestMsi.Name)' 重新命名為 '$newName'"
