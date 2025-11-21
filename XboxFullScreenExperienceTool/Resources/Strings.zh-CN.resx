@@ -448,7 +448,7 @@
     <value>侦测到屏幕尺寸大于 9.5 英寸。为确保兼容性，已将覆写模式限制为“任务计划 (CS)”模式。</value>
   </data>
   <data name="chkStartKeyboardOnLogon_Text" xml:space="preserve">
-    <value>登录时启动游戏控制器键盘</value>
+    <value>在登录时启动游戏控制器键盘，并自动隐藏至后台待命</value>
   </data>
   <data name="LogCreatingKeyboardTask" xml:space="preserve">
     <value>正在创建“登录时启动游戏控制器键盘”的任务计划...</value>

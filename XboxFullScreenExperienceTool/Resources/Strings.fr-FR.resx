@@ -448,7 +448,7 @@ Veuillez vous assurer que vous exécutez ce programme avec les privilèges d'adm
     <value>Une taille d'écran supérieure à 9,5 pouces a été détectée. Pour garantir la compatibilité, le mode de substitution a été limité au mode 'Planificateur de tâches (CS)'.</value>
   </data>
   <data name="chkStartKeyboardOnLogon_Text" xml:space="preserve">
-    <value>Démarrer le clavier pour manette à l'ouverture de session</value>
+    <value>Démarrer le clavier pour manette à la connexion et masquer automatiquement en arrière-plan</value>
   </data>
   <data name="LogCreatingKeyboardTask" xml:space="preserve">
     <value>Création de la tâche planifiée pour démarrer le clavier pour manette à l'ouverture de session...</value>

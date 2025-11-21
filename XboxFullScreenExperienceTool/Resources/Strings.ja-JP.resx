@@ -448,7 +448,7 @@
     <value>9.5インチを超える画面サイズが検出されました。互換性を確保するため、オーバーライドモードは「タスクスケジューラ (CS)」モードに制限されています。</value>
   </data>
   <data name="chkStartKeyboardOnLogon_Text" xml:space="preserve">
-    <value>ログオン時にゲームパッドキーボードを起動する</value>
+    <value>ログオン時にゲームパッドキーボードを起動し、自動的にバックグラウンドに隠す</value>
   </data>
   <data name="LogCreatingKeyboardTask" xml:space="preserve">
     <value>ログオン時にゲームパッドキーボードを起動するためのスケジュール済みタスクを作成しています...</value>

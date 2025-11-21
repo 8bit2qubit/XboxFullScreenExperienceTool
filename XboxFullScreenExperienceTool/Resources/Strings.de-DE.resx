@@ -448,7 +448,7 @@ Bitte stellen Sie sicher, dass Sie dieses Programm mit Administratorrechten ausf
     <value>Eine Bildschirmgröße von mehr als 9,5 Zoll wurde erkannt. Um die Kompatibilität zu gewährleisten, wurde der Überschreibungsmodus auf den 'Aufgabenplanungsmodus (CS)' beschränkt.</value>
   </data>
   <data name="chkStartKeyboardOnLogon_Text" xml:space="preserve">
-    <value>Gamepad-Tastatur bei Anmeldung starten</value>
+    <value>Gamepad-Tastatur bei Anmeldung starten und automatisch im Hintergrund verbergen</value>
   </data>
   <data name="LogCreatingKeyboardTask" xml:space="preserve">
     <value>Erstelle geplante Aufgabe zum Starten der Gamepad-Tastatur bei Anmeldung...</value>

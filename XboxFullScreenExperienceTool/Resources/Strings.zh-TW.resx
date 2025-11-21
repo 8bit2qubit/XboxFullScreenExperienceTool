@@ -448,7 +448,7 @@
     <value>偵測到螢幕尺寸大於 9.5 英吋。為確保相容性，已將覆寫模式限制為「工作排程 (CS)」模式。</value>
   </data>
   <data name="chkStartKeyboardOnLogon_Text" xml:space="preserve">
-    <value>在登入時啟動遊戲控制器鍵盤</value>
+    <value>在登入時啟動遊戲控制器鍵盤，並自動收至背景待命</value>
   </data>
   <data name="LogCreatingKeyboardTask" xml:space="preserve">
     <value>正在建立「登入時啟動遊戲控制器鍵盤」的工作排程...</value>

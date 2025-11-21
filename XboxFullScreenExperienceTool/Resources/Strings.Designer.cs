@@ -88,7 +88,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Start gamepad keyboard on logon 的當地語系化字串。
+        ///   查詢類似 Start gamepad keyboard on logon and auto-hide to background 的當地語系化字串。
         /// </summary>
         internal static string chkStartKeyboardOnLogon_Text {
             get {

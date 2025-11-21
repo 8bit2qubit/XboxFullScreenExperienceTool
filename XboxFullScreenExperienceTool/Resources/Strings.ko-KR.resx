@@ -448,7 +448,7 @@
     <value>9.5인치보다 큰 화면 크기가 감지되었습니다. 호환성을 보장하기 위해 덮어쓰기 모드는 「작업 스케줄러 (CS)」 모드로 제한됩니다.</value>
   </data>
   <data name="chkStartKeyboardOnLogon_Text" xml:space="preserve">
-    <value>로그온 시 게임패드 키보드 시작</value>
+    <value>로그온 시 게임패드 키보드 시작 및 자동으로 백그라운드로 숨김</value>
   </data>
   <data name="LogCreatingKeyboardTask" xml:space="preserve">
     <value>로그온 시 게임패드 키보드를 시작하도록 예약된 작업 생성 중...</value>
