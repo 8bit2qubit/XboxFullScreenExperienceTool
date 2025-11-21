@@ -489,4 +489,7 @@
   <data name="UpdateWindowsPrompt" xml:space="preserve">
     <value>Windows Update를 실행하여 시스템을 최신 버전으로 업데이트한 후 다시 시도하십시오.</value>
   </data>
+  <data name="LogArchNotSupported" xml:space="preserve">
+    <value>현재 CPU 아키텍처(ARM64)는 드라이버 모드를 지원하지 않습니다.</value>
+  </data>
 </root>

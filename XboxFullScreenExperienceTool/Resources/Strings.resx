@@ -489,4 +489,7 @@ Please ensure you are running this program with administrator privileges.</value
   <data name="UpdateWindowsPrompt" xml:space="preserve">
     <value>Please run Windows Update to update your system to the latest version and try again.</value>
   </data>
+  <data name="LogArchNotSupported" xml:space="preserve">
+    <value>Current CPU architecture (ARM64) does not support Driver Mode.</value>
+  </data>
 </root>

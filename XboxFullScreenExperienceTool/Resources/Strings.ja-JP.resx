@@ -489,4 +489,7 @@
   <data name="UpdateWindowsPrompt" xml:space="preserve">
     <value>Windows Update を実行してシステムを最新バージョンに更新してから、もう一度お試しください。</value>
   </data>
+  <data name="LogArchNotSupported" xml:space="preserve">
+    <value>現在の CPU アーキテクチャ (ARM64) はドライバー モードをサポートしていません。</value>
+  </data>
 </root>

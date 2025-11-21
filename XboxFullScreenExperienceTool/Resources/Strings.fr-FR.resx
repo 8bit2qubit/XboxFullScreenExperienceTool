@@ -489,4 +489,7 @@ Veuillez vous assurer que vous exécutez ce programme avec les privilèges d'adm
   <data name="UpdateWindowsPrompt" xml:space="preserve">
     <value>Veuillez exécuter Windows Update pour mettre à jour votre système vers la dernière version, puis réessayez.</value>
   </data>
+  <data name="LogArchNotSupported" xml:space="preserve">
+    <value>L'architecture CPU actuelle (ARM64) ne prend pas en charge le mode pilote.</value>
+  </data>
 </root>

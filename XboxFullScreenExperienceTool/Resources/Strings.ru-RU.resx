@@ -489,4 +489,7 @@
   <data name="UpdateWindowsPrompt" xml:space="preserve">
     <value>Пожалуйста, запустите Центр обновления Windows, чтобы обновить вашу систему до последней версии, и повторите попытку.</value>
   </data>
+  <data name="LogArchNotSupported" xml:space="preserve">
+    <value>Текущая архитектура ЦП (ARM64) не поддерживает режим драйвера.</value>
+  </data>
 </root>

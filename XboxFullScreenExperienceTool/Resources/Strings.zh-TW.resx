@@ -489,4 +489,7 @@
   <data name="UpdateWindowsPrompt" xml:space="preserve">
     <value>請執行 Windows Update 將您的系統更新至最新版本後再試。</value>
   </data>
+  <data name="LogArchNotSupported" xml:space="preserve">
+    <value>目前的 CPU 架構 (ARM64) 不支援驅動程式模式。</value>
+  </data>
 </root>

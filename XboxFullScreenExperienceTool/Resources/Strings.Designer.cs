@@ -253,6 +253,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Current CPU architecture (ARM64) does not support Driver Mode. 的當地語系化字串。
+        /// </summary>
+        internal static string LogArchNotSupported {
+            get {
+                return ResourceManager.GetString("LogArchNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Backing up and setting registry... 的當地語系化字串。
         /// </summary>
         internal static string LogBackupAndSetRegistry {

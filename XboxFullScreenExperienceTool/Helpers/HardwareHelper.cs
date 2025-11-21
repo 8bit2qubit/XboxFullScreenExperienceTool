@@ -42,5 +42,15 @@ namespace XboxFullScreenExperienceTool.Helpers
             // 如果回傳值大於 0，表示至少有一個觸控點，即存在觸控螢幕。
             return GetSystemMetrics(SM_MAXIMUMTOUCHES) > 0;
         }
+
+        /// <summary>
+        /// 檢查作業系統架構是否支援 PhysPanelDrv 驅動程式 (目前僅支援 x64)。
+        /// </summary>
+        /// <returns>如果是 x64 架構則回傳 true，ARM64 或其他架構回傳 false。</returns>
+        public static bool IsDriverSupportedArchitecture()
+        {
+            // PhysPanelDrv.sys 是原生 x64 驅動，無法在 ARM64 Windows 上載入
+            return RuntimeInformation.OSArchitecture == Architecture.X64;
+        }
     }
 }

@@ -405,7 +405,13 @@ namespace XboxFullScreenExperienceTool
                 bool isTestSigningOn = DriverManager.IsTestSigningEnabled(); // 檢查測試簽章模式是否啟用
                 bool isScreenSizeRestricted = RESTRICT_DRV_MODE_ON_LARGE_SCREEN && isScreenTooLarge; // 根據功能旗標和螢幕尺寸，判斷是否存在螢幕尺寸限制
                                                                                                      // 只有在「旗標為 true」且「螢幕需要覆寫 (即 > 9.5")」時，限制才生效
-                bool isDrvModeAvailable = isTestSigningOn && !isScreenSizeRestricted; // 綜合判斷：Drv 模式只有在「測試簽章已啟用」且「沒有螢幕尺寸限制」時才可用
+                bool isArchSupported = HardwareHelper.IsDriverSupportedArchitecture(); // 檢查架構是否相容
+
+                // 綜合判斷：Drv 模式現在需要同時滿足：
+                // 1. 測試簽章已啟用
+                // 2. 沒有螢幕尺寸限制
+                // 3. 系統架構支援 (必須是 x64)
+                bool isDrvModeAvailable = isTestSigningOn && !isScreenSizeRestricted && isArchSupported;
 
                 // 步驟 6: 狀態判斷 (非 UI) 
                 // (先在背景執行緒準備好所有 UI 應該顯示的狀態)
@@ -515,11 +521,17 @@ namespace XboxFullScreenExperienceTool
                 // 步驟 8: 記錄日誌 (Log/LogError 方法已有 InvokeRequired 保護，是 thread-safe)
                 Log(string.Format(Resources.Strings.LogTouchSupportStatus, hasTouchSupport));
                 // 根據條件記錄日誌
+                // 如果測試簽章模式未開啟，記錄日誌提醒使用者
                 if (!isTestSigningOn)
                 {
                     Log(Resources.Strings.LogTestSigningDisabled);
                 }
-                // 只有在限制實際生效時才記錄日誌
+                // 如果架構不支援，記錄日誌提醒使用者
+                if (!isArchSupported)
+                {
+                    Log(Resources.Strings.LogArchNotSupported);
+                }
+                // 只有在螢幕尺寸限制實際生效時才記錄日誌
                 if (isScreenSizeRestricted)
                 {
                     Log(Resources.Strings.LogLargeScreenForceCS);
