@@ -11,6 +11,12 @@
     <Platforms>x64</Platforms>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <SelfContained>true</SelfContained>
+    <IsExperimentalBuild>false</IsExperimentalBuild>
+  </PropertyGroup>
+
+  <!-- 若為實驗版，定義 EXPERIMENTAL 常數供程式碼使用 -->
+  <PropertyGroup Condition="'$(IsExperimentalBuild)'=='true'">
+    <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -44,6 +50,28 @@
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+
+  <!-- 編譯前自動取得 Git Hash 並注入組件屬性中 -->
+  <Target Name="AddGitHashToAssembly" BeforeTargets="GetAssemblyAttributes">
+    <!-- 執行 git 指令取得短 Hash，若失敗不中斷編譯 -->
+	<Exec Command="git rev-parse --short HEAD" ConsoleToMSBuild="true" StandardOutputImportance="low" IgnoreExitCode="true">
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitHash" />
+      <Output TaskParameter="ExitCode" PropertyName="GitExitCode" />
+    </Exec>
+    
+	<!-- 若取得失敗，設定預設值 N/A -->
+    <PropertyGroup>
+      <GitHash Condition="'$(GitExitCode)' != '0' Or '$(GitHash)' == ''">N/A</GitHash>
+    </PropertyGroup>
+    
+	<!-- 將 Hash 注入 AssemblyMetadataAttribute -->
+    <ItemGroup>
+      <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+        <_Parameter1>GitHash</_Parameter1>
+        <_Parameter2>$(GitHash)</_Parameter2>
+      </AssemblyAttribute>
+    </ItemGroup>
+  </Target>
 
   <!-- 建置後目標，從 PhysPanelDrv 子模組複製必要的檔案 -->
   <Target Name="CopyPhysPanelDrvFiles" AfterTargets="AfterBuild">
