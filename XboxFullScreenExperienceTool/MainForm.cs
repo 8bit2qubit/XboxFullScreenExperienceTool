@@ -1005,9 +1005,20 @@ namespace XboxFullScreenExperienceTool
             // 取得版本號字串，如果版本資訊不存在，使用一個預設值 (未知版本)
             // Version.ToString(3) 的格式是 "Major.Minor.Build"
             string versionString = Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? Resources.Strings.UnknownVersion;
-            // 將標題設定為 "程式名稱 v主版號.次版號.組建編號"
-            // this.Text 的初始值是在設計工具中設定的 "Xbox 全螢幕體驗工具"
-            this.Text = $"{Resources.Strings.MainFormTitle} v{versionString}";
+
+            // 建立基礎標題："程式名稱 v主版號.次版號.組建編號"
+            string windowTitle = $"{Resources.Strings.MainFormTitle} v{versionString}";
+
+#if EXPERIMENTAL
+            // 只有在編譯為實驗版 (定義了 EXPERIMENTAL 常數) 時才會執行此區塊。
+            // 讀取 Git Hash 並將其附加到視窗標題後方，讓使用者或測試者能一眼識別目前版本。
+            string gitHash = GetGitHash();
+            if (gitHash != "N/A")
+            {
+                windowTitle += $" (Preview: {gitHash})";
+            }
+#endif
+            this.Text = windowTitle;
 
             lblStatus.Text = Resources.Strings.StatusChecking; // "狀態：偵測中...";
             grpPhysPanel.Text = Resources.Strings.grpPhysPanel_Text; 
@@ -1052,7 +1063,25 @@ namespace XboxFullScreenExperienceTool
                 Log(Resources.Strings.WelcomeMessage);
 
                 // 顯示程式標題與版本號 (與視窗標題列的格式一致)
-                Log($"{Resources.Strings.MainFormTitle} v{versionString}");
+                // 記錄版本資訊，並在此處記錄 Git Hash 以供偵錯 (無論是正式版或實驗版都記錄，方便排查)
+                string logVersion = $"{Resources.Strings.MainFormTitle} v{versionString}";
+
+                // 嘗試讀取 Git Hash
+                string gitHash = GetGitHash();
+                // 無論是「正式版」還是「實驗版」，只要能取得 Hash，都應記錄到日誌檔案中。
+                // 這樣當用戶回報問題並提供 Log 檔時，開發者能精確定位是哪一次 Commit 的程式碼。
+                if (gitHash != "N/A")
+                {
+                    // 將 Hash 加入日誌
+                    logVersion += $" (Commit: {gitHash})";
+
+#if EXPERIMENTAL
+                    // 如果是實驗版，在日誌中額外標註 [EXPERIMENTAL BUILD] 以便區分
+                    logVersion += " [EXPERIMENTAL BUILD]";
+#endif
+                }
+
+                Log(logVersion);
 
                 // 步驟 3: 執行耗時的非同步檢查 (使用 await Task.Run 等待背景執行緒的 CheckCurrentStatus 完成)
                 await Task.Run(() => CheckCurrentStatus());
@@ -1172,6 +1201,23 @@ namespace XboxFullScreenExperienceTool
             {
                 MessageBox.Show("Error displaying copyright information.", "Error");
             }
+        }
+
+        /// <summary>
+        /// 取得 Git Commit Hash。
+        /// 此方法負責讀取目前執行組件 (Executing Assembly) 的中繼資料 (Metadata)。
+        /// 該資料是在編譯時期由 .csproj 中的 <c>AddGitHashToAssembly</c> 目標自動注入的。
+        /// </summary>
+        /// <returns>
+        /// 返回 Git 的短 Hash (例如 "15e887c")；
+        /// 如果編譯環境無法取得 Hash (例如未安裝 git)，則返回 "N/A"。
+        /// </returns>
+        private string GetGitHash()
+        {
+            var attr = Assembly.GetExecutingAssembly()
+                .GetCustomAttributes<AssemblyMetadataAttribute>()
+                .FirstOrDefault(a => a.Key == "GitHash");
+            return attr?.Value ?? "N/A";
         }
 
         //======================================================================
