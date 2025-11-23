@@ -154,9 +154,13 @@ namespace XboxFullScreenExperienceTool
             {
                 if (mode == "/migrate")
                 {
-                    // Commit 階段：執行工作排程遷移/更新
+                    // Commit 階段：
+                    // 1. 執行工作排程遷移/更新
                     logger("Executing Task Migration...");
                     TaskSchedulerManager.RunTaskMigration(logger);
+                    // 2. 執行功能 ID 更新 (當偵測到備份檔案 DeviceForm.bak 時)
+                    logger("Checking and Updating Feature IDs...");
+                    MainForm.SilentActionHandler.MigrateFeaturesIfEnabled(logger);
                     logger("Migration completed.");
                 }
                 else if (mode == "/silentdisable")

@@ -41,7 +41,7 @@ namespace XboxFullScreenExperienceTool
         /// <summary>
         /// 需要透過 ViVe 工具啟用的功能 ID 陣列。
         /// </summary>
-        private static readonly uint[] FEATURE_IDS = { 52580392, 50902630 };
+        private static readonly uint[] FEATURE_IDS = { 52580392, 50902630, 59765208 };
 
         // --- 登錄檔相關常數 ---
         private const string REG_PATH_PARENT = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion";
@@ -187,6 +187,54 @@ namespace XboxFullScreenExperienceTool
                 {
                     logger($"ERROR restoring registry: {ex.Message}");
                     return false;
+                }
+            }
+
+            private static void EnableAllFeatures(Action<string> logger)
+            {
+                try
+                {
+                    logger($"Enabling features: {string.Join(", ", FEATURE_IDS)}");
+                    var updates = Array.ConvertAll(FEATURE_IDS, id => new RTL_FEATURE_CONFIGURATION_UPDATE
+                    {
+                        FeatureId = id,
+                        EnabledState = RTL_FEATURE_ENABLED_STATE.Enabled,
+                        Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState,
+                        Priority = RTL_FEATURE_CONFIGURATION_PRIORITY.User
+                    });
+                    FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
+                    FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Boot);
+                    logger("All features enabled successfully.");
+                }
+                catch (Exception ex)
+                {
+                    logger($"ERROR enabling features: {ex.Message}");
+                }
+            }
+
+            /// <summary>
+            /// 供 /migrate 使用。
+            /// 透過檢查備份檔案 (DeviceForm.bak) 是否存在來判斷功能是否啟用。
+            /// 避免誤將全新安裝或原本停用的使用者強制啟用。
+            /// </summary>
+            public static void MigrateFeaturesIfEnabled(Action<string> logger)
+            {
+                try
+                {
+                    // 當備份檔案存在時，代表本工具介入過
+                    if (File.Exists(BackupFilePath))
+                    {
+                        logger($"Detected active state (Backup file found). Applying Feature ID updates...");
+                        EnableAllFeatures(logger);
+                    }
+                    else
+                    {
+                        logger("Backup file not found. Assuming features are disabled or clean install. Skipping Feature ID updates.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger($"ERROR during feature migration check: {ex.Message}");
                 }
             }
         }
@@ -340,10 +388,37 @@ namespace XboxFullScreenExperienceTool
             try
             {
                 // 步驟 1: 基礎核心檢查 (非 UI) (ViVe 功能 & 登錄檔)
+#if EXPERIMENTAL
+                // [實驗版邏輯] 詳細檢查並列出每一個 ID 的狀態
+                bool allFeaturesEnabled = true;
+                Log("--- [EXPERIMENTAL] Feature ID Status ---");
+
+                foreach (uint id in FEATURE_IDS)
+                {
+                    var configObj = FeatureManager.QueryFeatureConfiguration(id, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
+                    if (configObj is RTL_FEATURE_CONFIGURATION config)
+                    {
+                        bool isEnabled = config.EnabledState == RTL_FEATURE_ENABLED_STATE.Enabled;
+                        string statusStr = isEnabled ? "Enabled (OK)" : "Disabled/Inactive";
+
+                        // 即使是啟用狀態也記錄，方便確認
+                        Log($"ID {id}: {statusStr}");
+
+                        if (!isEnabled) allFeaturesEnabled = false;
+                    }
+                    else
+                    {
+                        Log($"ID {id}: Config Not Found");
+                        allFeaturesEnabled = false;
+                    }
+                }
+                Log("----------------------------------------");
+#else
+                // [正式版邏輯] 使用 LINQ 快速檢查 (只要有一個不符合就回傳 false，不印出個別狀態)
                 bool allFeaturesEnabled = FEATURE_IDS.All(id =>
                     FeatureManager.QueryFeatureConfiguration(id, RTL_FEATURE_CONFIGURATION_TYPE.Runtime) is RTL_FEATURE_CONFIGURATION config &&
                     config.EnabledState == RTL_FEATURE_ENABLED_STATE.Enabled);
-
+#endif
                 // 檢查登錄檔：確認 DeviceForm 值是否已設定為 0x2E (46)
                 object? regValue = Registry.GetValue($"HKEY_LOCAL_MACHINE\\{REG_PATH}", REG_VALUE, null);
                 bool isRegistrySet = regValue is int intValue && intValue == 0x2E;
