@@ -32,9 +32,9 @@ By using this tool, you acknowledge and agree to the following:
 
 -----
 
-## 💡 Screen Dimension Override for Desktop PCs & Laptops
+## 💡 Screen Dimensions Override for Desktop PCs & Laptops
 
-The Xbox Full Screen Experience is designed for handheld-sized screens. If your device is not a handheld, a screen dimension override is required. This tool offers two distinct methods, and now automatically guides you to the appropriate choice based on your device type.
+The Xbox Full Screen Experience is designed for handheld-sized screens. If your device is not a handheld, a screen dimensions override is required. This tool offers two distinct methods, and now automatically guides you to the appropriate choice based on your device type.
 
 ### Task Scheduler Mode: `PhysPanelCS` (Recommended)
 This is the **default and recommended** method. It is easy to use and requires no additional manual setup. As of `v0.0.11`, this method has been enhanced to improve its startup stability, making it highly reliable for all devices, including desktops and laptops.
@@ -104,9 +104,9 @@ If you find this tool helpful, your support would be a great motivation for me t
 
 * **One-Click Toggle** – Simple interface to enable or disable the Xbox full screen experience.
 * **Automatic System Check** – Verifies your Windows build for compatibility at startup.
-* **Automatic Keyboard Fix** – Ensures the on-screen keyboard is always ready, enabling seamless controller input on non-touch PCs.
+* **Automatic Gamepad Keyboard Fix** – Ensures the on-screen keyboard is always ready, enabling seamless controller input on non-touch PCs.
 * **Device Type Emulation** – Automatically simulates a handheld device type for activation on desktop or laptop systems.
-* **Automatic Mode Selection** – Detects your device type (Desktop, Laptop, Handheld) and provides the appropriate screen dimension override options.
+* **Automatic Mode Selection** – Detects your device type (Desktop, Laptop, Handheld) and provides the appropriate screen dimensions override options.
 * **Safe and Reversible** – All changes are fully reversible. Backups of original settings are created to ensure safe restoration.
 * **Standard Installation** – Distributed as a `.msi` installer for clean installation, management, and removal.
 
@@ -149,7 +149,7 @@ This tool prepares your system for the new mode. Final activation is done in Win
 *   **Supporting Languages**: C++, C, PowerShell
 *   **Components & Libraries**:
     *   **ViVeLib (ViVeTool)** – A native API wrapper for managing Windows Feature Flags. Integrated as a Git submodule from [thebookisclosed/ViVe](https://github.com/thebookisclosed/ViVe).
-    *   **PhysPanelLib** – A custom library for reading and writing physical panel size information via undocumented `ntdll.dll` APIs. Concept adapted from [riverar/physpanel](https://github.com/riverar/physpanel).
+    *   **PhysPanelLib** – A custom library for reading and writing physical panel dimensions via undocumented `ntdll.dll` APIs. Concept adapted from [riverar/physpanel](https://github.com/riverar/physpanel).
     *   **PhysPanelDrv** – A lightweight kernel driver for the advanced `PhysPanelDrv` mode that reliably overrides physical display dimensions. Integrated as a Git submodule from [8bit2qubit/PhysPanelDrv](https://github.com/8bit2qubit/PhysPanelDrv).
 * **Installer**: Visual Studio Installer Projects (MSI)
 
