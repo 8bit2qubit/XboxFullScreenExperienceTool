@@ -492,4 +492,19 @@
   <data name="LogArchNotSupported" xml:space="preserve">
     <value>Текущая архитектура ЦП (ARM64) не поддерживает режим драйвера.</value>
   </data>
+  <data name="LogStatusCheckSummaryDetail" xml:space="preserve">
+    <value>Проверка статуса: Ядро={0}, Нативный={1}, Реестр={2}, Требуется переопределение экрана={3}, CS={4}, Drv={5}, Размер экрана={6:F2}", Тестовая подпись={7}</value>
+  </data>
+  <data name="LogNativeSupportDetected" xml:space="preserve">
+    <value>Обнаружена сборка 26220.7271+, применяется конфигурация нативной поддержки. (Размер: {0:F2}", Переопределение: {1})</value>
+  </data>
+  <data name="LogNonHandheldDetected" xml:space="preserve">
+    <value>Обнаружена не портативная среда: Создание задачи обслуживания реестра...</value>
+  </data>
+  <data name="LogHandheldDetected" xml:space="preserve">
+    <value>Обнаружено портативное устройство: Задача обслуживания не требуется.</value>
+  </data>
+  <data name="LogErrorArchivingLog" xml:space="preserve">
+    <value>Не удалось заархивировать старый файл журнала: {0}</value>
+  </data>
 </root>

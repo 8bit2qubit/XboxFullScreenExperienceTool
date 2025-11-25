@@ -492,4 +492,19 @@
   <data name="LogArchNotSupported" xml:space="preserve">
     <value>現在の CPU アーキテクチャ (ARM64) はドライバー モードをサポートしていません。</value>
   </data>
+  <data name="LogStatusCheckSummaryDetail" xml:space="preserve">
+    <value>状態チェック: コア={0}, ネイティブ={1}, レジストリ={2}, 画面上書き要={3}, CS={4}, Drv={5}, 画面サイズ={6:F2}", テスト署名={7}</value>
+  </data>
+  <data name="LogNativeSupportDetected" xml:space="preserve">
+    <value>ビルド 26220.7271+ を検出しました。ネイティブサポート設定を適用しています。(サイズ: {0:F2}", 上書き: {1})</value>
+  </data>
+  <data name="LogNonHandheldDetected" xml:space="preserve">
+    <value>非ハンドヘルド環境が検出されました: レジストリ保守タスクを作成しています...</value>
+  </data>
+  <data name="LogHandheldDetected" xml:space="preserve">
+    <value>ハンドヘルドデバイスが検出されました: 保守タスクは不要です。</value>
+  </data>
+  <data name="LogErrorArchivingLog" xml:space="preserve">
+    <value>古いログファイルをアーカイブできませんでした: {0}</value>
+  </data>
 </root>

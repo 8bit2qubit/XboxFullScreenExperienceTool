@@ -492,4 +492,19 @@
   <data name="LogArchNotSupported" xml:space="preserve">
     <value>当前 CPU 架构 (ARM64) 不支持驱动程序模式。</value>
   </data>
+  <data name="LogStatusCheckSummaryDetail" xml:space="preserve">
+    <value>状态检查: 核心={0}, 原生={1}, 注册表={2}, 屏幕覆写需求={3}, CS={4}, Drv={5}, 屏幕尺寸={6:F2}", 测试签名={7}</value>
+  </data>
+  <data name="LogNativeSupportDetected" xml:space="preserve">
+    <value>检测到构建 26220.7271+，正在应用原生支持配置。(尺寸: {0:F2}", 覆写: {1})</value>
+  </data>
+  <data name="LogNonHandheldDetected" xml:space="preserve">
+    <value>检测到非掌机环境：正在创建注册表维护任务...</value>
+  </data>
+  <data name="LogHandheldDetected" xml:space="preserve">
+    <value>检测到掌机设备：无需维护任务。</value>
+  </data>
+  <data name="LogErrorArchivingLog" xml:space="preserve">
+    <value>无法归档旧的日志文件：{0}</value>
+  </data>
 </root>

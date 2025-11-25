@@ -492,4 +492,19 @@ Bitte stellen Sie sicher, dass Sie dieses Programm mit Administratorrechten ausf
   <data name="LogArchNotSupported" xml:space="preserve">
     <value>Die aktuelle CPU-Architektur (ARM64) unterstützt den Treibermodus nicht.</value>
   </data>
+  <data name="LogStatusCheckSummaryDetail" xml:space="preserve">
+    <value>Statusprüfung: Kern={0}, Nativ={1}, Registrierung={2}, Bildschirmüberschreibung erforderlich={3}, CS={4}, Drv={5}, Bildschirmgröße={6:F2}", Testsignierung={7}</value>
+  </data>
+  <data name="LogNativeSupportDetected" xml:space="preserve">
+    <value>Build 26220.7271+ erkannt, wende native Support-Konfiguration an. (Größe: {0:F2}", Überschreibung: {1})</value>
+  </data>
+  <data name="LogNonHandheldDetected" xml:space="preserve">
+    <value>Nicht-Handheld-Umgebung erkannt: Erstelle Registrierungswartungsaufgabe...</value>
+  </data>
+  <data name="LogHandheldDetected" xml:space="preserve">
+    <value>Handheld-Gerät erkannt: Keine Wartungsaufgabe erforderlich.</value>
+  </data>
+  <data name="LogErrorArchivingLog" xml:space="preserve">
+    <value>Fehler beim Archivieren der alten Protokolldatei: {0}</value>
+  </data>
 </root>

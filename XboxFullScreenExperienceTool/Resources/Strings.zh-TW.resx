@@ -492,4 +492,19 @@
   <data name="LogArchNotSupported" xml:space="preserve">
     <value>目前的 CPU 架構 (ARM64) 不支援驅動程式模式。</value>
   </data>
+  <data name="LogStatusCheckSummaryDetail" xml:space="preserve">
+    <value>狀態檢查: 核心={0}, 原生={1}, 登錄檔={2}, 螢幕覆寫需求={3}, CS={4}, Drv={5}, 螢幕尺寸={6:F2}", 測試簽章={7}</value>
+  </data>
+  <data name="LogNativeSupportDetected" xml:space="preserve">
+    <value>偵測到組建 26220.7271+，正在套用原生支援設定。(尺寸: {0:F2}", 覆寫: {1})</value>
+  </data>
+  <data name="LogNonHandheldDetected" xml:space="preserve">
+    <value>偵測到非掌機環境：正在建立登錄檔維護工作...</value>
+  </data>
+  <data name="LogHandheldDetected" xml:space="preserve">
+    <value>偵測到掌機裝置：無需維護工作。</value>
+  </data>
+  <data name="LogErrorArchivingLog" xml:space="preserve">
+    <value>無法封存舊的日誌檔案：{0}</value>
+  </data>
 </root>

@@ -492,4 +492,19 @@
   <data name="LogArchNotSupported" xml:space="preserve">
     <value>현재 CPU 아키텍처(ARM64)는 드라이버 모드를 지원하지 않습니다.</value>
   </data>
+  <data name="LogStatusCheckSummaryDetail" xml:space="preserve">
+    <value>상태 확인: 코어={0}, 네이티브={1}, 레지스트리={2}, 화면 재정의 필요={3}, CS={4}, Drv={5}, 화면 크기={6:F2}", 테스트 서명={7}</value>
+  </data>
+  <data name="LogNativeSupportDetected" xml:space="preserve">
+    <value>빌드 26220.7271+가 감지되었습니다. 네이티브 지원 구성을 적용 중입니다. (크기: {0:F2}", 재정의: {1})</value>
+  </data>
+  <data name="LogNonHandheldDetected" xml:space="preserve">
+    <value>비 휴대용 환경이 감지되었습니다: 레지스트리 유지 관리 작업을 생성 중...</value>
+  </data>
+  <data name="LogHandheldDetected" xml:space="preserve">
+    <value>휴대용 장치가 감지되었습니다: 유지 관리 작업이 필요하지 않습니다.</value>
+  </data>
+  <data name="LogErrorArchivingLog" xml:space="preserve">
+    <value>이전 로그 파일을 보관하지 못했습니다: {0}</value>
+  </data>
 </root>

@@ -712,7 +712,15 @@ namespace XboxFullScreenExperienceTool
 
                 // 明確顯示 CS 與 Drv 的狀態，並保留 ScreenOverrideRequired 供判斷
                 // 這樣可以清楚看到：雖然是 Native 模式，但可能 CS=True (Reg 工作)
-                Log($"Status Check: Core={isCoreEnabled}, Native={isNativeSupport}, Registry={registryStatusString}, ScreenOverrideRequired={isScreenOverrideRequired}, CS={isPhysPanelCSActive}, Drv={isPhysPanelDrvActive}, ScreenSize={diagonalInches:F2}\", TestSigning={isTestSigningOn}");
+                Log(string.Format(Resources.Strings.LogStatusCheckSummaryDetail,
+                    isCoreEnabled,
+                    isNativeSupport,
+                    registryStatusString,
+                    isScreenOverrideRequired,
+                    isPhysPanelCSActive,
+                    isPhysPanelDrvActive,
+                    diagonalInches,
+                    isTestSigningOn));
                 Log(statusText); // 最終判斷的狀態文字
             }
             catch (Exception ex)
@@ -783,7 +791,7 @@ namespace XboxFullScreenExperienceTool
 
                 if (isNativeSupport)
                 {
-                    Log($"Detected build 26220.7271+, applying native support configuration. (Size: {diagonalInches:F2}\", Override: {isOverridePresent})");
+                    Log(string.Format(Resources.Strings.LogNativeSupportDetected, diagonalInches, isOverridePresent));
 
                     // --- Native 支援模式：清理舊機制 ---
 
@@ -807,7 +815,7 @@ namespace XboxFullScreenExperienceTool
                     // 條件：偵測到覆寫 (代表是桌機/筆電但被改過) OR 真實尺寸 > 9.5" (或未定義)
                     if (isOverridePresent || !IsHandheldDevice(diagonalInches))
                     {
-                        Log("Non-handheld environment detected: Creating Registry maintenance task...");
+                        Log(Resources.Strings.LogNonHandheldDetected);
                         // 建立僅執行 'reg' 指令的工作排程，確保開機時 DeviceForm 維持為 46
                         TaskSchedulerManager.CreateSetPanelDimensionsTask(regOnly: true);
                         Log(Resources.Strings.LogPanelTaskCreated);
@@ -815,7 +823,7 @@ namespace XboxFullScreenExperienceTool
                     else
                     {
                         // 真掌機 (無覆寫 且 尺寸 <= 9.5")：不需要任何工作排程
-                        Log("Handheld device detected: No maintenance task required.");
+                        Log(Resources.Strings.LogHandheldDetected);
                     }
                 }
                 else
@@ -1566,7 +1574,7 @@ namespace XboxFullScreenExperienceTool
             catch (Exception ex)
             {
                 // 如果封存失敗，在 UI 上提示，但不影響主要操作
-                LogError($"無法封存舊的日誌檔案：{ex.Message}");
+                LogError(string.Format(Resources.Strings.LogErrorArchivingLog, ex.Message));
             }
         }
 

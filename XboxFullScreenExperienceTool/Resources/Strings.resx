@@ -492,4 +492,19 @@ Please ensure you are running this program with administrator privileges.</value
   <data name="LogArchNotSupported" xml:space="preserve">
     <value>Current CPU architecture (ARM64) does not support Driver Mode.</value>
   </data>
+  <data name="LogStatusCheckSummaryDetail" xml:space="preserve">
+    <value>Status Check: Core={0}, Native={1}, Registry={2}, ScreenOverrideRequired={3}, CS={4}, Drv={5}, ScreenSize={6:F2}", TestSigning={7}</value>
+  </data>
+  <data name="LogNativeSupportDetected" xml:space="preserve">
+    <value>Detected build 26220.7271+, applying native support configuration. (Size: {0:F2}", Override: {1})</value>
+  </data>
+  <data name="LogNonHandheldDetected" xml:space="preserve">
+    <value>Non-handheld environment detected: Creating Registry maintenance task...</value>
+  </data>
+  <data name="LogHandheldDetected" xml:space="preserve">
+    <value>Handheld device detected: No maintenance task required.</value>
+  </data>
+  <data name="LogErrorArchivingLog" xml:space="preserve">
+    <value>Failed to archive old log file: {0}</value>
+  </data>
 </root>

@@ -223,7 +223,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Screen Dimension Override Method (for non-handheld devices) 的當地語系化字串。
+        ///   查詢類似 Screen Dimensions Override Method (for non-handheld devices) 的當地語系化字串。
         /// </summary>
         internal static string grpPhysPanel_Text {
             get {
@@ -451,6 +451,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Failed to archive old log file: {0} 的當地語系化字串。
+        /// </summary>
+        internal static string LogErrorArchivingLog {
+            get {
+                return ResourceManager.GetString("LogErrorArchivingLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Driver installation failed or was cancelled by the user. (Exit code: {0}) 的當地語系化字串。
         /// </summary>
         internal static string LogErrorDriverInstallCancelled {
@@ -505,7 +514,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Failed to read screen dimension, unable to determine if a scheduled task is needed. 的當地語系化字串。
+        ///   查詢類似 Failed to read screen dimensions, unable to determine if a scheduled task is needed. 的當地語系化字串。
         /// </summary>
         internal static string LogErrorReadingScreenSize {
             get {
@@ -514,7 +523,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Failed to read screen dimension, skipping this step. 的當地語系化字串。
+        ///   查詢類似 Failed to read screen dimensions, skipping this step. 的當地語系化字串。
         /// </summary>
         internal static string LogErrorReadingScreenSizeEnable {
             get {
@@ -555,6 +564,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         internal static string LogFindingDriverPackage {
             get {
                 return ResourceManager.GetString("LogFindingDriverPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Handheld device detected: No maintenance task required. 的當地語系化字串。
+        /// </summary>
+        internal static string LogHandheldDetected {
+            get {
+                return ResourceManager.GetString("LogHandheldDetected", resourceCulture);
             }
         }
         
@@ -613,11 +631,29 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Detected build 26220.7271+, applying native support configuration. (Size: {0:F2}&quot;, Override: {1}) 的當地語系化字串。
+        /// </summary>
+        internal static string LogNativeSupportDetected {
+            get {
+                return ResourceManager.GetString("LogNativeSupportDetected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 No backup file found, indicating this tool has not modified the registry. No restore needed. 的當地語系化字串。
         /// </summary>
         internal static string LogNoBackupFound {
             get {
                 return ResourceManager.GetString("LogNoBackupFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Non-handheld environment detected: Creating Registry maintenance task... 的當地語系化字串。
+        /// </summary>
+        internal static string LogNonHandheldDetected {
+            get {
+                return ResourceManager.GetString("LogNonHandheldDetected", resourceCulture);
             }
         }
         
@@ -649,7 +685,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Reading current screen dimension... 的當地語系化字串。
+        ///   查詢類似 Reading current screen dimensions... 的當地語系化字串。
         /// </summary>
         internal static string LogReadingScreenSize {
             get {
@@ -784,7 +820,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Successfully read screen dimension: {0}x{1}mm. 的當地語系化字串。
+        ///   查詢類似 Successfully read screen dimensions: {0}x{1}mm. 的當地語系化字串。
         /// </summary>
         internal static string LogScreenSizeSuccess {
             get {
@@ -793,7 +829,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Screen dimension ({0:F2}&quot;) is larger than the {1}&quot; threshold, creating startup task... 的當地語系化字串。
+        ///   查詢類似 Screen size ({0:F2}&quot;) is larger than the {1}&quot; threshold, creating startup task... 的當地語系化字串。
         /// </summary>
         internal static string LogScreenSizeTooLarge {
             get {
@@ -802,7 +838,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Undefined screen dimension (0x0mm) detected, creating startup task... 的當地語系化字串。
+        ///   查詢類似 Undefined screen dimensions (0x0mm) detected, creating startup task... 的當地語系化字串。
         /// </summary>
         internal static string LogScreenSizeUndefined {
             get {
@@ -829,6 +865,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Status Check: Core={0}, Native={1}, Registry={2}, ScreenOverrideRequired={3}, CS={4}, Drv={5}, ScreenSize={6:F2}&quot;, TestSigning={7} 的當地語系化字串。
+        /// </summary>
+        internal static string LogStatusCheckSummaryDetail {
+            get {
+                return ResourceManager.GetString("LogStatusCheckSummaryDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Task &apos;SetPanelDimensions&apos; created. 的當地語系化字串。
         /// </summary>
         internal static string LogTaskCreated {
@@ -847,7 +892,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Screen dimension ({0:F2}&quot;) is within the {1}&quot; range, no task needed. 的當地語系化字串。
+        ///   查詢類似 Screen size ({0:F2}&quot;) is within the {1}&quot; range, no task needed. 的當地語系化字串。
         /// </summary>
         internal static string LogTaskNotNeeded {
             get {
@@ -1036,7 +1081,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Status: Needs fix (Screen dimension task not set up correctly) 的當地語系化字串。
+        ///   查詢類似 Status: Needs fix (Screen dimensions task not set up correctly) 的當地語系化字串。
         /// </summary>
         internal static string StatusNeedsFix {
             get {
