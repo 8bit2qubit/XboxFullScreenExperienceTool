@@ -38,12 +38,13 @@ namespace XboxFullScreenExperienceTool
         //======================================================================
 
         #region Shared Configuration
-        /// <summary>
-        /// 需要透過 ViVe 工具啟用的功能 ID 陣列。
-        /// </summary>
-        private static readonly uint[] FEATURE_IDS = { 52580392, 50902630, 59765208 };
+        // 需要透過 ViVe 啟用的功能 ID 陣列。
+        // 定義所有功能 ID 的集合。
+        private static readonly uint[] ALL_FEATURE_IDS = { 52580392, 50902630, 59765208 };
+        // 定義基礎 (BASIC) 功能 ID 的集合 (適用於 Legacy Build 系統與掌機)。
+        private static readonly uint[] BASIC_FEATURE_IDS = { 52580392, 50902630 };
 
-        // --- 登錄檔相關常數 ---
+        // 登錄檔相關常數。
         private const string REG_PATH_PARENT = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion";
         private const string REG_PATH = REG_PATH_PARENT + @"\OEM";
         private const string REG_VALUE = "DeviceForm";
@@ -64,7 +65,7 @@ namespace XboxFullScreenExperienceTool
         /// </summary>
         private const bool RESTRICT_DRV_MODE_ON_LARGE_SCREEN = false;
 
-        // --- 螢幕尺寸限制 ---
+        // 螢幕尺寸限制。
         private const double MAX_DIAGONAL_INCHES = 9.5;
         private const double INCHES_TO_MM = 25.4;
 
@@ -73,6 +74,10 @@ namespace XboxFullScreenExperienceTool
         /// </summary>
         private readonly string _logFilePath = Path.Combine(Application.StartupPath, "XboxFullScreenExperienceTool.log");
         #endregion
+
+        //======================================================================
+        // 靜默動作處理 (Silent Action Handler)
+        //======================================================================
 
         #region Silent Action Handler
         /// <summary>
@@ -125,12 +130,18 @@ namespace XboxFullScreenExperienceTool
                 return allSucceeded;
             }
 
+            /// <summary>
+            /// 停用功能。必須清除所有已知的 ID。
+            /// 確保無論使用者之前處於何種狀態 (Legacy Build、Native Build、掌機、非掌機)，都能徹底還原。
+            /// </summary>
             private static bool DisableViveFeatures(Action<string> logger)
             {
                 try
                 {
-                    logger($"Disabling features: {string.Join(", ", FEATURE_IDS)}");
-                    var updates = Array.ConvertAll(FEATURE_IDS, id => new RTL_FEATURE_CONFIGURATION_UPDATE
+                    // 取得應停用的 ID 清單
+                    uint[] idsToDisable = GetIdsToDisable();
+                    logger($"Disabling features based on build ver (Native={IsNativeSupportBuild()}): {string.Join(", ", idsToDisable)}");
+                    var updates = Array.ConvertAll(idsToDisable, id => new RTL_FEATURE_CONFIGURATION_UPDATE
                     {
                         FeatureId = id,
                         EnabledState = RTL_FEATURE_ENABLED_STATE.Disabled,
@@ -194,8 +205,8 @@ namespace XboxFullScreenExperienceTool
             {
                 try
                 {
-                    logger($"Enabling features: {string.Join(", ", FEATURE_IDS)}");
-                    var updates = Array.ConvertAll(FEATURE_IDS, id => new RTL_FEATURE_CONFIGURATION_UPDATE
+                    logger($"Enabling features: {string.Join(", ", ALL_FEATURE_IDS)}");
+                    var updates = Array.ConvertAll(ALL_FEATURE_IDS, id => new RTL_FEATURE_CONFIGURATION_UPDATE
                     {
                         FeatureId = id,
                         EnabledState = RTL_FEATURE_ENABLED_STATE.Enabled,
@@ -213,6 +224,47 @@ namespace XboxFullScreenExperienceTool
             }
 
             /// <summary>
+            /// 智慧啟用功能，取代舊的 EnableAllFeatures。
+            /// 考慮 Override 狀態，以正確區分「被覆寫的主機」與「真掌機」。
+            /// </summary>
+            private static void EnableSmartFeatures(Action<string> logger)
+            {
+                try
+                {
+                    // 1. 取得環境資訊
+                    bool isNative = IsNativeSupportBuild();
+
+                    // 2. 檢查覆寫狀態 (PhysPanelCS 或 PhysPanelDrv 是否存在)
+                    bool isOverridePresent = TaskSchedulerManager.SetPanelDimensionsTaskExists() ||
+                                             DriverManager.IsDriverServiceInstalled();
+
+                    // 3. 取得螢幕尺寸
+                    var (success, size) = PanelManager.GetDisplaySize();
+                    double diagonalInches = (success && (size.WidthMm > 0 || size.HeightMm > 0))
+                        ? Math.Sqrt((size.WidthMm * size.WidthMm) + (size.HeightMm * size.HeightMm)) / INCHES_TO_MM
+                        : 0;
+
+                    // 4. 決定 ID 清單 (傳入 isOverridePresent)
+                    uint[] idsToEnable = GetRequiredFeatureIds(isNative, diagonalInches, isOverridePresent);
+                    logger($"Enabling smart features (Native={isNative}, Override={isOverridePresent}, Size={diagonalInches:F2}\"): {string.Join(", ", idsToEnable)}");
+                    var updates = Array.ConvertAll(idsToEnable, id => new RTL_FEATURE_CONFIGURATION_UPDATE
+                    {
+                        FeatureId = id,
+                        EnabledState = RTL_FEATURE_ENABLED_STATE.Enabled,
+                        Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState,
+                        Priority = RTL_FEATURE_CONFIGURATION_PRIORITY.User
+                    });
+                    FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
+                    FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Boot);
+                    logger("Features enabled successfully.");
+                }
+                catch (Exception ex)
+                {
+                    logger($"ERROR enabling features: {ex.Message}");
+                }
+            }
+
+            /// <summary>
             /// 供 /migrate 使用。
             /// 透過檢查備份檔案 (DeviceForm.bak) 是否存在來判斷功能是否啟用。
             /// 避免誤將全新安裝或原本停用的使用者強制啟用。
@@ -221,11 +273,12 @@ namespace XboxFullScreenExperienceTool
             {
                 try
                 {
-                    // 當備份檔案存在時，代表本工具介入過
+                    // 當備份檔案存在時，代表本工具介入過 (作為是否已啟用的標記)
                     if (File.Exists(BackupFilePath))
                     {
-                        logger($"Detected active state (Backup file found). Applying Feature ID updates...");
-                        EnableAllFeatures(logger);
+                        logger($"Detected active state (Backup file found). Applying SMART Feature ID updates...");
+                        // 呼叫智慧啟用，而非 EnableAllFeatures，確保從 Legacy Build 升級時，在掌機上不會誤開 59765208
+                        EnableSmartFeatures(logger);
                     }
                     else
                     {
@@ -244,6 +297,7 @@ namespace XboxFullScreenExperienceTool
         // 狀態旗標 (State Flags)
         //======================================================================
 
+        #region State Flags
         /// <summary>
         /// 追蹤是否已套用變更但使用者尚未重新啟動電腦。
         /// 在此狀態下，UI 應被鎖定以防止進一步的操作。
@@ -259,6 +313,7 @@ namespace XboxFullScreenExperienceTool
         /// 指示 UI 控制項的狀態是否正在由程式碼自動更新（例如 CheckCurrentStatus 正在將系統狀態同步到 UI）。
         /// </summary>
         private bool _isUpdatingStatus = false;
+        #endregion
 
         //======================================================================
         // 表單事件 (Form Events)
@@ -379,6 +434,72 @@ namespace XboxFullScreenExperienceTool
         }
 
         /// <summary>
+        /// 判斷是否為 26220.7271 或更新的原生支援版本 (Native Build)。
+        /// </summary>
+        private static bool IsNativeSupportBuild()
+        {
+            try
+            {
+                string? currentBuildStr = Registry.GetValue($@"HKEY_LOCAL_MACHINE\{REG_PATH_PARENT}", "CurrentBuild", null)?.ToString();
+                string? currentRevisionStr = Registry.GetValue($@"HKEY_LOCAL_MACHINE\{REG_PATH_PARENT}", "UBR", null)?.ToString();
+
+                if (int.TryParse(currentBuildStr, out int build) && int.TryParse(currentRevisionStr, out int revision))
+                {
+                    // Build > 26220 或 Build = 26220 且 Revision >= 7271
+                    if (build > 26220) return true;
+                    if (build == 26220 && revision >= 7271) return true;
+                }
+            }
+            catch { /* 忽略錯誤 */ }
+            return false;
+        }
+
+        /// <summary>
+        /// 取得「停用」操作時應針對的功能 ID 清單。
+        /// 1. 26220.7271+ (Native Build) -> 停用 3 個 ID (含 59765208)。
+        /// 2. Legacy Build -> 停用 2 個 ID (排除 59765208)。
+        /// 此邏輯不考慮螢幕尺寸。
+        /// </summary>
+        private static uint[] GetIdsToDisable()
+        {
+            return IsNativeSupportBuild() ? ALL_FEATURE_IDS : BASIC_FEATURE_IDS;
+        }
+
+        /// <summary>
+        /// 判斷是否為掌機尺寸 (0 < 尺寸 <= 9.5")。
+        /// </summary>
+        private static bool IsHandheldDevice(double diagonalInches)
+        {
+            return diagonalInches > 0 && diagonalInches <= MAX_DIAGONAL_INCHES;
+        }
+
+        /// <summary>
+        /// 根據系統版本、螢幕尺寸以及「是否存在覆寫」來取得功能 ID 清單。
+        /// </summary>
+        /// <param name="isNativeSupport">是否為 Native Build 26220.7271+ 版本</param>
+        /// <param name="diagonalInches">偵測到的螢幕對角線尺寸</param>
+        /// <param name="isOverridePresent">是否偵測到 CS 或 Drv 正在運作</param>
+        private static uint[] GetRequiredFeatureIds(bool isNativeSupport, double diagonalInches, bool isOverridePresent)
+        {
+            // Legacy Build：一律只支援 BASIC
+            if (!isNativeSupport) return BASIC_FEATURE_IDS;
+
+            // 原生支援版本 (Native Build 26220.7271+)：
+            // 判斷是否需要啟用 59765208 (非掌機模式)
+            // 條件 A: 偵測到覆寫 (CS/Drv)。這意味著尺寸是假的 (如 7")，且使用者之前刻意安裝了覆寫，
+            //         因此假設這是非掌機 (Desktop/Laptop)，需要完整功能。
+            // 條件 B: 無覆寫，且真實尺寸大於掌機範圍 (> 9.5" 或 0)。
+            if (isOverridePresent || !IsHandheldDevice(diagonalInches))
+            {
+                return ALL_FEATURE_IDS; // { 52580392, 50902630, 59765208 }
+            }
+
+            // 其他情況 ("無覆寫"且"尺寸符合掌機")：
+            // 真掌機 -> 排除 59765208
+            return BASIC_FEATURE_IDS; // { 52580392, 50902630 }
+        }
+
+        /// <summary>
         /// 檢查所有相關設定 (ViVe 功能、登錄檔、螢幕尺寸、排程工作/驅動程式) 以確定功能的目前啟用狀態，並相應地更新 UI。
         /// 綜合性的檢查，處理多種中間狀態（例如，需要修正）。
         /// 此方法現在被設計為在背景執行緒上執行。
@@ -387,202 +508,189 @@ namespace XboxFullScreenExperienceTool
         {
             try
             {
-                // 步驟 1: 基礎核心檢查 (非 UI) (ViVe 功能 & 登錄檔)
-#if EXPERIMENTAL
-                // [實驗版邏輯] 詳細檢查並列出每一個 ID 的狀態
-                bool allFeaturesEnabled = true;
-                Log("--- [EXPERIMENTAL] Feature ID Status ---");
+                // ======================================================================
+                // 步驟 1: 基礎環境與核心檢查
+                // ======================================================================
 
-                foreach (uint id in FEATURE_IDS)
-                {
-                    var configObj = FeatureManager.QueryFeatureConfiguration(id, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
-                    if (configObj is RTL_FEATURE_CONFIGURATION config)
-                    {
-                        bool isEnabled = config.EnabledState == RTL_FEATURE_ENABLED_STATE.Enabled;
-                        string statusStr = isEnabled ? "Enabled (OK)" : "Disabled/Inactive";
-
-                        // 即使是啟用狀態也記錄，方便確認
-                        Log($"ID {id}: {statusStr}");
-
-                        if (!isEnabled) allFeaturesEnabled = false;
-                    }
-                    else
-                    {
-                        Log($"ID {id}: Config Not Found");
-                        allFeaturesEnabled = false;
-                    }
-                }
-                Log("----------------------------------------");
-#else
-                // [正式版邏輯] 使用 LINQ 快速檢查 (只要有一個不符合就回傳 false，不印出個別狀態)
-                bool allFeaturesEnabled = FEATURE_IDS.All(id =>
-                    FeatureManager.QueryFeatureConfiguration(id, RTL_FEATURE_CONFIGURATION_TYPE.Runtime) is RTL_FEATURE_CONFIGURATION config &&
-                    config.EnabledState == RTL_FEATURE_ENABLED_STATE.Enabled);
-#endif
-                // 檢查登錄檔：確認 DeviceForm 值是否已設定為 0x2E (46)
-                object? regValue = Registry.GetValue($"HKEY_LOCAL_MACHINE\\{REG_PATH}", REG_VALUE, null);
-                bool isRegistrySet = regValue is int intValue && intValue == 0x2E;
-
-                // 描述登錄檔狀態的邏輯
-                string registryStatusString;
-                if (regValue == null)
-                    registryStatusString = Resources.Strings.LogRegStatusFalseNotExist;
-                else if (isRegistrySet)
-                    registryStatusString = Resources.Strings.LogRegStatusTrue;
-                else
-                    registryStatusString = string.Format(Resources.Strings.LogRegStatusFalseWrongValue, regValue);
-
-                bool isCoreEnabled = allFeaturesEnabled && isRegistrySet;
-
-                // 步驟 2: 硬體相依性檢查 (螢幕尺寸需求)
-                // 判斷是否仍需要覆寫螢幕尺寸 (0x0 或 > 9.5")
-                // 在以下兩種情況下需要：
-                //   a) 系統無法偵測到實體尺寸 (回傳 0x0mm)。
-                //   b) 偵測到的尺寸過大 (例如，桌機、筆電)，超出了此功能預期的掌機尺寸範圍。
-                bool isScreenOverrideRequired = false;
-                bool isScreenTooLarge = false; // 用於判斷螢幕是否過大
+                // 1.1 取得螢幕實體尺寸
                 var (success, size) = PanelManager.GetDisplaySize();
-                if (success)
-                {
-                    // 情況 a: 尺寸未定義
-                    bool isUndefined = size.WidthMm == 0 && size.HeightMm == 0;
-                    if (isUndefined) // 這是 0" 的情況
-                    {
-                        isScreenOverrideRequired = true;
-                    }
-                    // 情況 b: 尺寸有定義，現在來判斷是否過大
-                    else
-                    {
-                        // 使用畢氏定理 (a^2 + b^2 = c^2) 計算螢幕對角線的長度 (單位：毫米 mm)
-                        double diagonalMm = Math.Sqrt((size.WidthMm * size.WidthMm) + (size.HeightMm * size.HeightMm));
+                // 若無法讀取尺寸或為 0，視為未定義
+                double diagonalInches = (success && (size.WidthMm > 0 || size.HeightMm > 0))
+                    ? Math.Sqrt((size.WidthMm * size.WidthMm) + (size.HeightMm * size.HeightMm)) / INCHES_TO_MM
+                    : 0;
 
-                        // 將毫米 (mm) 轉換為英寸 (inches)，並檢查是否超過最大限制 (9.5")
-                        if ((diagonalMm / INCHES_TO_MM) > MAX_DIAGONAL_INCHES)
-                        {
-                            isScreenOverrideRequired = true;
-                            isScreenTooLarge = true; // 在這裡才將 isScreenTooLarge 設為 true
-                        }
-                    }
-                }
-                else
-                {
-                    LogError(Resources.Strings.LogErrorReadingScreenSize);
-                }
+                // 1.2 判斷版本
+                bool isNativeSupport = IsNativeSupportBuild(); // 26220.7271+
 
-                // 步驟 3: 檢查覆寫方法是否存在 (非 UI) (CS Task & Drv Service)
+                // ======================================================================
+                // 步驟 2: 檢查覆寫機制狀態 (個別檢查 CS 與 Drv)
+                // ======================================================================
+
                 bool isPhysPanelCSActive = TaskSchedulerManager.SetPanelDimensionsTaskExists();
                 bool isPhysPanelDrvActive = DriverManager.IsDriverServiceInstalled();
                 bool isScreenOverridePresent = isPhysPanelCSActive || isPhysPanelDrvActive;
-                // 步驟 4: 設定鍵盤啟動選項的可用性 (非 UI) 
-                bool hasTouchSupport = HardwareHelper.IsTouchScreenAvailable();
-                bool isStartKeyboardTaskActive = TaskSchedulerManager.StartGamepadKeyboardOnLogonTaskExists();
-                // 步驟 5: 檢查並設定覆寫模式的可用性 (非 UI) (檢查驅動程式模式的先決條件 (Test Signing))
+
+                // 1.3 判斷功能 ID 需求
+                uint[] requiredIds = GetRequiredFeatureIds(isNativeSupport, diagonalInches, isScreenOverridePresent);
+
+                // 1.4 檢查功能 ID 狀態
+#if EXPERIMENTAL
+                Log("--- [EXPERIMENTAL] Feature ID Status ---");
+                bool allRequiredEnabled = true;
+                foreach (uint id in requiredIds)
+                {
+                    var configObj = FeatureManager.QueryFeatureConfiguration(id, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
+                    bool isEnabled = configObj is RTL_FEATURE_CONFIGURATION config && config.EnabledState == RTL_FEATURE_ENABLED_STATE.Enabled;
+                    Log($"ID {id}: {(isEnabled ? "Enabled (OK)" : "Disabled/Inactive")}");
+                    if (!isEnabled) allRequiredEnabled = false;
+                }
+                Log("----------------------------------------");
+#else
+                bool allRequiredEnabled = requiredIds.All(id =>
+                    FeatureManager.QueryFeatureConfiguration(id, RTL_FEATURE_CONFIGURATION_TYPE.Runtime) is RTL_FEATURE_CONFIGURATION config &&
+                    config.EnabledState == RTL_FEATURE_ENABLED_STATE.Enabled);
+#endif
+                // 1.5 檢查登錄檔
+                object? regValue = Registry.GetValue($"HKEY_LOCAL_MACHINE\\{REG_PATH}", REG_VALUE, null);
+                bool isRegistrySet = regValue is int intValue && intValue == 0x2E;
+                string registryStatusString = (regValue == null) ? Resources.Strings.LogRegStatusFalseNotExist :
+                                              (isRegistrySet ? Resources.Strings.LogRegStatusTrue : string.Format(Resources.Strings.LogRegStatusFalseWrongValue, regValue));
+                bool isCoreEnabled = allRequiredEnabled && isRegistrySet;
+
+                // ======================================================================
+                // 步驟 3: 判斷是否「需要」修正 (ScreenOverrideRequired)
+                // ======================================================================
+
+                // 修正判斷邏輯：
+                // 1. Native Build：系統原生支援，不需要工具介入修正尺寸 -> Required = False
+                // 2. Legacy Build：若尺寸為 0 或 > 9.5" (例如桌機、筆電，超出了此功能預期的掌機尺寸範圍)，則需要修正 -> Required = True
+                //    (注意：若 CS 已生效將尺寸覆寫為 7"，此處 diagonalInches=7，判斷為 False，這代表「已修正/狀態良好」)
+                bool isScreenOverrideRequired = false;
+                if (!isNativeSupport)
+                {
+                    bool isUndefined = diagonalInches == 0;
+                    if (isUndefined || diagonalInches > MAX_DIAGONAL_INCHES)
+                    {
+                        isScreenOverrideRequired = true;
+                    }
+                }
+
+                // ======================================================================
+                // 步驟 4: 驅動模式可用性檢查
+                // ======================================================================
                 bool isTestSigningOn = DriverManager.IsTestSigningEnabled(); // 檢查測試簽章模式是否啟用
-                bool isScreenSizeRestricted = RESTRICT_DRV_MODE_ON_LARGE_SCREEN && isScreenTooLarge; // 根據功能旗標和螢幕尺寸，判斷是否存在螢幕尺寸限制
-                                                                                                     // 只有在「旗標為 true」且「螢幕需要覆寫 (即 > 9.5")」時，限制才生效
                 bool isArchSupported = HardwareHelper.IsDriverSupportedArchitecture(); // 檢查架構是否相容
+                bool isScreenSizeRestricted = RESTRICT_DRV_MODE_ON_LARGE_SCREEN && (diagonalInches > MAX_DIAGONAL_INCHES); // 根據 Drv 功能旗標和螢幕尺寸，判斷是否存在螢幕尺寸限制
+                bool isDrvModeAvailable = !isNativeSupport && isTestSigningOn && !isScreenSizeRestricted && isArchSupported; // Native 模式下停用 Drv
 
-                // 綜合判斷：Drv 模式現在需要同時滿足：
-                // 1. 測試簽章已啟用
-                // 2. 沒有螢幕尺寸限制
-                // 3. 系統架構支援 (必須是 x64)
-                bool isDrvModeAvailable = isTestSigningOn && !isScreenSizeRestricted && isArchSupported;
+                // ======================================================================
+                // 步驟 5: 決定 UI 狀態
+                // ======================================================================
 
-                // 步驟 6: 狀態判斷 (非 UI) 
-                // (先在背景執行緒準備好所有 UI 應該顯示的狀態)
                 string statusText;
                 Color statusColor;
-                string btnEnableText = Resources.Strings.btnEnable_Text; // 預設值
+                string btnEnableText = Resources.Strings.btnEnable_Text;
                 bool btnEnableEnabled, btnDisableEnabled, grpPhysPanelEnabled;
-                bool radPhysPanelDrvChecked = false, radPhysPanelCSChecked = true; // 預設值
+                bool radPhysPanelDrvChecked = false, radPhysPanelCSChecked = true; // 預設 PhysPanelCS
 
-                // 核心邏輯判斷：
-                // 1. isCoreEnabled: ViVe 功能 + 登錄檔是否設定。
-                // 2. isScreenOverrideRequired: 呼叫 GetDisplaySize() 後，螢幕尺寸是否仍不符需求。(如果覆寫成功，此值應為 False)
-                if (isCoreEnabled)
+                if (isCoreEnabled) // 功能 ID 和登錄檔是否已設定
                 {
-                    if (isScreenOverrideRequired)
+                    if (isNativeSupport)
                     {
-                        // 狀態 2: 需要修正
-                        // 核心已啟用，但螢幕尺寸仍不符
-                        // 根據使用者回報：當驅動程式安裝後未正常工作時，應用程式會進入此「需要修正」狀態
-                        // 此時若讓使用者點選「修正」，會導致重複安裝驅動，且無法解決問題
-                        // 正確的處理方式是引導使用者先「停用」功能，將系統還原到乾淨狀態再重試
-                        if (isPhysPanelDrvActive)
-                        {
-                            // 偵測到是驅動程式模式 (Drv) 處於無效狀態
-                            statusText = Resources.Strings.StatusDriverErrorNeedsDisable;
-                            statusColor = Color.Red; // 使用更醒目的紅色來表示嚴重錯誤
-                            btnEnableEnabled = false; // 停用「修正」按鈕
-                            btnDisableEnabled = true; // 啟用「停用」按鈕，這是唯一允許的操作
-                            grpPhysPanelEnabled = false; // 鎖定覆寫選項，防止使用者切換模式
-                            radPhysPanelDrvChecked = true; // 保持顯示目前是驅動模式
-                        }
-                        else
-                        {
-                            // 非驅動程式模式下的「需要修正」狀態 (例如排程工作損壞或從未安裝覆寫)
-                            statusText = Resources.Strings.StatusNeedsFix;
-                            statusColor = Color.Orange; // 使用更醒目的橘色來表示修正操作
-                            btnEnableText = Resources.Strings.btnEnable_Text_Fix;
-                            btnEnableEnabled = true; // 啟用「修正」按鈕
-                            btnDisableEnabled = true; // 啟用「停用」按鈕，同時提供完全停用的操作
-                            grpPhysPanelEnabled = true; // 啟用覆寫選項，允許選擇修正方式
-                            radPhysPanelDrvChecked = isPhysPanelDrvActive;
-                            radPhysPanelCSChecked = isPhysPanelCSActive;
-                            if (!isScreenOverridePresent) radPhysPanelCSChecked = true; // 預設 PhysPanelCS
-                        }
+                        // Native 模式，已啟用
+                        statusText = Resources.Strings.StatusEnabled;
+                        statusColor = Color.LimeGreen;
+                        btnEnableEnabled = false; // 停用「啟用」按鈕
+                        btnDisableEnabled = true; // 啟用「停用」按鈕
+                        grpPhysPanelEnabled = false; // 鎖定覆寫選項，防止使用者切換模式
+
+                        // Native 模式下預設選中 CS (代表使用工作排程機制，即便是 Reg Only)
+                        radPhysPanelCSChecked = true;
+                        radPhysPanelDrvChecked = false;
                     }
                     else
                     {
-                        // 狀態 1: 已啟用
-                        // 核心已啟用，且螢幕尺寸已符合需求。(無論是天生符合，或是覆寫已成功生效)
-                        statusText = isPhysPanelDrvActive ? Resources.Strings.StatusEnabledDriverMode : (isPhysPanelCSActive ? Resources.Strings.StatusEnabledSchedulerMode : Resources.Strings.StatusEnabled);
-                        statusColor = Color.LimeGreen;
-                        radPhysPanelDrvChecked = isPhysPanelDrvActive;
-                        radPhysPanelCSChecked = isPhysPanelCSActive;
-                        if (!isScreenOverridePresent) radPhysPanelCSChecked = true; // 螢幕尺寸正常，預設 PhysPanelCS
-                        grpPhysPanelEnabled = false; // 已啟用時鎖定選項
-                        btnEnableEnabled = false; // 停用「啟用」按鈕
-                        btnDisableEnabled = true; // 啟用「停用」按鈕
+                        // Legacy 模式，需要覆寫但未生效
+                        if (isScreenOverrideRequired)
+                        {
+                            // 偵測到是驅動程式模式 (Drv) 處於無效狀態
+                            if (isPhysPanelDrvActive)
+                            {
+                                statusText = Resources.Strings.StatusDriverErrorNeedsDisable;
+                                statusColor = Color.Red; // 使用更醒目的紅色來表示嚴重錯誤
+                                btnEnableEnabled = false; // 停用「啟用」按鈕
+                                btnDisableEnabled = true; // 啟用「停用」按鈕，這是唯一允許的操作
+                                grpPhysPanelEnabled = false; // 鎖定覆寫選項，防止使用者切換模式
+                                radPhysPanelDrvChecked = true; // 保持顯示目前是驅動模式
+                            }
+                            // 非驅動程式模式下的「需要修正」狀態 (例如排程工作損壞或從未安裝覆寫)
+                            else
+                            {
+                                statusText = Resources.Strings.StatusNeedsFix;
+                                statusColor = Color.Orange; // 使用更醒目的橘色來表示修正操作
+                                btnEnableText = Resources.Strings.btnEnable_Text_Fix;
+                                btnEnableEnabled = true; // 啟用「修正」按鈕
+                                btnDisableEnabled = true; // 啟用「停用」按鈕，同時提供完全停用的操作
+                                grpPhysPanelEnabled = true; // 啟用覆寫選項，允許選擇修正方式
+                                radPhysPanelDrvChecked = false;
+                                radPhysPanelCSChecked = true; // 預設 PhysPanelCS
+                            }
+                        }
+                        else
+                        {
+                            // 狀態良好，已啟用且尺寸正確 (無論是天生符合，或是覆寫已成功生效)
+                            statusText = isPhysPanelDrvActive ? Resources.Strings.StatusEnabledDriverMode : (isPhysPanelCSActive ? Resources.Strings.StatusEnabledSchedulerMode : Resources.Strings.StatusEnabled);
+                            statusColor = Color.LimeGreen;
+                            btnEnableEnabled = false; // 停用「啟用」按鈕
+                            btnDisableEnabled = true; // 啟用「停用」按鈕
+                            grpPhysPanelEnabled = false; // 停用覆寫選項
+                            radPhysPanelDrvChecked = isPhysPanelDrvActive;
+                            radPhysPanelCSChecked = isPhysPanelCSActive || !isPhysPanelDrvActive;
+                        }
                     }
                 }
-                else // !isCoreEnabled
+                else
                 {
-                    // 狀態 3: 未啟用
-                    // 核心功能 (ViVe 功能 & 登錄檔) 未設定。
+                    // 未啟用 (功能 ID 和登錄檔未設定)
                     statusText = Resources.Strings.StatusDisabled;
                     statusColor = Color.Tomato;
                     btnEnableText = Resources.Strings.btnEnable_Text;
                     btnEnableEnabled = true; // 啟用「啟用」按鈕
                     btnDisableEnabled = false; // 停用「停用」按鈕
-                    grpPhysPanelEnabled = isScreenOverrideRequired; // 只有在螢幕尺寸確實需要覆寫時，才啟用此選項群組
-                    radPhysPanelDrvChecked = isPhysPanelDrvActive;
-                    radPhysPanelCSChecked = isPhysPanelCSActive;
-                    if (!isScreenOverridePresent) radPhysPanelCSChecked = true; // 預設 PhysPanelCS
+
+                    if (isNativeSupport)
+                    {
+                        grpPhysPanelEnabled = false;
+                        radPhysPanelCSChecked = true;
+                    }
+                    else
+                    {
+                        grpPhysPanelEnabled = isScreenOverrideRequired; // 只有在螢幕尺寸確實需要覆寫時，才啟用此選項群組
+                        radPhysPanelDrvChecked = isPhysPanelDrvActive;
+                        radPhysPanelCSChecked = isPhysPanelCSActive || !isPhysPanelDrvActive;
+                    }
                 }
 
-                // 步驟 7: 將所有 UI 更新封裝到 this.Invoke 中
-                // (一次性將所有計算結果傳回 UI 執行緒進行更新)
+                // ======================================================================
+                // 步驟 6: 更新 UI
+                // ======================================================================
                 this.Invoke((Action)(() =>
                 {
                     _isUpdatingStatus = true; // 開始更新 UI
 
-                    // 設定鍵盤啟動選項的可用性
-                    chkStartKeyboardOnLogon.Enabled = !hasTouchSupport; // 如果沒有觸控，則啟用此選項
+                    // 設定遊戲控制器鍵盤啟動選項的可用性
+                    bool hasTouchSupport = HardwareHelper.IsTouchScreenAvailable();
+                    bool isStartKeyboardTaskActive = TaskSchedulerManager.StartGamepadKeyboardOnLogonTaskExists();
+
+                    chkStartKeyboardOnLogon.Enabled = !hasTouchSupport; // 讓桌電與筆電使用原本僅支援觸控裝置的遊戲控制器鍵盤
                     chkStartKeyboardOnLogon.Checked = isStartKeyboardTaskActive;
+                    toolTip.SetToolTip(chkStartKeyboardOnLogon, hasTouchSupport ? Resources.Strings.TooltipTouchEnabled : Resources.Strings.TooltipTouchDisabled); // 設定 ToolTip 提示，向使用者解釋選項
 
-                    // 設定 ToolTip 提示，向使用者解釋為何選項被停用
-                    if (hasTouchSupport)
-                        toolTip.SetToolTip(chkStartKeyboardOnLogon, Resources.Strings.TooltipTouchEnabled);
-                    else
-                        toolTip.SetToolTip(chkStartKeyboardOnLogon, Resources.Strings.TooltipTouchDisabled);
-
-                    radPhysPanelDrv.Enabled = isDrvModeAvailable;
                     // 安全機制：如果 Drv 模式因任何限制而變為不可用，則強制切換回 CS 模式
-                    if (!isDrvModeAvailable)
-                        radPhysPanelCS.Checked = true;
+                    radPhysPanelDrv.Enabled = isDrvModeAvailable;
+                    if (!isDrvModeAvailable && radPhysPanelDrv.Checked) radPhysPanelCS.Checked = true;
 
-                    // 設定從步驟 4 邏輯中計算出來的值
+                    // 設定從步驟 5 邏輯中計算出來的值
                     lblStatus.Text = statusText;
                     lblStatus.ForeColor = statusColor;
                     btnEnable.Text = btnEnableText;
@@ -593,27 +701,19 @@ namespace XboxFullScreenExperienceTool
                     radPhysPanelCS.Checked = radPhysPanelCSChecked;
                 }));
 
-                // 步驟 8: 記錄日誌 (Log/LogError 方法已有 InvokeRequired 保護，是 thread-safe)
-                Log(string.Format(Resources.Strings.LogTouchSupportStatus, hasTouchSupport));
-                // 根據條件記錄日誌
-                // 如果測試簽章模式未開啟，記錄日誌提醒使用者
-                if (!isTestSigningOn)
-                {
-                    Log(Resources.Strings.LogTestSigningDisabled);
-                }
-                // 如果架構不支援，記錄日誌提醒使用者
-                if (!isArchSupported)
-                {
-                    Log(Resources.Strings.LogArchNotSupported);
-                }
-                // 只有在螢幕尺寸限制實際生效時才記錄日誌
-                if (isScreenSizeRestricted)
-                {
-                    Log(Resources.Strings.LogLargeScreenForceCS);
-                }
-                Log(string.Format(Resources.Strings.LogStatusCheckSummary, isCoreEnabled, allFeaturesEnabled, registryStatusString, isScreenOverrideRequired, isScreenOverridePresent, isPhysPanelCSActive, isPhysPanelDrvActive, isTestSigningOn));
-                // 最終判斷的狀態文字
-                Log(statusText);
+                // ======================================================================
+                // 步驟 7: 寫入日誌 (顯示 CS 與 Drv 狀態)
+                // ======================================================================
+                Log(string.Format(Resources.Strings.LogTouchSupportStatus, HardwareHelper.IsTouchScreenAvailable()));
+
+                if (!isNativeSupport && !isTestSigningOn) Log(Resources.Strings.LogTestSigningDisabled); // 如果測試簽章模式未開啟
+                if (!isNativeSupport && !isArchSupported) Log(Resources.Strings.LogArchNotSupported); // 如果架構不支援
+                if (!isNativeSupport && isScreenSizeRestricted) Log(Resources.Strings.LogLargeScreenForceCS); // 只有在螢幕尺寸限制生效時
+
+                // 明確顯示 CS 與 Drv 的狀態，並保留 ScreenOverrideRequired 供判斷
+                // 這樣可以清楚看到：雖然是 Native 模式，但可能 CS=True (Reg 工作)
+                Log($"Status Check: Core={isCoreEnabled}, Native={isNativeSupport}, Registry={registryStatusString}, ScreenOverrideRequired={isScreenOverrideRequired}, CS={isPhysPanelCSActive}, Drv={isPhysPanelDrvActive}, ScreenSize={diagonalInches:F2}\", TestSigning={isTestSigningOn}");
+                Log(statusText); // 最終判斷的狀態文字
             }
             catch (Exception ex)
             {
@@ -627,7 +727,7 @@ namespace XboxFullScreenExperienceTool
             }
             finally
             {
-                _isUpdatingStatus = false; // 結束更新
+                _isUpdatingStatus = false; // 結束更新 UI
             }
         }
 
@@ -656,51 +756,107 @@ namespace XboxFullScreenExperienceTool
             {
                 Log(Resources.Strings.LogBeginEnable);
 
-                // --- 通用步驟：設定核心功能 ---
                 // 1. 備份並設定登錄檔
                 Log(Resources.Strings.LogBackupAndSetRegistry);
                 BackupAndSetRegistry();
 
-                // 2. 啟用 ViVe 功能
-                Log(string.Format(Resources.Strings.LogEnablingFeatures, string.Join(", ", FEATURE_IDS)));
-                EnableViveFeatures();
+                // 準備環境判斷參數
+                bool isNativeSupport = IsNativeSupportBuild();
+                var (success, size) = PanelManager.GetDisplaySize();
+                // 若無法讀取尺寸，視為 0 (未定義)
+                double diagonalInches = (success && (size.WidthMm > 0 || size.HeightMm > 0))
+                    ? Math.Sqrt((size.WidthMm * size.WidthMm) + (size.HeightMm * size.HeightMm)) / INCHES_TO_MM
+                    : 0;
 
-                // --- 步驟 3: 條件步驟：設定螢幕尺寸覆寫 ---
+                // 檢查目前是否有覆寫 (這會影響判斷裝置類型)
+                // 如果偵測到 CS 或 Drv 正在運作，代表目前的 diagonalInches 可能是被覆寫過的 (例如 7")
+                // 此時應將其視為「非掌機」來處理
+                bool isOverridePresent = TaskSchedulerManager.SetPanelDimensionsTaskExists() ||
+                                         DriverManager.IsDriverServiceInstalled();
+
+                // 2. 啟用 ViVe 功能 (使用動態計算的 ID，考慮系統版本與覆寫狀態)
+                uint[] idsToEnable = GetRequiredFeatureIds(isNativeSupport, diagonalInches, isOverridePresent);
+                EnableViveFeatures(idsToEnable);
+
+                // 3: 設定螢幕尺寸覆寫或維護排程
                 bool operationSuccess = true; // 預設為成功
 
-                // --- 條件步驟：根據選擇的模式設定螢幕尺寸覆寫 ---
-                if (radPhysPanelDrv.Checked)
+                if (isNativeSupport)
                 {
-                    Log(Resources.Strings.LogChoosingDriverMode);
-                    // 執行前先移除 CS 工作，避免衝突
+                    Log($"Detected build 26220.7271+, applying native support configuration. (Size: {diagonalInches:F2}\", Override: {isOverridePresent})");
+
+                    // --- Native 支援模式：清理舊機制 ---
+
+                    // 移除舊的驅動程式 (如果存在)，避免衝突
+                    if (DriverManager.IsDriverServiceInstalled())
+                    {
+                        Log(Resources.Strings.LogRemovingOldDriver);
+                        await Task.Run(() => DriverManager.UninstallDriver(msg => Log(msg)));
+                    }
+
+                    // 移除舊的工作排程 (如果存在)，稍後會根據需求重建
                     if (TaskSchedulerManager.SetPanelDimensionsTaskExists())
                     {
                         Log(Resources.Strings.LogRemovingOldTask);
                         TaskSchedulerManager.DeleteSetPanelDimensionsTask();
                     }
 
-                    // 呼叫安裝方法並接收其回傳值
-                    bool installSuccess = await Task.Run(() => DriverManager.InstallDriver(msg => Log(msg)));
+                    // --- Native 支援模式：判斷是否需要 Reg 工作 ---
 
-                    // 檢查安裝是否成功。如果使用者點選了 "不安裝"，此處會收到 false
-                    if (!installSuccess)
+                    // 判斷是否為「非掌機」(需要 Reg 工作)
+                    // 條件：偵測到覆寫 (代表是桌機/筆電但被改過) OR 真實尺寸 > 9.5" (或未定義)
+                    if (isOverridePresent || !IsHandheldDevice(diagonalInches))
                     {
-                        operationSuccess = false; // 標記操作失敗
+                        Log("Non-handheld environment detected: Creating Registry maintenance task...");
+                        // 建立僅執行 'reg' 指令的工作排程，確保開機時 DeviceForm 維持為 46
+                        TaskSchedulerManager.CreateSetPanelDimensionsTask(regOnly: true);
+                        Log(Resources.Strings.LogPanelTaskCreated);
+                    }
+                    else
+                    {
+                        // 真掌機 (無覆寫 且 尺寸 <= 9.5")：不需要任何工作排程
+                        Log("Handheld device detected: No maintenance task required.");
                     }
                 }
-                else // radPhysPanelCS.Checked
+                else
                 {
-                    Log(Resources.Strings.LogChoosingSchedulerMode);
-                    // 執行前先移除 Drv 服務，避免衝突
-                    if (DriverManager.IsDriverServiceInstalled())
+                    // --- Legacy 相容模式：根據使用者選擇安裝 Drv 或 CS ---
+
+                    if (radPhysPanelDrv.Checked)
                     {
-                        Log(Resources.Strings.LogRemovingOldDriver);
-                        await Task.Run(() => DriverManager.UninstallDriver(msg => Log(msg)));
+                        Log(Resources.Strings.LogChoosingDriverMode);
+                        // 執行前先移除 CS 工作，避免衝突
+                        if (TaskSchedulerManager.SetPanelDimensionsTaskExists())
+                        {
+                            Log(Resources.Strings.LogRemovingOldTask);
+                            TaskSchedulerManager.DeleteSetPanelDimensionsTask();
+                        }
+
+                        // 呼叫安裝方法並接收其回傳值
+                        bool installSuccess = await Task.Run(() => DriverManager.InstallDriver(msg => Log(msg)));
+
+                        // 檢查安裝是否成功
+                        if (!installSuccess)
+                        {
+                            operationSuccess = false; // 標記操作失敗
+                        }
                     }
-                    HandleTaskSchedulerCreation();
+                    else // radPhysPanelCS.Checked
+                    {
+                        Log(Resources.Strings.LogChoosingSchedulerMode);
+                        // 執行前先移除 Drv 服務，避免衝突
+                        if (DriverManager.IsDriverServiceInstalled())
+                        {
+                            Log(Resources.Strings.LogRemovingOldDriver);
+                            await Task.Run(() => DriverManager.UninstallDriver(msg => Log(msg)));
+                        }
+
+                        // 執行標準的排程工作建立 (set 155 87 reg)
+                        HandleTaskSchedulerCreation();
+                    }
                 }
 
-                // --- 步驟 4: 流程總結與處理 ---
+                // 4. 流程總結與處理
                 if (operationSuccess)
                 {
                     // --- 成功路徑 ---
@@ -784,6 +940,7 @@ namespace XboxFullScreenExperienceTool
             }
         }
 
+        #region Helper Methods for Enable/Disable
         /// <summary>
         /// 執行停用功能的所有核心步驟。
         /// </summary>
@@ -826,7 +983,6 @@ namespace XboxFullScreenExperienceTool
             }
         }
 
-        #region Helper Methods for Enable/Disable
         /// <summary>
         /// 備份現有的登錄檔值，然後設定新的值。
         /// </summary>
@@ -853,9 +1009,10 @@ namespace XboxFullScreenExperienceTool
         /// <summary>
         /// 啟用所需的 ViVe 功能。
         /// </summary>
-        private void EnableViveFeatures()
+        private void EnableViveFeatures(uint[] featureIds)
         {
-            var updates = Array.ConvertAll(FEATURE_IDS, id => new RTL_FEATURE_CONFIGURATION_UPDATE
+            Log(string.Format(Resources.Strings.LogEnablingFeatures, string.Join(", ", featureIds)));
+            var updates = Array.ConvertAll(featureIds, id => new RTL_FEATURE_CONFIGURATION_UPDATE
             {
                 FeatureId = id,
                 EnabledState = RTL_FEATURE_ENABLED_STATE.Enabled,
@@ -966,8 +1123,10 @@ namespace XboxFullScreenExperienceTool
         /// </summary>
         private void DisableViveFeatures()
         {
-            Log(string.Format(Resources.Strings.LogDisablingFeatures, string.Join(", ", FEATURE_IDS)));
-            var updates = Array.ConvertAll(FEATURE_IDS, id => new RTL_FEATURE_CONFIGURATION_UPDATE
+            // 取得應停用的 ID 清單
+            uint[] idsToDisable = GetIdsToDisable();
+            Log(string.Format(Resources.Strings.LogDisablingFeatures, string.Join(", ", idsToDisable)));
+            var updates = Array.ConvertAll(idsToDisable, id => new RTL_FEATURE_CONFIGURATION_UPDATE
             {
                 FeatureId = id,
                 EnabledState = RTL_FEATURE_ENABLED_STATE.Disabled,
@@ -1305,27 +1464,6 @@ namespace XboxFullScreenExperienceTool
                 .GetCustomAttributes<AssemblyMetadataAttribute>()
                 .FirstOrDefault(a => a.Key == "GitHash");
             return attr?.Value ?? "N/A";
-        }
-
-        //======================================================================
-        // 靜默模式 (Silent Mode)
-        //======================================================================
-
-        /// <summary>
-        /// 供解除安裝程式在背景呼叫的靜默停用方法。
-        /// 它執行與 UI 停用相同的核心邏輯，但不提供任何輸出或錯誤處理。
-        /// </summary>
-        public static void PerformSilentDisable()
-        {
-            try
-            {
-                var mainFormInstance = new MainForm(); // 建立一個實例以存取非靜態成員和常數
-                mainFormInstance.PerformDisableActions().GetAwaiter().GetResult();
-            }
-            catch (Exception)
-            {
-                // 在靜默模式下，不處理任何錯誤
-            }
         }
 
         #region Logging and Error Handling

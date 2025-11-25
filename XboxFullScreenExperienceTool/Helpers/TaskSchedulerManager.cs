@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+using Microsoft.Win32;
 using System.Diagnostics;
 
 namespace XboxFullScreenExperienceTool.Helpers
@@ -35,6 +36,28 @@ namespace XboxFullScreenExperienceTool.Helpers
         /// </summary>
         private const string KEYBOARD_TASK_NAME = "XFSET-StartGamepadKeyboardOnLogon";
         private const string OLD_KEYBOARD_TASK_NAME = "StartTouchKeyboardOnLogon"; // 舊版名稱，用於遷移
+
+        /// <summary>
+        /// 判斷是否為 26220.7271 或更新的原生支援版本 (Native Build)。
+        /// </summary>
+        private static bool IsNativeSupportBuild()
+        {
+            try
+            {
+                const string REG_PATH_PARENT = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion";
+                string? currentBuildStr = Registry.GetValue($@"HKEY_LOCAL_MACHINE\{REG_PATH_PARENT}", "CurrentBuild", null)?.ToString();
+                string? currentRevisionStr = Registry.GetValue($@"HKEY_LOCAL_MACHINE\{REG_PATH_PARENT}", "UBR", null)?.ToString();
+
+                if (int.TryParse(currentBuildStr, out int build) && int.TryParse(currentRevisionStr, out int revision))
+                {
+                    // Build > 26220 或 Build = 26220 且 Revision >= 7271
+                    if (build > 26220) return true;
+                    if (build == 26220 && revision >= 7271) return true;
+                }
+            }
+            catch { /* 忽略錯誤 */ }
+            return false;
+        }
 
         /// <summary>
         /// 組合並傳回 `PhysPanelCS.exe` 工具的完整路徑。
@@ -98,12 +121,24 @@ namespace XboxFullScreenExperienceTool.Helpers
             {
                 logger($"Detecting Panel Task... Old: {oldPanelTaskExists}, New: {newPanelTaskExists}. Rebuilding...");
 
+                // 判斷 OS 版本
+                bool isNative = IsNativeSupportBuild();
+
+                // 先刪除舊有的工作 (無論名稱是新是舊)
                 if (oldPanelTaskExists) DeleteTask(OLD_TASK_NAME);
                 if (newPanelTaskExists) DeleteTask(TASK_NAME);
 
                 try
                 {
-                    CreateSetPanelDimensionsTask();
+                    // 根據 OS 版本決定參數：
+                    // Native Build -> 使用 regOnly (僅設定登錄檔，交由系統原生處理 FSE)
+                    // Legacy Build -> 使用完整 set (強制覆寫面板尺寸)
+                    bool useRegOnly = isNative;
+
+                    logger($"Migrating Panel Task (Native={isNative}) -> Creating task with regOnly={useRegOnly}...");
+
+                    CreateSetPanelDimensionsTask(regOnly: useRegOnly);
+
                     logger("Panel Task updated successfully.");
                 }
                 catch (Exception ex)
@@ -142,9 +177,10 @@ namespace XboxFullScreenExperienceTool.Helpers
         /// <summary>
         /// 建立或覆寫 SetPanelDimensions 工作排程。
         /// </summary>
+        /// <param name="regOnly">如果為 true，則僅執行 'reg' 指令 (適用於 26220.7271+)；否則執行標準的 'set 155 87 reg'。</param>
         /// <exception cref="FileNotFoundException">如果找不到 `PhysPanelCS.exe`，則擲出此例外狀況。</exception>
         /// <exception cref="Exception">如果 `schtasks.exe` 命令因任何其他原因失敗，則擲出此例外狀況。</exception>
-        public static void CreateSetPanelDimensionsTask()
+        public static void CreateSetPanelDimensionsTask(bool regOnly = false)
         {
             string physPanelPath = GetPhysPanelPath();
             // 執行前檢查：確保必要的工具程式存在，若不存在則提早失敗並提供清晰的錯誤訊息。
@@ -152,6 +188,9 @@ namespace XboxFullScreenExperienceTool.Helpers
             {
                 throw new FileNotFoundException(string.Format(Resources.Strings.TaskSchedulerManagerErrorFindFile, physPanelPath));
             }
+
+            // 若 regOnly 為 true，參數僅為 "reg"，否則維持原有的 "set 155 87 reg"
+            string arguments = regOnly ? "reg" : "set 155 87 reg";
 
             // 使用 XML 定義工作排程。這種方法比使用一長串命令列參數更精確且可靠。
             string xmlContent = $@"<?xml version=""1.0"" encoding=""UTF-16""?>
@@ -192,7 +231,7 @@ namespace XboxFullScreenExperienceTool.Helpers
   <Actions Context=""Author"">
     <Exec>
       <Command>""{physPanelPath}""</Command>
-      <Arguments>set 155 87 reg</Arguments>
+      <Arguments>{arguments}</Arguments>
     </Exec>
   </Actions>
 </Task>";
