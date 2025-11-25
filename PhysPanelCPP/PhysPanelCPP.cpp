@@ -33,9 +33,10 @@ void PrintUsage() {
     wprintf(L"Usage: PhysPanelCPP <command> [arguments...]\n\n");
     wprintf(L"Commands:\n");
     wprintf(L"  get                  Get the current physical display size (in mm and inches).\n");
-    wprintf(L"  set <w> <h> [opt]    Set display size (mm). Use 'reg' as 3rd arg to update OEM registry.\n");
+    wprintf(L"  set <w> <h> [opt]    Set display size (mm). Use 'reg' as 3rd arg to update OEM registry (0x2e).\n");
     wprintf(L"                       Requires SYSTEM privileges.\n");
-    wprintf(L"  startkeyboard        Launches and prepares the touch keyboard for use.\n\n");
+    wprintf(L"  reg                  Set OEM DeviceForm registry key to 0x2e only. Requires SYSTEM privileges.\n");
+    wprintf(L"  startkeyboard        Launches and prepares the gamepad keyboard for use.\n\n");
     wprintf(L"Examples:\n");
     wprintf(L"  PhysPanelCPP get\n");
     wprintf(L"  PhysPanelCPP set 155 87\n");
@@ -114,6 +115,17 @@ int HandleSet(int argc, wchar_t* argv[]) {
     }
 }
 
+int HandleReg() {
+    if (PanelManager::SetOEMDeviceForm()) {
+        wprintf(L"Success: OEM DeviceForm registry key set to 0x2e.\n");
+        return 0;
+    }
+    else {
+        fwprintf(stderr, L"Error: Failed to set OEM DeviceForm registry key. This operation requires SYSTEM privileges.\n");
+        return -1;
+    }
+}
+
 int HandleStartKeyboard() {
     try {
         KeyboardManager::StartTouchKeyboard();
@@ -181,6 +193,9 @@ int wmain(int argc, wchar_t* argv[]) {
     }
     if (_wcsicmp(action, L"set") == 0) {
         return HandleSet(argc, argv);
+    }
+    if (_wcsicmp(action, L"reg") == 0) {
+        return HandleReg();
     }
     if (_wcsicmp(action, L"startkeyboard") == 0) {
         return HandleStartKeyboard();
