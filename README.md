@@ -106,7 +106,7 @@ If you find this tool helpful, your support would be a great motivation for me t
 * **Automatic System Check** – Verifies your Windows build for compatibility at startup.
 * **Automatic Gamepad Keyboard Fix** – Ensures the on-screen keyboard is always ready, enabling seamless controller input on non-touch PCs.
 * **Device Type Emulation** – Automatically simulates a handheld device type for activation on desktop or laptop systems.
-* **Automatic Mode Selection** – Detects your device type (Desktop, Laptop, Handheld) and provides the appropriate screen dimensions override options.
+* **Automatic Mode Selection** – Detects your device type (Desktop, Laptop, Handheld) and provides the appropriate screen dimension override options.
 * **Safe and Reversible** – All changes are fully reversible. Backups of original settings are created to ensure safe restoration.
 * **Standard Installation** – Distributed as a `.msi` installer for clean installation, management, and removal.
 

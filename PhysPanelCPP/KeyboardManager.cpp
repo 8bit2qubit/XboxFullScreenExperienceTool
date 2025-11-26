@@ -134,7 +134,7 @@ namespace KeyboardManager {
             LogDebug(L"[Debug] Executing ShellExecuteW to open TabTip.exe...");
             ShellExecuteW(NULL, L"open", tabTipPath.c_str(), NULL, NULL, SW_SHOWNORMAL);
 
-            LogDebug(L"[Debug] Starting 5-second post-launch delay...");
+            LogDebug(L"[Debug] Starting post-launch delay...");
             std::this_thread::sleep_for(POST_LAUNCH_DELAY);
             LogDebug(L"[Debug] Post-launch delay finished.");
 
