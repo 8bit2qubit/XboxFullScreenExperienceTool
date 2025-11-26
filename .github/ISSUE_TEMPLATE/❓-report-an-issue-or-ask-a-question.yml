@@ -16,7 +16,7 @@ body:
 
             *   **"System Requirements"** (I confirm my build is one of the **COMPATIBLE** builds: `26100.7019+`, `26200.7015+` or `26220.6972+`.)
 
-            *   **"Screen Dimension Override for Desktop PCs & Laptops"** (I understand the difference between `PhysPanelCS` / `PhysPanelDrv`)
+            *   **"Screen Dimensions Override for Desktop PCs & Laptops"** (I understand the difference between `PhysPanelCS` / `PhysPanelDrv`)
 
             *   **"Quick Start"** (I have followed the installation and initial setup steps.)
           required: true
@@ -62,9 +62,9 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: screen-dimension-override-mode
+    id: screen-dimensions-override-mode
     attributes:
-      label: "3. Which \"Screen Dimension Override Mode\" are you currently using?"
+      label: "3. Which \"Screen Dimensions Override Mode\" are you currently using?"
       options:
         - Task Scheduler Mode (`PhysPanelCS`) (Default)
         - Driver Mode (`PhysPanelDrv`) (Advanced)
@@ -77,6 +77,7 @@ body:
       label: "4. Which Xbox Full Screen Experience Tool version are you using?"
       description: "(You can see the version in the tool's title bar.)"
       options:
+        - v0.0.15
         - v0.0.14
         - v0.0.13
         - v0.0.12
