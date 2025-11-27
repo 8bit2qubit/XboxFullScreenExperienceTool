@@ -507,4 +507,22 @@ Bitte stellen Sie sicher, dass Sie dieses Programm mit Administratorrechten ausf
   <data name="LogErrorArchivingLog" xml:space="preserve">
     <value>Fehler beim Archivieren der alten Protokolldatei: {0}</value>
   </data>
+  <data name="btnOpenSettings_Text" xml:space="preserve">
+    <value>Vollbildschirm-Erfahrungseinstellungen öffnen</value>
+  </data>
+  <data name="btnCheckUpdates_Text" xml:space="preserve">
+    <value>Im MS Store nach Xbox-Updates suchen</value>
+  </data>
+  <data name="ErrorOpenSettings" xml:space="preserve">
+    <value>Fehler beim Öffnen der Einstellungsseite: {0}</value>
+  </data>
+  <data name="MsgOpenSettingsManual" xml:space="preserve">
+    <value>Windows-Einstellungen konnten nicht geöffnet werden. Bitte gehen Sie manuell zu [Start &gt; Einstellungen &gt; Spielen &gt; Vollbild-Erfahrung].</value>
+  </data>
+  <data name="ErrorOpenStore" xml:space="preserve">
+    <value>Fehler beim Öffnen des Microsoft Store: {0}</value>
+  </data>
+  <data name="MsgOpenStoreManual" xml:space="preserve">
+    <value>Microsoft Store konnte nicht geöffnet werden. Bitte suchen Sie manuell nach Updates für Xbox-Apps.</value>
+  </data>
 </root>

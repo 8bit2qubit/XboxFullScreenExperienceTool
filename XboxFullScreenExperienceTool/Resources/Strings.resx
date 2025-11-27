@@ -507,4 +507,22 @@ Please ensure you are running this program with administrator privileges.</value
   <data name="LogErrorArchivingLog" xml:space="preserve">
     <value>Failed to archive old log file: {0}</value>
   </data>
+  <data name="btnOpenSettings_Text" xml:space="preserve">
+    <value>Open Full Screen Experience Settings</value>
+  </data>
+  <data name="btnCheckUpdates_Text" xml:space="preserve">
+    <value>Check MS Store for Xbox Updates</value>
+  </data>
+  <data name="ErrorOpenSettings" xml:space="preserve">
+    <value>Failed to open settings page: {0}</value>
+  </data>
+  <data name="MsgOpenSettingsManual" xml:space="preserve">
+    <value>Unable to open Windows Settings. Please manually go to [Start &amp;gt; Settings &amp;gt; Gaming &amp;gt; Full Screen Experience].</value>
+  </data>
+  <data name="ErrorOpenStore" xml:space="preserve">
+    <value>Failed to open Microsoft Store: {0}</value>
+  </data>
+  <data name="MsgOpenStoreManual" xml:space="preserve">
+    <value>Unable to open Microsoft Store. Please manually check for Xbox related app updates.</value>
+  </data>
 </root>

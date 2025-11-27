@@ -507,4 +507,22 @@
   <data name="LogErrorArchivingLog" xml:space="preserve">
     <value>无法归档旧的日志文件：{0}</value>
   </data>
+  <data name="btnOpenSettings_Text" xml:space="preserve">
+    <value>打开全屏体验设置</value>
+  </data>
+  <data name="btnCheckUpdates_Text" xml:space="preserve">
+    <value>检查微软商店的 Xbox 更新</value>
+  </data>
+  <data name="ErrorOpenSettings" xml:space="preserve">
+    <value>无法打开设置页面: {0}</value>
+  </data>
+  <data name="MsgOpenSettingsManual" xml:space="preserve">
+    <value>无法打开 Windows 设置，请手动前往 [开始 &gt; 设置 &gt; 游戏 &gt; 全屏体验]。</value>
+  </data>
+  <data name="ErrorOpenStore" xml:space="preserve">
+    <value>无法打开 Microsoft Store: {0}</value>
+  </data>
+  <data name="MsgOpenStoreManual" xml:space="preserve">
+    <value>无法打开 Microsoft Store，请手动确认 Xbox 相关应用程序更新。</value>
+  </data>
 </root>

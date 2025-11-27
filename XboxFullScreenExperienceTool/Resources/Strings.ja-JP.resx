@@ -507,4 +507,22 @@
   <data name="LogErrorArchivingLog" xml:space="preserve">
     <value>古いログファイルをアーカイブできませんでした: {0}</value>
   </data>
+  <data name="btnOpenSettings_Text" xml:space="preserve">
+    <value>全画面表示エクスペリエンス設定を開</value>
+  </data>
+  <data name="btnCheckUpdates_Text" xml:space="preserve">
+    <value>MS Store で Xbox の更新を確認</value>
+  </data>
+  <data name="ErrorOpenSettings" xml:space="preserve">
+    <value>設定ページを開けませんでした: {0}</value>
+  </data>
+  <data name="MsgOpenSettingsManual" xml:space="preserve">
+    <value>Windows の設定を開けませんでした。手動で [スタート &gt; 設定 &gt; ゲーム &gt; 全画面表示エクスペリエンス] へ移動してください。</value>
+  </data>
+  <data name="ErrorOpenStore" xml:space="preserve">
+    <value>Microsoft Store を開けませんでした: {0}</value>
+  </data>
+  <data name="MsgOpenStoreManual" xml:space="preserve">
+    <value>Microsoft Store を開けませんでした。手動で Xbox 関連アプリの更新を確認してください。</value>
+  </data>
 </root>

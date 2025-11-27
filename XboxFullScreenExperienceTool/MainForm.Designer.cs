@@ -31,180 +31,224 @@ namespace XboxFullScreenExperienceTool
 
         private void InitializeComponent()
         {
-            this.btnEnable = new System.Windows.Forms.Button();
-            this.btnDisable = new System.Windows.Forms.Button();
-            this.grpActions = new System.Windows.Forms.GroupBox();
-            this.chkStartKeyboardOnLogon = new System.Windows.Forms.CheckBox();
-            this.grpOutput = new System.Windows.Forms.GroupBox();
-            this.txtOutput = new System.Windows.Forms.RichTextBox();
-            this.lblStatus = new System.Windows.Forms.Label();
-            this.cboLanguage = new System.Windows.Forms.ComboBox();
-            this.grpPhysPanel = new System.Windows.Forms.GroupBox();
-            this.radPhysPanelDrv = new System.Windows.Forms.RadioButton();
-            this.radPhysPanelCS = new System.Windows.Forms.RadioButton();
-            this.toolTip = new System.Windows.Forms.ToolTip();
-            this.grpActions.SuspendLayout();
-            this.grpOutput.SuspendLayout();
-            this.grpPhysPanel.SuspendLayout();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            btnEnable = new Button();
+            btnDisable = new Button();
+            grpActions = new GroupBox();
+            chkStartKeyboardOnLogon = new CheckBox();
+            btnCheckUpdates = new Button();
+            btnOpenSettings = new Button();
+            grpOutput = new GroupBox();
+            txtOutput = new RichTextBox();
+            lblStatus = new Label();
+            grpPhysPanel = new GroupBox();
+            radPhysPanelDrv = new RadioButton();
+            radPhysPanelCS = new RadioButton();
+            toolTip = new ToolTip(components);
+            cboLanguage = new ComboBox();
+            grpActions.SuspendLayout();
+            grpOutput.SuspendLayout();
+            grpPhysPanel.SuspendLayout();
+            SuspendLayout();
             // 
             // btnEnable
             // 
-            this.btnEnable.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnEnable.ForeColor = System.Drawing.Color.DarkGreen;
-            this.btnEnable.Location = new System.Drawing.Point(19, 29);
-            this.btnEnable.Name = "btnEnable";
-            this.btnEnable.Size = new System.Drawing.Size(282, 50);
-            this.btnEnable.TabIndex = 5;
-            this.btnEnable.Text = "啟用 Xbox 全螢幕體驗";
-            this.btnEnable.UseVisualStyleBackColor = true;
-            this.btnEnable.Click += new System.EventHandler(this.btnEnable_Click);
+            btnEnable.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 136);
+            btnEnable.ForeColor = Color.DarkGreen;
+            btnEnable.Location = new Point(28, 19);
+            btnEnable.Margin = new Padding(4, 5, 4, 5);
+            btnEnable.Name = "btnEnable";
+            btnEnable.Size = new Size(423, 66);
+            btnEnable.TabIndex = 6;
+            btnEnable.Text = "啟用 Xbox 全螢幕體驗";
+            btnEnable.UseVisualStyleBackColor = true;
+            btnEnable.Click += btnEnable_Click;
             // 
             // btnDisable
             // 
-            this.btnDisable.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnDisable.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnDisable.Location = new System.Drawing.Point(318, 29);
-            this.btnDisable.Name = "btnDisable";
-            this.btnDisable.Size = new System.Drawing.Size(283, 50);
-            this.btnDisable.TabIndex = 6;
-            this.btnDisable.Text = "停用並還原";
-            this.btnDisable.UseVisualStyleBackColor = true;
-            this.btnDisable.Click += new System.EventHandler(this.btnDisable_Click);
+            btnDisable.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 136);
+            btnDisable.ForeColor = Color.DarkRed;
+            btnDisable.Location = new Point(477, 19);
+            btnDisable.Margin = new Padding(4, 5, 4, 5);
+            btnDisable.Name = "btnDisable";
+            btnDisable.Size = new Size(424, 66);
+            btnDisable.TabIndex = 7;
+            btnDisable.Text = "停用並還原";
+            btnDisable.UseVisualStyleBackColor = true;
+            btnDisable.Click += btnDisable_Click;
             // 
             // grpActions
             // 
-            this.grpActions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpActions.Controls.Add(this.chkStartKeyboardOnLogon);
-            this.grpActions.Controls.Add(this.cboLanguage);
-            this.grpActions.Controls.Add(this.btnDisable);
-            this.grpActions.Controls.Add(this.btnEnable);
-            this.grpActions.Location = new System.Drawing.Point(12, 122);
-            this.grpActions.Name = "grpActions";
-            this.grpActions.Size = new System.Drawing.Size(619, 120);
-            this.grpActions.TabIndex = 4;
-            this.grpActions.TabStop = false;
-            this.grpActions.Text = "操作";
+            grpActions.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            grpActions.Controls.Add(chkStartKeyboardOnLogon);
+            grpActions.Controls.Add(btnDisable);
+            grpActions.Controls.Add(btnEnable);
+            grpActions.Controls.Add(btnCheckUpdates);
+            grpActions.Controls.Add(btnOpenSettings);
+            grpActions.Location = new Point(18, 86);
+            grpActions.Margin = new Padding(4, 5, 4, 5);
+            grpActions.Name = "grpActions";
+            grpActions.Padding = new Padding(4, 5, 4, 5);
+            grpActions.Size = new Size(928, 174);
+            grpActions.TabIndex = 5;
+            grpActions.TabStop = false;
+            grpActions.Text = "操作";
             // 
             // chkStartKeyboardOnLogon
             // 
-            this.chkStartKeyboardOnLogon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.chkStartKeyboardOnLogon.AutoSize = true;
-            this.chkStartKeyboardOnLogon.Location = new System.Drawing.Point(19, 88);
-            this.chkStartKeyboardOnLogon.Name = "chkStartKeyboardOnLogon";
-            this.chkStartKeyboardOnLogon.Size = new System.Drawing.Size(212, 19);
-            this.chkStartKeyboardOnLogon.TabIndex = 7;
-            this.chkStartKeyboardOnLogon.Text = "在登入時啟動觸控鍵盤";
-            this.chkStartKeyboardOnLogon.UseVisualStyleBackColor = true;
-            this.chkStartKeyboardOnLogon.CheckedChanged += new System.EventHandler(this.chkStartKeyboardOnLogon_CheckedChanged);
+            chkStartKeyboardOnLogon.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            chkStartKeyboardOnLogon.AutoSize = true;
+            chkStartKeyboardOnLogon.Location = new Point(28, 139);
+            chkStartKeyboardOnLogon.Margin = new Padding(4, 5, 4, 5);
+            chkStartKeyboardOnLogon.Name = "chkStartKeyboardOnLogon";
+            chkStartKeyboardOnLogon.Size = new Size(376, 23);
+            chkStartKeyboardOnLogon.TabIndex = 10;
+            chkStartKeyboardOnLogon.Text = "在登入時啟動遊戲控制器鍵盤，並自動收至背景待命";
+            chkStartKeyboardOnLogon.UseVisualStyleBackColor = true;
+            chkStartKeyboardOnLogon.CheckedChanged += chkStartKeyboardOnLogon_CheckedChanged;
+            // 
+            // btnCheckUpdates
+            // 
+            btnCheckUpdates.Font = new Font("Microsoft JhengHei UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 136);
+            btnCheckUpdates.Location = new Point(477, 95);
+            btnCheckUpdates.Name = "btnCheckUpdates";
+            btnCheckUpdates.Size = new Size(424, 35);
+            btnCheckUpdates.TabIndex = 9;
+            btnCheckUpdates.Text = "檢查 MS Store 的 Xbox 更新";
+            btnCheckUpdates.UseVisualStyleBackColor = true;
+            btnCheckUpdates.Click += btnCheckUpdates_Click;
+            // 
+            // btnOpenSettings
+            // 
+            btnOpenSettings.Enabled = false;
+            btnOpenSettings.Font = new Font("Microsoft JhengHei UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 136);
+            btnOpenSettings.Location = new Point(28, 95);
+            btnOpenSettings.Name = "btnOpenSettings";
+            btnOpenSettings.Size = new Size(423, 35);
+            btnOpenSettings.TabIndex = 8;
+            btnOpenSettings.Text = "開啟全螢幕體驗設定";
+            btnOpenSettings.UseVisualStyleBackColor = true;
+            btnOpenSettings.Click += btnOpenSettings_Click;
             // 
             // grpOutput
             // 
-            this.grpOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpOutput.Controls.Add(this.txtOutput);
-            this.grpOutput.Location = new System.Drawing.Point(12, 248);
-            this.grpOutput.Name = "grpOutput";
-            this.grpOutput.Size = new System.Drawing.Size(619, 154);
-            this.grpOutput.TabIndex = 9;
-            this.grpOutput.TabStop = false;
-            this.grpOutput.Text = "執行日誌";
+            grpOutput.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            grpOutput.Controls.Add(txtOutput);
+            grpOutput.Location = new Point(18, 261);
+            grpOutput.Margin = new Padding(4, 5, 4, 5);
+            grpOutput.Name = "grpOutput";
+            grpOutput.Padding = new Padding(4, 5, 4, 5);
+            grpOutput.Size = new Size(928, 278);
+            grpOutput.TabIndex = 11;
+            grpOutput.TabStop = false;
+            grpOutput.Text = "執行日誌";
             // 
             // txtOutput
             // 
-            this.txtOutput.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.txtOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtOutput.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtOutput.ForeColor = System.Drawing.Color.Gainsboro;
-            this.txtOutput.Location = new System.Drawing.Point(3, 18);
-            this.txtOutput.Name = "txtOutput";
-            this.txtOutput.ReadOnly = true;
-            this.txtOutput.Size = new System.Drawing.Size(613, 133);
-            this.txtOutput.TabIndex = 10;
-            this.txtOutput.Text = "";
+            txtOutput.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            txtOutput.BackColor = Color.FromArgb(40, 40, 40);
+            txtOutput.BorderStyle = BorderStyle.None;
+            txtOutput.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtOutput.ForeColor = Color.Gainsboro;
+            txtOutput.Location = new Point(4, 25);
+            txtOutput.Margin = new Padding(4, 5, 4, 5);
+            txtOutput.Name = "txtOutput";
+            txtOutput.ReadOnly = true;
+            txtOutput.Size = new Size(920, 243);
+            txtOutput.TabIndex = 12;
+            txtOutput.Text = "";
             // 
             // lblStatus
             // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblStatus.Location = new System.Drawing.Point(12, 8);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(105, 20);
-            this.lblStatus.TabIndex = 0;
-            this.lblStatus.Text = "狀態：偵測中...";
-            this.lblStatus.DoubleClick += new System.EventHandler(this.lblStatus_DoubleClick);
-            // 
-            // cboLanguage
-            // 
-            this.cboLanguage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboLanguage.Font = new System.Drawing.Font("Microsoft JhengHei UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.cboLanguage.FormattingEnabled = true;
-            this.cboLanguage.Location = new System.Drawing.Point(479, 88);
-            this.cboLanguage.Name = "cboLanguage";
-            this.cboLanguage.Size = new System.Drawing.Size(121, 27);
-            this.cboLanguage.TabIndex = 8;
-            this.cboLanguage.SelectedIndexChanged += new System.EventHandler(this.cboLanguage_SelectedIndexChanged);
+            lblStatus.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            lblStatus.AutoSize = true;
+            lblStatus.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 136);
+            lblStatus.Location = new Point(13, 543);
+            lblStatus.Margin = new Padding(4, 0, 4, 0);
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(147, 25);
+            lblStatus.TabIndex = 0;
+            lblStatus.Text = "狀態：偵測中...";
+            lblStatus.DoubleClick += lblStatus_DoubleClick;
             // 
             // grpPhysPanel
             // 
-            this.grpPhysPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpPhysPanel.Controls.Add(this.radPhysPanelDrv);
-            this.grpPhysPanel.Controls.Add(this.radPhysPanelCS);
-            this.grpPhysPanel.Location = new System.Drawing.Point(12, 41);
-            this.grpPhysPanel.Name = "grpPhysPanel";
-            this.grpPhysPanel.Size = new System.Drawing.Size(619, 75);
-            this.grpPhysPanel.TabIndex = 1;
-            this.grpPhysPanel.TabStop = false;
-            this.grpPhysPanel.Text = "螢幕尺寸覆寫方式 (適用於非掌機)";
+            grpPhysPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            grpPhysPanel.Controls.Add(radPhysPanelDrv);
+            grpPhysPanel.Controls.Add(radPhysPanelCS);
+            grpPhysPanel.Location = new Point(18, 3);
+            grpPhysPanel.Margin = new Padding(4, 5, 4, 5);
+            grpPhysPanel.Name = "grpPhysPanel";
+            grpPhysPanel.Padding = new Padding(4, 5, 4, 5);
+            grpPhysPanel.Size = new Size(928, 82);
+            grpPhysPanel.TabIndex = 2;
+            grpPhysPanel.TabStop = false;
+            grpPhysPanel.Text = "螢幕尺寸覆寫方式 (適用於非掌機)";
             // 
             // radPhysPanelDrv
             // 
-            this.radPhysPanelDrv.AutoSize = true;
-            this.radPhysPanelDrv.Location = new System.Drawing.Point(19, 48);
-            this.radPhysPanelDrv.Name = "radPhysPanelDrv";
-            this.radPhysPanelDrv.Size = new System.Drawing.Size(378, 16);
-            this.radPhysPanelDrv.TabIndex = 3;
-            this.radPhysPanelDrv.Text = "PhysPanelDrv (驅動程式模式，進階替代方案，需停用安全啟動並啟用測試簽章)";
-            this.radPhysPanelDrv.UseVisualStyleBackColor = true;
+            radPhysPanelDrv.AutoSize = true;
+            radPhysPanelDrv.Location = new Point(28, 53);
+            radPhysPanelDrv.Margin = new Padding(4, 5, 4, 5);
+            radPhysPanelDrv.Name = "radPhysPanelDrv";
+            radPhysPanelDrv.Size = new Size(560, 23);
+            radPhysPanelDrv.TabIndex = 4;
+            radPhysPanelDrv.Text = "PhysPanelDrv (驅動程式模式，進階替代方案，需停用安全啟動並啟用測試簽章)";
+            radPhysPanelDrv.UseVisualStyleBackColor = true;
             // 
             // radPhysPanelCS
             // 
-            this.radPhysPanelCS.AutoSize = true;
-            this.radPhysPanelCS.Checked = true;
-            this.radPhysPanelCS.Location = new System.Drawing.Point(19, 22);
-            this.radPhysPanelCS.Name = "radPhysPanelCS";
-            this.radPhysPanelCS.Size = new System.Drawing.Size(326, 16);
-            this.radPhysPanelCS.TabIndex = 2;
-            this.radPhysPanelCS.TabStop = true;
-            this.radPhysPanelCS.Text = "PhysPanelCS (工作排程模式，預設建議方案，無需額外設定)";
-            this.radPhysPanelCS.UseVisualStyleBackColor = true;
+            radPhysPanelCS.AutoSize = true;
+            radPhysPanelCS.Checked = true;
+            radPhysPanelCS.Location = new Point(28, 25);
+            radPhysPanelCS.Margin = new Padding(4, 5, 4, 5);
+            radPhysPanelCS.Name = "radPhysPanelCS";
+            radPhysPanelCS.Size = new Size(434, 23);
+            radPhysPanelCS.TabIndex = 3;
+            radPhysPanelCS.TabStop = true;
+            radPhysPanelCS.Text = "PhysPanelCS (工作排程模式，預設建議方案，無需額外設定)";
+            radPhysPanelCS.UseVisualStyleBackColor = true;
+            // 
+            // cboLanguage
+            // 
+            cboLanguage.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            cboLanguage.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboLanguage.Font = new Font("Microsoft JhengHei UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 136);
+            cboLanguage.FormattingEnabled = true;
+            cboLanguage.Location = new Point(766, 542);
+            cboLanguage.Margin = new Padding(4, 5, 4, 5);
+            cboLanguage.Name = "cboLanguage";
+            cboLanguage.Size = new Size(180, 31);
+            cboLanguage.TabIndex = 1;
+            cboLanguage.SelectedIndexChanged += cboLanguage_SelectedIndexChanged;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(643, 414);
-            this.Controls.Add(this.grpPhysPanel);
-            this.Controls.Add(this.lblStatus);
-            this.Controls.Add(this.grpOutput);
-            this.Controls.Add(this.grpActions);
-            this.MinimumSize = new System.Drawing.Size(659, 453);
-            this.Name = "MainForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.ShowIcon = false;
-            this.Text = "Xbox 全螢幕體驗工具";
-            this.Load += new System.EventHandler(this.MainForm_Load);
-            this.Shown += new System.EventHandler(this.MainForm_Shown);
-            this.grpActions.ResumeLayout(false);
-            this.grpActions.PerformLayout();
-            this.grpOutput.ResumeLayout(false);
-            this.grpPhysPanel.ResumeLayout(false);
-            this.grpPhysPanel.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(9F, 19F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(964, 577);
+            Controls.Add(cboLanguage);
+            Controls.Add(grpPhysPanel);
+            Controls.Add(lblStatus);
+            Controls.Add(grpOutput);
+            Controls.Add(grpActions);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Margin = new Padding(4, 5, 4, 5);
+            MaximizeBox = false;
+            MinimumSize = new Size(982, 624);
+            Name = "MainForm";
+            ShowIcon = false;
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Xbox 全螢幕體驗工具";
+            Load += MainForm_Load;
+            Shown += MainForm_Shown;
+            grpActions.ResumeLayout(false);
+            grpActions.PerformLayout();
+            grpOutput.ResumeLayout(false);
+            grpPhysPanel.ResumeLayout(false);
+            grpPhysPanel.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         private System.Windows.Forms.Button btnEnable;
@@ -213,11 +257,13 @@ namespace XboxFullScreenExperienceTool
         private System.Windows.Forms.GroupBox grpOutput;
         private System.Windows.Forms.RichTextBox txtOutput;
         private System.Windows.Forms.Label lblStatus;
-        private System.Windows.Forms.ComboBox cboLanguage;
         private System.Windows.Forms.GroupBox grpPhysPanel;
         private System.Windows.Forms.RadioButton radPhysPanelDrv;
         private System.Windows.Forms.RadioButton radPhysPanelCS;
         private System.Windows.Forms.CheckBox chkStartKeyboardOnLogon;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.ComboBox cboLanguage;
+        private System.Windows.Forms.Button btnOpenSettings;
+        private System.Windows.Forms.Button btnCheckUpdates;
     }
 }

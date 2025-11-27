@@ -61,6 +61,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Check MS Store for Xbox Updates 的當地語系化字串。
+        /// </summary>
+        internal static string btnCheckUpdates_Text {
+            get {
+                return ResourceManager.GetString("btnCheckUpdates_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Disable &amp;&amp; Restore 的當地語系化字串。
         /// </summary>
         internal static string btnDisable_Text {
@@ -84,6 +93,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         internal static string btnEnable_Text_Fix {
             get {
                 return ResourceManager.GetString("btnEnable_Text_Fix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Open Full Screen Experience Settings 的當地語系化字串。
+        /// </summary>
+        internal static string btnOpenSettings_Text {
+            get {
+                return ResourceManager.GetString("btnOpenSettings_Text", resourceCulture);
             }
         }
         
@@ -156,6 +174,24 @@ namespace XboxFullScreenExperienceTool.Resources {
         internal static string ErrorKeyboardTask {
             get {
                 return ResourceManager.GetString("ErrorKeyboardTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Failed to open settings page: {0} 的當地語系化字串。
+        /// </summary>
+        internal static string ErrorOpenSettings {
+            get {
+                return ResourceManager.GetString("ErrorOpenSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Failed to open Microsoft Store: {0} 的當地語系化字串。
+        /// </summary>
+        internal static string ErrorOpenStore {
+            get {
+                return ResourceManager.GetString("ErrorOpenStore", resourceCulture);
             }
         }
         
@@ -951,6 +987,24 @@ namespace XboxFullScreenExperienceTool.Resources {
         internal static string MessageBoxRestartFailed {
             get {
                 return ResourceManager.GetString("MessageBoxRestartFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Unable to open Windows Settings. Please manually go to [Start &amp;gt; Settings &amp;gt; Gaming &amp;gt; Full Screen Experience]. 的當地語系化字串。
+        /// </summary>
+        internal static string MsgOpenSettingsManual {
+            get {
+                return ResourceManager.GetString("MsgOpenSettingsManual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Unable to open Microsoft Store. Please manually check for Xbox related app updates. 的當地語系化字串。
+        /// </summary>
+        internal static string MsgOpenStoreManual {
+            get {
+                return ResourceManager.GetString("MsgOpenStoreManual", resourceCulture);
             }
         }
         

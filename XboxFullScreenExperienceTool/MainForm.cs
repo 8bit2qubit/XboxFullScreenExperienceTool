@@ -591,7 +591,7 @@ namespace XboxFullScreenExperienceTool
                 Color statusColor;
                 string btnEnableText = Resources.Strings.btnEnable_Text;
                 bool btnEnableEnabled, btnDisableEnabled, grpPhysPanelEnabled;
-                bool radPhysPanelDrvChecked = false, radPhysPanelCSChecked = true; // 預設 PhysPanelCS
+                bool enableOpenSettings = false, radPhysPanelDrvChecked = false, radPhysPanelCSChecked = true; // 預設 PhysPanelCS
 
                 if (isCoreEnabled) // 功能 ID 和登錄檔是否已設定
                 {
@@ -603,6 +603,7 @@ namespace XboxFullScreenExperienceTool
                         btnEnableEnabled = false; // 停用「啟用」按鈕
                         btnDisableEnabled = true; // 啟用「停用」按鈕
                         grpPhysPanelEnabled = false; // 鎖定覆寫選項，防止使用者切換模式
+                        enableOpenSettings = true; // 開放 FSE 設定按鈕
 
                         // Native 模式下預設選中 CS (代表使用工作排程機制，即便是 Reg Only)
                         radPhysPanelCSChecked = true;
@@ -613,6 +614,8 @@ namespace XboxFullScreenExperienceTool
                         // Legacy 模式，需要覆寫但未生效
                         if (isScreenOverrideRequired)
                         {
+                            enableOpenSettings = false; // 需要修正 (Error 或 Needs Fix) -> 不算啟用，故不開放 FSE 設定按鈕
+
                             // 偵測到是驅動程式模式 (Drv) 處於無效狀態
                             if (isPhysPanelDrvActive)
                             {
@@ -644,6 +647,7 @@ namespace XboxFullScreenExperienceTool
                             btnEnableEnabled = false; // 停用「啟用」按鈕
                             btnDisableEnabled = true; // 啟用「停用」按鈕
                             grpPhysPanelEnabled = false; // 停用覆寫選項
+                            enableOpenSettings = true; // 開放 FSE 設定按鈕
                             radPhysPanelDrvChecked = isPhysPanelDrvActive;
                             radPhysPanelCSChecked = isPhysPanelCSActive || !isPhysPanelDrvActive;
                         }
@@ -651,6 +655,8 @@ namespace XboxFullScreenExperienceTool
                 }
                 else
                 {
+                    enableOpenSettings = false; // 不開放 FSE 設定按鈕
+
                     // 未啟用 (功能 ID 和登錄檔未設定)
                     statusText = Resources.Strings.StatusDisabled;
                     statusColor = Color.Tomato;
@@ -677,6 +683,9 @@ namespace XboxFullScreenExperienceTool
                 this.Invoke((Action)(() =>
                 {
                     _isUpdatingStatus = true; // 開始更新 UI
+
+                    // 設定 FSE 設定按鈕的狀態
+                    btnOpenSettings.Enabled = enableOpenSettings;
 
                     // 設定遊戲控制器鍵盤啟動選項的可用性
                     bool hasTouchSupport = HardwareHelper.IsTouchScreenAvailable();
@@ -759,6 +768,8 @@ namespace XboxFullScreenExperienceTool
             grpPhysPanel.Enabled = false;
             cboLanguage.Enabled = false;
             chkStartKeyboardOnLogon.Enabled = false;
+            btnOpenSettings.Enabled = false;
+            btnCheckUpdates.Enabled = false;
 
             try
             {
@@ -924,6 +935,8 @@ namespace XboxFullScreenExperienceTool
             grpPhysPanel.Enabled = false;
             cboLanguage.Enabled = false;
             chkStartKeyboardOnLogon.Enabled = false;
+            btnOpenSettings.Enabled = false;
+            btnCheckUpdates.Enabled = false;
 
             try
             {
@@ -945,6 +958,48 @@ namespace XboxFullScreenExperienceTool
                 {
                     await RerunChecksAndLog();
                 }
+            }
+        }
+
+        /// <summary>
+        /// 開啟 Windows 設定中的「全螢幕體驗」頁面。
+        /// URI: ms-settings:gaming-fullscreen
+        /// </summary>
+        private void btnOpenSettings_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo("ms-settings:gaming-fullscreen") { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                LogError(string.Format(Resources.Strings.ErrorOpenSettings, ex.Message));
+                MessageBox.Show(
+                    Resources.Strings.MsgOpenSettingsManual,
+                    Resources.Strings.HandleExceptionTitle,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 開啟 Microsoft Store 並跳轉至「更新與下載」頁面。
+        /// URI: ms-windows-store://downloadsandupdates
+        /// </summary>
+        private void btnCheckUpdates_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo("ms-windows-store://downloadsandupdates") { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                LogError(string.Format(Resources.Strings.ErrorOpenStore, ex.Message));
+                MessageBox.Show(
+                    Resources.Strings.MsgOpenStoreManual,
+                    Resources.Strings.HandleExceptionTitle,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 
@@ -1275,7 +1330,7 @@ namespace XboxFullScreenExperienceTool
             this.Text = windowTitle;
 
             lblStatus.Text = Resources.Strings.StatusChecking; // "狀態：偵測中...";
-            grpPhysPanel.Text = Resources.Strings.grpPhysPanel_Text; 
+            grpPhysPanel.Text = Resources.Strings.grpPhysPanel_Text;
             radPhysPanelCS.Text = Resources.Strings.radPhysPanelCS_Text;
             radPhysPanelDrv.Text = Resources.Strings.radPhysPanelDrv_Text;
             grpActions.Text = Resources.Strings.grpActions_Text;
@@ -1283,6 +1338,8 @@ namespace XboxFullScreenExperienceTool
             btnDisable.Text = Resources.Strings.btnDisable_Text;
             btnEnable.Text = Resources.Strings.btnEnable_Text;
             chkStartKeyboardOnLogon.Text = Resources.Strings.chkStartKeyboardOnLogon_Text;
+            btnOpenSettings.Text = Resources.Strings.btnOpenSettings_Text;
+            btnCheckUpdates.Text = Resources.Strings.btnCheckUpdates_Text;
         }
 
         /// <summary>
@@ -1385,7 +1442,7 @@ namespace XboxFullScreenExperienceTool
             // 這會覆寫所有執行緒的預設行為，確保 Log 和 MessageBox 也使用新語言
             Resources.Strings.Culture = newCulture;
 
-            UpdateUIForLanguage();
+            UpdateUIForLanguage();
 
             _isInitializing = true;
             await RerunChecksAndLog(); // 呼叫修改後的 async 版本

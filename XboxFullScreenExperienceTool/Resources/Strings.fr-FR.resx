@@ -507,4 +507,22 @@ Veuillez vous assurer que vous exécutez ce programme avec les privilèges d'adm
   <data name="LogErrorArchivingLog" xml:space="preserve">
     <value>Échec de l'archivage de l'ancien fichier journal : {0}</value>
   </data>
+  <data name="btnOpenSettings_Text" xml:space="preserve">
+    <value>Ouvrir les paramètres d'expérience plein écran</value>
+  </data>
+  <data name="btnCheckUpdates_Text" xml:space="preserve">
+    <value>Rechercher des mises à jour Xbox dans le MS Store</value>
+  </data>
+  <data name="ErrorOpenSettings" xml:space="preserve">
+    <value>Échec de l'ouverture de la page des paramètres : {0}</value>
+  </data>
+  <data name="MsgOpenSettingsManual" xml:space="preserve">
+    <value>Impossible d'ouvrir les paramètres Windows. Veuillez aller manuellement dans [Démarrer &gt; Paramètres &gt; Jeux &gt; Expérience plein écran].</value>
+  </data>
+  <data name="ErrorOpenStore" xml:space="preserve">
+    <value>Échec de l'ouverture du Microsoft Store : {0}</value>
+  </data>
+  <data name="MsgOpenStoreManual" xml:space="preserve">
+    <value>Impossible d'ouvrir le Microsoft Store. Veuillez vérifier manuellement les mises à jour des applications Xbox.</value>
+  </data>
 </root>

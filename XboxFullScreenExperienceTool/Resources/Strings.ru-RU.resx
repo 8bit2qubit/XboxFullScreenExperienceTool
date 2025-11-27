@@ -507,4 +507,22 @@
   <data name="LogErrorArchivingLog" xml:space="preserve">
     <value>Не удалось заархивировать старый файл журнала: {0}</value>
   </data>
+  <data name="btnOpenSettings_Text" xml:space="preserve">
+    <value>Открыть настройки полноэкранного режима</value>
+  </data>
+  <data name="btnCheckUpdates_Text" xml:space="preserve">
+    <value>Проверить обновления Xbox в MS Store</value>
+  </data>
+  <data name="ErrorOpenSettings" xml:space="preserve">
+    <value>Не удалось открыть страницу настроек: {0}</value>
+  </data>
+  <data name="MsgOpenSettingsManual" xml:space="preserve">
+    <value>Не удалось открыть параметры Windows. Пожалуйста, перейдите вручную: [Пуск &gt; Параметры &gt; Игры &gt; Полноэкранный режим].</value>
+  </data>
+  <data name="ErrorOpenStore" xml:space="preserve">
+    <value>Не удалось открыть Microsoft Store: {0}</value>
+  </data>
+  <data name="MsgOpenStoreManual" xml:space="preserve">
+    <value>Не удалось открыть Microsoft Store. Пожалуйста, проверьте обновления приложений Xbox вручную.</value>
+  </data>
 </root>

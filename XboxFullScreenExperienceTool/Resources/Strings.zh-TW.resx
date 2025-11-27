@@ -507,4 +507,22 @@
   <data name="LogErrorArchivingLog" xml:space="preserve">
     <value>無法封存舊的日誌檔案：{0}</value>
   </data>
+  <data name="btnOpenSettings_Text" xml:space="preserve">
+    <value>開啟全螢幕體驗設定</value>
+  </data>
+  <data name="btnCheckUpdates_Text" xml:space="preserve">
+    <value>檢查 MS Store 的 Xbox 更新</value>
+  </data>
+  <data name="ErrorOpenSettings" xml:space="preserve">
+    <value>無法開啟設定頁面: {0}</value>
+  </data>
+  <data name="MsgOpenSettingsManual" xml:space="preserve">
+    <value>無法開啟 Windows 設定，請手動前往 [開始 &gt; 設定 &gt; 遊戲 &gt; 全螢幕體驗]。</value>
+  </data>
+  <data name="ErrorOpenStore" xml:space="preserve">
+    <value>無法開啟 Microsoft Store: {0}</value>
+  </data>
+  <data name="MsgOpenStoreManual" xml:space="preserve">
+    <value>無法開啟 Microsoft Store，請手動確認 Xbox 相關應用程式更新。</value>
+  </data>
 </root>

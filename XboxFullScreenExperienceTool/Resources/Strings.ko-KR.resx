@@ -507,4 +507,22 @@
   <data name="LogErrorArchivingLog" xml:space="preserve">
     <value>이전 로그 파일을 보관하지 못했습니다: {0}</value>
   </data>
+  <data name="btnOpenSettings_Text" xml:space="preserve">
+    <value>전체 화면 경험 설정 열기</value>
+  </data>
+  <data name="btnCheckUpdates_Text" xml:space="preserve">
+    <value>MS Store에서 Xbox 업데이트 확인</value>
+  </data>
+  <data name="ErrorOpenSettings" xml:space="preserve">
+    <value>설정 페이지를 열 수 없습니다: {0}</value>
+  </data>
+  <data name="MsgOpenSettingsManual" xml:space="preserve">
+    <value>Windows 설정을 열 수 없습니다. [시작 &gt; 설정 &gt; 게임 &gt; 전체 화면 경험]으로 직접 이동하십시오.</value>
+  </data>
+  <data name="ErrorOpenStore" xml:space="preserve">
+    <value>Microsoft Store를 열 수 없습니다: {0}</value>
+  </data>
+  <data name="MsgOpenStoreManual" xml:space="preserve">
+    <value>Microsoft Store를 열 수 없습니다. Xbox 관련 앱 업데이트를 수동으로 확인하십시오.</value>
+  </data>
 </root>
