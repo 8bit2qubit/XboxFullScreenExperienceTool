@@ -145,7 +145,7 @@ namespace XboxFullScreenExperienceTool
                     {
                         FeatureId = id,
                         EnabledState = RTL_FEATURE_ENABLED_STATE.Disabled,
-                        Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState,
+                        Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState | RTL_FEATURE_CONFIGURATION_OPERATION.VariantState,
                         Priority = RTL_FEATURE_CONFIGURATION_PRIORITY.User
                     });
                     FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
@@ -210,7 +210,7 @@ namespace XboxFullScreenExperienceTool
                     {
                         FeatureId = id,
                         EnabledState = RTL_FEATURE_ENABLED_STATE.Enabled,
-                        Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState,
+                        Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState | RTL_FEATURE_CONFIGURATION_OPERATION.VariantState,
                         Priority = RTL_FEATURE_CONFIGURATION_PRIORITY.User
                     });
                     FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
@@ -251,7 +251,7 @@ namespace XboxFullScreenExperienceTool
                     {
                         FeatureId = id,
                         EnabledState = RTL_FEATURE_ENABLED_STATE.Enabled,
-                        Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState,
+                        Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState | RTL_FEATURE_CONFIGURATION_OPERATION.VariantState,
                         Priority = RTL_FEATURE_CONFIGURATION_PRIORITY.User
                     });
                     FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
@@ -1024,7 +1024,7 @@ namespace XboxFullScreenExperienceTool
             {
                 FeatureId = id,
                 EnabledState = RTL_FEATURE_ENABLED_STATE.Enabled,
-                Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState,
+                Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState | RTL_FEATURE_CONFIGURATION_OPERATION.VariantState,
                 Priority = RTL_FEATURE_CONFIGURATION_PRIORITY.User
             });
             FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
@@ -1138,7 +1138,7 @@ namespace XboxFullScreenExperienceTool
             {
                 FeatureId = id,
                 EnabledState = RTL_FEATURE_ENABLED_STATE.Disabled,
-                Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState,
+                Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState | RTL_FEATURE_CONFIGURATION_OPERATION.VariantState,
                 Priority = RTL_FEATURE_CONFIGURATION_PRIORITY.User
             });
             FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
