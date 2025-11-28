@@ -337,6 +337,7 @@ namespace XboxFullScreenExperienceTool
             grpPhysPanel.Enabled = false;
             chkStartKeyboardOnLogon.Enabled = false;
             cboLanguage.Enabled = false;
+            btnCheckUpdates.Enabled = false;
 
             // 步驟 2: 根據選定的語言更新 UI 文字
             UpdateUIForLanguage();
@@ -686,6 +687,8 @@ namespace XboxFullScreenExperienceTool
 
                     // 設定 FSE 設定按鈕的狀態
                     btnOpenSettings.Enabled = enableOpenSettings;
+                    // 開放 MS Store 按鈕
+                    btnCheckUpdates.Enabled = true;
 
                     // 設定遊戲控制器鍵盤啟動選項的可用性
                     bool hasTouchSupport = HardwareHelper.IsTouchScreenAvailable();
@@ -1408,7 +1411,7 @@ namespace XboxFullScreenExperienceTool
                 this.Cursor = Cursors.Default;
                 cboLanguage.Enabled = true; // 重新啟用語言選單
 
-                // 注意：btnEnable, btnDisable, grpPhysPanel, chkStartKeyboardOnLogon
+                // 注意：btnEnable, btnDisable, grpPhysPanel, chkStartKeyboardOnLogon, btnOpenSettings, btnCheckUpdates
                 // 的 Enabled 狀態由 CheckCurrentStatus 內部的 Invoke 決定，
                 // 所以這裡不需要也不應該將它們設為 true。
             }
