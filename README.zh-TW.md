@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-<img src="demo.zh-TW.png" alt="Xbox 全螢幕體驗工具展示" style="width: 550px; object-fit: contain; display: block; margin: 0 auto;">
+<img src="demo.zh-TW.png" alt="Xbox 全螢幕體驗工具展示" style="width: 602px; object-fit: contain; display: block; margin: 0 auto;">
 </p>
 
 <p align="center">
