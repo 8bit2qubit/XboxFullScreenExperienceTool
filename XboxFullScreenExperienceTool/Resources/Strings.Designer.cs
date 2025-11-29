@@ -991,7 +991,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Unable to open Windows Settings. Please manually go to [Start &amp;gt; Settings &amp;gt; Gaming &amp;gt; Full Screen Experience]. 的當地語系化字串。
+        ///   查詢類似 Unable to open Windows Settings. Please manually go to [Start &gt; Settings &gt; Gaming &gt; Full Screen Experience]. 的當地語系化字串。
         /// </summary>
         internal static string MsgOpenSettingsManual {
             get {

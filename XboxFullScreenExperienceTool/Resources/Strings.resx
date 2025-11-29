@@ -517,7 +517,7 @@ Please ensure you are running this program with administrator privileges.</value
     <value>Failed to open settings page: {0}</value>
   </data>
   <data name="MsgOpenSettingsManual" xml:space="preserve">
-    <value>Unable to open Windows Settings. Please manually go to [Start &amp;gt; Settings &amp;gt; Gaming &amp;gt; Full Screen Experience].</value>
+    <value>Unable to open Windows Settings. Please manually go to [Start &gt; Settings &gt; Gaming &gt; Full Screen Experience].</value>
   </data>
   <data name="ErrorOpenStore" xml:space="preserve">
     <value>Failed to open Microsoft Store: {0}</value>
