@@ -348,6 +348,10 @@ namespace XboxFullScreenExperienceTool
         /// </summary>
         private async void MainForm_Shown(object sender, EventArgs e)
         {
+            // 啟動時檢查日誌大小，若過大則自動輪替
+            // 確保長期使用下來，使用者每次開啟程式都是從乾淨或較小的日誌開始
+            CheckAndArchiveLogFile();
+
             _isInitializing = true;
             await RerunChecksAndLog(); // 執行所有初始檢查並記錄結果
             _isInitializing = false; // 待所有檢查完成後，才算初始化完畢
@@ -1605,6 +1609,31 @@ namespace XboxFullScreenExperienceTool
                     txtOutput.AppendText(errorTimestamp + string.Format(Resources.Strings.ErrorWritingLogFile, ex.Message) + Environment.NewLine);
                 }
             }
+        }
+
+        /// <summary>
+        /// 檢查日誌檔案大小，如果超過 1MB 則進行封存。
+        /// 在啟動時呼叫。
+        /// </summary>
+        private void CheckAndArchiveLogFile()
+        {
+            if (!File.Exists(_logFilePath)) return;
+
+            try
+            {
+                FileInfo fi = new FileInfo(_logFilePath);
+
+                // 設定門檻值：1MB (1024 * 1024 bytes)
+                // 如果檔案小於 1MB，則不動作
+                if (fi.Length < (1024 * 1024))
+                {
+                    return;
+                }
+
+                // 超過大小，執行封存
+                ArchiveLogFile();
+            }
+            catch { /* 忽略錯誤 */ }
         }
 
         /// <summary>
