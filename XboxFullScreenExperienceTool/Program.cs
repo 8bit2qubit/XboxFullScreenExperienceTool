@@ -117,7 +117,7 @@ namespace XboxFullScreenExperienceTool
                 try
                 {
                     string logPath = Path.Combine(Path.GetTempPath(), "XFSET_Install.log");
-                    File.AppendAllText(logPath, $"[{DateTime.Now:HH:mm:ss}] [{mode}] {msg}{Environment.NewLine}");
+                    File.AppendAllText(logPath, $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] [{mode}] {msg}{Environment.NewLine}");
                 }
                 catch { /* 忽略日誌寫入失敗 */ }
             };

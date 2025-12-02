@@ -1551,16 +1551,22 @@ namespace XboxFullScreenExperienceTool
                 return;
             }
 
-            string timestamp = $"[{DateTime.Now:HH:mm:ss}] ";
-            string fullMessage = timestamp + message;
+            // 取得當下時間
+            DateTime now = DateTime.Now;
 
-            // 更新 UI
+            // 1. 建立 GUI 顯示用的訊息 (僅時間)
+            string guiMessage = $"[{now:HH:mm:ss}] " + message;
+
+            // 2. 建立寫入檔案用的訊息 (包含日期與時間)
+            string fileMessage = $"[{now:yyyy-MM-dd HH:mm:ss}] " + message;
+
+            // 更新 UI (使用 guiMessage)
             txtOutput.SelectionColor = isSuccess ? Color.LimeGreen : Color.Gainsboro;
-            txtOutput.AppendText(fullMessage + Environment.NewLine);
+            txtOutput.AppendText(guiMessage + Environment.NewLine);
             txtOutput.ScrollToCaret();
 
-            // 將日誌寫入檔案
-            WriteToFile(fullMessage);
+            // 將日誌寫入檔案 (使用 fileMessage)
+            WriteToFile(fileMessage);
         }
 
         /// <summary>
@@ -1575,16 +1581,23 @@ namespace XboxFullScreenExperienceTool
                 return;
             }
 
-            string timestamp = $"[{DateTime.Now:HH:mm:ss}] [{Resources.Strings.HandleExceptionTitle}] ";
-            string fullMessage = timestamp + message;
+            // 取得當下時間
+            DateTime now = DateTime.Now;
+            string errorTitle = Resources.Strings.HandleExceptionTitle;
 
-            // 更新 UI
+            // 1. 建立 GUI 顯示用的訊息 (僅時間)
+            string guiMessage = $"[{now:HH:mm:ss}] [{errorTitle}] " + message;
+
+            // 2. 建立寫入檔案用的訊息 (包含日期與時間)
+            string fileMessage = $"[{now:yyyy-MM-dd HH:mm:ss}] [{errorTitle}] " + message;
+
+            // 更新 UI (使用 guiMessage)
             txtOutput.SelectionColor = Color.Tomato;
-            txtOutput.AppendText(fullMessage + Environment.NewLine);
+            txtOutput.AppendText(guiMessage + Environment.NewLine);
             txtOutput.ScrollToCaret();
 
-            // 將日誌寫入檔案
-            WriteToFile(fullMessage);
+            // 將日誌寫入檔案 (使用 fileMessage)
+            WriteToFile(fileMessage);
         }
 
         /// <summary>
