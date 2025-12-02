@@ -511,7 +511,7 @@
     <value>打开全屏体验设置</value>
   </data>
   <data name="btnCheckUpdates_Text" xml:space="preserve">
-    <value>检查微软商店的 Xbox 更新</value>
+    <value>检查 MS Store 的 Xbox 更新</value>
   </data>
   <data name="ErrorOpenSettings" xml:space="preserve">
     <value>无法打开设置页面: {0}</value>
@@ -524,5 +524,14 @@
   </data>
   <data name="MsgOpenStoreManual" xml:space="preserve">
     <value>无法打开 Microsoft Store，请手动确认 Xbox 相关应用程序更新。</value>
+  </data>
+  <data name="btnOpenUAC_Text" xml:space="preserve">
+    <value>打开 UAC 设置</value>
+  </data>
+  <data name="ErrorOpenUAC" xml:space="preserve">
+    <value>无法打开 UAC 设置: {0}</value>
+  </data>
+  <data name="MsgOpenUACError" xml:space="preserve">
+    <value>无法打开 UAC 设置。错误: {0}</value>
   </data>
 </root>

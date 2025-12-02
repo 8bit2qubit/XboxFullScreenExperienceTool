@@ -525,4 +525,13 @@ Bitte stellen Sie sicher, dass Sie dieses Programm mit Administratorrechten ausf
   <data name="MsgOpenStoreManual" xml:space="preserve">
     <value>Microsoft Store konnte nicht geöffnet werden. Bitte suchen Sie manuell nach Updates für Xbox-Apps.</value>
   </data>
+  <data name="btnOpenUAC_Text" xml:space="preserve">
+    <value>UAC-Einstellungen öffnen</value>
+  </data>
+  <data name="ErrorOpenUAC" xml:space="preserve">
+    <value>Fehler beim Öffnen der UAC-Einstellungen: {0}</value>
+  </data>
+  <data name="MsgOpenUACError" xml:space="preserve">
+    <value>UAC-Einstellungen konnten nicht geöffnet werden. Fehler: {0}</value>
+  </data>
 </root>

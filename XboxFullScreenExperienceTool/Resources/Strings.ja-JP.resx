@@ -525,4 +525,13 @@
   <data name="MsgOpenStoreManual" xml:space="preserve">
     <value>Microsoft Store を開けませんでした。手動で Xbox 関連アプリの更新を確認してください。</value>
   </data>
+  <data name="btnOpenUAC_Text" xml:space="preserve">
+    <value>UAC 設定を開く</value>
+  </data>
+  <data name="ErrorOpenUAC" xml:space="preserve">
+    <value>UAC 設定を開けませんでした: {0}</value>
+  </data>
+  <data name="MsgOpenUACError" xml:space="preserve">
+    <value>UAC 設定を開けませんでした。エラー: {0}</value>
+  </data>
 </root>

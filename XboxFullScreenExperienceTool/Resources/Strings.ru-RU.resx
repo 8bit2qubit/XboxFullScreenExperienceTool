@@ -525,4 +525,13 @@
   <data name="MsgOpenStoreManual" xml:space="preserve">
     <value>Не удалось открыть Microsoft Store. Пожалуйста, проверьте обновления приложений Xbox вручную.</value>
   </data>
+  <data name="btnOpenUAC_Text" xml:space="preserve">
+    <value>Открыть настройки UAC</value>
+  </data>
+  <data name="ErrorOpenUAC" xml:space="preserve">
+    <value>Не удалось открыть настройки UAC: {0}</value>
+  </data>
+  <data name="MsgOpenUACError" xml:space="preserve">
+    <value>Не удалось открыть настройки UAC. Ошибка: {0}</value>
+  </data>
 </root>

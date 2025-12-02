@@ -106,6 +106,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Open UAC Settings 的當地語系化字串。
+        /// </summary>
+        internal static string btnOpenUAC_Text {
+            get {
+                return ResourceManager.GetString("btnOpenUAC_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Start gamepad keyboard on logon and auto-hide to background 的當地語系化字串。
         /// </summary>
         internal static string chkStartKeyboardOnLogon_Text {
@@ -192,6 +201,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         internal static string ErrorOpenStore {
             get {
                 return ResourceManager.GetString("ErrorOpenStore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Failed to open UAC settings: {0} 的當地語系化字串。
+        /// </summary>
+        internal static string ErrorOpenUAC {
+            get {
+                return ResourceManager.GetString("ErrorOpenUAC", resourceCulture);
             }
         }
         
@@ -1005,6 +1023,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         internal static string MsgOpenStoreManual {
             get {
                 return ResourceManager.GetString("MsgOpenStoreManual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Unable to open UAC settings. Error: {0} 的當地語系化字串。
+        /// </summary>
+        internal static string MsgOpenUACError {
+            get {
+                return ResourceManager.GetString("MsgOpenUACError", resourceCulture);
             }
         }
         

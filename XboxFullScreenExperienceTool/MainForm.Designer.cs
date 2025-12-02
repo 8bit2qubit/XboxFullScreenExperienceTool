@@ -38,6 +38,7 @@ namespace XboxFullScreenExperienceTool
             chkStartKeyboardOnLogon = new CheckBox();
             btnCheckUpdates = new Button();
             btnOpenSettings = new Button();
+            btnOpenUAC = new Button();
             grpOutput = new GroupBox();
             txtOutput = new RichTextBox();
             lblStatus = new Label();
@@ -53,12 +54,12 @@ namespace XboxFullScreenExperienceTool
             // 
             // btnEnable
             // 
-            btnEnable.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 136);
+            btnEnable.Font = new Font("Microsoft JhengHei UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 136);
             btnEnable.ForeColor = Color.DarkGreen;
-            btnEnable.Location = new Point(28, 19);
+            btnEnable.Location = new Point(28, 24);
             btnEnable.Margin = new Padding(4, 5, 4, 5);
             btnEnable.Name = "btnEnable";
-            btnEnable.Size = new Size(423, 66);
+            btnEnable.Size = new Size(424, 50);
             btnEnable.TabIndex = 6;
             btnEnable.Text = "啟用 Xbox 全螢幕體驗";
             btnEnable.UseVisualStyleBackColor = true;
@@ -66,12 +67,12 @@ namespace XboxFullScreenExperienceTool
             // 
             // btnDisable
             // 
-            btnDisable.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 136);
+            btnDisable.Font = new Font("Microsoft JhengHei UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 136);
             btnDisable.ForeColor = Color.DarkRed;
-            btnDisable.Location = new Point(477, 19);
+            btnDisable.Location = new Point(28, 79);
             btnDisable.Margin = new Padding(4, 5, 4, 5);
             btnDisable.Name = "btnDisable";
-            btnDisable.Size = new Size(424, 66);
+            btnDisable.Size = new Size(424, 50);
             btnDisable.TabIndex = 7;
             btnDisable.Text = "停用並還原";
             btnDisable.UseVisualStyleBackColor = true;
@@ -85,6 +86,7 @@ namespace XboxFullScreenExperienceTool
             grpActions.Controls.Add(btnEnable);
             grpActions.Controls.Add(btnCheckUpdates);
             grpActions.Controls.Add(btnOpenSettings);
+            grpActions.Controls.Add(btnOpenUAC);
             grpActions.Location = new Point(18, 86);
             grpActions.Margin = new Padding(4, 5, 4, 5);
             grpActions.Name = "grpActions";
@@ -102,18 +104,18 @@ namespace XboxFullScreenExperienceTool
             chkStartKeyboardOnLogon.Margin = new Padding(4, 5, 4, 5);
             chkStartKeyboardOnLogon.Name = "chkStartKeyboardOnLogon";
             chkStartKeyboardOnLogon.Size = new Size(376, 23);
-            chkStartKeyboardOnLogon.TabIndex = 10;
-            chkStartKeyboardOnLogon.Text = "在登入時啟動遊戲控制器鍵盤，並自動收至背景待命";
+            chkStartKeyboardOnLogon.TabIndex = 11;
+            chkStartKeyboardOnLogon.Text = "在登入時啟動遊戲控制器鍵盤，並自動隱藏至背景待命";
             chkStartKeyboardOnLogon.UseVisualStyleBackColor = true;
             chkStartKeyboardOnLogon.CheckedChanged += chkStartKeyboardOnLogon_CheckedChanged;
             // 
             // btnCheckUpdates
             // 
             btnCheckUpdates.Font = new Font("Microsoft JhengHei UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 136);
-            btnCheckUpdates.Location = new Point(477, 95);
+            btnCheckUpdates.Location = new Point(477, 24);
             btnCheckUpdates.Name = "btnCheckUpdates";
-            btnCheckUpdates.Size = new Size(424, 35);
-            btnCheckUpdates.TabIndex = 9;
+            btnCheckUpdates.Size = new Size(424, 31);
+            btnCheckUpdates.TabIndex = 8;
             btnCheckUpdates.Text = "檢查 MS Store 的 Xbox 更新";
             btnCheckUpdates.UseVisualStyleBackColor = true;
             btnCheckUpdates.Click += btnCheckUpdates_Click;
@@ -122,13 +124,24 @@ namespace XboxFullScreenExperienceTool
             // 
             btnOpenSettings.Enabled = false;
             btnOpenSettings.Font = new Font("Microsoft JhengHei UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 136);
-            btnOpenSettings.Location = new Point(28, 95);
+            btnOpenSettings.Location = new Point(477, 61);
             btnOpenSettings.Name = "btnOpenSettings";
-            btnOpenSettings.Size = new Size(423, 35);
-            btnOpenSettings.TabIndex = 8;
+            btnOpenSettings.Size = new Size(424, 31);
+            btnOpenSettings.TabIndex = 9;
             btnOpenSettings.Text = "開啟全螢幕體驗設定";
             btnOpenSettings.UseVisualStyleBackColor = true;
             btnOpenSettings.Click += btnOpenSettings_Click;
+            // 
+            // btnOpenUAC
+            // 
+            btnOpenUAC.Font = new Font("Microsoft JhengHei UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 136);
+            btnOpenUAC.Location = new Point(477, 98);
+            btnOpenUAC.Name = "btnOpenUAC";
+            btnOpenUAC.Size = new Size(424, 31);
+            btnOpenUAC.TabIndex = 10;
+            btnOpenUAC.Text = "開啟 UAC 設定";
+            btnOpenUAC.UseVisualStyleBackColor = true;
+            btnOpenUAC.Click += btnOpenUAC_Click;
             // 
             // grpOutput
             // 
@@ -139,7 +152,7 @@ namespace XboxFullScreenExperienceTool
             grpOutput.Name = "grpOutput";
             grpOutput.Padding = new Padding(4, 5, 4, 5);
             grpOutput.Size = new Size(928, 278);
-            grpOutput.TabIndex = 11;
+            grpOutput.TabIndex = 12;
             grpOutput.TabStop = false;
             grpOutput.Text = "執行日誌";
             // 
@@ -155,7 +168,7 @@ namespace XboxFullScreenExperienceTool
             txtOutput.Name = "txtOutput";
             txtOutput.ReadOnly = true;
             txtOutput.Size = new Size(920, 243);
-            txtOutput.TabIndex = 12;
+            txtOutput.TabIndex = 13;
             txtOutput.Text = "";
             // 
             // lblStatus
@@ -265,5 +278,6 @@ namespace XboxFullScreenExperienceTool
         private System.Windows.Forms.ComboBox cboLanguage;
         private System.Windows.Forms.Button btnOpenSettings;
         private System.Windows.Forms.Button btnCheckUpdates;
+        private System.Windows.Forms.Button btnOpenUAC;
     }
 }

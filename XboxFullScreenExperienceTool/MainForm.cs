@@ -338,6 +338,7 @@ namespace XboxFullScreenExperienceTool
             chkStartKeyboardOnLogon.Enabled = false;
             cboLanguage.Enabled = false;
             btnCheckUpdates.Enabled = false;
+            btnOpenUAC.Enabled = false;
 
             // 步驟 2: 根據選定的語言更新 UI 文字
             UpdateUIForLanguage();
@@ -693,6 +694,8 @@ namespace XboxFullScreenExperienceTool
                     btnOpenSettings.Enabled = enableOpenSettings;
                     // 開放 MS Store 按鈕
                     btnCheckUpdates.Enabled = true;
+                    // 開放 UAC 設定按鈕
+                    btnOpenUAC.Enabled = true;
 
                     // 設定遊戲控制器鍵盤啟動選項的可用性
                     bool hasTouchSupport = HardwareHelper.IsTouchScreenAvailable();
@@ -777,6 +780,7 @@ namespace XboxFullScreenExperienceTool
             chkStartKeyboardOnLogon.Enabled = false;
             btnOpenSettings.Enabled = false;
             btnCheckUpdates.Enabled = false;
+            btnOpenUAC.Enabled = false;
 
             try
             {
@@ -944,6 +948,7 @@ namespace XboxFullScreenExperienceTool
             chkStartKeyboardOnLogon.Enabled = false;
             btnOpenSettings.Enabled = false;
             btnCheckUpdates.Enabled = false;
+            btnOpenUAC.Enabled = false;
 
             try
             {
@@ -1004,6 +1009,27 @@ namespace XboxFullScreenExperienceTool
                 LogError(string.Format(Resources.Strings.ErrorOpenStore, ex.Message));
                 MessageBox.Show(
                     Resources.Strings.MsgOpenStoreManual,
+                    Resources.Strings.HandleExceptionTitle,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 開啟使用者帳戶控制 (UAC) 設定視窗。
+        /// 執行檔: UserAccountControlSettings.exe
+        /// </summary>
+        private void btnOpenUAC_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo("UserAccountControlSettings.exe") { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                LogError(string.Format(Resources.Strings.ErrorOpenUAC, ex.Message));
+                MessageBox.Show(
+                    string.Format(Resources.Strings.MsgOpenUACError, ex.Message),
                     Resources.Strings.HandleExceptionTitle,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -1347,6 +1373,7 @@ namespace XboxFullScreenExperienceTool
             chkStartKeyboardOnLogon.Text = Resources.Strings.chkStartKeyboardOnLogon_Text;
             btnOpenSettings.Text = Resources.Strings.btnOpenSettings_Text;
             btnCheckUpdates.Text = Resources.Strings.btnCheckUpdates_Text;
+            btnOpenUAC.Text = Resources.Strings.btnOpenUAC_Text;
         }
 
         /// <summary>

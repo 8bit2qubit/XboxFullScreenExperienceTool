@@ -525,4 +525,13 @@ Veuillez vous assurer que vous exécutez ce programme avec les privilèges d'adm
   <data name="MsgOpenStoreManual" xml:space="preserve">
     <value>Impossible d'ouvrir le Microsoft Store. Veuillez vérifier manuellement les mises à jour des applications Xbox.</value>
   </data>
+  <data name="btnOpenUAC_Text" xml:space="preserve">
+    <value>Ouvrir les paramètres UAC</value>
+  </data>
+  <data name="ErrorOpenUAC" xml:space="preserve">
+    <value>Échec de l'ouverture des paramètres UAC : {0}</value>
+  </data>
+  <data name="MsgOpenUACError" xml:space="preserve">
+    <value>Impossible d'ouvrir les paramètres UAC. Erreur : {0}</value>
+  </data>
 </root>

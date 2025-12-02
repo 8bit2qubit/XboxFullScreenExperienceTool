@@ -16,10 +16,10 @@
 
 using Microsoft.Win32;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceProcess;
 using System.Text.RegularExpressions;
-using System.Runtime.InteropServices;
 
 namespace XboxFullScreenExperienceTool.Helpers
 {
