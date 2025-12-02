@@ -205,6 +205,16 @@ namespace XboxFullScreenExperienceTool
             {
                 try
                 {
+                    var resetUpdates = Array.ConvertAll(ALL_FEATURE_IDS, id => new RTL_FEATURE_CONFIGURATION_UPDATE
+                    {
+                        FeatureId = id,
+                        EnabledState = RTL_FEATURE_ENABLED_STATE.Disabled,
+                        Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState | RTL_FEATURE_CONFIGURATION_OPERATION.VariantState,
+                        Priority = RTL_FEATURE_CONFIGURATION_PRIORITY.User
+                    });
+                    FeatureManager.SetFeatureConfigurations(resetUpdates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
+                    FeatureManager.SetFeatureConfigurations(resetUpdates, RTL_FEATURE_CONFIGURATION_TYPE.Boot);
+
                     logger($"Enabling features: {string.Join(", ", ALL_FEATURE_IDS)}");
                     var updates = Array.ConvertAll(ALL_FEATURE_IDS, id => new RTL_FEATURE_CONFIGURATION_UPDATE
                     {
@@ -246,6 +256,17 @@ namespace XboxFullScreenExperienceTool
 
                     // 4. 決定 ID 清單 (傳入 isOverridePresent)
                     uint[] idsToEnable = GetRequiredFeatureIds(isNative, diagonalInches, isOverridePresent);
+
+                    var resetUpdates = Array.ConvertAll(idsToEnable, id => new RTL_FEATURE_CONFIGURATION_UPDATE
+                    {
+                        FeatureId = id,
+                        EnabledState = RTL_FEATURE_ENABLED_STATE.Disabled,
+                        Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState | RTL_FEATURE_CONFIGURATION_OPERATION.VariantState,
+                        Priority = RTL_FEATURE_CONFIGURATION_PRIORITY.User
+                    });
+                    FeatureManager.SetFeatureConfigurations(resetUpdates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
+                    FeatureManager.SetFeatureConfigurations(resetUpdates, RTL_FEATURE_CONFIGURATION_TYPE.Boot);
+
                     logger($"Enabling smart features (Native={isNative}, Override={isOverridePresent}, Size={diagonalInches:F2}\"): {string.Join(", ", idsToEnable)}");
                     var updates = Array.ConvertAll(idsToEnable, id => new RTL_FEATURE_CONFIGURATION_UPDATE
                     {
@@ -1136,6 +1157,16 @@ namespace XboxFullScreenExperienceTool
         /// </summary>
         private void EnableViveFeatures(uint[] featureIds)
         {
+            var resetUpdates = Array.ConvertAll(featureIds, id => new RTL_FEATURE_CONFIGURATION_UPDATE
+            {
+                FeatureId = id,
+                EnabledState = RTL_FEATURE_ENABLED_STATE.Disabled,
+                Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState | RTL_FEATURE_CONFIGURATION_OPERATION.VariantState,
+                Priority = RTL_FEATURE_CONFIGURATION_PRIORITY.User
+            });
+            FeatureManager.SetFeatureConfigurations(resetUpdates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
+            FeatureManager.SetFeatureConfigurations(resetUpdates, RTL_FEATURE_CONFIGURATION_TYPE.Boot);
+
             Log(string.Format(Resources.Strings.LogEnablingFeatures, string.Join(", ", featureIds)));
             var updates = Array.ConvertAll(featureIds, id => new RTL_FEATURE_CONFIGURATION_UPDATE
             {
