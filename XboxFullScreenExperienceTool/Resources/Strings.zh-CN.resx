@@ -534,4 +534,13 @@
   <data name="MsgOpenUACError" xml:space="preserve">
     <value>无法打开 UAC 设置。错误: {0}</value>
   </data>
+  <data name="btnOpenStartupApps_Text" xml:space="preserve">
+    <value>打开启动应用设置</value>
+  </data>
+  <data name="ErrorOpenStartupApps" xml:space="preserve">
+    <value>无法打开启动应用设置: {0}</value>
+  </data>
+  <data name="MsgOpenStartupAppsError" xml:space="preserve">
+    <value>无法打开启动应用设置。错误: {0}</value>
+  </data>
 </root>

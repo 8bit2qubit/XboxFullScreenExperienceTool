@@ -517,7 +517,7 @@ Bitte stellen Sie sicher, dass Sie dieses Programm mit Administratorrechten ausf
     <value>Fehler beim Öffnen der Einstellungsseite: {0}</value>
   </data>
   <data name="MsgOpenSettingsManual" xml:space="preserve">
-    <value>Windows-Einstellungen konnten nicht geöffnet werden. Bitte gehen Sie manuell zu [Start &gt; Einstellungen &gt; Spielen &gt; Vollbild-Erfahrung].</value>
+    <value>Windows-Einstellungen konnten nicht geöffnet werden. Bitte gehen Sie manuell zu [Start &gt; Einstellungen &gt; Spielen &gt; Vollbildschirm-Erfahrung].</value>
   </data>
   <data name="ErrorOpenStore" xml:space="preserve">
     <value>Fehler beim Öffnen des Microsoft Store: {0}</value>
@@ -533,5 +533,14 @@ Bitte stellen Sie sicher, dass Sie dieses Programm mit Administratorrechten ausf
   </data>
   <data name="MsgOpenUACError" xml:space="preserve">
     <value>UAC-Einstellungen konnten nicht geöffnet werden. Fehler: {0}</value>
+  </data>
+  <data name="btnOpenStartupApps_Text" xml:space="preserve">
+    <value>Autostart-Einstellungen öffnen</value>
+  </data>
+  <data name="ErrorOpenStartupApps" xml:space="preserve">
+    <value>Fehler beim Öffnen der Autostart-Einstellungen: {0}</value>
+  </data>
+  <data name="MsgOpenStartupAppsError" xml:space="preserve">
+    <value>Autostart-Einstellungen konnten nicht geöffnet werden. Fehler: {0}</value>
   </data>
 </root>

@@ -534,4 +534,13 @@ Please ensure you are running this program with administrator privileges.</value
   <data name="MsgOpenUACError" xml:space="preserve">
     <value>Unable to open UAC settings. Error: {0}</value>
   </data>
+  <data name="btnOpenStartupApps_Text" xml:space="preserve">
+    <value>Open Startup Apps Settings</value>
+  </data>
+  <data name="ErrorOpenStartupApps" xml:space="preserve">
+    <value>Failed to open Startup Apps settings: {0}</value>
+  </data>
+  <data name="MsgOpenStartupAppsError" xml:space="preserve">
+    <value>Unable to open Startup Apps settings. Error: {0}</value>
+  </data>
 </root>

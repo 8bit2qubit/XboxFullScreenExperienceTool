@@ -106,6 +106,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Open Startup Apps Settings 的當地語系化字串。
+        /// </summary>
+        internal static string btnOpenStartupApps_Text {
+            get {
+                return ResourceManager.GetString("btnOpenStartupApps_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Open UAC Settings 的當地語系化字串。
         /// </summary>
         internal static string btnOpenUAC_Text {
@@ -192,6 +201,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         internal static string ErrorOpenSettings {
             get {
                 return ResourceManager.GetString("ErrorOpenSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Failed to open Startup Apps settings: {0} 的當地語系化字串。
+        /// </summary>
+        internal static string ErrorOpenStartupApps {
+            get {
+                return ResourceManager.GetString("ErrorOpenStartupApps", resourceCulture);
             }
         }
         
@@ -1014,6 +1032,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         internal static string MsgOpenSettingsManual {
             get {
                 return ResourceManager.GetString("MsgOpenSettingsManual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Unable to open Startup Apps settings. Error: {0} 的當地語系化字串。
+        /// </summary>
+        internal static string MsgOpenStartupAppsError {
+            get {
+                return ResourceManager.GetString("MsgOpenStartupAppsError", resourceCulture);
             }
         }
         

@@ -339,6 +339,7 @@ namespace XboxFullScreenExperienceTool
             cboLanguage.Enabled = false;
             btnCheckUpdates.Enabled = false;
             btnOpenUAC.Enabled = false;
+            btnOpenStartupApps.Enabled = false;
 
             // 步驟 2: 根據選定的語言更新 UI 文字
             UpdateUIForLanguage();
@@ -518,14 +519,14 @@ namespace XboxFullScreenExperienceTool
                 // 步驟 1: 基礎環境與核心檢查
                 // ======================================================================
 
-                // 1.1 取得螢幕實體尺寸
+                // 取得螢幕實體尺寸
                 var (success, size) = PanelManager.GetDisplaySize();
                 // 若無法讀取尺寸或為 0，視為未定義
                 double diagonalInches = (success && (size.WidthMm > 0 || size.HeightMm > 0))
                     ? Math.Sqrt((size.WidthMm * size.WidthMm) + (size.HeightMm * size.HeightMm)) / INCHES_TO_MM
                     : 0;
 
-                // 1.2 判斷版本
+                // 判斷版本
                 bool isNativeSupport = IsNativeSupportBuild(); // 26220.7271+
 
                 // ======================================================================
@@ -536,10 +537,10 @@ namespace XboxFullScreenExperienceTool
                 bool isPhysPanelDrvActive = DriverManager.IsDriverServiceInstalled();
                 bool isScreenOverridePresent = isPhysPanelCSActive || isPhysPanelDrvActive;
 
-                // 1.3 判斷功能 ID 需求
+                // 判斷功能 ID 需求
                 uint[] requiredIds = GetRequiredFeatureIds(isNativeSupport, diagonalInches, isScreenOverridePresent);
 
-                // 1.4 檢查功能 ID 狀態
+                // 檢查功能 ID 狀態
 #if EXPERIMENTAL
                 Log("--- [EXPERIMENTAL] Feature ID Status ---");
                 bool allRequiredEnabled = true;
@@ -556,7 +557,7 @@ namespace XboxFullScreenExperienceTool
                     FeatureManager.QueryFeatureConfiguration(id, RTL_FEATURE_CONFIGURATION_TYPE.Runtime) is RTL_FEATURE_CONFIGURATION config &&
                     config.EnabledState == RTL_FEATURE_ENABLED_STATE.Enabled);
 #endif
-                // 1.5 檢查登錄檔
+                // 檢查登錄檔
                 object? regValue = Registry.GetValue($"HKEY_LOCAL_MACHINE\\{REG_PATH}", REG_VALUE, null);
                 bool isRegistrySet = regValue is int intValue && intValue == 0x2E;
                 string registryStatusString = (regValue == null) ? Resources.Strings.LogRegStatusFalseNotExist :
@@ -584,6 +585,7 @@ namespace XboxFullScreenExperienceTool
                 // ======================================================================
                 // 步驟 4: 驅動模式可用性檢查
                 // ======================================================================
+
                 bool isTestSigningOn = DriverManager.IsTestSigningEnabled(); // 檢查測試簽章模式是否啟用
                 bool isArchSupported = HardwareHelper.IsDriverSupportedArchitecture(); // 檢查架構是否相容
                 bool isScreenSizeRestricted = RESTRICT_DRV_MODE_ON_LARGE_SCREEN && (diagonalInches > MAX_DIAGONAL_INCHES); // 根據 Drv 功能旗標和螢幕尺寸，判斷是否存在螢幕尺寸限制
@@ -686,12 +688,15 @@ namespace XboxFullScreenExperienceTool
                 // ======================================================================
                 // 步驟 6: 更新 UI
                 // ======================================================================
+
                 this.Invoke((Action)(() =>
                 {
                     _isUpdatingStatus = true; // 開始更新 UI
 
                     // 設定 FSE 設定按鈕的狀態
                     btnOpenSettings.Enabled = enableOpenSettings;
+                    // 設定啟動應用程式設定按鈕的狀態
+                    btnOpenStartupApps.Enabled = enableOpenSettings;
                     // 開放 MS Store 按鈕
                     btnCheckUpdates.Enabled = true;
                     // 開放 UAC 設定按鈕
@@ -723,6 +728,7 @@ namespace XboxFullScreenExperienceTool
                 // ======================================================================
                 // 步驟 7: 寫入日誌 (顯示 CS 與 Drv 狀態)
                 // ======================================================================
+
                 Log(string.Format(Resources.Strings.LogTouchSupportStatus, HardwareHelper.IsTouchScreenAvailable()));
 
                 if (!isNativeSupport && !isTestSigningOn) Log(Resources.Strings.LogTestSigningDisabled); // 如果測試簽章模式未開啟
@@ -781,6 +787,7 @@ namespace XboxFullScreenExperienceTool
             btnOpenSettings.Enabled = false;
             btnCheckUpdates.Enabled = false;
             btnOpenUAC.Enabled = false;
+            btnOpenStartupApps.Enabled = false;
 
             try
             {
@@ -949,6 +956,7 @@ namespace XboxFullScreenExperienceTool
             btnOpenSettings.Enabled = false;
             btnCheckUpdates.Enabled = false;
             btnOpenUAC.Enabled = false;
+            btnOpenStartupApps.Enabled = false;
 
             try
             {
@@ -988,6 +996,27 @@ namespace XboxFullScreenExperienceTool
                 LogError(string.Format(Resources.Strings.ErrorOpenSettings, ex.Message));
                 MessageBox.Show(
                     Resources.Strings.MsgOpenSettingsManual,
+                    Resources.Strings.HandleExceptionTitle,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 開啟 Windows 設定中的「啟動應用程式」頁面。
+        /// URI: ms-settings:startupapps
+        /// </summary>
+        private void btnOpenStartupApps_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo("ms-settings:startupapps") { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                LogError(string.Format(Resources.Strings.ErrorOpenStartupApps, ex.Message));
+                MessageBox.Show(
+                    string.Format(Resources.Strings.MsgOpenStartupAppsError, ex.Message),
                     Resources.Strings.HandleExceptionTitle,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -1374,6 +1403,7 @@ namespace XboxFullScreenExperienceTool
             btnOpenSettings.Text = Resources.Strings.btnOpenSettings_Text;
             btnCheckUpdates.Text = Resources.Strings.btnCheckUpdates_Text;
             btnOpenUAC.Text = Resources.Strings.btnOpenUAC_Text;
+            btnOpenStartupApps.Text = Resources.Strings.btnOpenStartupApps_Text;
         }
 
         /// <summary>

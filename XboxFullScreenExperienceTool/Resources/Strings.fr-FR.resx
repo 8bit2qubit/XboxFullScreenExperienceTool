@@ -534,4 +534,13 @@ Veuillez vous assurer que vous exécutez ce programme avec les privilèges d'adm
   <data name="MsgOpenUACError" xml:space="preserve">
     <value>Impossible d'ouvrir les paramètres UAC. Erreur : {0}</value>
   </data>
+  <data name="btnOpenStartupApps_Text" xml:space="preserve">
+    <value>Ouvrir les applications de démarrage</value>
+  </data>
+  <data name="ErrorOpenStartupApps" xml:space="preserve">
+    <value>Échec de l'ouverture des applications de démarrage : {0}</value>
+  </data>
+  <data name="MsgOpenStartupAppsError" xml:space="preserve">
+    <value>Impossible d'ouvrir les applications de démarrage. Erreur : {0}</value>
+  </data>
 </root>

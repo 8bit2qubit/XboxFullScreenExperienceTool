@@ -534,4 +534,13 @@
   <data name="MsgOpenUACError" xml:space="preserve">
     <value>Не удалось открыть настройки UAC. Ошибка: {0}</value>
   </data>
+  <data name="btnOpenStartupApps_Text" xml:space="preserve">
+    <value>Открыть настройки автозагрузки</value>
+  </data>
+  <data name="ErrorOpenStartupApps" xml:space="preserve">
+    <value>Не удалось открыть настройки автозагрузки: {0}</value>
+  </data>
+  <data name="MsgOpenStartupAppsError" xml:space="preserve">
+    <value>Не удалось открыть настройки автозагрузки. Ошибка: {0}</value>
+  </data>
 </root>

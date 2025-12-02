@@ -529,9 +529,18 @@
     <value>UAC 설정 열기</value>
   </data>
   <data name="ErrorOpenUAC" xml:space="preserve">
-    <value>UAC 설정을 열지 못했습니다: {0}</value>
+    <value>UAC 설정을 열 수 없습니다: {0}</value>
   </data>
   <data name="MsgOpenUACError" xml:space="preserve">
     <value>UAC 설정을 열 수 없습니다. 오류: {0}</value>
+  </data>
+  <data name="btnOpenStartupApps_Text" xml:space="preserve">
+    <value>시작 앱 설정 열기</value>
+  </data>
+  <data name="ErrorOpenStartupApps" xml:space="preserve">
+    <value>시작 앱 설정을 열 수 없습니다: {0}</value>
+  </data>
+  <data name="MsgOpenStartupAppsError" xml:space="preserve">
+    <value>시작 앱 설정을 열 수 없습니다. 오류: {0}</value>
   </data>
 </root>

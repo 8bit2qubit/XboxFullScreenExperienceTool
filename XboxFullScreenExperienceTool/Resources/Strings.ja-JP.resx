@@ -508,7 +508,7 @@
     <value>古いログファイルをアーカイブできませんでした: {0}</value>
   </data>
   <data name="btnOpenSettings_Text" xml:space="preserve">
-    <value>全画面表示エクスペリエンス設定を開</value>
+    <value>全画面表示エクスペリエンス設定を開く</value>
   </data>
   <data name="btnCheckUpdates_Text" xml:space="preserve">
     <value>MS Store で Xbox の更新を確認</value>
@@ -533,5 +533,14 @@
   </data>
   <data name="MsgOpenUACError" xml:space="preserve">
     <value>UAC 設定を開けませんでした。エラー: {0}</value>
+  </data>
+  <data name="btnOpenStartupApps_Text" xml:space="preserve">
+    <value>スタートアップ アプリ設定を開く</value>
+  </data>
+  <data name="ErrorOpenStartupApps" xml:space="preserve">
+    <value>スタートアップ アプリ設定を開けませんでした: {0}</value>
+  </data>
+  <data name="MsgOpenStartupAppsError" xml:space="preserve">
+    <value>スタートアップ アプリ設定を開けませんでした。エラー: {0}</value>
   </data>
 </root>
