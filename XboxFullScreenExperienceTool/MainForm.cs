@@ -890,6 +890,10 @@ namespace XboxFullScreenExperienceTool
                             TaskSchedulerManager.DeleteSetPanelDimensionsTask();
                         }
 
+                        // 這確保了即使在驅動模式下，DeviceForm 機碼 (0x2E) 也會在開機時被強制鎖定 (regOnly)
+                        TaskSchedulerManager.CreateSetPanelDimensionsTask(regOnly: true);
+                        Log(Resources.Strings.LogPanelTaskCreated);
+
                         // 呼叫安裝方法並接收其回傳值
                         bool installSuccess = await Task.Run(() => DriverManager.InstallDriver(msg => Log(msg)));
 
@@ -935,10 +939,18 @@ namespace XboxFullScreenExperienceTool
                         await Task.Run(() => DriverManager.UninstallDriver(msg => Log(msg)));
                     }
 
-                    // 步驟 2: 停用 ViVe 功能
+                    // 步驟 2: 移除 XFSET-SetPanelDimensions 工作排程 (regOnly)
+                    if (TaskSchedulerManager.SetPanelDimensionsTaskExists())
+                    {
+                        Log(Resources.Strings.LogDeletingTask);
+                        TaskSchedulerManager.DeleteSetPanelDimensionsTask();
+                        Log(Resources.Strings.LogPanelTaskDeleted, true);
+                    }
+
+                    // 步驟 3: 停用 ViVe 功能
                     DisableViveFeatures();
 
-                    // 步驟 3: 還原登錄檔
+                    // 步驟 4: 還原登錄檔
                     RestoreRegistry();
 
                     LogError(Resources.Strings.LogRollbackComplete);

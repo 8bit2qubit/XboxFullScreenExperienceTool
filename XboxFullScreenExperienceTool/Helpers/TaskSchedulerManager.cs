@@ -116,10 +116,15 @@ namespace XboxFullScreenExperienceTool.Helpers
             bool oldPanelTaskExists = CheckTaskExists(OLD_TASK_NAME);
             bool newPanelTaskExists = CheckTaskExists(TASK_NAME);
 
+            // 判斷是否已安裝驅動程式 (PhysPanelDrv)
+            // 為了驅動模式下使用 reg 參數 (確保在遷移過程中補建對應的 regOnly 工作)
+            bool isDriverInstalled = DriverManager.IsDriverServiceInstalled();
+
             // 注意：如果舊工作存在，或者新工作已經存在 (需要更新 XML 設定，如參數變更)，都執行重建
-            if (oldPanelTaskExists || newPanelTaskExists)
+            // 只要滿足任一條件：舊工作存在 OR 新工作存在 OR 驅動已安裝
+            if (oldPanelTaskExists || newPanelTaskExists || isDriverInstalled)
             {
-                logger($"Detecting Panel Task... Old: {oldPanelTaskExists}, New: {newPanelTaskExists}. Rebuilding...");
+                logger($"Detecting Panel Task needs update/creation... Old: {oldPanelTaskExists}, New: {newPanelTaskExists}, DrvInstalled: {isDriverInstalled}. Rebuilding...");
 
                 // 判斷 OS 版本
                 bool isNative = IsNativeSupportBuild();
@@ -130,12 +135,13 @@ namespace XboxFullScreenExperienceTool.Helpers
 
                 try
                 {
-                    // 根據 OS 版本決定參數：
+                    // 根據 OS 版本或驅動程式狀態決定參數：
                     // Native Build -> 使用 regOnly (僅設定登錄檔，交由系統原生處理 FSE)
-                    // Legacy Build -> 使用完整 set (強制覆寫面板尺寸)
-                    bool useRegOnly = isNative;
+                    // Driver Installed -> 使用 regOnly (驅動程式處理 FSE，工作排程僅負責鎖定登錄檔)
+                    // Legacy Build -> 使用完整 set 155 87 reg (強制覆寫面板尺寸 + 登錄檔)
+                    bool useRegOnly = isNative || isDriverInstalled;
 
-                    logger($"Migrating Panel Task (Native={isNative}) -> Creating task with regOnly={useRegOnly}...");
+                    logger($"Migrating Panel Task (Native={isNative}, DrvInstalled={isDriverInstalled}) -> Creating task with regOnly={useRegOnly}...");
 
                     CreateSetPanelDimensionsTask(regOnly: useRegOnly);
 
