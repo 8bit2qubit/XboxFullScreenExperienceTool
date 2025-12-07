@@ -543,4 +543,7 @@
   <data name="MsgOpenStartupAppsError" xml:space="preserve">
     <value>無法開啟啟動應用程式設定。錯誤: {0}</value>
   </data>
+  <data name="LogCertificateAlreadyInstalled" xml:space="preserve">
+    <value>憑證已安裝。略過安裝。</value>
+  </data>
 </root>

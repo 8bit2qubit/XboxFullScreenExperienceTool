@@ -543,4 +543,7 @@
   <data name="MsgOpenStartupAppsError" xml:space="preserve">
     <value>无法打开启动应用设置。错误: {0}</value>
   </data>
+  <data name="LogCertificateAlreadyInstalled" xml:space="preserve">
+    <value>证书已安装。跳过安装。</value>
+  </data>
 </root>

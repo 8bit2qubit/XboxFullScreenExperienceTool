@@ -543,4 +543,7 @@
   <data name="MsgOpenStartupAppsError" xml:space="preserve">
     <value>Не удалось открыть настройки автозагрузки. Ошибка: {0}</value>
   </data>
+  <data name="LogCertificateAlreadyInstalled" xml:space="preserve">
+    <value>Сертификат уже установлен. Установка пропускается.</value>
+  </data>
 </root>

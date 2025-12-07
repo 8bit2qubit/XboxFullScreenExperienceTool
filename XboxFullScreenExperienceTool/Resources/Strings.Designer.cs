@@ -379,6 +379,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Certificate already installed. Skipping installation. 的當地語系化字串。
+        /// </summary>
+        internal static string LogCertificateAlreadyInstalled {
+            get {
+                return ResourceManager.GetString("LogCertificateAlreadyInstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Certificate installed successfully. 的當地語系化字串。
         /// </summary>
         internal static string LogCertificateInstallSuccess {

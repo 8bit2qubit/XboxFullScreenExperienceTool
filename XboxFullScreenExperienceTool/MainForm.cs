@@ -119,6 +119,8 @@ namespace XboxFullScreenExperienceTool
                         if (!driverSuccess) { allSucceeded = false; }
                         logger(driverSuccess ? "Driver uninstall command executed." : "Driver uninstall command FAILED.");
                     }
+
+                    DriverManager.UninstallCertificate(logger);
                 }
                 catch (Exception ex)
                 {

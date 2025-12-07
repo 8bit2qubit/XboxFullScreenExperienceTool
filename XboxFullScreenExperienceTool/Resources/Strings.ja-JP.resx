@@ -543,4 +543,7 @@
   <data name="MsgOpenStartupAppsError" xml:space="preserve">
     <value>スタートアップ アプリ設定を開けませんでした。エラー: {0}</value>
   </data>
+  <data name="LogCertificateAlreadyInstalled" xml:space="preserve">
+    <value>証明書は既にインストールされています。インストールをスキップします。</value>
+  </data>
 </root>

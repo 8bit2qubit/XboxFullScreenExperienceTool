@@ -543,4 +543,7 @@
   <data name="MsgOpenStartupAppsError" xml:space="preserve">
     <value>시작 앱 설정을 열 수 없습니다. 오류: {0}</value>
   </data>
+  <data name="LogCertificateAlreadyInstalled" xml:space="preserve">
+    <value>인증서가 이미 설치되어 있습니다. 설치를 건너뜁니다.</value>
+  </data>
 </root>

@@ -155,13 +155,28 @@ namespace XboxFullScreenExperienceTool.Helpers
                     return false;
                 }
 
-                logger(Resources.Strings.LogInstallingCertificate);
-                X509Store store = new X509Store(StoreName.Root, StoreLocation.LocalMachine);
-                store.Open(OpenFlags.ReadWrite);
-                X509Certificate2 cert = new X509Certificate2(certPath);
-                store.Add(cert);
-                store.Close();
-                logger(Resources.Strings.LogCertificateInstallSuccess);
+                // 檢查憑證是否已存在
+                // 開啟 LocalMachine 的 Root (受信任的根憑證授權單位) 存放區
+                using (X509Store store = new X509Store(StoreName.Root, StoreLocation.LocalMachine))
+                {
+                    store.Open(OpenFlags.ReadWrite);
+                    X509Certificate2 cert = new X509Certificate2(certPath);
+
+                    // 根據指紋 (Thumbprint) 尋找憑證
+                    X509Certificate2Collection matches = store.Certificates.Find(X509FindType.FindByThumbprint, cert.Thumbprint, false);
+
+                    if (matches.Count == 0)
+                    {
+                        // 只有當找不到時才安裝
+                        store.Add(cert);
+                        logger(Resources.Strings.LogCertificateInstallSuccess);
+                    }
+                    else
+                    {
+                        // 若已存在則跳過，避免重複操作或錯誤
+                        logger(Resources.Strings.LogCertificateAlreadyInstalled);
+                    }
+                }
 
                 // 步驟 2: 使用 devcon.exe 安裝驅動程式
                 string devconPath = Path.Combine(DriverFilesPath, "devcon.exe");
@@ -225,6 +240,44 @@ namespace XboxFullScreenExperienceTool.Helpers
             {
                 logger(string.Format(Resources.Strings.LogErrorDriverRemoveFailed, ex.Message));
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// 移除已安裝的驅動程式根憑證。
+        /// </summary>
+        /// <param name="logger">用於記錄進度的回呼函式。</param>
+        public static void UninstallCertificate(Action<string> logger)
+        {
+            try
+            {
+                string certPath = Path.Combine(DriverFilesPath, "PhysPanelDrv.cer");
+                if (!File.Exists(certPath))
+                {
+                    return;
+                }
+
+                logger("Removing driver certificate...");
+                X509Certificate2 certToRemove = new X509Certificate2(certPath);
+
+                // 開啟 LocalMachine 的 Root (受信任的根憑證授權單位) 存放區
+                using (X509Store store = new X509Store(StoreName.Root, StoreLocation.LocalMachine))
+                {
+                    store.Open(OpenFlags.ReadWrite);
+
+                    // 根據指紋 (Thumbprint) 尋找憑證
+                    X509Certificate2Collection matches = store.Certificates.Find(X509FindType.FindByThumbprint, certToRemove.Thumbprint, false);
+
+                    if (matches.Count > 0)
+                    {
+                        store.RemoveRange(matches);
+                        logger("Driver certificate removed successfully.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logger($"Failed to remove certificate: {ex.Message}");
             }
         }
 

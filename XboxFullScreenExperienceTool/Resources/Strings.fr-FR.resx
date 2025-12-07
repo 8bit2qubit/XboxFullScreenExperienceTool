@@ -543,4 +543,7 @@ Veuillez vous assurer que vous exécutez ce programme avec les privilèges d'adm
   <data name="MsgOpenStartupAppsError" xml:space="preserve">
     <value>Impossible d'ouvrir les applications de démarrage. Erreur : {0}</value>
   </data>
+  <data name="LogCertificateAlreadyInstalled" xml:space="preserve">
+    <value>Certificat déjà installé. Installation ignorée.</value>
+  </data>
 </root>
