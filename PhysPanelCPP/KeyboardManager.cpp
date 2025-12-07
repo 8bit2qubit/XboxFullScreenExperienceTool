@@ -16,8 +16,6 @@
 
 #include "pch.h"
 #include "KeyboardManager.h"
-#include <dwmapi.h>
-#pragma comment(lib, "dwmapi.lib")
 
 std::string WstringToString(const std::wstring& wstr) {
     if (wstr.empty()) return std::string();
@@ -42,15 +40,22 @@ namespace KeyboardManager {
     }
 
     struct __declspec(uuid("4CE576FA-83DC-4F88-951C-9D0782B4E376")) TipInvocation;
-    struct __declspec(uuid("37c994e7-432b-4834-a2f7-dce1f13b834b")) ITipInvocation : IUnknown {
+    struct __declspec(uuid("37C994E7-432B-4834-A2F7-DCE1F13B834B")) ITipInvocation : IUnknown {
         virtual HRESULT __stdcall Toggle(HWND hwnd) = 0;
+    };
+
+    struct __declspec(uuid("D5120AA3-46BA-44C5-822D-CA8092C1FC72")) FrameworkInputPane;
+    struct __declspec(uuid("5752238B-24F0-495A-82F1-2FD593056796")) IFrameworkInputPane : IUnknown {
+        virtual HRESULT __stdcall Advise(IUnknown* pWindow, IUnknown* pHandler, DWORD* pdwCookie) = 0;
+        virtual HRESULT __stdcall AdviseWithHWND(HWND hwnd, IUnknown* pHandler, DWORD* pdwCookie) = 0;
+        virtual HRESULT __stdcall Unadvise(DWORD pdwCookie) = 0;
+        virtual HRESULT __stdcall Location(RECT* prcInputPaneScreenLocation) = 0;
     };
 
     constexpr auto TABTIP_PROCESS_NAME = L"TabTip.exe";
     constexpr auto SHELL_PROCESS_NAME = L"explorer.exe";
     const auto SHELL_READY_TIMEOUT = std::chrono::seconds(30);
-    const auto COM_SERVICE_TIMEOUT = std::chrono::seconds(10);
-    const auto POST_LAUNCH_DELAY = std::chrono::seconds(7);
+    const auto COM_SERVICE_TIMEOUT = std::chrono::seconds(15);
 
     bool IsProcessRunning(const wchar_t* processName) {
         HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
@@ -85,58 +90,68 @@ namespace KeyboardManager {
     }
 
     bool IsTouchKeyboardVisible() {
-        const wchar_t* PARENT_CLASS_NAME = L"ApplicationFrameWindow";
-        HWND parentHwnd = FindWindowW(PARENT_CLASS_NAME, NULL);
-        if (parentHwnd == NULL) return false;
+        bool isVisible = false;
+        IFrameworkInputPane* pInputPane = nullptr;
 
-        BOOL isCloaked = FALSE;
-        HRESULT hr = DwmGetWindowAttribute(parentHwnd, DWMWA_CLOAKED, &isCloaked, sizeof(isCloaked));
-        if (SUCCEEDED(hr) && isCloaked) return false;
+        HRESULT hr = CoCreateInstance(__uuidof(FrameworkInputPane), NULL, CLSCTX_INPROC_SERVER, __uuidof(IFrameworkInputPane), (void**)&pInputPane);
 
-        if (!IsWindowVisible(parentHwnd) || IsIconic(parentHwnd)) return false;
+        if (SUCCEEDED(hr) && pInputPane) {
+            RECT rc = { 0 };
+            hr = pInputPane->Location(&rc);
 
-        LogDebug(L"[Debug] Poll Check: Keyboard is CONFIRMED VISIBLE (Host HWND=%p).", parentHwnd);
-        return true;
+            if (SUCCEEDED(hr)) {
+                if ((rc.right - rc.left) > 0 && (rc.bottom - rc.top) > 0) {
+                    isVisible = true;
+                    LogDebug(L"[Debug] IFrameworkInputPane State: Visible (Rect: %d x %d)", (rc.right - rc.left), (rc.bottom - rc.top));
+                }
+            }
+            pInputPane->Release();
+        }
+
+        return isVisible;
     }
 
     void StartTouchKeyboard() {
-        LogDebug(L"--- StartTouchKeyboard() ---");
+        LogDebug(L"--- StartTouchKeyboard() [Mode: Start -> Poll -> Hide] ---");
 
-        if (IsProcessRunning(TABTIP_PROCESS_NAME)) {
-            LogDebug(L"[Debug] TabTip.exe is already running. Exiting.");
-            return;
-        }
+        if (!IsProcessRunning(TABTIP_PROCESS_NAME)) {
+            PWSTR pszPath = nullptr;
+            HRESULT hr_path = SHGetKnownFolderPath(FOLDERID_ProgramFilesCommon, 0, NULL, &pszPath);
+            if (FAILED(hr_path)) {
+                LogDebug(L"[Debug] Error: Failed to retrieve FOLDERID_ProgramFilesCommon.");
+                throw TabTipNotFoundException("Failed to retrieve Common Program Files path.");
+            }
 
-        PWSTR pszPath = nullptr;
-        HRESULT hr_path = SHGetKnownFolderPath(FOLDERID_ProgramFilesCommon, 0, NULL, &pszPath);
-        if (FAILED(hr_path)) {
-            LogDebug(L"[Debug] FAILED to get FOLDERID_ProgramFilesCommon.");
-            throw TabTipNotFoundException("Could not get Common Program Files path.");
-        }
+            std::wstring tabTipPath(pszPath);
+            CoTaskMemFree(pszPath);
+            tabTipPath += L"\\Microsoft Shared\\ink\\TabTip.exe";
+            LogDebug(L"[Debug] TabTip path: %s", tabTipPath.c_str());
 
-        std::wstring tabTipPath(pszPath);
-        CoTaskMemFree(pszPath);
-        tabTipPath += L"\\Microsoft Shared\\ink\\TabTip.exe";
-        LogDebug(L"[Debug] TabTip path: %s", tabTipPath.c_str());
+            DWORD fileAttr = GetFileAttributesW(tabTipPath.c_str());
+            if (fileAttr == INVALID_FILE_ATTRIBUTES || (fileAttr & FILE_ATTRIBUTE_DIRECTORY)) {
+                LogDebug(L"[Debug] Warning: TabTip.exe not found at expected path.");
+                throw TabTipNotFoundException("TabTip.exe not found at its expected path.");
+            }
 
-        DWORD fileAttr = GetFileAttributesW(tabTipPath.c_str());
-        if (fileAttr == INVALID_FILE_ATTRIBUTES || (fileAttr & FILE_ATTRIBUTE_DIRECTORY)) {
-            LogDebug(L"[Debug] TabTip.exe not found at path.");
-            throw TabTipNotFoundException("TabTip.exe not found at its expected path.");
-        }
-
-        bool comInitialized = false;
-        try {
             if (!WaitForProcess(SHELL_PROCESS_NAME, SHELL_READY_TIMEOUT)) {
                 throw TabTipActivationException("Timed out waiting for Windows Shell (explorer.exe).");
             }
 
-            LogDebug(L"[Debug] Executing ShellExecuteW to open TabTip.exe...");
+            LogDebug(L"[Debug] Launching TabTip.exe service via ShellExecuteW...");
             ShellExecuteW(NULL, L"open", tabTipPath.c_str(), NULL, NULL, SW_SHOWNORMAL);
 
-            LogDebug(L"[Debug] Starting post-launch delay...");
-            std::this_thread::sleep_for(POST_LAUNCH_DELAY);
-            LogDebug(L"[Debug] Post-launch delay finished.");
+            WaitForProcess(TABTIP_PROCESS_NAME, std::chrono::seconds(10));
+        } else {
+            LogDebug(L"[Debug] TabTip.exe is already running. Skipping launch, proceeding to visibility check.");
+        }
+
+        bool comInitialized = false;
+        try {
+            LogDebug(L"[Debug] Initializing COM for visibility polling and control...");
+            HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED);
+            if (SUCCEEDED(hr)) {
+                comInitialized = true;
+            }
 
             LogDebug(L"[Debug] Starting visibility poll (max 10s)...");
             bool visible = false;
@@ -145,23 +160,18 @@ namespace KeyboardManager {
             while (std::chrono::high_resolution_clock::now() - pollStart < COM_SERVICE_TIMEOUT) {
                 if (IsTouchKeyboardVisible()) {
                     visible = true;
+                    LogDebug(L"[Debug] Poll Result: Keyboard is VISIBLE.");
                     break;
                 }
                 std::this_thread::sleep_for(std::chrono::milliseconds(250));
             }
 
             if (visible) {
-                LogDebug(L"[Debug] Initializing COM for Toggle (Close)...");
-                HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED);
-                if (FAILED(hr)) {
-                    LogDebug(L"[Debug] CoInitializeEx FAILED.");
-                    throw TabTipActivationException("Failed to initialize COM for Toggle.");
-                }
-                comInitialized = true;
+                LogDebug(L"[Debug] Action: Keyboard visible. Toggling to HIDE.");
 
-                LogDebug(L"[Debug] Attempting to connect to COM service to Toggle (Close)...");
                 ITipInvocation* pTip = nullptr;
                 auto start = std::chrono::high_resolution_clock::now();
+
                 while (std::chrono::high_resolution_clock::now() - start < COM_SERVICE_TIMEOUT) {
                     hr = CoCreateInstance(__uuidof(TipInvocation), NULL, CLSCTX_LOCAL_SERVER, __uuidof(ITipInvocation), (void**)&pTip);
                     if (SUCCEEDED(hr)) break;
@@ -169,17 +179,18 @@ namespace KeyboardManager {
                 }
 
                 if (pTip) {
-                    LogDebug(L"[Debug] COM service connected. Invoking Toggle() to CLOSE keyboard.");
-                    pTip->Toggle(GetShellWindow());
+                    LogDebug(L"[Debug] COM service connected. Invoking Toggle() to HIDE keyboard.");
+                    pTip->Toggle(GetDesktopWindow());
                     pTip->Release();
+                    LogDebug(L"[Debug] Keyboard hidden successfully.");
                 }
                 else {
-                    LogDebug(L"[Debug] FAILED to connect to COM service (pTip is null).");
-                    throw TabTipActivationException("Timed out waiting for TabTip COM service (after keyboard was visible).");
+                    LogDebug(L"[Debug] FAILED to connect to COM service (pTip is null). Cannot HIDE keyboard.");
+                    throw TabTipActivationException("Failed to connect to TabTip COM interface (Keyboard detected but unresponsive).");
                 }
             }
             else {
-                LogDebug(L"[Debug] POLL TIMEOUT: Keyboard did NOT become visible. Skipping Toggle (close).");
+                LogDebug(L"[Debug] Poll Completed: Keyboard never appeared. Assuming silent background execution.");
             }
 
             if (comInitialized) {
@@ -197,7 +208,7 @@ namespace KeyboardManager {
             throw;
         }
         catch (...) {
-            LogDebug(L"[Debug] EXCEPTION (Unknown).");
+            LogDebug(L"[Debug] Critical: Unknown EXCEPTION caught.");
             if (comInitialized) CoUninitialize();
             throw;
         }
