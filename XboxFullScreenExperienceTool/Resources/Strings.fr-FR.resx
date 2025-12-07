@@ -546,4 +546,10 @@ Veuillez vous assurer que vous exécutez ce programme avec les privilèges d'adm
   <data name="LogCertificateAlreadyInstalled" xml:space="preserve">
     <value>Certificat déjà installé. Installation ignorée.</value>
   </data>
+  <data name="MsgUninstallTitle" xml:space="preserve">
+    <value>Désinstallation</value>
+  </data>
+  <data name="MsgDeleteLogFiles" xml:space="preserve">
+    <value>Voulez-vous supprimer les fichiers journaux (y compris les archives) créés par l'application ?</value>
+  </data>
 </root>

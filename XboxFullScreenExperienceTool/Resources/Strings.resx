@@ -546,4 +546,10 @@ Please ensure you are running this program with administrator privileges.</value
   <data name="LogCertificateAlreadyInstalled" xml:space="preserve">
     <value>Certificate already installed. Skipping installation.</value>
   </data>
+  <data name="MsgUninstallTitle" xml:space="preserve">
+    <value>Uninstall</value>
+  </data>
+  <data name="MsgDeleteLogFiles" xml:space="preserve">
+    <value>Do you want to remove the log files (including archived logs) created by the application?</value>
+  </data>
 </root>

@@ -546,4 +546,10 @@ Bitte stellen Sie sicher, dass Sie dieses Programm mit Administratorrechten ausf
   <data name="LogCertificateAlreadyInstalled" xml:space="preserve">
     <value>Zertifikat bereits installiert. Installation wird übersprungen.</value>
   </data>
+  <data name="MsgUninstallTitle" xml:space="preserve">
+    <value>Deinstallation</value>
+  </data>
+  <data name="MsgDeleteLogFiles" xml:space="preserve">
+    <value>Möchten Sie die von der Anwendung erstellten Protokolldateien (einschließlich Archive) löschen?</value>
+  </data>
 </root>

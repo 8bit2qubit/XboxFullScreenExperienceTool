@@ -546,4 +546,10 @@
   <data name="LogCertificateAlreadyInstalled" xml:space="preserve">
     <value>Сертификат уже установлен. Установка пропускается.</value>
   </data>
+  <data name="MsgUninstallTitle" xml:space="preserve">
+    <value>Удаление</value>
+  </data>
+  <data name="MsgDeleteLogFiles" xml:space="preserve">
+    <value>Вы хотите удалить лог-файлы (включая архивы), созданные приложением?</value>
+  </data>
 </root>

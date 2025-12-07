@@ -546,4 +546,10 @@
   <data name="LogCertificateAlreadyInstalled" xml:space="preserve">
     <value>证书已安装。跳过安装。</value>
   </data>
+  <data name="MsgUninstallTitle" xml:space="preserve">
+    <value>卸载</value>
+  </data>
+  <data name="MsgDeleteLogFiles" xml:space="preserve">
+    <value>您是否要一并移除应用程序生成的日志文件 (含归档文件)？</value>
+  </data>
 </root>

@@ -546,4 +546,10 @@
   <data name="LogCertificateAlreadyInstalled" xml:space="preserve">
     <value>인증서가 이미 설치되어 있습니다. 설치를 건너뜁니다.</value>
   </data>
+  <data name="MsgUninstallTitle" xml:space="preserve">
+    <value>제거</value>
+  </data>
+  <data name="MsgDeleteLogFiles" xml:space="preserve">
+    <value>응용 프로그램에서 생성한 로그 파일(아카이브 포함)도 함께 삭제하시겠습니까?</value>
+  </data>
 </root>

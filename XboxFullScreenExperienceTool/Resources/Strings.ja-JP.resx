@@ -546,4 +546,10 @@
   <data name="LogCertificateAlreadyInstalled" xml:space="preserve">
     <value>証明書は既にインストールされています。インストールをスキップします。</value>
   </data>
+  <data name="MsgUninstallTitle" xml:space="preserve">
+    <value>アンインストール</value>
+  </data>
+  <data name="MsgDeleteLogFiles" xml:space="preserve">
+    <value>アプリケーションによって作成されたログファイル（アーカイブを含む）も削除しますか？</value>
+  </data>
 </root>

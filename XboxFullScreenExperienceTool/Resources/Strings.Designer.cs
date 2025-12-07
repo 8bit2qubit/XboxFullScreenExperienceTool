@@ -1036,6 +1036,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Do you want to remove the log files (including archived logs) created by the application? 的當地語系化字串。
+        /// </summary>
+        internal static string MsgDeleteLogFiles {
+            get {
+                return ResourceManager.GetString("MsgDeleteLogFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Unable to open Windows Settings. Please manually go to [Start &gt; Settings &gt; Gaming &gt; Full Screen Experience]. 的當地語系化字串。
         /// </summary>
         internal static string MsgOpenSettingsManual {
@@ -1068,6 +1077,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         internal static string MsgOpenUACError {
             get {
                 return ResourceManager.GetString("MsgOpenUACError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Uninstall 的當地語系化字串。
+        /// </summary>
+        internal static string MsgUninstallTitle {
+            get {
+                return ResourceManager.GetString("MsgUninstallTitle", resourceCulture);
             }
         }
         

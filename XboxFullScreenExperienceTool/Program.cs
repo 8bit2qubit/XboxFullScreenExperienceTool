@@ -172,6 +172,41 @@ namespace XboxFullScreenExperienceTool
 
                     if (success)
                     {
+                        // 詢問使用者是否刪除日誌檔案
+                        try
+                        {
+                            string logPath = Path.Combine(AppPathManager.InstallPath, "XboxFullScreenExperienceTool.log");
+                            string bakPath = logPath + ".bak";
+
+                            // 只有當檔案存在時才詢問
+                            if (File.Exists(logPath) || File.Exists(bakPath))
+                            {
+                                // 顯示詢問視窗
+                                DialogResult result = MessageBox.Show(
+                                    Resources.Strings.MsgDeleteLogFiles,
+                                    Resources.Strings.MsgUninstallTitle,
+                                    MessageBoxButtons.YesNo,
+                                    MessageBoxIcon.Question,
+                                    MessageBoxDefaultButton.Button2); // Button2 表示預設選 "否"，避免誤刪
+
+                                if (result == DialogResult.Yes)
+                                {
+                                    if (File.Exists(logPath)) File.Delete(logPath);
+                                    if (File.Exists(bakPath)) File.Delete(bakPath);
+                                    logger("Log files deleted by user request.");
+                                }
+                                else
+                                {
+                                    logger("User chose to keep log files.");
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // 刪除檔案失敗不應中斷解除安裝流程，僅記錄錯誤
+                            logger($"WARNING: Failed to delete log files: {ex.Message}");
+                        }
+
                         // 非 Debug 模式才執行重開機
                         if (!IsDebugBuild())
                         {
