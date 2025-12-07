@@ -113,7 +113,7 @@ namespace XboxFullScreenExperienceTool
             // 
             // btnCheckUpdates
             // 
-            btnCheckUpdates.Font = new Font("Microsoft JhengHei UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 136);
+            btnCheckUpdates.Font = new Font("Microsoft JhengHei UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 136);
             btnCheckUpdates.Location = new Point(477, 24);
             btnCheckUpdates.Name = "btnCheckUpdates";
             btnCheckUpdates.Size = new Size(424, 32);
@@ -125,7 +125,7 @@ namespace XboxFullScreenExperienceTool
             // btnOpenSettings
             // 
             btnOpenSettings.Enabled = false;
-            btnOpenSettings.Font = new Font("Microsoft JhengHei UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 136);
+            btnOpenSettings.Font = new Font("Microsoft JhengHei UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 136);
             btnOpenSettings.Location = new Point(477, 56);
             btnOpenSettings.Name = "btnOpenSettings";
             btnOpenSettings.Size = new Size(424, 32);
@@ -137,7 +137,7 @@ namespace XboxFullScreenExperienceTool
             // btnOpenStartupApps
             // 
             btnOpenStartupApps.Enabled = false;
-            btnOpenStartupApps.Font = new Font("Microsoft JhengHei UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 136);
+            btnOpenStartupApps.Font = new Font("Microsoft JhengHei UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 136);
             btnOpenStartupApps.Location = new Point(477, 88);
             btnOpenStartupApps.Name = "btnOpenStartupApps";
             btnOpenStartupApps.Size = new Size(424, 32);
@@ -148,7 +148,7 @@ namespace XboxFullScreenExperienceTool
             // 
             // btnOpenUAC
             // 
-            btnOpenUAC.Font = new Font("Microsoft JhengHei UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 136);
+            btnOpenUAC.Font = new Font("Microsoft JhengHei UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 136);
             btnOpenUAC.Location = new Point(477, 120);
             btnOpenUAC.Name = "btnOpenUAC";
             btnOpenUAC.Size = new Size(424, 32);
