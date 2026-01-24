@@ -16,6 +16,7 @@
 
 #include "pch.h"
 #include "KeyboardManager.h"
+#include "Utils.h"
 
 std::string WstringToString(const std::wstring& wstr) {
     if (wstr.empty()) return std::string();
@@ -26,18 +27,6 @@ std::string WstringToString(const std::wstring& wstr) {
 }
 
 namespace KeyboardManager {
-
-    void LogDebug(const wchar_t* format, ...) {
-#if defined(_DEBUG)
-        va_list args;
-        va_start(args, format);
-        vwprintf(format, args);
-        wprintf(L"\n");
-        va_end(args);
-#else
-        UNREFERENCED_PARAMETER(format);
-#endif
-    }
 
     struct __declspec(uuid("4CE576FA-83DC-4F88-951C-9D0782B4E376")) TipInvocation;
     struct __declspec(uuid("37C994E7-432B-4834-A2F7-DCE1F13B834B")) ITipInvocation : IUnknown {
@@ -76,16 +65,16 @@ namespace KeyboardManager {
     }
 
     bool WaitForProcess(const wchar_t* processName, std::chrono::milliseconds timeout) {
-        LogDebug(L"[Debug] Waiting for process: %s", processName);
+        LogDebug(L"Waiting for process: %s", processName);
         auto start = std::chrono::high_resolution_clock::now();
         while (std::chrono::high_resolution_clock::now() - start < timeout) {
             if (IsProcessRunning(processName)) {
-                LogDebug(L"[Debug] Process found: %s", processName);
+                LogDebug(L"Process found: %s", processName);
                 return true;
             }
             std::this_thread::sleep_for(std::chrono::milliseconds(500));
         }
-        LogDebug(L"[Debug] Wait for process TIMEOUT: %s", processName);
+        LogDebug(L"Wait for process TIMEOUT: %s", processName);
         return false;
     }
 
@@ -102,7 +91,7 @@ namespace KeyboardManager {
             if (SUCCEEDED(hr)) {
                 if ((rc.right - rc.left) > 0 && (rc.bottom - rc.top) > 0) {
                     isVisible = true;
-                    LogDebug(L"[Debug] IFrameworkInputPane State: Visible (Rect: %d x %d)", (rc.right - rc.left), (rc.bottom - rc.top));
+                    LogDebug(L"IFrameworkInputPane State: Visible (Rect: %d x %d)", (rc.right - rc.left), (rc.bottom - rc.top));
                 }
             }
             pInputPane->Release();
@@ -118,18 +107,18 @@ namespace KeyboardManager {
             PWSTR pszPath = nullptr;
             HRESULT hr_path = SHGetKnownFolderPath(FOLDERID_ProgramFilesCommon, 0, NULL, &pszPath);
             if (FAILED(hr_path)) {
-                LogDebug(L"[Debug] Error: Failed to retrieve FOLDERID_ProgramFilesCommon.");
+                LogDebug(L"Error: Failed to retrieve FOLDERID_ProgramFilesCommon.");
                 throw TabTipNotFoundException("Failed to retrieve Common Program Files path.");
             }
 
             std::wstring tabTipPath(pszPath);
             CoTaskMemFree(pszPath);
             tabTipPath += L"\\Microsoft Shared\\ink\\TabTip.exe";
-            LogDebug(L"[Debug] TabTip path: %s", tabTipPath.c_str());
+            LogDebug(L"TabTip path: %s", tabTipPath.c_str());
 
             DWORD fileAttr = GetFileAttributesW(tabTipPath.c_str());
             if (fileAttr == INVALID_FILE_ATTRIBUTES || (fileAttr & FILE_ATTRIBUTE_DIRECTORY)) {
-                LogDebug(L"[Debug] Warning: TabTip.exe not found at expected path.");
+                LogDebug(L"Warning: TabTip.exe not found at expected path.");
                 throw TabTipNotFoundException("TabTip.exe not found at its expected path.");
             }
 
@@ -137,37 +126,37 @@ namespace KeyboardManager {
                 throw TabTipActivationException("Timed out waiting for Windows Shell (explorer.exe).");
             }
 
-            LogDebug(L"[Debug] Launching TabTip.exe service via ShellExecuteW...");
+            LogDebug(L"Launching TabTip.exe service via ShellExecuteW...");
             ShellExecuteW(NULL, L"open", tabTipPath.c_str(), NULL, NULL, SW_SHOWNORMAL);
 
             WaitForProcess(TABTIP_PROCESS_NAME, std::chrono::seconds(10));
         } else {
-            LogDebug(L"[Debug] TabTip.exe is already running. Skipping launch, proceeding to visibility check.");
+            LogDebug(L"TabTip.exe is already running. Skipping launch, proceeding to visibility check.");
         }
 
         bool comInitialized = false;
         try {
-            LogDebug(L"[Debug] Initializing COM for visibility polling and control...");
+            LogDebug(L"Initializing COM for visibility polling and control...");
             HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED);
             if (SUCCEEDED(hr)) {
                 comInitialized = true;
             }
 
-            LogDebug(L"[Debug] Starting visibility poll (max 10s)...");
+            LogDebug(L"Starting visibility poll (max 10s)...");
             bool visible = false;
             auto pollStart = std::chrono::high_resolution_clock::now();
 
             while (std::chrono::high_resolution_clock::now() - pollStart < COM_SERVICE_TIMEOUT) {
                 if (IsTouchKeyboardVisible()) {
                     visible = true;
-                    LogDebug(L"[Debug] Poll Result: Keyboard is VISIBLE.");
+                    LogDebug(L"Poll Result: Keyboard is VISIBLE.");
                     break;
                 }
                 std::this_thread::sleep_for(std::chrono::milliseconds(250));
             }
 
             if (visible) {
-                LogDebug(L"[Debug] Action: Keyboard visible. Toggling to HIDE.");
+                LogDebug(L"Action: Keyboard visible. Toggling to HIDE.");
 
                 ITipInvocation* pTip = nullptr;
                 auto start = std::chrono::high_resolution_clock::now();
@@ -179,22 +168,22 @@ namespace KeyboardManager {
                 }
 
                 if (pTip) {
-                    LogDebug(L"[Debug] COM service connected. Invoking Toggle() to HIDE keyboard.");
+                    LogDebug(L"COM service connected. Invoking Toggle() to HIDE keyboard.");
                     pTip->Toggle(GetDesktopWindow());
                     pTip->Release();
-                    LogDebug(L"[Debug] Keyboard hidden successfully.");
+                    LogDebug(L"Keyboard hidden successfully.");
                 }
                 else {
-                    LogDebug(L"[Debug] FAILED to connect to COM service (pTip is null). Cannot HIDE keyboard.");
+                    LogDebug(L"FAILED to connect to COM service (pTip is null). Cannot HIDE keyboard.");
                     throw TabTipActivationException("Failed to connect to TabTip COM interface (Keyboard detected but unresponsive).");
                 }
             }
             else {
-                LogDebug(L"[Debug] Poll Completed: Keyboard never appeared. Assuming silent background execution.");
+                LogDebug(L"Poll Completed: Keyboard never appeared. Assuming silent background execution.");
             }
 
             if (comInitialized) {
-                LogDebug(L"[Debug] CoUninitialize.");
+                LogDebug(L"CoUninitialize.");
                 CoUninitialize();
             }
         }
@@ -208,7 +197,7 @@ namespace KeyboardManager {
             throw;
         }
         catch (...) {
-            LogDebug(L"[Debug] Critical: Unknown EXCEPTION caught.");
+            LogDebug(L"Critical: Unknown EXCEPTION caught.");
             if (comInitialized) CoUninitialize();
             throw;
         }

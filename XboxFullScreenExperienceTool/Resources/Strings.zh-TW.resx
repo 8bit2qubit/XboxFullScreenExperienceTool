@@ -466,7 +466,7 @@
     <value>您的系統已原生支援觸控，Windows 將自動管理遊戲控制器鍵盤的顯示。</value>
   </data>
   <data name="TooltipTouchDisabled" xml:space="preserve">
-    <value>您的系統未偵測到觸控支援。您可以啟用此選項，以在登入時自動為控制器體驗啟動遊戲控制器鍵盤。</value>
+    <value>您的系統未偵測到觸控支援。您可以啟用此選項，以在系統啟動時自動為控制器體驗啟動遊戲控制器鍵盤。</value>
   </data>
   <data name="LogPanelTaskCreated" xml:space="preserve">
     <value>工作排程 'XFSET-SetPanelDimensions' 已建立。</value>
@@ -551,5 +551,26 @@
   </data>
   <data name="MsgDeleteLogFiles" xml:space="preserve">
     <value>您是否要一併移除應用程式產生的日誌檔案 (含封存檔)？</value>
+  </data>
+  <data name="LogDeletingPanelTask" xml:space="preserve">
+    <value>正在刪除工作排程 'XFSET-SetPanelDimensions'...</value>
+  </data>
+  <data name="LogDeletingSimulateTouchTask" xml:space="preserve">
+    <value>正在刪除觸控模擬的工作排程...</value>
+  </data>
+  <data name="LogSimulateTouchTaskDeleted" xml:space="preserve">
+    <value>工作排程 'XFSET-SimulateTouchService' 已刪除。</value>
+  </data>
+  <data name="LogCreatingSimulateTouchTask" xml:space="preserve">
+    <value>正在建立觸控模擬的工作排程...</value>
+  </data>
+  <data name="LogSimulateTouchTaskCreated" xml:space="preserve">
+    <value>工作排程 'XFSET-SimulateTouchService' 已建立。</value>
+  </data>
+  <data name="ErrorSimulateTouchTask" xml:space="preserve">
+    <value>修改觸控模擬工作排程時發生錯誤。錯誤: {0}</value>
+  </data>
+  <data name="chkSimulateTouch_Text" xml:space="preserve">
+    <value>在系統啟動時模擬觸控能力以啟動遊戲控制器鍵盤輸入 (需要重啟)</value>
   </data>
 </root>

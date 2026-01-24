@@ -30,6 +30,9 @@
     <ClCompile Include="Utils.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
+    <ClCompile Include="TouchManager.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyboardManager.h">
@@ -45,6 +48,9 @@
       <Filter>標頭檔</Filter>
     </ClInclude>
     <ClInclude Include="Utils.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="TouchManager.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
   </ItemGroup>

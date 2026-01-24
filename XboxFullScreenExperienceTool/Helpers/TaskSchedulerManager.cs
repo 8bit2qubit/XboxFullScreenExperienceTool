@@ -32,10 +32,11 @@ namespace XboxFullScreenExperienceTool.Helpers
         private const string OLD_TASK_NAME = "SetPanelDimensions"; // 舊版名稱，用於遷移
 
         /// <summary>
-        /// 定義用於在登入時啟動遊戲控制器鍵盤的工作排程之唯一名稱。
+        /// 定義用於在系統啟動時模擬觸控能力的工作排程之唯一名稱。
         /// </summary>
-        private const string KEYBOARD_TASK_NAME = "XFSET-StartGamepadKeyboardOnLogon";
-        private const string OLD_KEYBOARD_TASK_NAME = "StartTouchKeyboardOnLogon"; // 舊版名稱，用於遷移
+        private const string SIMULATE_TOUCH_TASK_NAME = "XFSET-SimulateTouchService";
+        private const string OLD_KEYBOARD_TASK_NAME_LEGACY = "StartTouchKeyboardOnLogon"; // 舊版名稱，用於遷移
+        private const string OLD_KEYBOARD_TASK_NAME_RECENT = "XFSET-StartGamepadKeyboardOnLogon"; // 前一版名稱，用於遷移
 
         /// <summary>
         /// 判斷是否為 26220.7271 或更新的原生支援版本 (Native Build)。
@@ -103,7 +104,7 @@ namespace XboxFullScreenExperienceTool.Helpers
         }
 
         public static bool SetPanelDimensionsTaskExists() => CheckTaskExists(TASK_NAME);
-        public static bool StartGamepadKeyboardOnLogonTaskExists() => CheckTaskExists(KEYBOARD_TASK_NAME);
+        public static bool SimulateTouchTaskExists() => CheckTaskExists(SIMULATE_TOUCH_TASK_NAME);
 
         /// <summary>
         /// 供安裝程式在 Commit 階段呼叫，用於遷移舊工作或更新現有工作定義。
@@ -154,26 +155,30 @@ namespace XboxFullScreenExperienceTool.Helpers
                 }
             }
 
-            // 2. 處理鍵盤啟動工作
-            bool oldKbTaskExists = CheckTaskExists(OLD_KEYBOARD_TASK_NAME);
-            bool newKbTaskExists = CheckTaskExists(KEYBOARD_TASK_NAME);
+            // 2. 處理觸控模擬工作 (取代舊的 StartGamepadKeyboardOnLogon)
+            bool oldLegacyKbExists = CheckTaskExists(OLD_KEYBOARD_TASK_NAME_LEGACY);
+            bool oldRecentKbExists = CheckTaskExists(OLD_KEYBOARD_TASK_NAME_RECENT);
+            bool newSimTouchExists = CheckTaskExists(SIMULATE_TOUCH_TASK_NAME);
 
-            if (oldKbTaskExists || newKbTaskExists)
+            if (oldLegacyKbExists || oldRecentKbExists || newSimTouchExists)
             {
-                logger($"Detecting Keyboard Task... Old: {oldKbTaskExists}, New: {newKbTaskExists}. Rebuilding...");
+                logger($"Detecting Touch/Keyboard Task... Legacy: {oldLegacyKbExists}, Recent: {oldRecentKbExists}, New: {newSimTouchExists}. Rebuilding as SimulateTouchService...");
 
-                if (oldKbTaskExists) DeleteTask(OLD_KEYBOARD_TASK_NAME);
-                if (newKbTaskExists) DeleteTask(KEYBOARD_TASK_NAME);
+                // 刪除所有舊版與現有工作，統一遷移至新版
+                if (oldLegacyKbExists) DeleteTask(OLD_KEYBOARD_TASK_NAME_LEGACY);
+                if (oldRecentKbExists) DeleteTask(OLD_KEYBOARD_TASK_NAME_RECENT);
+                if (newSimTouchExists) DeleteTask(SIMULATE_TOUCH_TASK_NAME);
 
                 try
                 {
-                    CreateStartGamepadKeyboardOnLogonTask();
-                    logger("Keyboard Task updated successfully.");
+                    // 建立新的觸控模擬工作
+                    CreateSimulateTouchTask();
+                    logger("Simulate Touch Task updated successfully.");
                 }
                 catch (Exception ex)
                 {
                     // 建議檢查 XFSET_Install.log
-                    logger($"Failed to create Keyboard Task: {ex.Message}");
+                    logger($"Failed to create Simulate Touch Task: {ex.Message}");
                 }
             }
 
@@ -231,7 +236,7 @@ namespace XboxFullScreenExperienceTool.Helpers
     <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
     <Enabled>true</Enabled>
     <Hidden>false</Hidden>
-    <!-- 優先級：0 (THREAD_PRIORITY_TIME_CRITICAL)，確保開機後第一時間修改實體顯示面板設定 -->
+    <!-- 優先級：0 (REALTIME_PRIORITY_CLASS)，確保開機後第一時間修改實體顯示面板設定 -->
     <Priority>0</Priority>
   </Settings>
   <Actions Context=""Author"">
@@ -246,9 +251,10 @@ namespace XboxFullScreenExperienceTool.Helpers
         }
 
         /// <summary>
-        /// 建立或覆寫 StartGamepadKeyboardOnLogon 工作排程。
+        /// 建立或覆寫 SimulateTouchService 工作排程 (系統層級服務)。
+        /// 此工作在開機時以 SYSTEM 權限執行，並自動將觸控注入邏輯散佈到所有使用者 Session。
         /// </summary>
-        public static void CreateStartGamepadKeyboardOnLogonTask()
+        public static void CreateSimulateTouchTask()
         {
             string physPanelPath = GetPhysPanelPath();
             if (!File.Exists(physPanelPath))
@@ -260,21 +266,20 @@ namespace XboxFullScreenExperienceTool.Helpers
 <Task version=""1.2"" xmlns=""http://schemas.microsoft.com/windows/2004/02/mit/task"">
   <RegistrationInfo>
     <Author>XboxFullScreenExperienceTool</Author>
-    <URI>\{KEYBOARD_TASK_NAME}</URI>
+    <URI>\{SIMULATE_TOUCH_TASK_NAME}</URI>
   </RegistrationInfo>
   <Triggers>
-    <!-- 觸發器：任何使用者登入時執行 -->
-    <LogonTrigger>
+    <!-- 觸發器：系統啟動時執行 (System Startup) -->
+    <BootTrigger>
       <Enabled>true</Enabled>
-    </LogonTrigger>
+    </BootTrigger>
   </Triggers>
   <Principals>
     <Principal id=""Author"">
-      <!-- 執行身份：S-1-5-32-545。 -->
-      <!-- 這確保當由 Installer 建立工作時，此工作是針對「使用者」群組的。 -->
-      <GroupId>S-1-5-32-545</GroupId>
-      <!-- 權限等級：最小權限 (避免觸發 UAC 或 UI 隔離問題，確保鍵盤能與桌面互動) -->
-      <RunLevel>LeastPrivilege</RunLevel>
+      <!-- 執行身分：S-1-5-18 (LocalSystem) -->
+      <!-- 必須是 SYSTEM 權限才能跨 Session 注入與管理 Mutex -->
+      <UserId>S-1-5-18</UserId>
+      <RunLevel>HighestAvailable</RunLevel>
     </Principal>
   </Principals>
   <Settings>
@@ -283,22 +288,22 @@ namespace XboxFullScreenExperienceTool.Helpers
     <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
     <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
     <AllowHardTerminate>true</AllowHardTerminate>
-    <StartWhenAvailable>false</StartWhenAvailable>
+    <StartWhenAvailable>true</StartWhenAvailable>
     <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
     <Enabled>true</Enabled>
     <Hidden>false</Hidden>
-    <!-- 優先級：4 (THREAD_PRIORITY_NORMAL) -->
-    <Priority>4</Priority>
+    <!-- 優先級：0 (REALTIME_PRIORITY_CLASS)，確保開機後第一時間模擬觸控能力 -->
+    <Priority>0</Priority>
   </Settings>
   <Actions Context=""Author"">
     <Exec>
       <Command>""{physPanelPath}""</Command>
-      <Arguments>startkeyboard</Arguments>
+      <Arguments>touchservice</Arguments>
     </Exec>
   </Actions>
 </Task>";
 
-            CreateTaskFromXml(KEYBOARD_TASK_NAME, xmlContent);
+            CreateTaskFromXml(SIMULATE_TOUCH_TASK_NAME, xmlContent);
         }
 
         /// <summary>
@@ -368,7 +373,40 @@ namespace XboxFullScreenExperienceTool.Helpers
             }
         }
 
+        /// <summary>
+        /// 通用私有方法：結束正在執行的工作。
+        /// </summary>
+        private static void EndTask(string name)
+        {
+            var process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "schtasks.exe",
+                    // 參數：結束 (/end) 指定名稱 (/tn) 的工作
+                    Arguments = $"/end /tn \"{name}\"",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    CreateNoWindow = true
+                }
+            };
+            process.Start();
+            process.WaitForExit();
+            // 這裡不檢查 ExitCode，因為如果工作本來就沒在執行，指令會回傳錯誤，這是可接受的。
+        }
+
         public static void DeleteSetPanelDimensionsTask() => DeleteTask(TASK_NAME);
-        public static void DeleteStartGamepadKeyboardOnLogonTask() => DeleteTask(KEYBOARD_TASK_NAME);
+        public static void DeleteSimulateTouchTask() => DeleteTask(SIMULATE_TOUCH_TASK_NAME);
+
+        // 保留此方法以清除舊版工作 (例如在靜默解除安裝時)
+        public static void DeleteStartGamepadKeyboardOnLogonTask()
+        {
+            // 嘗試刪除所有已知的舊版名稱
+            try { DeleteTask(OLD_KEYBOARD_TASK_NAME_LEGACY); } catch { }
+            try { DeleteTask(OLD_KEYBOARD_TASK_NAME_RECENT); } catch { }
+        }
+
+        public static void StopSimulateTouchTask() => EndTask(SIMULATE_TOUCH_TASK_NAME);
     }
 }

@@ -466,7 +466,7 @@
     <value>您的系统已原生支持触摸，Windows 将自动管理游戏控制器键盘的显示。</value>
   </data>
   <data name="TooltipTouchDisabled" xml:space="preserve">
-    <value>您的系统未检测到触摸支持。您可以启用此选项，以便在登录时自动为控制器体验启动游戏控制器键盘。</value>
+    <value>您的系统未检测到触摸支持。您可以启用此选项，以便在系统启动时自动为控制器体验启动游戏控制器键盘。</value>
   </data>
   <data name="LogPanelTaskCreated" xml:space="preserve">
     <value>任务计划 'XFSET-SetPanelDimensions' 已创建。</value>
@@ -551,5 +551,26 @@
   </data>
   <data name="MsgDeleteLogFiles" xml:space="preserve">
     <value>您是否要一并移除应用程序生成的日志文件 (含归档文件)？</value>
+  </data>
+  <data name="LogDeletingPanelTask" xml:space="preserve">
+    <value>正在删除任务计划 'XFSET-SetPanelDimensions'...</value>
+  </data>
+  <data name="LogDeletingSimulateTouchTask" xml:space="preserve">
+    <value>正在删除触摸模拟的任务计划...</value>
+  </data>
+  <data name="LogSimulateTouchTaskDeleted" xml:space="preserve">
+    <value>任务计划 'XFSET-SimulateTouchService' 已删除。</value>
+  </data>
+  <data name="LogCreatingSimulateTouchTask" xml:space="preserve">
+    <value>正在创建触摸模拟的任务计划...</value>
+  </data>
+  <data name="LogSimulateTouchTaskCreated" xml:space="preserve">
+    <value>任务计划 'XFSET-SimulateTouchService' 已创建。</value>
+  </data>
+  <data name="ErrorSimulateTouchTask" xml:space="preserve">
+    <value>修改触摸模拟任务计划时出错。错误: {0}</value>
+  </data>
+  <data name="chkSimulateTouch_Text" xml:space="preserve">
+    <value>在系统启动时模拟触控功能以启用游戏控制器键盘输入 (需要重启)</value>
   </data>
 </root>

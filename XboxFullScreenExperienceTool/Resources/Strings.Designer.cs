@@ -124,6 +124,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Simulate touch capabilities at system startup to enable gamepad keyboard input (restart required) 的當地語系化字串。
+        /// </summary>
+        internal static string chkSimulateTouch_Text {
+            get {
+                return ResourceManager.GetString("chkSimulateTouch_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Start gamepad keyboard on logon and auto-hide to background 的當地語系化字串。
         /// </summary>
         internal static string chkStartKeyboardOnLogon_Text {
@@ -264,6 +273,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         internal static string ErrorRestoringRegistry {
             get {
                 return ResourceManager.GetString("ErrorRestoringRegistry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Failed to modify the touch simulation task. Error: {0} 的當地語系化字串。
+        /// </summary>
+        internal static string ErrorSimulateTouchTask {
+            get {
+                return ResourceManager.GetString("ErrorSimulateTouchTask", resourceCulture);
             }
         }
         
@@ -433,6 +451,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Creating scheduled task for touch simulation... 的當地語系化字串。
+        /// </summary>
+        internal static string LogCreatingSimulateTouchTask {
+            get {
+                return ResourceManager.GetString("LogCreatingSimulateTouchTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Found driver package &apos;{0}&apos;, deleting... 的當地語系化字串。
         /// </summary>
         internal static string LogDeletingDriverPackage {
@@ -447,6 +474,24 @@ namespace XboxFullScreenExperienceTool.Resources {
         internal static string LogDeletingKeyboardTask {
             get {
                 return ResourceManager.GetString("LogDeletingKeyboardTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Deleting scheduled task &apos;XFSET-SetPanelDimensions&apos;... 的當地語系化字串。
+        /// </summary>
+        internal static string LogDeletingPanelTask {
+            get {
+                return ResourceManager.GetString("LogDeletingPanelTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Deleting scheduled task for touch simulation... 的當地語系化字串。
+        /// </summary>
+        internal static string LogDeletingSimulateTouchTask {
+            get {
+                return ResourceManager.GetString("LogDeletingSimulateTouchTask", resourceCulture);
             }
         }
         
@@ -928,6 +973,24 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Scheduled task &apos;XFSET-SimulateTouchService&apos; has been created. 的當地語系化字串。
+        /// </summary>
+        internal static string LogSimulateTouchTaskCreated {
+            get {
+                return ResourceManager.GetString("LogSimulateTouchTaskCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Scheduled task &apos;XFSET-SimulateTouchService&apos; has been deleted. 的當地語系化字串。
+        /// </summary>
+        internal static string LogSimulateTouchTaskDeleted {
+            get {
+                return ResourceManager.GetString("LogSimulateTouchTaskDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Status Check -&gt; ViVe Features: {0}, Registry: {1}, Task Required: {2}, Task Exists: {3} 的當地語系化字串。
         /// </summary>
         internal static string LogStatusCheck {
@@ -1279,7 +1342,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 No touch support detected on your system. You can enable this to automatically launch the gamepad keyboard on logon for a controller-first experience. 的當地語系化字串。
+        ///   查詢類似 No touch support detected on your system. You can enable this to automatically launch the gamepad keyboard on system startup for a controller-first experience. 的當地語系化字串。
         /// </summary>
         internal static string TooltipTouchDisabled {
             get {

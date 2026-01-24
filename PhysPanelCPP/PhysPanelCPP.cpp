@@ -17,6 +17,7 @@
 #include "pch.h"
 #include "PanelManager.h"
 #include "KeyboardManager.h"
+#include "TouchManager.h"
 #include "Utils.h"
 #include <io.h>
 #include <fcntl.h>
@@ -36,12 +37,14 @@ void PrintUsage() {
     wprintf(L"  set <w> <h> [opt]    Set display size (mm). Use 'reg' as 3rd arg to update OEM registry (0x2e).\n");
     wprintf(L"                       Requires SYSTEM privileges.\n");
     wprintf(L"  reg                  Set OEM DeviceForm registry key to 0x2e only. Requires SYSTEM privileges.\n");
-    wprintf(L"  startkeyboard        Launches and prepares the gamepad keyboard for use.\n\n");
+    wprintf(L"  startkeyboard        Launches and prepares the gamepad keyboard for use.\n");
+    wprintf(L"  touchservice         Simulates touch capabilities to enable gamepad keyboard input.\n\n");
     wprintf(L"Examples:\n");
     wprintf(L"  PhysPanelCPP get\n");
     wprintf(L"  PhysPanelCPP set 155 87\n");
     wprintf(L"  PhysPanelCPP set 155 87 reg\n");
-    wprintf(L"  PhysPanelCPP startkeyboard\n\n");
+    wprintf(L"  PhysPanelCPP startkeyboard\n");
+    wprintf(L"  PhysPanelCPP touchservice\n\n");
 }
 
 int HandleGet() {
@@ -136,6 +139,10 @@ int HandleStartKeyboard() {
     catch (const std::exception&) { return -1; }
 }
 
+int HandleTouchService() {
+    return TouchManager::RunService();
+}
+
 bool AttachConsoleAndRedirectIO() {
     bool consoleAttached = false;
     if (AttachConsole(ATTACH_PARENT_PROCESS)) {
@@ -167,7 +174,7 @@ int wmain(int argc, wchar_t* argv[]) {
 
     if (argc >= 2) {
         action = argv[1];
-        if (_wcsicmp(action, L"startkeyboard") == 0) {
+        if (_wcsicmp(action, L"startkeyboard") == 0 || _wcsicmp(action, L"touchservice") == 0) {
 #if defined(_DEBUG)
             needsConsole = true;
 #else
@@ -199,6 +206,9 @@ int wmain(int argc, wchar_t* argv[]) {
     }
     if (_wcsicmp(action, L"startkeyboard") == 0) {
         return HandleStartKeyboard();
+    }
+    if (_wcsicmp(action, L"touchservice") == 0) {
+        return HandleTouchService();
     }
 
     if (consoleAttached) {

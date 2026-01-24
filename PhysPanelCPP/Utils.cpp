@@ -55,3 +55,16 @@ bool GetAppVersion(wchar_t* buffer, size_t size) {
 
     return false;
 }
+
+void LogDebug(const wchar_t* format, ...) {
+#if defined(_DEBUG)
+    va_list args;
+    va_start(args, format);
+    wprintf(L"[Debug] ");
+    vwprintf(format, args);
+    wprintf(L"\n");
+    va_end(args);
+#else
+    UNREFERENCED_PARAMETER(format);
+#endif
+}

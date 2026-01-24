@@ -466,7 +466,7 @@
     <value>お使いのシステムはネイティブでタッチをサポートしています。Windowsはゲームパッドキーボードの表示を自動的に管理します。</value>
   </data>
   <data name="TooltipTouchDisabled" xml:space="preserve">
-    <value>お使いのシステムでタッチサポートは検出されませんでした。これを有効にすると、ログオン時にコントローラー優先の体験のためにゲームパッドキーボードを自動的に起動できます。</value>
+    <value>お使いのシステムでタッチサポートは検出されませんでした。これを有効にすると、システム起動時にコントローラー優先の体験のためにゲームパッドキーボードを自動的に起動できます。</value>
   </data>
   <data name="LogPanelTaskCreated" xml:space="preserve">
     <value>スケジュールされたタスク 'XFSET-SetPanelDimensions' が作成されました。</value>
@@ -551,5 +551,26 @@
   </data>
   <data name="MsgDeleteLogFiles" xml:space="preserve">
     <value>アプリケーションによって作成されたログファイル（アーカイブを含む）も削除しますか？</value>
+  </data>
+  <data name="LogDeletingPanelTask" xml:space="preserve">
+    <value>スケジュールされたタスク 'XFSET-SetPanelDimensions' を削除しています...</value>
+  </data>
+  <data name="LogDeletingSimulateTouchTask" xml:space="preserve">
+    <value>タッチシミュレーションのスケジュールされたタスクを削除しています...</value>
+  </data>
+  <data name="LogSimulateTouchTaskDeleted" xml:space="preserve">
+    <value>スケジュールされたタスク 'XFSET-SimulateTouchService' が削除されました。</value>
+  </data>
+  <data name="LogCreatingSimulateTouchTask" xml:space="preserve">
+    <value>タッチシミュレーションのスケジュールされたタスクを作成しています...</value>
+  </data>
+  <data name="LogSimulateTouchTaskCreated" xml:space="preserve">
+    <value>スケジュールされたタスク 'XFSET-SimulateTouchService' が作成されました。</value>
+  </data>
+  <data name="ErrorSimulateTouchTask" xml:space="preserve">
+    <value>タッチシミュレーションタスクの変更に失敗しました。エラー: {0}</value>
+  </data>
+  <data name="chkSimulateTouch_Text" xml:space="preserve">
+    <value>システム起動時にタッチ機能をシミュレートし、ゲームパッドキーボードを有効にする (再起動が必要)</value>
   </data>
 </root>

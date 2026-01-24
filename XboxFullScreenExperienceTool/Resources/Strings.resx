@@ -466,7 +466,7 @@ Please ensure you are running this program with administrator privileges.</value
     <value>Your system has native touch support. Windows will manage the gamepad keyboard display automatically.</value>
   </data>
   <data name="TooltipTouchDisabled" xml:space="preserve">
-    <value>No touch support detected on your system. You can enable this to automatically launch the gamepad keyboard on logon for a controller-first experience.</value>
+    <value>No touch support detected on your system. You can enable this to automatically launch the gamepad keyboard on system startup for a controller-first experience.</value>
   </data>
   <data name="LogPanelTaskCreated" xml:space="preserve">
     <value>Scheduled task 'XFSET-SetPanelDimensions' has been created.</value>
@@ -551,5 +551,26 @@ Please ensure you are running this program with administrator privileges.</value
   </data>
   <data name="MsgDeleteLogFiles" xml:space="preserve">
     <value>Do you want to remove the log files (including archived logs) created by the application?</value>
+  </data>
+  <data name="LogDeletingPanelTask" xml:space="preserve">
+    <value>Deleting scheduled task 'XFSET-SetPanelDimensions'...</value>
+  </data>
+  <data name="LogDeletingSimulateTouchTask" xml:space="preserve">
+    <value>Deleting scheduled task for touch simulation...</value>
+  </data>
+  <data name="LogSimulateTouchTaskDeleted" xml:space="preserve">
+    <value>Scheduled task 'XFSET-SimulateTouchService' has been deleted.</value>
+  </data>
+  <data name="LogCreatingSimulateTouchTask" xml:space="preserve">
+    <value>Creating scheduled task for touch simulation...</value>
+  </data>
+  <data name="LogSimulateTouchTaskCreated" xml:space="preserve">
+    <value>Scheduled task 'XFSET-SimulateTouchService' has been created.</value>
+  </data>
+  <data name="ErrorSimulateTouchTask" xml:space="preserve">
+    <value>Failed to modify the touch simulation task. Error: {0}</value>
+  </data>
+  <data name="chkSimulateTouch_Text" xml:space="preserve">
+    <value>Simulate touch capabilities at system startup to enable gamepad keyboard input (restart required)</value>
   </data>
 </root>

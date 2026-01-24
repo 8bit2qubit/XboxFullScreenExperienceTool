@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#pragma once
 #include "pch.h"
+#include "PanelManager.h"
 
-bool GetAppVersion(wchar_t* buffer, size_t size);
-
-void LogDebug(const wchar_t* format, ...);
+namespace TouchManager {
+    int RunService();
+}

@@ -466,7 +466,7 @@
     <value>Ваша система имеет встроенную поддержку сенсорного ввода. Windows будет автоматически управлять отображением клавиатуры для геймпада.</value>
   </data>
   <data name="TooltipTouchDisabled" xml:space="preserve">
-    <value>В вашей системе не обнаружена поддержка сенсорного ввода. Вы можете включить эту опцию для автоматического запуска клавиатуры для геймпада при входе для удобства управления с контроллера.</value>
+    <value>В вашей системе не обнаружена поддержка сенсорного ввода. Вы можете включить эту опцию для автоматического запуска клавиатуры для геймпада при запуске системы для удобства управления с контроллера.</value>
   </data>
   <data name="LogPanelTaskCreated" xml:space="preserve">
     <value>Запланированная задача 'XFSET-SetPanelDimensions' была создана.</value>
@@ -551,5 +551,26 @@
   </data>
   <data name="MsgDeleteLogFiles" xml:space="preserve">
     <value>Вы хотите удалить лог-файлы (включая архивы), созданные приложением?</value>
+  </data>
+  <data name="LogDeletingPanelTask" xml:space="preserve">
+    <value>Удаление запланированной задачи 'XFSET-SetPanelDimensions'...</value>
+  </data>
+  <data name="LogDeletingSimulateTouchTask" xml:space="preserve">
+    <value>Удаление запланированной задачи для симуляции сенсорного ввода...</value>
+  </data>
+  <data name="LogSimulateTouchTaskDeleted" xml:space="preserve">
+    <value>Запланированная задача 'XFSET-SimulateTouchService' была удалена.</value>
+  </data>
+  <data name="LogCreatingSimulateTouchTask" xml:space="preserve">
+    <value>Создание запланированной задачи для симуляции сенсорного ввода...</value>
+  </data>
+  <data name="LogSimulateTouchTaskCreated" xml:space="preserve">
+    <value>Запланированная задача 'XFSET-SimulateTouchService' была создана.</value>
+  </data>
+  <data name="ErrorSimulateTouchTask" xml:space="preserve">
+    <value>Не удалось изменить задачу симуляции сенсорного ввода. Ошибка: {0}</value>
+  </data>
+  <data name="chkSimulateTouch_Text" xml:space="preserve">
+    <value>Эмуляция сенсорного ввода при запуске системы для включения клавиатуры геймпада (требуется перезагрузка)</value>
   </data>
 </root>

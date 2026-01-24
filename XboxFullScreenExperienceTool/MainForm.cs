@@ -106,11 +106,15 @@ namespace XboxFullScreenExperienceTool
                         logger("Deleting SetPanelDimensions task...");
                         TaskSchedulerManager.DeleteSetPanelDimensionsTask();
                     }
-                    if (TaskSchedulerManager.StartGamepadKeyboardOnLogonTaskExists())
+                    // 刪除新的 SimulateTouch 工作
+                    if (TaskSchedulerManager.SimulateTouchTaskExists())
                     {
-                        logger("Deleting StartGamepadKeyboardOnLogon task...");
-                        TaskSchedulerManager.DeleteStartGamepadKeyboardOnLogonTask();
+                        logger("Deleting SimulateTouchService task...");
+                        TaskSchedulerManager.StopSimulateTouchTask();
+                        TaskSchedulerManager.DeleteSimulateTouchTask();
                     }
+                    // 順便清除舊的 Keyboard 工作
+                    TaskSchedulerManager.DeleteStartGamepadKeyboardOnLogonTask();
 
                     if (DriverManager.IsDriverServiceInstalled())
                     {
@@ -358,7 +362,7 @@ namespace XboxFullScreenExperienceTool
             btnEnable.Enabled = false;
             btnDisable.Enabled = false;
             grpPhysPanel.Enabled = false;
-            chkStartKeyboardOnLogon.Enabled = false;
+            chkSimulateTouch.Enabled = false;
             cboLanguage.Enabled = false;
             btnCheckUpdates.Enabled = false;
             btnOpenUAC.Enabled = false;
@@ -615,7 +619,13 @@ namespace XboxFullScreenExperienceTool
                 bool isDrvModeAvailable = !isNativeSupport && isTestSigningOn && !isScreenSizeRestricted && isArchSupported; // Native 模式下停用 Drv
 
                 // ======================================================================
-                // 步驟 5: 決定 UI 狀態
+                // 步驟 5: 檢查觸控狀態
+                // ======================================================================
+                bool isSimulateTouchTaskActive = TaskSchedulerManager.SimulateTouchTaskExists();
+                bool hasNativeTouch = HardwareHelper.IsTouchScreenAvailable();
+
+                // ======================================================================
+                // 步驟 6: 決定 UI 狀態
                 // ======================================================================
 
                 string statusText;
@@ -709,7 +719,7 @@ namespace XboxFullScreenExperienceTool
                 }
 
                 // ======================================================================
-                // 步驟 6: 更新 UI
+                // 步驟 7: 更新 UI
                 // ======================================================================
 
                 this.Invoke((Action)(() =>
@@ -725,13 +735,28 @@ namespace XboxFullScreenExperienceTool
                     // 開放 UAC 設定按鈕
                     btnOpenUAC.Enabled = true;
 
-                    // 設定遊戲控制器鍵盤啟動選項的可用性
-                    bool hasTouchSupport = HardwareHelper.IsTouchScreenAvailable();
-                    bool isStartKeyboardTaskActive = TaskSchedulerManager.StartGamepadKeyboardOnLogonTaskExists();
-
-                    chkStartKeyboardOnLogon.Enabled = !hasTouchSupport; // 讓桌電與筆電使用原本僅支援觸控裝置的遊戲控制器鍵盤
-                    chkStartKeyboardOnLogon.Checked = isStartKeyboardTaskActive;
-                    toolTip.SetToolTip(chkStartKeyboardOnLogon, hasTouchSupport ? Resources.Strings.TooltipTouchEnabled : Resources.Strings.TooltipTouchDisabled); // 設定 ToolTip 提示，向使用者解釋選項
+                    // 設定模擬觸控選項的可用性
+                    if (isSimulateTouchTaskActive)
+                    {
+                        // 模擬觸控服務正在運作 -> 允許使用者取消勾選
+                        chkSimulateTouch.Checked = true;
+                        chkSimulateTouch.Enabled = true;
+                        toolTip.SetToolTip(chkSimulateTouch, Resources.Strings.TooltipTouchDisabled); // 這是模擬的
+                    }
+                    else if (hasNativeTouch)
+                    {
+                        // 原生觸控存在，且無模擬觸控服務 -> 這是真觸控裝置
+                        chkSimulateTouch.Checked = false; // 停用選項，因為不需要模擬
+                        chkSimulateTouch.Enabled = false;
+                        toolTip.SetToolTip(chkSimulateTouch, Resources.Strings.TooltipTouchEnabled);
+                    }
+                    else
+                    {
+                        // 無觸控，無模擬觸控 -> 允許使用者啟用
+                        chkSimulateTouch.Checked = false;
+                        chkSimulateTouch.Enabled = true;
+                        toolTip.SetToolTip(chkSimulateTouch, Resources.Strings.TooltipTouchDisabled);
+                    }
 
                     // 安全機制：如果 Drv 模式因任何限制而變為不可用，則強制切換回 CS 模式
                     radPhysPanelDrv.Enabled = isDrvModeAvailable;
@@ -749,7 +774,7 @@ namespace XboxFullScreenExperienceTool
                 }));
 
                 // ======================================================================
-                // 步驟 7: 寫入日誌 (顯示 CS 與 Drv 狀態)
+                // 步驟 8: 寫入日誌 (顯示 CS 與 Drv 狀態)
                 // ======================================================================
 
                 Log(string.Format(Resources.Strings.LogTouchSupportStatus, HardwareHelper.IsTouchScreenAvailable()));
@@ -806,7 +831,7 @@ namespace XboxFullScreenExperienceTool
             btnDisable.Enabled = false;
             grpPhysPanel.Enabled = false;
             cboLanguage.Enabled = false;
-            chkStartKeyboardOnLogon.Enabled = false;
+            chkSimulateTouch.Enabled = false;
             btnOpenSettings.Enabled = false;
             btnCheckUpdates.Enabled = false;
             btnOpenUAC.Enabled = false;
@@ -944,7 +969,7 @@ namespace XboxFullScreenExperienceTool
                     // 步驟 2: 移除 XFSET-SetPanelDimensions 工作排程 (regOnly)
                     if (TaskSchedulerManager.SetPanelDimensionsTaskExists())
                     {
-                        Log(Resources.Strings.LogDeletingTask);
+                        Log(Resources.Strings.LogDeletingPanelTask);
                         TaskSchedulerManager.DeleteSetPanelDimensionsTask();
                         Log(Resources.Strings.LogPanelTaskDeleted, true);
                     }
@@ -987,7 +1012,7 @@ namespace XboxFullScreenExperienceTool
             btnDisable.Enabled = false;
             grpPhysPanel.Enabled = false;
             cboLanguage.Enabled = false;
-            chkStartKeyboardOnLogon.Enabled = false;
+            chkSimulateTouch.Enabled = false;
             btnOpenSettings.Enabled = false;
             btnCheckUpdates.Enabled = false;
             btnOpenUAC.Enabled = false;
@@ -1114,18 +1139,19 @@ namespace XboxFullScreenExperienceTool
             // 步驟 2: 還原登錄檔值
             RestoreRegistry();
 
-            // 步驟 3: 移除鍵盤啟動工作
-            if (TaskSchedulerManager.StartGamepadKeyboardOnLogonTaskExists())
+            // 步驟 3: 移除觸控模擬工作
+            if (TaskSchedulerManager.SimulateTouchTaskExists())
             {
-                Log(Resources.Strings.LogDeletingKeyboardTask);
-                TaskSchedulerManager.DeleteStartGamepadKeyboardOnLogonTask();
-                Log(Resources.Strings.LogKeyboardTaskDeleted, true);
+                Log(Resources.Strings.LogDeletingSimulateTouchTask);
+                TaskSchedulerManager.StopSimulateTouchTask();
+                TaskSchedulerManager.DeleteSimulateTouchTask();
+                Log(Resources.Strings.LogSimulateTouchTaskDeleted, true);
             }
 
             // 步驟 4: 移除所有可能的覆寫方法 (包括 CS 和 Drv)
             if (TaskSchedulerManager.SetPanelDimensionsTaskExists())
             {
-                Log(Resources.Strings.LogDeletingTask);
+                Log(Resources.Strings.LogDeletingPanelTask);
                 TaskSchedulerManager.DeleteSetPanelDimensionsTask();
                 Log(Resources.Strings.LogPanelTaskDeleted, true);
             }
@@ -1367,7 +1393,7 @@ namespace XboxFullScreenExperienceTool
             btnDisable.Enabled = false;
             cboLanguage.Enabled = false;
             grpPhysPanel.Enabled = false;
-            chkStartKeyboardOnLogon.Enabled = false;
+            chkSimulateTouch.Enabled = false;
             Log(Resources.Strings.LogUserRestartLater);
         }
 
@@ -1444,7 +1470,7 @@ namespace XboxFullScreenExperienceTool
             grpOutput.Text = Resources.Strings.grpOutput_Text;
             btnDisable.Text = Resources.Strings.btnDisable_Text;
             btnEnable.Text = Resources.Strings.btnEnable_Text;
-            chkStartKeyboardOnLogon.Text = Resources.Strings.chkStartKeyboardOnLogon_Text;
+            chkSimulateTouch.Text = Resources.Strings.chkSimulateTouch_Text;
             btnOpenSettings.Text = Resources.Strings.btnOpenSettings_Text;
             btnCheckUpdates.Text = Resources.Strings.btnCheckUpdates_Text;
             btnOpenUAC.Text = Resources.Strings.btnOpenUAC_Text;
@@ -1461,7 +1487,7 @@ namespace XboxFullScreenExperienceTool
             btnEnable.Enabled = false;
             btnDisable.Enabled = false;
             grpPhysPanel.Enabled = false;
-            chkStartKeyboardOnLogon.Enabled = false;
+            chkSimulateTouch.Enabled = false;
             cboLanguage.Enabled = false;
 
             try
@@ -1561,42 +1587,43 @@ namespace XboxFullScreenExperienceTool
         /// <summary>
         /// 當「在登入時啟動觸控鍵盤」核取方塊的狀態變更時觸發。
         /// </summary>
-        private void chkStartKeyboardOnLogon_CheckedChanged(object sender, EventArgs e)
+        private void chkSimulateTouch_CheckedChanged(object sender, EventArgs e)
         {
             if (_isInitializing || _isUpdatingStatus) return;
 
             // 暫時停用控制項並顯示等待游標
-            chkStartKeyboardOnLogon.Enabled = false;
+            chkSimulateTouch.Enabled = false;
             this.Cursor = Cursors.WaitCursor;
 
             try
             {
-                if (chkStartKeyboardOnLogon.Checked)
+                if (chkSimulateTouch.Checked)
                 {
-                    Log(Resources.Strings.LogCreatingKeyboardTask);
-                    TaskSchedulerManager.CreateStartGamepadKeyboardOnLogonTask();
-                    Log(Resources.Strings.LogKeyboardTaskCreated, true);
+                    Log(Resources.Strings.LogCreatingSimulateTouchTask);
+                    TaskSchedulerManager.CreateSimulateTouchTask();
+                    Log(Resources.Strings.LogSimulateTouchTaskCreated, true);
                 }
                 else
                 {
-                    Log(Resources.Strings.LogDeletingKeyboardTask);
-                    TaskSchedulerManager.DeleteStartGamepadKeyboardOnLogonTask();
-                    Log(Resources.Strings.LogKeyboardTaskDeleted, true);
+                    Log(Resources.Strings.LogDeletingSimulateTouchTask);
+                    TaskSchedulerManager.StopSimulateTouchTask(); // 在刪除工作排程前，先嘗試停止該工作
+                    TaskSchedulerManager.DeleteSimulateTouchTask();
+                    Log(Resources.Strings.LogSimulateTouchTaskDeleted, true);
                 }
             }
             catch (Exception ex)
             {
-                LogError(string.Format(Resources.Strings.ErrorKeyboardTask, ex.Message));
+                LogError(string.Format(Resources.Strings.ErrorSimulateTouchTask, ex.Message));
                 // 如果發生錯誤，將核取方塊還原到先前的狀態
                 _isInitializing = true;
-                chkStartKeyboardOnLogon.Checked = !chkStartKeyboardOnLogon.Checked;
+                chkSimulateTouch.Checked = !chkSimulateTouch.Checked;
                 _isInitializing = false;
             }
             finally
             {
                 // 無論成功或失敗，都恢復游標並重新啟用控制項
                 this.Cursor = Cursors.Default;
-                chkStartKeyboardOnLogon.Enabled = true;
+                chkSimulateTouch.Enabled = true;
             }
         }
 

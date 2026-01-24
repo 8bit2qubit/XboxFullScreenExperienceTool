@@ -145,6 +145,7 @@
     <ClCompile Include="PanelManager.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="PhysPanelCPP.cpp" />
+    <ClCompile Include="TouchManager.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +153,7 @@
     <ClInclude Include="PanelManager.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="TouchManager.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>

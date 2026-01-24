@@ -35,7 +35,7 @@ namespace XboxFullScreenExperienceTool
             btnEnable = new Button();
             btnDisable = new Button();
             grpActions = new GroupBox();
-            chkStartKeyboardOnLogon = new CheckBox();
+            chkSimulateTouch = new CheckBox();
             btnCheckUpdates = new Button();
             btnOpenSettings = new Button();
             btnOpenUAC = new Button();
@@ -57,7 +57,7 @@ namespace XboxFullScreenExperienceTool
             // 
             grpActions.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             grpActions.Controls.Add(btnOpenStartupApps);
-            grpActions.Controls.Add(chkStartKeyboardOnLogon);
+            grpActions.Controls.Add(chkSimulateTouch);
             grpActions.Controls.Add(btnDisable);
             grpActions.Controls.Add(btnEnable);
             grpActions.Controls.Add(btnCheckUpdates);
@@ -98,18 +98,18 @@ namespace XboxFullScreenExperienceTool
             btnDisable.UseVisualStyleBackColor = true;
             btnDisable.Click += btnDisable_Click;
             // 
-            // chkStartKeyboardOnLogon
+            // chkSimulateTouch
             // 
-            chkStartKeyboardOnLogon.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            chkStartKeyboardOnLogon.AutoSize = true;
-            chkStartKeyboardOnLogon.Location = new Point(28, 159);
-            chkStartKeyboardOnLogon.Margin = new Padding(4, 5, 4, 5);
-            chkStartKeyboardOnLogon.Name = "chkStartKeyboardOnLogon";
-            chkStartKeyboardOnLogon.Size = new Size(391, 23);
-            chkStartKeyboardOnLogon.TabIndex = 8;
-            chkStartKeyboardOnLogon.Text = "在登入時啟動遊戲控制器鍵盤，並自動隱藏至背景待命";
-            chkStartKeyboardOnLogon.UseVisualStyleBackColor = true;
-            chkStartKeyboardOnLogon.CheckedChanged += chkStartKeyboardOnLogon_CheckedChanged;
+            chkSimulateTouch.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            chkSimulateTouch.AutoSize = true;
+            chkSimulateTouch.Location = new Point(28, 159);
+            chkSimulateTouch.Margin = new Padding(4, 5, 4, 5);
+            chkSimulateTouch.Name = "chkSimulateTouch";
+            chkSimulateTouch.Size = new Size(391, 23);
+            chkSimulateTouch.TabIndex = 8;
+            chkSimulateTouch.Text = "在系統啟動時模擬觸控能力以啟動遊戲控制器鍵盤輸入 (需要重啟)";
+            chkSimulateTouch.UseVisualStyleBackColor = true;
+            chkSimulateTouch.CheckedChanged += chkSimulateTouch_CheckedChanged;
             // 
             // btnCheckUpdates
             // 
@@ -287,7 +287,7 @@ namespace XboxFullScreenExperienceTool
         private System.Windows.Forms.GroupBox grpPhysPanel;
         private System.Windows.Forms.RadioButton radPhysPanelDrv;
         private System.Windows.Forms.RadioButton radPhysPanelCS;
-        private System.Windows.Forms.CheckBox chkStartKeyboardOnLogon;
+        private System.Windows.Forms.CheckBox chkSimulateTouch;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.ComboBox cboLanguage;
         private System.Windows.Forms.Button btnOpenSettings;

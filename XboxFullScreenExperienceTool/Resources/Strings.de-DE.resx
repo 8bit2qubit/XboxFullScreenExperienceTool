@@ -466,7 +466,7 @@ Bitte stellen Sie sicher, dass Sie dieses Programm mit Administratorrechten ausf
     <value>Ihr System verfügt über native Touch-Unterstützung. Windows verwaltet die Anzeige der Gamepad-Tastatur automatisch.</value>
   </data>
   <data name="TooltipTouchDisabled" xml:space="preserve">
-    <value>Keine Touch-Unterstützung auf Ihrem System erkannt. Sie können diese Option aktivieren, um die Gamepad-Tastatur bei der Anmeldung automatisch zu starten und eine Controller-orientierte Erfahrung zu ermöglichen.</value>
+    <value>Keine Touch-Unterstützung auf Ihrem System erkannt. Sie können diese Option aktivieren, um die Gamepad-Tastatur beim Systemstart automatisch zu starten und eine Controller-orientierte Erfahrung zu ermöglichen.</value>
   </data>
   <data name="LogPanelTaskCreated" xml:space="preserve">
     <value>Geplante Aufgabe 'XFSET-SetPanelDimensions' wurde erstellt.</value>
@@ -551,5 +551,26 @@ Bitte stellen Sie sicher, dass Sie dieses Programm mit Administratorrechten ausf
   </data>
   <data name="MsgDeleteLogFiles" xml:space="preserve">
     <value>Möchten Sie die von der Anwendung erstellten Protokolldateien (einschließlich Archive) löschen?</value>
+  </data>
+  <data name="LogDeletingPanelTask" xml:space="preserve">
+    <value>Lösche geplante Aufgabe 'XFSET-SetPanelDimensions'...</value>
+  </data>
+  <data name="LogDeletingSimulateTouchTask" xml:space="preserve">
+    <value>Lösche geplante Aufgabe für Touch-Simulation...</value>
+  </data>
+  <data name="LogSimulateTouchTaskDeleted" xml:space="preserve">
+    <value>Geplante Aufgabe 'XFSET-SimulateTouchService' wurde gelöscht.</value>
+  </data>
+  <data name="LogCreatingSimulateTouchTask" xml:space="preserve">
+    <value>Erstelle geplante Aufgabe für Touch-Simulation...</value>
+  </data>
+  <data name="LogSimulateTouchTaskCreated" xml:space="preserve">
+    <value>Geplante Aufgabe 'XFSET-SimulateTouchService' wurde erstellt.</value>
+  </data>
+  <data name="ErrorSimulateTouchTask" xml:space="preserve">
+    <value>Fehler beim Ändern der Touch-Simulationsaufgabe. Fehler: {0}</value>
+  </data>
+  <data name="chkSimulateTouch_Text" xml:space="preserve">
+    <value>Touch-Funktionen beim Systemstart simulieren, um die Gamepad-Tastatur zu aktivieren (Neustart erforderlich)</value>
   </data>
 </root>
