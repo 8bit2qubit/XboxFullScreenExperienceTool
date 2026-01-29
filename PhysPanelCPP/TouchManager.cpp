@@ -30,6 +30,7 @@ namespace TouchManager {
     const LPCWSTR MASTER_MUTEX_NAME = L"Global\\XFEST_TouchSvc_Master_Lock";
 
     typedef BOOL(NTAPI* PInitializeTouchInjection)(UINT32, DWORD);
+    typedef BOOL(NTAPI* PInjectTouchInput)(UINT32, const POINTER_TOUCH_INFO*);
 
     std::wstring BuildMutexName(DWORD sessionId, const std::wstring& desktopPathOrName) {
         std::wstring shortName = desktopPathOrName;
@@ -79,46 +80,84 @@ namespace TouchManager {
         HMODULE hUser32 = LoadLibraryW(L"User32.dll");
         if (hUser32) {
             auto InitializeTouchInjection = (PInitializeTouchInjection)GetProcAddress(hUser32, "InitializeTouchInjection");
+            auto InjectTouchInput = (PInjectTouchInput)GetProcAddress(hUser32, "InjectTouchInput");
 
-            if (InitializeTouchInjection && InitializeTouchInjection(10, 0x1)) {
-                LogDebug(L"InitializeTouchInjection SUCCESS. Touch simulation active.");
+            if (InitializeTouchInjection && InjectTouchInput) {
+                if (InitializeTouchInjection(10, TOUCH_FEEDBACK_DEFAULT)) {
+                    LogDebug(L"InitializeTouchInjection API returned TRUE. Starting Probe phase...");
 
-                bool bRunning = true;
-                MSG msg;
+                    const int MAX_RETRIES = 60;
+                    const int RETRY_DELAY_MS = 500;
+                    bool bProbeSucceeded = false;
 
-                LogDebug(L"Entering message loop...");
-                while (bRunning) {
-                    DWORD waitResult = MsgWaitForMultipleObjects(1, &hMasterMutex, FALSE, INFINITE, QS_ALLINPUT);
+                    for (int i = 0; i < MAX_RETRIES; ++i) {
+                        POINTER_TOUCH_INFO contact = { 0 };
+                        contact.pointerInfo.pointerType = PT_TOUCH;
+                        contact.pointerInfo.pointerId = 0;
+                        contact.pointerInfo.ptPixelLocation.x = 0;
+                        contact.pointerInfo.ptPixelLocation.y = 0;
+                        contact.pointerInfo.pointerFlags = POINTER_FLAG_UPDATE | POINTER_FLAG_INRANGE;
+                        contact.touchFlags = TOUCH_FLAG_NONE;
+                        contact.touchMask = TOUCH_MASK_NONE;
 
-                    switch (waitResult) {
-                    case WAIT_OBJECT_0:
-                    case WAIT_ABANDONED_0:
-                        LogDebug(L"Master service stopped/abandoned. Worker shutting down.");
-                        bRunning = false;
-                        break;
+                        if (InjectTouchInput(1, &contact)) {
+                            LogDebug(L"*** Probe SUCCESS at attempt %d. Touch Injection READY. ***", i + 1);
+                            bProbeSucceeded = true;
+                            break;
+                        }
+                        else {
+                            DWORD dwErr = GetLastError();
+                            LogDebug(L"Probe Attempt %d/%d failed (Error: %d). Retrying in %dms...",
+                                i + 1, MAX_RETRIES, dwErr, RETRY_DELAY_MS);
+                            Sleep(RETRY_DELAY_MS);
+                        }
+                    }
 
-                    case WAIT_OBJECT_0 + 1:
-                        while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
-                            if (msg.message == WM_QUIT) {
-                                LogDebug(L"WM_QUIT received. Shutting down.");
+                    if (bProbeSucceeded) {
+                        bool bRunning = true;
+                        MSG msg;
+
+                        LogDebug(L"Entering message loop...");
+                        while (bRunning) {
+                            DWORD waitResult = MsgWaitForMultipleObjects(1, &hMasterMutex, FALSE, INFINITE, QS_ALLINPUT);
+
+                            switch (waitResult) {
+                            case WAIT_OBJECT_0:
+                            case WAIT_ABANDONED_0:
+                                LogDebug(L"Master service stopped/abandoned. Worker shutting down.");
+                                bRunning = false;
+                                break;
+
+                            case WAIT_OBJECT_0 + 1:
+                                while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+                                    if (msg.message == WM_QUIT) {
+                                        LogDebug(L"WM_QUIT received. Shutting down.");
+                                        bRunning = false;
+                                        break;
+                                    }
+                                    TranslateMessage(&msg);
+                                    DispatchMessage(&msg);
+                                }
+                                break;
+
+                            case WAIT_FAILED:
+                                LogDebug(L"MsgWaitForMultipleObjects failed (Error: %d).", GetLastError());
                                 bRunning = false;
                                 break;
                             }
-                            TranslateMessage(&msg);
-                            DispatchMessage(&msg);
                         }
-                        break;
-
-                    case WAIT_FAILED:
-                        LogDebug(L"MsgWaitForMultipleObjects failed (Error: %d).", GetLastError());
-                        bRunning = false;
-                        break;
+                        LogDebug(L"Exiting message loop.");
+                    }
+                    else {
+                        LogDebug(L"!!! FATAL: Probe failed after %d attempts. Giving up on this session instance. !!!", MAX_RETRIES);
                     }
                 }
-                LogDebug(L"Exiting message loop.");
+                else {
+                    LogDebug(L"Error: InitializeTouchInjection returned FALSE (Error: %d).", GetLastError());
+                }
             }
             else {
-                LogDebug(L"Error: InitializeTouchInjection failed or API missing.");
+                LogDebug(L"Error: Failed to GetProcAddress for Touch APIs.");
             }
             FreeLibrary(hUser32);
         }
@@ -245,7 +284,7 @@ namespace TouchManager {
         while (true) {
             DWORD activeSessionId = WTSGetActiveConsoleSessionId();
 
-            LogDebug(L"Loop check: Active Session is %d", activeSessionId); 
+            LogDebug(L"Loop check: Active Session is %d", activeSessionId);
 
             if (activeSessionId != 0xFFFFFFFF && activeSessionId != 0) {
                 for (const auto& desktop : targetDesktops) {
