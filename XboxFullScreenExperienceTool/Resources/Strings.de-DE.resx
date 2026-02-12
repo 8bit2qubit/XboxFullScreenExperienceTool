@@ -496,7 +496,7 @@ Bitte stellen Sie sicher, dass Sie dieses Programm mit Administratorrechten ausf
     <value>Statusprüfung: Kern={0}, Nativ={1}, Registrierung={2}, Bildschirmüberschreibung erforderlich={3}, CS={4}, Drv={5}, Bildschirmgröße={6:F2}", Testsignierung={7}</value>
   </data>
   <data name="LogNativeSupportDetected" xml:space="preserve">
-    <value>Build 26220.7271+ erkannt, wende native Support-Konfiguration an. (Größe: {0:F2}", Überschreibung: {1})</value>
+    <value>Native Build erkannt, native Unterstützungskonfiguration wird angewendet. (Bildschirmgröße: {0:F2}", Überschreibungsstatus: {1})</value>
   </data>
   <data name="LogNonHandheldDetected" xml:space="preserve">
     <value>Nicht-Handheld-Umgebung erkannt: Erstelle Registrierungswartungsaufgabe...</value>

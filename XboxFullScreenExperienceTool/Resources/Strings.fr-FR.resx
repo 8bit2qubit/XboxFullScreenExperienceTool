@@ -496,7 +496,7 @@ Veuillez vous assurer que vous exécutez ce programme avec les privilèges d'adm
     <value>Vérification de l'état : Noyau={0}, Natif={1}, Registre={2}, Substitution écran requise={3}, CS={4}, Drv={5}, Taille écran={6:F2}", Signature test={7}</value>
   </data>
   <data name="LogNativeSupportDetected" xml:space="preserve">
-    <value>Build 26220.7271+ détectée, application de la configuration de support natif. (Taille : {0:F2}", Substitution : {1})</value>
+    <value>Native Build détectée, application de la configuration de support natif. (Taille d'écran : {0:F2}", État de remplacement : {1})</value>
   </data>
   <data name="LogNonHandheldDetected" xml:space="preserve">
     <value>Environnement non portable détecté : Création de la tâche de maintenance du registre...</value>

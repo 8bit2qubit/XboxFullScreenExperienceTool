@@ -496,7 +496,7 @@ Please ensure you are running this program with administrator privileges.</value
     <value>Status Check: Core={0}, Native={1}, Registry={2}, ScreenOverrideRequired={3}, CS={4}, Drv={5}, ScreenSize={6:F2}", TestSigning={7}</value>
   </data>
   <data name="LogNativeSupportDetected" xml:space="preserve">
-    <value>Detected build 26220.7271+, applying native support configuration. (Size: {0:F2}", Override: {1})</value>
+    <value>Detected Native Build, applying native support configuration. (Screen Size: {0:F2}", Override Status: {1})</value>
   </data>
   <data name="LogNonHandheldDetected" xml:space="preserve">
     <value>Non-handheld environment detected: Creating Registry maintenance task...</value>

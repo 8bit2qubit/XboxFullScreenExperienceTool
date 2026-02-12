@@ -416,28 +416,45 @@ namespace XboxFullScreenExperienceTool
                 Log(string.Format(Resources.Strings.YourBuildVersion, versionString));
 
                 // 版本比較邏輯
+                // ✓ 支援: 26100.7019+, 26200.7015+, 26220.6972+, 26221~27999, 28000.1450+, 28020.1362+
+                // ✗ 不支援: 28000.1~1449, 28020.1~1361
                 bool isCompatible = false;
 
-                if (currentBuild > 26220) // 允許未來高於 26220 的任何版本
-                {
-                    isCompatible = true;
+                // --- 28000 系列以上 ---
+                if (currentBuild > 28020)
+                {
+                    isCompatible = true; // 未來版本 (預設支援)
+                }
+                else if (currentBuild == 28020)
+                {
+                    isCompatible = (currentRevision >= 1362); // ✓ 28020.1362+ (Native) | ✗ 28020.1~1361
+                }
+                else if (currentBuild == 28000)
+                {
+                    isCompatible = (currentRevision >= 1450); // ✓ 28000.1450+ (Legacy) | ✗ 28000.1~1449
+                }
+                // --- 26220 系列 ---
+                else if (currentBuild > 26220 && currentBuild < 28000)
+                {
+                    isCompatible = true; // ✓ 26221~27999 (Native)
                 }
                 else if (currentBuild == 26220)
                 {
-                    isCompatible = (currentRevision >= 6972); // 26220.6972+
-                }
+                    isCompatible = (currentRevision >= 6972); // ✓ 26220.6972+ (6972~7270: Legacy, 7271+: Native)
+                }
+                // --- 舊版本 ---
                 else if (currentBuild == 26200)
                 {
-                    isCompatible = (currentRevision >= 7015); // 26200.7015+
-                }
+                    isCompatible = (currentRevision >= 7015); // ✓ 26200.7015+ (Legacy)
+                }
                 else if (currentBuild == 26100)
                 {
-                    isCompatible = (currentRevision >= 7019); // 26100.7019+
-                }
+                    isCompatible = (currentRevision >= 7019); // ✓ 26100.7019+ (Legacy)
+                }
 
                 if (!isCompatible)
                 {
-                    string requirementString = "26100.7019+ / 26200.7015+ / 26220.6972+";
+                    string requirementString = "26100.7019+ / 26200.7015+ / 26220.6972+ / 28000.1450+ / 28020.1362+";
                     Log(string.Format(Resources.Strings.ErrorBuildTooLow, versionString));
                     Log(string.Format(Resources.Strings.RequiredBuild, requirementString));
 
@@ -468,7 +485,17 @@ namespace XboxFullScreenExperienceTool
         }
 
         /// <summary>
-        /// 判斷是否為 26220.7271 或更新的原生支援版本 (Native Build)。
+        /// 判斷是否為原生支援版本 (Native Build)。
+        /// 
+        /// Native Build (啟用 3 個功能 ID):
+        ///   - 26220.7271+
+        ///   - 26221 ~ 27999
+        ///   - 28020.1362+
+        /// 
+        /// Legacy Build (啟用 2 個功能 ID):
+        ///   - 26100.7019+, 26200.7015+
+        ///   - 26220.6972 ~ 26220.7270
+        ///   - 28000.1450+
         /// </summary>
         private static bool IsNativeSupportBuild()
         {
@@ -479,9 +506,14 @@ namespace XboxFullScreenExperienceTool
 
                 if (int.TryParse(currentBuildStr, out int build) && int.TryParse(currentRevisionStr, out int revision))
                 {
-                    // Build > 26220 或 Build = 26220 且 Revision >= 7271
-                    if (build > 26220) return true;
-                    if (build == 26220 && revision >= 7271) return true;
+                    // --- 28000 系列 ---
+                    if (build == 28020 && revision >= 1362) return true;  // ✓ Native: 28020.1362+
+                    if (build > 28020) return true;                        // ✓ Native: 28021+
+                    if (build == 28000) return false;                      // ✗ Legacy: 28000.1450+ (明確排除)
+
+                    // --- 26220 系列 ---
+                    if (build > 26220 && build < 28000) return true;       // ✓ Native: 26221~27999
+                    if (build == 26220 && revision >= 7271) return true;   // ✓ Native: 26220.7271+ | ✗ Legacy: 26220.6972~7270
                 }
             }
             catch { /* 忽略錯誤 */ }

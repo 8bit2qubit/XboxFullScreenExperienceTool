@@ -496,7 +496,7 @@
     <value>狀態檢查: 核心={0}, 原生={1}, 登錄檔={2}, 螢幕覆寫需求={3}, CS={4}, Drv={5}, 螢幕尺寸={6:F2}", 測試簽章={7}</value>
   </data>
   <data name="LogNativeSupportDetected" xml:space="preserve">
-    <value>偵測到組建 26220.7271+，正在套用原生支援設定。(尺寸: {0:F2}", 覆寫: {1})</value>
+    <value>偵測到 Native Build，正在套用原生支援設定。(螢幕尺寸: {0:F2}", 覆寫狀態: {1})</value>
   </data>
   <data name="LogNonHandheldDetected" xml:space="preserve">
     <value>偵測到非掌機環境：正在建立登錄檔維護工作...</value>

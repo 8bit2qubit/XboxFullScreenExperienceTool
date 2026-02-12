@@ -496,7 +496,7 @@
     <value>상태 확인: 코어={0}, 네이티브={1}, 레지스트리={2}, 화면 재정의 필요={3}, CS={4}, Drv={5}, 화면 크기={6:F2}", 테스트 서명={7}</value>
   </data>
   <data name="LogNativeSupportDetected" xml:space="preserve">
-    <value>빌드 26220.7271+가 감지되었습니다. 네이티브 지원 구성을 적용 중입니다. (크기: {0:F2}", 재정의: {1})</value>
+    <value>Native Build가 감지되었습니다. 네이티브 지원 구성을 적용 중입니다. (화면 크기: {0:F2}", 재정의 상태: {1})</value>
   </data>
   <data name="LogNonHandheldDetected" xml:space="preserve">
     <value>비 휴대용 환경이 감지되었습니다: 레지스트리 유지 관리 작업을 생성 중...</value>
