@@ -98,7 +98,7 @@ namespace XboxFullScreenExperienceTool
 
                 try
                 {
-                    allSucceeded &= DisableViveFeatures(logger);
+                    allSucceeded &= ResetViveFeatures(logger);
                     allSucceeded &= RestoreRegistry(logger);
 
                     if (TaskSchedulerManager.SetPanelDimensionsTaskExists())
@@ -137,31 +137,31 @@ namespace XboxFullScreenExperienceTool
             }
 
             /// <summary>
-            /// 停用功能。必須清除所有已知的 ID。
+            /// 重設功能。必須清除所有已知的 ID。
             /// 確保無論使用者之前處於何種狀態 (Legacy Build、Native Build、掌機、非掌機)，都能徹底還原。
             /// </summary>
-            private static bool DisableViveFeatures(Action<string> logger)
+            private static bool ResetViveFeatures(Action<string> logger)
             {
                 try
                 {
                     // 取得應停用的 ID 清單
                     uint[] idsToDisable = GetIdsToDisable();
-                    logger($"Disabling features based on build ver (Native={IsNativeSupportBuild()}): {string.Join(", ", idsToDisable)}");
+                    logger($"Resetting features based on build ver (Native={IsNativeSupportBuild()}): {string.Join(", ", idsToDisable)}");
                     var updates = Array.ConvertAll(idsToDisable, id => new RTL_FEATURE_CONFIGURATION_UPDATE
                     {
                         FeatureId = id,
-                        EnabledState = RTL_FEATURE_ENABLED_STATE.Disabled,
-                        Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState | RTL_FEATURE_CONFIGURATION_OPERATION.VariantState,
+                        EnabledState = RTL_FEATURE_ENABLED_STATE.Default,
+                        Operation = RTL_FEATURE_CONFIGURATION_OPERATION.ResetState,
                         Priority = RTL_FEATURE_CONFIGURATION_PRIORITY.User
                     });
                     FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
                     FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Boot);
-                    logger("Features disabled successfully.");
+                    logger("Features reset successfully.");
                     return true;
                 }
                 catch (Exception ex)
                 {
-                    logger($"ERROR disabling ViVe features: {ex.Message}");
+                    logger($"ERROR resetting ViVe features: {ex.Message}");
                     return false;
                 }
             }
@@ -522,7 +522,7 @@ namespace XboxFullScreenExperienceTool
 
         /// <summary>
         /// 取得「停用」操作時應針對的功能 ID 清單。
-        /// 1. 26220.7271+ (Native Build) -> 停用 3 個 ID (含 59765208)。
+        /// 1. Native Build -> 停用 3 個 ID (含 59765208)。
         /// 2. Legacy Build -> 停用 2 個 ID (排除 59765208)。
         /// 此邏輯不考慮螢幕尺寸。
         /// </summary>
@@ -542,7 +542,7 @@ namespace XboxFullScreenExperienceTool
         /// <summary>
         /// 根據系統版本、螢幕尺寸以及「是否存在覆寫」來取得功能 ID 清單。
         /// </summary>
-        /// <param name="isNativeSupport">是否為 Native Build 26220.7271+ 版本</param>
+        /// <param name="isNativeSupport">是否為 Native Build 版本</param>
         /// <param name="diagonalInches">偵測到的螢幕對角線尺寸</param>
         /// <param name="isOverridePresent">是否偵測到 CS 或 Drv 正在運作</param>
         private static uint[] GetRequiredFeatureIds(bool isNativeSupport, double diagonalInches, bool isOverridePresent)
@@ -550,7 +550,7 @@ namespace XboxFullScreenExperienceTool
             // Legacy Build：一律只支援 BASIC
             if (!isNativeSupport) return BASIC_FEATURE_IDS;
 
-            // 原生支援版本 (Native Build 26220.7271+)：
+            // 原生支援版本 (Native Build)：
             // 判斷是否需要啟用 59765208 (非掌機模式)
             // 條件 A: 偵測到覆寫 (CS/Drv)。這意味著尺寸是假的 (如 7")，且使用者之前刻意安裝了覆寫，
             //         因此假設這是非掌機 (Desktop/Laptop)，需要完整功能。
@@ -586,7 +586,7 @@ namespace XboxFullScreenExperienceTool
                     : 0;
 
                 // 判斷版本
-                bool isNativeSupport = IsNativeSupportBuild(); // 26220.7271+
+                bool isNativeSupport = IsNativeSupportBuild(); // Native Build
 
                 // ======================================================================
                 // 步驟 2: 檢查覆寫機制狀態 (個別檢查 CS 與 Drv)
@@ -1347,7 +1347,7 @@ namespace XboxFullScreenExperienceTool
         }
 
         /// <summary>
-        /// 停用所需的 ViVe 功能。此方法從 PerformDisableActions 中提取出來以便重複使用。
+        /// 停用所需的 ViVe 功能。
         /// </summary>
         private void DisableViveFeatures()
         {
