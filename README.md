@@ -38,7 +38,7 @@ The Xbox Full Screen Experience is designed for handheld-sized screens. If your 
 
 ### Task Scheduler Mode: `PhysPanelCS` (Recommended)
 
-This is the **default and recommended** method. It is easy to use and requires no additional manual setup. As of `v0.0.11`, this method has been enhanced to improve its startup stability, making it highly reliable for all devices, including desktops and laptops.
+This is the **default and recommended** method. It is easy to use, requires no additional manual setup, and provides high reliability for all devices, including desktops and laptops.
 
 ### Driver Mode: `PhysPanelDrv` (Alternative)
 
