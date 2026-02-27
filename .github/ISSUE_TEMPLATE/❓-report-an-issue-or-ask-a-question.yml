@@ -21,7 +21,9 @@ body:
             *   **"Quick Start"** (I have followed the installation and initial setup steps.)
           required: true
         - label: >-
-            I understand this tool is an **Enabler / Activation Utility / Configuration Tool** and not the implementer of the Full Screen Experience (FSE) feature. I understand FSE itself **is a Shell Replacement** that *replaces* the normal Windows desktop/taskbar, and FSE's behavior is not a bug in this tool.
+            I understand this tool is an **Enabler / Utility Tool** designed to easily turn on the hidden feature. It is **NOT** the creator or implementer of the "Full Screen Experience" (FSE) feature itself. If you encounter bugs, missing features, or UI problems **inside the Xbox FSE interface**, those are Microsoft's issues, not this tool's bugs. **(Exception: Bugs in this tool's UI, failures when applying the configuration, or issues with `PhysPanelCS` (Screen Dimensions Override, Touch Simulation) / `PhysPanelDrv` DO belong to this tool.)** Please report FSE-specific issues directly to Microsoft via:
+            *   [Windows Feedback Hub (apps.microsoft.com/detail/9NBLGGH4R32N)](ms-windows-store://pdp/?ProductId=9NBLGGH4R32N)
+            *   [Xbox Insider Hub (apps.microsoft.com/detail/9PLDPG46G47Z)](ms-windows-store://pdp/?ProductId=9PLDPG46G47Z)
           required: true
         - label: >-
             I have already tried going to the **Microsoft Store** to update all apps (especially Xbox and Game Bar).
@@ -64,7 +66,7 @@ body:
   - type: dropdown
     id: screen-dimensions-override-mode
     attributes:
-      label: "3. Which \"Screen Dimensions Override Mode\" are you currently using?"
+      label: '3. Which "Screen Dimensions Override Mode" are you currently using?'
       options:
         - Task Scheduler Mode (`PhysPanelCS`) (Default)
         - Driver Mode (`PhysPanelDrv`) (Advanced)
@@ -77,6 +79,7 @@ body:
       label: "4. Which Xbox Full Screen Experience Tool version are you using?"
       description: "(You can see the version in the tool's title bar.)"
       options:
+        - v0.9.0
         - v0.0.18
         - v0.0.17
         - v0.0.16
