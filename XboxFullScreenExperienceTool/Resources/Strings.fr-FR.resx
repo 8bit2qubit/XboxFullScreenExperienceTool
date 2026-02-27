@@ -573,4 +573,20 @@ Veuillez vous assurer que vous exécutez ce programme avec les privilèges d'adm
   <data name="chkSimulateTouch_Text" xml:space="preserve">
     <value>Simuler des fonctionnalités tactiles au démarrage pour activer le clavier de la manette (redémarrage requis)</value>
   </data>
+  <data name="PromptRestartWarning" xml:space="preserve">
+    <value>Cette opération redémarrera automatiquement votre ordinateur une fois terminée. Veuillez d'abord enregistrer votre travail. Voulez-vous continuer ?</value>
+  </data>
+  <data name="PromptEnableSimulateTouch" xml:space="preserve">
+    <value>Aucun écran tactile physique détecté. Voulez-vous activer le service « Simuler le toucher » ?
+(Ceci est requis pour utiliser la manette afin d'entrer votre code PIN/mot de passe sur l'écran d'ouverture de session et pour invoquer le clavier virtuel sur le bureau.)</value>
+  </data>
+  <data name="LogUserCancelledEnable" xml:space="preserve">
+    <value>L'utilisateur a annulé l'opération d'activation.</value>
+  </data>
+  <data name="LogUserAgreedToSimulateTouch" xml:space="preserve">
+    <value>L'utilisateur a accepté d'activer le service de simulation tactile.</value>
+  </data>
+  <data name="LogUserCancelledDisable" xml:space="preserve">
+    <value>L'utilisateur a annulé l'opération de désactivation.</value>
+  </data>
 </root>

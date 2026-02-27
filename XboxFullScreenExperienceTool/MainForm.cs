@@ -856,6 +856,40 @@ namespace XboxFullScreenExperienceTool
             // 在執行新操作前，先將目前的日誌封存備份
             ArchiveLogFile();
 
+            // 執行前警告
+            DialogResult result = MessageBox.Show(
+                Resources.Strings.PromptRestartWarning,
+                this.Text,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.No)
+            {
+                Log(Resources.Strings.LogUserCancelledEnable);
+                return;
+            }
+
+            // 動態詢問觸控模擬
+            // 判斷是否為「真觸控裝置」的條件：有實體觸控 而且 沒有正在跑模擬觸控服務
+            bool isRealTouchDevice = HardwareHelper.IsTouchScreenAvailable() && !TaskSchedulerManager.SimulateTouchTaskExists();
+
+            if (!isRealTouchDevice && !chkSimulateTouch.Checked)
+            {
+                DialogResult touchResult = MessageBox.Show(
+                    Resources.Strings.PromptEnableSimulateTouch,
+                    this.Text,
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (touchResult == DialogResult.Yes)
+                {
+                    // 在程式內將 Checkbox 狀態自動設為 Checked
+                    // 這也會觸發 chkSimulateTouch_CheckedChanged 事件並自動建立工作排程
+                    chkSimulateTouch.Checked = true;
+                    Log(Resources.Strings.LogUserAgreedToSimulateTouch);
+                }
+            }
+
             this.Cursor = Cursors.WaitCursor;
 
             // 在開始長時間操作之前，立即鎖定所有 UI 互動
@@ -1036,6 +1070,19 @@ namespace XboxFullScreenExperienceTool
         {
             // 在執行新操作前，先將目前的日誌封存備份
             ArchiveLogFile();
+
+            // 執行前警告
+            DialogResult result = MessageBox.Show(
+                Resources.Strings.PromptRestartWarning,
+                this.Text,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.No)
+            {
+                Log(Resources.Strings.LogUserCancelledDisable);
+                return;
+            }
 
             this.Cursor = Cursors.WaitCursor;
 

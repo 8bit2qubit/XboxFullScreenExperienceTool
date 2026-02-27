@@ -573,4 +573,20 @@
   <data name="chkSimulateTouch_Text" xml:space="preserve">
     <value>시스템 시작 시 터치 기능을 시뮬레이션하여 게임패드 키보드 입력을 활성화합니다 (재시작 필요)</value>
   </data>
+  <data name="PromptRestartWarning" xml:space="preserve">
+    <value>이 작업을 완료하면 컴퓨터가 자동으로 다시 시작됩니다. 먼저 작업을 저장하십시오. 계속하시겠습니까?</value>
+  </data>
+  <data name="PromptEnableSimulateTouch" xml:space="preserve">
+    <value>물리적 터치 스크린이 감지되지 않았습니다. "터치 시뮬레이션" 서비스를 활성화하시겠습니까?
+(이는 로그온 화면에서 컨트롤러를 사용하여 PIN/암호를 입력하고, 데스크톱에서 가상 키보드를 호출하는 데 필요합니다.)</value>
+  </data>
+  <data name="LogUserCancelledEnable" xml:space="preserve">
+    <value>사용자가 활성화 작업을 취소했습니다.</value>
+  </data>
+  <data name="LogUserAgreedToSimulateTouch" xml:space="preserve">
+    <value>사용자가 터치 시뮬레이션 서비스 활성화에 동의했습니다.</value>
+  </data>
+  <data name="LogUserCancelledDisable" xml:space="preserve">
+    <value>사용자가 비활성화 작업을 취소했습니다.</value>
+  </data>
 </root>

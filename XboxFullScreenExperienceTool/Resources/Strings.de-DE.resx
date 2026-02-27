@@ -573,4 +573,20 @@ Bitte stellen Sie sicher, dass Sie dieses Programm mit Administratorrechten ausf
   <data name="chkSimulateTouch_Text" xml:space="preserve">
     <value>Touch-Funktionen beim Systemstart simulieren, um die Gamepad-Tastatur zu aktivieren (Neustart erforderlich)</value>
   </data>
+  <data name="PromptRestartWarning" xml:space="preserve">
+    <value>Nach Abschluss dieses Vorgangs wird Ihr Computer automatisch neu gestartet. Bitte speichern Sie zuerst Ihre Arbeit. Möchten Sie fortfahren?</value>
+  </data>
+  <data name="PromptEnableSimulateTouch" xml:space="preserve">
+    <value>Es wurde kein physischer Touchscreen erkannt. Möchten Sie den Dienst "Touch Simulieren" aktivieren?
+(Dies ist erforderlich, um auf dem Anmeldebildschirm mit dem Controller Ihre PIN/Ihr Passwort einzugeben und auf dem Desktop die virtuelle Tastatur aufzurufen.)</value>
+  </data>
+  <data name="LogUserCancelledEnable" xml:space="preserve">
+    <value>Benutzer hat den Aktivierungsvorgang abgebrochen.</value>
+  </data>
+  <data name="LogUserAgreedToSimulateTouch" xml:space="preserve">
+    <value>Benutzer hat der Aktivierung des Dienstes "Touch Simulieren" zugestimmt.</value>
+  </data>
+  <data name="LogUserCancelledDisable" xml:space="preserve">
+    <value>Benutzer hat den Deaktivierungsvorgang abgebrochen.</value>
+  </data>
 </root>

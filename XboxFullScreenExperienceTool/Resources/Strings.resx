@@ -573,4 +573,20 @@ Please ensure you are running this program with administrator privileges.</value
   <data name="chkSimulateTouch_Text" xml:space="preserve">
     <value>Simulate touch capabilities at system startup to enable gamepad keyboard input (restart required)</value>
   </data>
+  <data name="PromptRestartWarning" xml:space="preserve">
+    <value>This operation will automatically restart your computer upon completion. Please save your work first. Do you want to continue?</value>
+  </data>
+  <data name="PromptEnableSimulateTouch" xml:space="preserve">
+    <value>No physical touch screen detected. Do you want to enable the "Simulate Touch" service?
+(This is required to use the controller to input your PIN/password on the logon screen and to invoke the virtual keyboard on the desktop.)</value>
+  </data>
+  <data name="LogUserCancelledEnable" xml:space="preserve">
+    <value>User cancelled the enable operation.</value>
+  </data>
+  <data name="LogUserAgreedToSimulateTouch" xml:space="preserve">
+    <value>User agreed to enable the simulate touch service.</value>
+  </data>
+  <data name="LogUserCancelledDisable" xml:space="preserve">
+    <value>User cancelled the disable operation.</value>
+  </data>
 </root>

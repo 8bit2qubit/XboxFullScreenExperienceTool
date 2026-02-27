@@ -573,4 +573,20 @@
   <data name="chkSimulateTouch_Text" xml:space="preserve">
     <value>在系统启动时模拟触控功能以启用游戏控制器键盘输入 (需要重启)</value>
   </data>
+  <data name="PromptRestartWarning" xml:space="preserve">
+    <value>此操作完成后将自动重新启动计算机，请先保存您的工作。是否继续？</value>
+  </data>
+  <data name="PromptEnableSimulateTouch" xml:space="preserve">
+    <value>未检测到实体触摸屏。是否启用“模拟触摸”服务？
+（此为在登录界面使用控制器输入 PIN 码/密码，以及在桌面呼叫虚拟键盘所必需）</value>
+  </data>
+  <data name="LogUserCancelledEnable" xml:space="preserve">
+    <value>用户取消启用操作。</value>
+  </data>
+  <data name="LogUserAgreedToSimulateTouch" xml:space="preserve">
+    <value>用户同意启用模拟触摸服务。</value>
+  </data>
+  <data name="LogUserCancelledDisable" xml:space="preserve">
+    <value>用户取消停用操作。</value>
+  </data>
 </root>

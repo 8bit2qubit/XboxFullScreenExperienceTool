@@ -757,7 +757,7 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Detected build 26220.7271+, applying native support configuration. (Size: {0:F2}&quot;, Override: {1}) 的當地語系化字串。
+        ///   查詢類似 Detected Native Build, applying native support configuration. (Screen Size: {0:F2}&quot;, Override Status: {1}) 的當地語系化字串。
         /// </summary>
         internal static string LogNativeSupportDetected {
             get {
@@ -1063,6 +1063,33 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 User agreed to enable the simulate touch service. 的當地語系化字串。
+        /// </summary>
+        internal static string LogUserAgreedToSimulateTouch {
+            get {
+                return ResourceManager.GetString("LogUserAgreedToSimulateTouch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 User cancelled the disable operation. 的當地語系化字串。
+        /// </summary>
+        internal static string LogUserCancelledDisable {
+            get {
+                return ResourceManager.GetString("LogUserCancelledDisable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 User cancelled the enable operation. 的當地語系化字串。
+        /// </summary>
+        internal static string LogUserCancelledEnable {
+            get {
+                return ResourceManager.GetString("LogUserCancelledEnable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 User chose to restart later. No further actions can be performed until restart. 的當地語系化字串。
         /// </summary>
         internal static string LogUserRestartLater {
@@ -1153,6 +1180,16 @@ namespace XboxFullScreenExperienceTool.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 No physical touch screen detected. Do you want to enable the &quot;Simulate Touch&quot; service?
+        ///(This is required to use the controller to input your PIN/password on the logon screen and to invoke the virtual keyboard on the desktop.) 的當地語系化字串。
+        /// </summary>
+        internal static string PromptEnableSimulateTouch {
+            get {
+                return ResourceManager.GetString("PromptEnableSimulateTouch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Disable Success 的當地語系化字串。
         /// </summary>
         internal static string PromptRestartCaptionDisableSuccess {
@@ -1176,6 +1213,15 @@ namespace XboxFullScreenExperienceTool.Resources {
         internal static string PromptRestartMessage {
             get {
                 return ResourceManager.GetString("PromptRestartMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 This operation will automatically restart your computer upon completion. Please save your work first. Do you want to continue? 的當地語系化字串。
+        /// </summary>
+        internal static string PromptRestartWarning {
+            get {
+                return ResourceManager.GetString("PromptRestartWarning", resourceCulture);
             }
         }
         

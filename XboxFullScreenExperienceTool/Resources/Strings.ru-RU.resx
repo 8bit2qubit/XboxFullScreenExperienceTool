@@ -573,4 +573,20 @@
   <data name="chkSimulateTouch_Text" xml:space="preserve">
     <value>Эмуляция сенсорного ввода при запуске системы для включения клавиатуры геймпада (требуется перезагрузка)</value>
   </data>
+  <data name="PromptRestartWarning" xml:space="preserve">
+    <value>По завершении этой операции ваш компьютер будет автоматически перезагружен. Пожалуйста, сначала сохраните свою работу. Вы хотите продолжить?</value>
+  </data>
+  <data name="PromptEnableSimulateTouch" xml:space="preserve">
+    <value>Физический сенсорный экран не обнаружен. Вы хотите включить службу «Имитация касания»?
+(Это необходимо для использования контроллера для ввода PIN-кода/пароля на экране входа в систему и вызова виртуальной клавиатуры на рабочем столе.)</value>
+  </data>
+  <data name="LogUserCancelledEnable" xml:space="preserve">
+    <value>Пользователь отменил операцию включения.</value>
+  </data>
+  <data name="LogUserAgreedToSimulateTouch" xml:space="preserve">
+    <value>Пользователь согласился включить службу имитации касания.</value>
+  </data>
+  <data name="LogUserCancelledDisable" xml:space="preserve">
+    <value>Пользователь отменил операцию отключения.</value>
+  </data>
 </root>

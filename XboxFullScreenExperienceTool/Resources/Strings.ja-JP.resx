@@ -573,4 +573,20 @@
   <data name="chkSimulateTouch_Text" xml:space="preserve">
     <value>システム起動時にタッチ機能をシミュレートし、ゲームパッドキーボードを有効にする (再起動が必要)</value>
   </data>
+  <data name="PromptRestartWarning" xml:space="preserve">
+    <value>この操作が完了すると、コンピューターが自動的に再起動します。先に作業を保存してください。続行しますか？</value>
+  </data>
+  <data name="PromptEnableSimulateTouch" xml:space="preserve">
+    <value>物理的なタッチスクリーンが検出されませんでした。「タッチシミュレーション」サービスを有効にしますか？
+（これは、ログオン画面でのコントローラーによるPIN/パスワード入力、およびデスクトップでの仮想キーボードの呼び出しに必要です）</value>
+  </data>
+  <data name="LogUserCancelledEnable" xml:space="preserve">
+    <value>ユーザーが有効化操作をキャンセルしました。</value>
+  </data>
+  <data name="LogUserAgreedToSimulateTouch" xml:space="preserve">
+    <value>ユーザーがタッチシミュレーションサービスの有効化に同意しました。</value>
+  </data>
+  <data name="LogUserCancelledDisable" xml:space="preserve">
+    <value>ユーザーが無効化操作をキャンセルしました。</value>
+  </data>
 </root>
