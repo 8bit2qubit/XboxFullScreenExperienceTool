@@ -205,6 +205,18 @@ Follow these steps to run this project on your own machine.
 
 ---
 
+## 🌟 Star History
+
+<a href="https://star-history.com/#8bit2qubit/XboxFullScreenExperienceTool&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=8bit2qubit/XboxFullScreenExperienceTool&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=8bit2qubit/XboxFullScreenExperienceTool&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=8bit2qubit/XboxFullScreenExperienceTool&type=Date" />
+  </picture>
+</a>
+
+---
+
 ## 📄 License
 
 This project is licensed under the [GNU General Public License v3.0 (GPL-3.0)](https://github.com/8bit2qubit/XboxFullScreenExperienceTool/blob/main/LICENSE).
