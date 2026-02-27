@@ -46,9 +46,8 @@ This is an **alternative advanced mode** that uses a custom kernel driver to app
 
 ### Which Mode Should You Use?
 
-- **For Desktops & Laptops**: Start with **`PhysPanelCS`**. This is the recommended, safest, and most reliable method for most users.
-- **For Desktops & Laptops (Alternative)**: If you experience any issues with the default mode, **`PhysPanelDrv`** is available as a fallback. It requires the prerequisites listed below.
-- **For Handheld Devices**: Your device does not need an override (does not rely on `PhysPanelCS` / `PhysPanelDrv`)! The mode selection UI will be disabled entirely.
+- **For Desktops & Laptops**: Start with **`PhysPanelCS`**. This is the recommended, safest, and most reliable method for most users. If you experience any issues with this default mode, **`PhysPanelDrv`** is available as a fallback alternative (requires the prerequisites listed below).
+- **For Handheld Devices**: Your device does not require `PhysPanelCS` or `PhysPanelDrv`. The mode selection UI will be automatically disabled.
 
 > #### **Prerequisites for `PhysPanelDrv` Mode (Alternative)**
 >
@@ -109,9 +108,8 @@ Please verify your Windows build version before downloading.
 
 - **One-Click Toggle** – Simple interface to enable or disable the Xbox full screen experience.
 - **Automatic System Check** – Verifies your Windows build for compatibility at startup.
-- **Automatic Gamepad Keyboard Fix** – Ensures the on-screen keyboard is always ready, enabling seamless controller input on non-touch PCs.
+- **Automatic Gamepad Keyboard Fix & Touch Simulation** – Simulates touch input at system startup to ensure the on-screen keyboard (including the PIN pad on the login screen) is always ready and accessible via gamepad on non-touch PCs.
 - **Device Type Emulation** – Automatically simulates a handheld device type for activation on desktop or laptop systems.
-- **Touch Capabilities Simulation** – Simulates touch input at system startup to ensure the Gamepad Keyboard (including PIN pad on login) is accessible via gamepad.
 - **Convenience Shortcuts** – Dedicated buttons to quickly access **MS Store Updates**, **Full Screen Experience Settings**, **Startup Apps**, and **UAC Settings**.
 - **Automatic Mode Selection** – Detects your device type (Desktop, Laptop, Handheld) and provides the appropriate screen dimension override options.
 - **Safe and Reversible** – All changes are fully reversible. Backups of original settings are created to ensure safe restoration.
@@ -129,9 +127,9 @@ This process consists of preparing your system with the tool, updating apps, and
 2.  Run the installer (administrator privileges required).
 3.  Launch the tool from the desktop shortcut. If using a desktop PC or laptop, the tool will automatically select the recommended **`PhysPanelCS`** mode.
     > **Note:** If you are a **desktop or laptop user** and wish to use the alternative **`PhysPanelDrv`** mode, you can select it manually. Ensure you have completed the prerequisites listed above first.
-4.  (Optional) Check **"Simulate touch capabilities at system startup to enable gamepad keyboard input (restart required)"** (Only for devices without a touch screen).
-5.  Click **“Enable Xbox Full Screen Experience”**.
-6.  **Restart your PC** for the changes to take effect.
+4.  Click the **“Enable Xbox Full Screen Experience”** button.
+5.  Accept the system restart confirmation prompt.
+6.  The tool will verify your environment. If no physical touch screen is detected, you will be prompted to select "Yes" to enable touch simulation. This ensures you can use your controller to operate the on-screen virtual keyboard (Gamepad Keyboard) properly. **Your PC will restart automatically** to apply all changes.
 
 ### 2. Update Core Apps
 
