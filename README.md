@@ -86,14 +86,16 @@ This tool is compatible with **Windows 11 24H2 builds `26100.7019` or later**. I
 >
 > _Native support. For Desktops & Laptops, does not rely on screen dimensions override via PhysPanelCS / PhysPanelDrv._
 >
+> - `26100.8328` or later
+> - `26200.8328` or later
 > - `26220.7271` or later
 > - `26300.7674` or later
 > - `28020.1362` or later
 >
 > ### **Legacy Experience**
 >
-> - `26100.7019` or later
-> - `26200.7015` or later
+> - `26100.7019` ~ `26100.8327`
+> - `26200.7015` ~ `26200.8327`
 > - `28000.1450` or later
 >
 > **Example:** A build like `26100.1` is **NOT** compatible because its revision `.1` is lower than the required `.7019`. If you are on build 26100 / 26200, please run Windows Update to get the latest version.
