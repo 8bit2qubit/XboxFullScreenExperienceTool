@@ -39,7 +39,19 @@ namespace XboxFullScreenExperienceTool.Helpers
         private const string OLD_KEYBOARD_TASK_NAME_RECENT = "XFSET-StartGamepadKeyboardOnLogon"; // 前一版名稱，用於遷移
 
         /// <summary>
-        /// 判斷是否為 26220.7271 或更新的原生支援版本 (Native Build)。
+        /// 判斷是否為原生支援版本 (Native Build)。與 MainForm.IsNativeSupportBuild 對應。
+        ///
+        /// Native:
+        ///   - 26100.8328+, 26200.8328+
+        ///   - 26220.7271+
+        ///   - 26221 ~ 27999
+        ///   - 28020.1362+, 28021+
+        ///
+        /// Legacy:
+        ///   - 26100.7019 ~ 26100.8327
+        ///   - 26200.7015 ~ 26200.8327
+        ///   - 26220.6972 ~ 26220.7270
+        ///   - 28000.1450+
         /// </summary>
         private static bool IsNativeSupportBuild()
         {
@@ -51,9 +63,18 @@ namespace XboxFullScreenExperienceTool.Helpers
 
                 if (int.TryParse(currentBuildStr, out int build) && int.TryParse(currentRevisionStr, out int revision))
                 {
-                    // Build > 26220 或 Build = 26220 且 Revision >= 7271
-                    if (build > 26220) return true;
-                    if (build == 26220 && revision >= 7271) return true;
+                    // --- 28000 系列 ---
+                    if (build == 28020 && revision >= 1362) return true;  // ✓ Native: 28020.1362+
+                    if (build > 28020) return true;                        // ✓ Native: 28021+
+                    if (build == 28000) return false;                      // ✗ Legacy: 28000.1450+
+
+                    // --- 26220 系列 ---
+                    if (build > 26220 && build < 28000) return true;       // ✓ Native: 26221~27999
+                    if (build == 26220 && revision >= 7271) return true;   // ✓ Native: 26220.7271+ | ✗ Legacy: 26220.6972~7270
+
+                    // --- 26100 / 26200 系列 (.8328+ 升級為 Native) ---
+                    if (build == 26200 && revision >= 8328) return true;   // ✓ Native: 26200.8328+ | ✗ Legacy: 26200.7015~8327
+                    if (build == 26100 && revision >= 8328) return true;   // ✓ Native: 26100.8328+ | ✗ Legacy: 26100.7019~8327
                 }
             }
             catch { /* 忽略錯誤 */ }
@@ -188,7 +209,7 @@ namespace XboxFullScreenExperienceTool.Helpers
         /// <summary>
         /// 建立或覆寫 SetPanelDimensions 工作排程。
         /// </summary>
-        /// <param name="regOnly">如果為 true，則僅執行 'reg' 指令 (適用於 26220.7271+)；否則執行標準的 'set 155 87 reg'。</param>
+        /// <param name="regOnly">如果為 true，則僅執行 'reg' 指令 (適用於 Native Build：26100.8328+ / 26200.8328+ / 26220.7271+ / 28020.1362+)；否則執行標準的 'set 155 87 reg'。</param>
         /// <exception cref="FileNotFoundException">如果找不到 `PhysPanelCS.exe`，則擲出此例外狀況。</exception>
         /// <exception cref="Exception">如果 `schtasks.exe` 命令因任何其他原因失敗，則擲出此例外狀況。</exception>
         public static void CreateSetPanelDimensionsTask(bool regOnly = false)

@@ -418,6 +418,7 @@ namespace XboxFullScreenExperienceTool
                 // 版本比較邏輯
                 // ✓ 支援: 26100.7019+, 26200.7015+, 26220.6972+, 26221~27999, 28000.1450+, 28020.1362+
                 // ✗ 不支援: 28000.1~1449, 28020.1~1361
+                // 註: 26100.8328+ / 26200.8328+ 已升級為 Native（見 IsNativeSupportBuild）
                 bool isCompatible = false;
 
                 // --- 28000 系列以上 ---
@@ -445,11 +446,11 @@ namespace XboxFullScreenExperienceTool
                 // --- 舊版本 ---
                 else if (currentBuild == 26200)
                 {
-                    isCompatible = (currentRevision >= 7015); // ✓ 26200.7015+ (Legacy)
+                    isCompatible = (currentRevision >= 7015); // ✓ 26200.7015+ (7015~8327: Legacy, 8328+: Native)
                 }
                 else if (currentBuild == 26100)
                 {
-                    isCompatible = (currentRevision >= 7019); // ✓ 26100.7019+ (Legacy)
+                    isCompatible = (currentRevision >= 7019); // ✓ 26100.7019+ (7019~8327: Legacy, 8328+: Native)
                 }
 
                 if (!isCompatible)
@@ -486,14 +487,16 @@ namespace XboxFullScreenExperienceTool
 
         /// <summary>
         /// 判斷是否為原生支援版本 (Native Build)。
-        /// 
+        ///
         /// Native Build (啟用 3 個功能 ID):
+        ///   - 26100.8328+, 26200.8328+
         ///   - 26220.7271+
         ///   - 26221 ~ 27999
         ///   - 28020.1362+
-        /// 
+        ///
         /// Legacy Build (啟用 2 個功能 ID):
-        ///   - 26100.7019+, 26200.7015+
+        ///   - 26100.7019 ~ 26100.8327
+        ///   - 26200.7015 ~ 26200.8327
         ///   - 26220.6972 ~ 26220.7270
         ///   - 28000.1450+
         /// </summary>
@@ -514,6 +517,10 @@ namespace XboxFullScreenExperienceTool
                     // --- 26220 系列 ---
                     if (build > 26220 && build < 28000) return true;       // ✓ Native: 26221~27999
                     if (build == 26220 && revision >= 7271) return true;   // ✓ Native: 26220.7271+ | ✗ Legacy: 26220.6972~7270
+
+                    // --- 26100 / 26200 系列 (.8328+ 升級為 Native) ---
+                    if (build == 26200 && revision >= 8328) return true;   // ✓ Native: 26200.8328+ | ✗ Legacy: 26200.7015~8327
+                    if (build == 26100 && revision >= 8328) return true;   // ✓ Native: 26100.8328+ | ✗ Legacy: 26100.7019~8327
                 }
             }
             catch { /* 忽略錯誤 */ }
