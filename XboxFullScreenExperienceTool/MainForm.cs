@@ -304,7 +304,8 @@ namespace XboxFullScreenExperienceTool
                     if (File.Exists(BackupFilePath))
                     {
                         logger($"Detected active state (Backup file found). Applying SMART Feature ID updates...");
-                        // 呼叫智慧啟用，而非 EnableAllFeatures，確保從 Legacy Build 升級時，在掌機上不會誤開 59765208
+                        // 呼叫智慧啟用，而非 EnableAllFeatures，讓 GetRequiredFeatureIds 根據 build 與裝置型態
+                        // 決定要開哪些 ID (例如 Insider Native + 真掌機只開 BASIC，正式版 Native 一律 ALL)
                         EnableSmartFeatures(logger);
                     }
                     else
@@ -528,6 +529,35 @@ namespace XboxFullScreenExperienceTool
         }
 
         /// <summary>
+        /// 判斷是否為「正式版 (Retail) Native Build」(26100.8328+ / 26200.8328+)。
+        /// 這些是 Microsoft 已推送到一般使用者 (非 Insider) 的 24H2 / 25H2 服務通道，
+        /// 對應 README 中 Native 體驗的 26100.x / 26200.x 條目。
+        ///
+        /// 自 KB5074105 (26200.7705) 起，正式版引入了 Task View 的 FSE 按鈕 regression
+        /// (按鈕失去圖示且無法開啟 FSE)。實測確認啟用 59765208 可繞過此問題，因此正式版
+        /// Native 不論是否為真掌機，都應啟用 ALL_FEATURE_IDS。
+        ///
+        /// Insider 通道的 Native build (26220.7271+ / 26221+ / 28020.1362+) 不受此
+        /// regression 影響，維持原本「真掌機只開 BASIC」的行為。
+        /// </summary>
+        private static bool IsRetailNativeBuild()
+        {
+            try
+            {
+                string? currentBuildStr = Registry.GetValue($@"HKEY_LOCAL_MACHINE\{REG_PATH_PARENT}", "CurrentBuild", null)?.ToString();
+                string? currentRevisionStr = Registry.GetValue($@"HKEY_LOCAL_MACHINE\{REG_PATH_PARENT}", "UBR", null)?.ToString();
+
+                if (int.TryParse(currentBuildStr, out int build) && int.TryParse(currentRevisionStr, out int revision))
+                {
+                    if (build == 26200 && revision >= 8328) return true;
+                    if (build == 26100 && revision >= 8328) return true;
+                }
+            }
+            catch { /* 忽略錯誤 */ }
+            return false;
+        }
+
+        /// <summary>
         /// 取得「停用」操作時應針對的功能 ID 清單。
         /// 1. Native Build -> 停用 3 個 ID (含 59765208)。
         /// 2. Legacy Build -> 停用 2 個 ID (排除 59765208)。
@@ -557,7 +587,12 @@ namespace XboxFullScreenExperienceTool
             // Legacy Build：一律只支援 BASIC
             if (!isNativeSupport) return BASIC_FEATURE_IDS;
 
-            // 原生支援版本 (Native Build)：
+            // 正式版 (Retail) Native Build (26100.8328+ / 26200.8328+)：一律啟用 ALL，
+            // 不論是否為真掌機。原因：這些 build 帶有 KB5074105 引入的 Task View
+            // FSE 按鈕 regression，需 59765208 繞過 (見 IsRetailNativeBuild 註解)。
+            if (IsRetailNativeBuild()) return ALL_FEATURE_IDS;
+
+            // Insider 通道 Native Build (26220.7271+ / 26221+ / 28020.1362+)：
             // 判斷是否需要啟用 59765208 (非掌機模式)
             // 條件 A: 偵測到覆寫 (CS/Drv)。這意味著尺寸是假的 (如 7")，且使用者之前刻意安裝了覆寫，
             //         因此假設這是非掌機 (Desktop/Laptop)，需要完整功能。
@@ -568,7 +603,7 @@ namespace XboxFullScreenExperienceTool
             }
 
             // 其他情況 ("無覆寫"且"尺寸符合掌機")：
-            // 真掌機 -> 排除 59765208
+            // 真掌機 (Insider Native) -> 排除 59765208
             return BASIC_FEATURE_IDS; // { 52580392, 50902630 }
         }
 
