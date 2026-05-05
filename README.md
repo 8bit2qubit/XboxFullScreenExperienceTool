@@ -11,10 +11,10 @@
 </p>
 
 <p align="center">
-<a href="https://github.com/8bit2qubit/XboxFullScreenExperienceTool/releases/latest"><img src="https://img.shields.io/github/v/release/8bit2qubit/XboxFullScreenExperienceTool?style=flat-square&color=blue" alt="Latest Release"></a>
-<a href="https://github.com/8bit2qubit/XboxFullScreenExperienceTool/releases"><img src="https://img.shields.io/github/downloads/8bit2qubit/XboxFullScreenExperienceTool/total" alt="Total Downloads"></a>
-<a href="#"><img src="https://img.shields.io/badge/tech-C%23%20%26%20.NET%208-blueviolet.svg?style=flat-square" alt="Tech"></a>
-<a href="https://github.com/8bit2qubit/XboxFullScreenExperienceTool/blob/main/LICENSE"><img src="https://img.shields.io/github/license/8bit2qubit/XboxFullScreenExperienceTool" alt="License"></a>
+<a href="https://github.com/8bit2qubit/XboxFullScreenExperienceTool/releases/latest"><img src="https://img.shields.io/github/v/release/8bit2qubit/XboxFullScreenExperienceTool?style=flat&color=blue" alt="Latest Release"></a>
+<a href="https://github.com/8bit2qubit/XboxFullScreenExperienceTool/releases"><img src="https://img.shields.io/github/downloads/8bit2qubit/XboxFullScreenExperienceTool/total?style=flat" alt="Total Downloads"></a>
+<a href="#"><img src="https://img.shields.io/badge/tech-C%23%20%26%20.NET%208-blueviolet.svg?style=flat" alt="Tech"></a>
+<a href="https://github.com/8bit2qubit/XboxFullScreenExperienceTool/blob/main/LICENSE"><img src="https://img.shields.io/github/license/8bit2qubit/XboxFullScreenExperienceTool?style=flat" alt="License"></a>
 </p>
 
 A lightweight and secure one-click utility designed to enable **Windows 11’s hidden Xbox full screen gaming experience** (also known as **"Xbox Mode"** in recent Windows builds).
@@ -45,48 +45,8 @@ Microsoft has recently rolled out a **limited PC edition** of Xbox Mode (Full Sc
 This tool's purpose is to enable the **Full Handheld** edition on any PC, unlocking the home-app selection and auto-launch behavior that the Limited PC edition lacks.
 
 > 💡 If you use a custom home app such as **[OmniConsole](https://8bit2qubit.github.io/omniconsole-site/)**, the Full Handheld edition is required.
-
----
-
-## 💡 Screen Dimensions Override for Desktop PCs & Laptops
-
-The Xbox Full Screen Experience (Xbox Mode) is designed for handheld-sized screens. If your device is not a handheld, a screen dimensions override is required. This tool offers two distinct methods, and now automatically guides you to the appropriate choice based on your device type.
-
-### Task Scheduler Mode: `PhysPanelCS` (Recommended)
-
-This is the **default and recommended** method. It is easy to use, requires no additional manual setup, and provides high reliability for all devices, including desktops and laptops.
-
-### Driver Mode: `PhysPanelDrv` (Alternative)
-
-This is an **alternative advanced mode** that uses a custom kernel driver to apply the override at the earliest stage of system boot. This method is an option for users who may still encounter issues with the default `PhysPanelCS` mode, but it **requires disabling Secure Boot** and **enabling Test Signing** (see prerequisites below).
-
-### Which Mode Should You Use?
-
-- **For Desktops & Laptops**: Start with **`PhysPanelCS`**. This is the recommended, safest, and most reliable method for most users. If you experience any issues with this default mode, **`PhysPanelDrv`** is available as a fallback alternative (requires the prerequisites listed below).
-- **For Handheld Devices**: Your device does not require `PhysPanelCS` or `PhysPanelDrv`. The mode selection UI will be automatically disabled.
-
-> #### **Prerequisites for `PhysPanelDrv` Mode (Alternative)**
 >
-> ⚠️ **Important:** These steps are only necessary for **desktop and laptop users** who choose to use the alternative `PhysPanelDrv` mode.
->
-> Installing this **test-signed driver** requires you to manually disable Secure Boot and enable Windows Test Signing Mode.
->
-> **Step 1: Enter BIOS/UEFI Settings**
->
-> 1.  Restart your computer and press the designated key during boot (usually `Del`, `F2`, `F10`, or `Esc`) to enter the BIOS/UEFI setup.
-> 2.  Find and **disable** the **Secure Boot** option.
-> 3.  Save your changes and exit.
->
-> **Step 2: Enable Test Signing in Windows**
->
-> 1.  Once your computer has restarted into Windows, open Terminal (PowerShell or Command Prompt) **as an administrator**.
-> 2.  Enter the following command and press Enter:
->     ```
->     bcdedit /set testsigning on
->     ```
-> 3.  Restart your computer one more time to apply the change.
->
-> After completing these steps, you can select **`PhysPanelDrv`** in the tool.
+> 🚀 **OmniConsole** boots straight into any gaming platform — Steam Big Picture, Xbox, Epic, Armoury Crate SE, Playnite, or anything you add.
 
 ---
 
@@ -115,6 +75,8 @@ This tool is compatible with **Windows 11 24H2 builds `26100.7019` or later**. I
 > - `28000.1450` or later
 >
 > **Example:** A build like `26100.1` is **NOT** compatible because its revision `.1` is lower than the required `.7019`. If you are on build 26100 / 26200, please run Windows Update to get the latest version.
+>
+> 📜 On Legacy builds, Desktop PCs and Laptops use a screen dimensions override — see [Backward Compatibility (Legacy Builds)](#-backward-compatibility-legacy-builds).
 
 Please verify your Windows build version before downloading.
 
@@ -124,11 +86,11 @@ Please verify your Windows build version before downloading.
 
 ## ✨ Features
 
-- **One-Click Toggle** – Simple interface to enable or disable the Xbox full screen experience (Xbox mode).
+- **One-Click Toggle** – Simple interface to enable or disable the Xbox Full Screen Experience (Xbox Mode).
 - **Automatic System Check** – Verifies your Windows build for compatibility at startup.
 - **Automatic Gamepad Keyboard Fix & Touch Simulation** – Simulates touch input at system startup to ensure the on-screen keyboard (including the PIN pad on the login screen) is always ready and accessible via gamepad on non-touch PCs.
 - **Device Type Emulation** – Automatically simulates a handheld device type for activation on desktop or laptop systems.
-- **Convenience Shortcuts** – Dedicated buttons to quickly access **MS Store Updates**, **Full Screen Experience Settings**, **Startup Apps**, and **UAC Settings**.
+- **Convenience Shortcuts** – Dedicated buttons to quickly access **MS Store Updates**, **Xbox Mode (FSE) Settings**, **Startup Apps**, and **UAC Settings**.
 - **Automatic Mode Selection** – Detects your device type (Desktop, Laptop, Handheld) and provides the appropriate screen dimension override options.
 - **Safe and Reversible** – All changes are fully reversible. Backups of original settings are created to ensure safe restoration.
 - **Standard Installation** – Distributed as a `.msi` installer for clean installation, management, and removal.
@@ -143,11 +105,10 @@ This process consists of preparing your system with the tool, updating apps, and
 
 1.  Download the latest `.msi` package from the [**Releases Page**](https://github.com/8bit2qubit/XboxFullScreenExperienceTool/releases/latest).
 2.  Run the installer (administrator privileges required).
-3.  Launch the tool from the desktop shortcut. If using a desktop PC or laptop, the tool will automatically select the recommended **`PhysPanelCS`** mode.
-    > **Note:** If you are a **desktop or laptop user** and wish to use the alternative **`PhysPanelDrv`** mode, you can select it manually. Ensure you have completed the prerequisites listed above first.
-4.  Click the **“Enable Xbox Full Screen Experience”** button.
+3.  Launch the tool from the desktop shortcut.
+4.  Click the **“Enable Xbox Mode (FSE)”** button.
 5.  Accept the system restart confirmation prompt.
-6.  The tool will verify your environment. If no physical touch screen is detected, you will be prompted to select "Yes" to enable touch simulation. This ensures you can use your controller to operate the on-screen virtual keyboard (Gamepad Keyboard) properly. **Your PC will restart automatically** to apply all changes.
+6.  The tool will verify your environment. If no physical touchscreen is detected, you will be prompted to select "Yes" to enable touch simulation. This ensures you can use your controller to operate the on-screen virtual keyboard (Gamepad Keyboard) properly. **Your PC will restart automatically** to apply all changes.
 
 ### 2. Update Core Apps
 
@@ -156,17 +117,35 @@ This process consists of preparing your system with the tool, updating apps, and
 3.  Click **"Check for updates"** within the Store to refresh all apps. Make sure **Xbox** and **Xbox Game Bar** are fully updated.
     > 🔄 **Tip:** You may need to run "Check for updates" **twice** to ensure everything is fully installed.
 
-### 3. Activate Full Screen Experience / Xbox Mode
+### 3. Activate Full Screen Experience / Xbox mode
 
-1.  Click the **"Open Full Screen Experience Settings"** button in the tool (or navigate to **Start → Settings → Gaming → Full screen experience / Xbox mode**).
+1.  Click the **"Open Xbox Mode (FSE) Settings"** button in the tool (or navigate to **Start → Settings → Gaming → Full screen experience / Xbox mode**).
 2.  Set "Choose Home app" to **Xbox**.
     - If this option is missing, return to "Update Core Apps" and ensure the apps are fully updated.
 3.  Enable **"Enter full screen experience on startup" / "Enter Xbox mode on startup"**.
+
+### 4. Enter Xbox Mode (FSE)
+
+Once activated, you can enter Xbox Mode (FSE) in three ways:
+
+1.  **Manually** – Open Task View and click **Xbox mode (FSE)**.
+2.  **On startup** – Boots directly into Xbox mode (requires `"Enter full screen experience on startup" / "Enter Xbox mode on startup"` enabled in step 3 above).
+3.  **From the Xbox App** – Open the Xbox app and click the **Xbox mode (FSE)** entry.
 
 ### **How to Revert**
 
 1.  Run the tool again and click **“Disable & Restore”**.
 2.  **Restart your PC** to complete the process.
+
+> 💡 To completely remove this tool, go to **Windows Settings → Apps → Installed apps** and uninstall it. The uninstaller reverts all system changes made when enabling Xbox Mode and resets the Feature IDs to their default Microsoft-managed state.
+
+---
+
+## 📜 Backward Compatibility (Legacy Builds)
+
+On Legacy builds (`26100.7019` ~ `26100.8327` / `26200.7015` ~ `26200.8327`), this tool provides two screen dimensions override modes for Desktop PCs and Laptops — `PhysPanelCS` (default) and `PhysPanelDrv` (alternative).
+
+📖 [Learn about the two override modes](Docs/screen-dimensions-override.md)
 
 ---
 

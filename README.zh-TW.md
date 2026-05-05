@@ -11,10 +11,10 @@
 </p>
 
 <p align="center">
-<a href="https://github.com/8bit2qubit/XboxFullScreenExperienceTool/releases/latest"><img src="https://img.shields.io/github/v/release/8bit2qubit/XboxFullScreenExperienceTool?style=flat-square&color=blue" alt="最新版本"></a>
-<a href="https://github.com/8bit2qubit/XboxFullScreenExperienceTool/releases"><img src="https://img.shields.io/github/downloads/8bit2qubit/XboxFullScreenExperienceTool/total" alt="總下載量"></a>
-<a href="#"><img src="https://img.shields.io/badge/tech-C%23%20%26%20.NET%208-blueviolet.svg?style=flat-square" alt="技術"></a>
-<a href="https://github.com/8bit2qubit/XboxFullScreenExperienceTool/blob/main/LICENSE"><img src="https://img.shields.io/github/license/8bit2qubit/XboxFullScreenExperienceTool" alt="授權條款"></a>
+<a href="https://github.com/8bit2qubit/XboxFullScreenExperienceTool/releases/latest"><img src="https://img.shields.io/github/v/release/8bit2qubit/XboxFullScreenExperienceTool?style=flat&color=blue" alt="最新版本"></a>
+<a href="https://github.com/8bit2qubit/XboxFullScreenExperienceTool/releases"><img src="https://img.shields.io/github/downloads/8bit2qubit/XboxFullScreenExperienceTool/total?style=flat" alt="總下載量"></a>
+<a href="#"><img src="https://img.shields.io/badge/tech-C%23%20%26%20.NET%208-blueviolet.svg?style=flat" alt="技術"></a>
+<a href="https://github.com/8bit2qubit/XboxFullScreenExperienceTool/blob/main/LICENSE"><img src="https://img.shields.io/github/license/8bit2qubit/XboxFullScreenExperienceTool?style=flat" alt="授權條款"></a>
 </p>
 
 一款簡單、安全的一鍵式工具，專為啟用 Windows 11 中隱藏的 **Xbox 全螢幕遊戲體驗**（在較新版本中亦稱為「**Xbox 模式**」）而生。本工具將繁複的底層設定全部自動化，讓您輕鬆享受專為遊戲手把最佳化的類主機介面。
@@ -44,48 +44,8 @@
 本工具的用途，正是讓任何 PC 都能啟用**掌機完整版**，解鎖 PC 限制版所缺少的「選擇主畫面應用程式」與開機自動啟動功能。
 
 > 💡 若您使用自訂的主畫面應用程式（例如 **[OmniConsole](https://8bit2qubit.github.io/omniconsole-site/zh-TW/)**），則必須啟用掌機完整版。
-
----
-
-## 💡 為桌機與筆電覆寫螢幕尺寸
-
-Xbox 全螢幕體驗 (Xbox 模式) 專為掌機尺寸的螢幕設計。若您的裝置不是掌機，就需要覆寫螢幕尺寸。本工具提供了兩種模式，並會根據您的裝置類型，自動引導您至最適當的選項。
-
-### 工作排程模式: `PhysPanelCS` (建議)
-
-此為**預設且建議**的選項。它簡單易用且無須額外的手動設定，並對於包含桌機與筆電在內的所有裝置都非常穩定可靠。
-
-### 驅動程式模式: `PhysPanelDrv` (替代方案)
-
-這是一個**替代用的進階模式**，它使用一個自訂核心驅動程式，在系統開機的最早階段就套用螢幕尺寸覆寫。此方法適用於使用預設 `PhysPanelCS` 模式仍可能遇到問題的使用者，但它 **要求您停用「安全啟動」** 並 **啟用「測試簽章」** (請參閱下述前置作業)。
-
-### 如何選擇適合您的模式？
-
-- **桌上型電腦與筆記型電腦**：請先使用 **`PhysPanelCS`**。這是對大多數使用者而言最建議、最安全且最可靠的方法。如果您在使用預設模式時遇到任何問題，**`PhysPanelDrv`** 可作為備用選項（需要完成下列的前置作業）。
-- **掌上型裝置**：您的裝置不需要依賴 `PhysPanelCS` 或 `PhysPanelDrv`。模式選擇介面將會自動停用。
-
-> #### **`PhysPanelDrv` 模式的前置作業 (替代方案)**
 >
-> ⚠️ **重要提示：** 這些步驟僅適用於需要使用替代方案 `PhysPanelDrv` 模式的 **桌上型電腦與筆記型電腦使用者**。
->
-> 安裝此**使用測試簽章的驅動程式**需要您手動停用「安全啟動」並啟用 Windows 的「測試簽章模式」。
->
-> **步驟一：進入 BIOS 設定**
->
-> 1.  重新啟動電腦，在開機時按下指定按鍵 (通常是 `Del`, `F2`, `F10`, 或 `Esc`) 進入 BIOS/UEFI 設定。
-> 2.  找到並**關閉 Secure Boot (安全啟動)** 選項。
-> 3.  儲存設定並離開。
->
-> **步驟二：啟用測試簽章**
->
-> 1.  電腦重啟進入 Windows 後，使用**系統管理員權限**打開終端機 (PowerShell 或 CMD)。
-> 2.  輸入以下指令，然後按下 Enter：
->     ```
->     bcdedit /set testsigning on
->     ```
-> 3.  完成後，再次重新開機。
->
-> 完成以上步驟後，您就可以在工具中選取 **`PhysPanelDrv`**。
+> 🚀 **OmniConsole** 開機直達任何遊戲平台 — Steam Big Picture、Xbox、Epic、Armoury Crate SE、Playnite，或任何您要加入的平台。
 
 ---
 
@@ -114,6 +74,8 @@ Xbox 全螢幕體驗 (Xbox 模式) 專為掌機尺寸的螢幕設計。若您的
 > - `28000.1450` 或更新版本
 >
 > **範例：** `26100.1` 這樣的版本是**不相容**的，因為它的次要版本號 `.1` 小於 (舊於) 所要求的 `.7019`。如果您處於 26100 / 26200 版本，請執行 Windows Update 以更新至最新狀態。
+>
+> 📜 在 Legacy 版本上，桌機與筆電會啟用螢幕尺寸覆寫機制 — 詳見 [向下相容（Legacy Builds）](#-向下相容legacy-builds)。
 
 請在下載前確認您的作業系統版本。
 
@@ -123,11 +85,11 @@ Xbox 全螢幕體驗 (Xbox 模式) 專為掌機尺寸的螢幕設計。若您的
 
 ## ✨ 功能特色
 
-- **一鍵切換**：提供直觀的介面，只需點選一次即可啟用或停用 Xbox 全螢幕體驗 (Xbox 模式)。
+- **一鍵切換**：提供直觀的介面，只需點選一次即可啟用或停用全螢幕體驗工具 (Xbox 模式)。
 - **自動系統檢查**：啟動時自動驗證您的 Windows 組建版本，確保符合執行要求。
 - **自動遊戲控制器鍵盤修正與觸控模擬**：在系統啟動時模擬觸控輸入，確保螢幕鍵盤隨時待命，讓非觸控電腦（包含登入畫面的 PIN 面板）也能透過控制器無縫喚起與操作。
 - **硬體類型模擬**：若您使用桌上型或筆記型電腦，工具會自動將裝置類型模擬為掌機，以滿足啟用條件。
-- **便利捷徑**：提供專屬按鈕以快速存取 **MS Store 更新**、**全螢幕體驗設定**、**啟動應用程式**以及 **UAC 設定**。
+- **便利捷徑**：提供專屬按鈕以快速存取 **MS Store 更新**、**Xbox Mode (FSE) 設定**、**啟動應用程式**以及 **UAC 設定**。
 - **自動模式選擇**：自動偵測您的裝置類型（桌機、筆電、掌機），並提供最適當的螢幕尺寸覆寫選項。
 - **安全且完全可逆**：所有變更都會在停用或解除安裝時被還原。工具會備份初始設定，確保您的系統能無損恢復原狀。
 - **標準化安裝**：提供標準的 `.msi` 安裝檔，便於版本管理與乾淨解除安裝。
@@ -142,9 +104,8 @@ Xbox 全螢幕體驗 (Xbox 模式) 專為掌機尺寸的螢幕設計。若您的
 
 1.  從 **[發行頁面](https://github.com/8bit2qubit/XboxFullScreenExperienceTool/releases/latest)** 下載最新的 `.msi` 安裝檔。
 2.  執行安裝程式（過程需要系統管理員權限）。
-3.  從桌面捷徑啟動工具。若使用桌機或筆電，工具將自動選取建議的 **`PhysPanelCS`** 模式。
-    > **注意：** 如果您是 **桌機或筆電使用者**，並希望改用替代的 **`PhysPanelDrv`** 模式，您可以手動選擇它。請務必先完成上述的前置作業。
-4.  點選 **「啟用 Xbox 全螢幕體驗」** 按鈕。
+3.  從桌面捷徑啟動工具。
+4.  點選 **「啟用 Xbox Mode (FSE)」** 按鈕。
 5.  在彈出的系統重啟對話方塊中選擇「是」。
 6.  工具會自動偵測運作環境。若未偵測到實體觸控螢幕，建議在詢問是否啟用觸控模擬的視窗中選擇「是」，以確保能用控制器正常操作螢幕虛擬鍵盤（遊戲控制器）。完成後**系統將會自動重新啟動**並套用變更。
 
@@ -157,15 +118,33 @@ Xbox 全螢幕體驗 (Xbox 模式) 專為掌機尺寸的螢幕設計。若您的
 
 ### 3. 啟用全螢幕體驗 / Xbox 模式
 
-1.  點選工具中的 **「開啟全螢幕體驗設定」** (或手動前往 **開始 → 設定 → 遊戲 → 全螢幕體驗 / Xbox 模式**)。
+1.  點選工具中的 **「開啟 Xbox Mode (FSE) 設定」** (或手動前往 **開始 → 設定 → 遊戲 → 啟用全螢幕體驗 / Xbox 模式**)。
 2.  在「選擇主畫面應用程式」中設定為 **Xbox**。
     - 若沒有出現此選項，請返回 "更新核心應用程式" 步驟，確保應用程式都已更新至最新。
-3.  啟用 **「啟動時進入全螢幕體驗」/「啟動時進入 Xbox 模式」**。
+3.  啟用 **「啟動時進入啟用全螢幕體驗 / Xbox 模式」**。
+
+### 4. 進入 Xbox 模式 (FSE)
+
+啟用後，您可以透過以下三種方式進入 Xbox 模式 (FSE)：
+
+1.  **手動進入** – 開啟工作檢視，點選 **Xbox 模式 (FSE)**。
+2.  **開機進入** – 直接以 Xbox 模式啟動（需在上方步驟 3 啟用「啟動時進入啟用全螢幕體驗 / Xbox 模式」）。
+3.  **從 Xbox App 進入** – 開啟 Xbox 應用程式，點選 **Xbox 模式 (FSE)** 入口。
 
 ### **如何還原**
 
 1.  再次執行工具，並點選 `停用並還原` 按鈕。
 2.  **重新啟動**您的電腦即可完成還原。
+
+> 💡 若要完全移除本工具，請至 **Windows 設定 → 應用程式 → 已安裝的應用程式** 解除安裝。解除安裝程式會還原啟用 Xbox 模式時對系統做的所有變更，並將功能 ID 還原為 Microsoft 管理的預設狀態。
+
+---
+
+## 📜 向下相容（Legacy Builds）
+
+在 Legacy 版本（`26100.7019` ~ `26100.8327` / `26200.7015` ~ `26200.8327`）上，本工具為桌機與筆電提供兩種螢幕尺寸覆寫模式 — `PhysPanelCS`（預設）與 `PhysPanelDrv`（替代方案）。
+
+📖 [了解兩種覆寫模式](Docs/screen-dimensions-override.zh-TW.md)
 
 ---
 

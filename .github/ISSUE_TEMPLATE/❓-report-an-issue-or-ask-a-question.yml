@@ -16,12 +16,12 @@ body:
 
             *   **"System Requirements"** (I confirm my build is one of the **COMPATIBLE** builds: `26100.7019+`, `26200.7015+`, `26220.6972+`, `28000.1450+`, or `28020.1362+`.)
 
-            *   **"Screen Dimensions Override for Desktop PCs & Laptops"** (I understand the difference between `PhysPanelCS` / `PhysPanelDrv`)
+            *   **"Full Handheld vs. Limited PC Xbox Mode"** (I understand the difference between the editions and why this tool is required.)
 
             *   **"Quick Start"** (I have followed the installation and initial setup steps.)
           required: true
         - label: |-
-            I understand this tool is an **Enabler / Utility Tool** designed to easily turn on the hidden feature. It is **NOT** the creator or implementer of the "Full Screen Experience" (FSE) feature itself.
+            I understand this tool is an **Enabler / Utility Tool** designed to easily turn on the hidden feature. It is **NOT** the creator or implementer of the "Xbox Mode" (FSE) feature itself.
 
             💡 **The Amusement Park Analogy:** Think of this tool as someone giving you a free VIP ticket to an amusement park. If the rollercoasters inside are broken, or if the park staff (Microsoft's CFR/A/B Testing) refuses to let you in despite having a ticket, you complain to the park management (Microsoft), not the person who gave you the ticket.
 
@@ -69,19 +69,9 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: screen-dimensions-override-mode
-    attributes:
-      label: '3. Which "Screen Dimensions Override Mode" are you currently using?'
-      options:
-        - Task Scheduler Mode (`PhysPanelCS`) (Default)
-        - Driver Mode (`PhysPanelDrv`) (Advanced)
-        - N/A (Not Applicable) (My device is a Handheld, or this is not relevant)
-    validations:
-      required: true
-  - type: dropdown
     id: tool-version
     attributes:
-      label: "4. Which Xbox Full Screen Experience Tool version are you using?"
+      label: "3. Which Xbox Full Screen Experience Tool version are you using?"
       description: "(You can see the version in the tool's title bar.)"
       options:
         - v0.9.2
@@ -111,7 +101,7 @@ body:
   - type: textarea
     id: issue-description
     attributes:
-      label: "5. Describe your issue or question:"
+      label: "4. Describe your issue or question:"
       description: "(A clear and concise description of what the problem is.)"
       placeholder: "Type here..."
     validations:
@@ -119,7 +109,7 @@ body:
   - type: textarea
     id: steps-to-reproduce
     attributes:
-      label: "6. Steps to Reproduce (if applicable):"
+      label: "5. Steps to Reproduce (if applicable):"
       description: "(If you are reporting a reproducible problem, list the steps.)"
       placeholder: |
         1. Boot the PC.
@@ -130,7 +120,7 @@ body:
   - type: textarea
     id: expected-behavior
     attributes:
-      label: "7. Expected Behavior:"
+      label: "6. Expected Behavior:"
       description: "(What did you expect to happen?)"
       placeholder: "Type here..."
     validations:
@@ -138,7 +128,7 @@ body:
   - type: textarea
     id: actual-behavior
     attributes:
-      label: "8. Actual Behavior:"
+      label: "7. Actual Behavior:"
       description: "(What actually happened?)"
       placeholder: "Type here..."
     validations:
@@ -146,8 +136,8 @@ body:
   - type: textarea
     id: screenshots
     attributes:
-      label: "9. Screenshots / Videos / Error Messages / Logs"
-      description: "(Attach screenshots, videos, error messages, or provide logs if possible. Logs are located at: \"C:\\Program Files\\8bit2qubit\\Xbox FullScreen Experience Tool\\XboxFullScreenExperienceTool.log\" and \".log.bak\")"
+      label: "8. Screenshots / Videos / Error Messages / Logs"
+      description: "(Attach screenshots, videos, error messages, or provide logs if possible. Logs are located at: \"C:\\Program Files\\8bit2qubit\\Xbox FullScreen Experience Tool\\XboxFullScreenExperienceTool.log\" and \".log.bak\". ⚠️ **Note: Please rename \".log.bak\" to \".log.txt\" before uploading, as GitHub does not allow .bak files.**)"
       placeholder: "Type here..."
     validations:
       required: false
