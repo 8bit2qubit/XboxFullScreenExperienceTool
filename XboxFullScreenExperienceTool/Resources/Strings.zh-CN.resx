@@ -169,10 +169,10 @@
     <value>状态: 等待重启...</value>
   </data>
   <data name="btnEnable_Text" xml:space="preserve">
-    <value>启用 Xbox 全屏体验</value>
+    <value>启用 Xbox Mode (FSE)</value>
   </data>
   <data name="btnEnable_Text_Fix" xml:space="preserve">
-    <value>修复 Xbox 全屏体验</value>
+    <value>修复 Xbox Mode (FSE)</value>
   </data>
   <data name="btnDisable_Text" xml:space="preserve">
     <value>禁用并还原</value>
@@ -237,6 +237,9 @@
   <data name="LogRegistrySetSuccess" xml:space="preserve">
     <value>注册表已成功设置为 46 (0x2E)。</value>
   </data>
+  <data name="LogResettingBeforeEnable" xml:space="preserve">
+    <value>正在重置功能 ID 覆盖: {0}...</value>
+  </data>
   <data name="LogEnablingFeatures" xml:space="preserve">
     <value>正在启用功能 ID: {0}...</value>
   </data>
@@ -284,6 +287,9 @@
   </data>
   <data name="LogBeginDisable" xml:space="preserve">
     <value>--- 开始禁用流程 ---</value>
+  </data>
+  <data name="LogResettingBeforeDisable" xml:space="preserve">
+    <value>正在重置功能 ID 覆盖: {0}...</value>
   </data>
   <data name="LogDisablingFeatures" xml:space="preserve">
     <value>正在明确禁用功能 ID: {0}...</value>
@@ -466,7 +472,7 @@
     <value>您的系统已原生支持触摸，Windows 将自动管理游戏控制器键盘的显示。</value>
   </data>
   <data name="TooltipTouchDisabled" xml:space="preserve">
-    <value>您的系统未检测到触摸支持。您可以启用此选项，以便在系统启动时自动为控制器体验启动游戏控制器键盘。</value>
+    <value>您的系统未检测到触摸支持。您可以启用此选项，以便在系统启动时自动为控制器体验开启游戏控制器键盘。</value>
   </data>
   <data name="LogPanelTaskCreated" xml:space="preserve">
     <value>任务计划 'XFSET-SetPanelDimensions' 已创建。</value>
@@ -508,7 +514,7 @@
     <value>无法归档旧的日志文件：{0}</value>
   </data>
   <data name="btnOpenSettings_Text" xml:space="preserve">
-    <value>打开全屏体验设置</value>
+    <value>打开 Xbox Mode (FSE) 设置</value>
   </data>
   <data name="btnCheckUpdates_Text" xml:space="preserve">
     <value>检查 MS Store 的 Xbox 更新</value>
@@ -517,7 +523,7 @@
     <value>无法打开设置页面: {0}</value>
   </data>
   <data name="MsgOpenSettingsManual" xml:space="preserve">
-    <value>无法打开 Windows 设置，请手动前往 [开始 &gt; 设置 &gt; 游戏 &gt; 全屏体验]。</value>
+    <value>无法打开 Windows 设置，请手动前往 [开始 &gt; 设置 &gt; 游戏 &gt; Xbox mode]。</value>
   </data>
   <data name="ErrorOpenStore" xml:space="preserve">
     <value>无法打开 Microsoft Store: {0}</value>
@@ -571,7 +577,7 @@
     <value>修改触摸模拟任务计划时出错。错误: {0}</value>
   </data>
   <data name="chkSimulateTouch_Text" xml:space="preserve">
-    <value>在系统启动时模拟触控功能以启用游戏控制器键盘输入 (需要重启)</value>
+    <value>在系统启动时模拟触控输入，以启用游戏控制器键盘 (需要重新启动)</value>
   </data>
   <data name="PromptRestartWarning" xml:space="preserve">
     <value>此操作完成后将自动重新启动计算机，请先保存您的工作。是否继续？</value>

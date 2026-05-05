@@ -169,10 +169,10 @@
     <value>Status: Neustart ausstehend...</value>
   </data>
   <data name="btnEnable_Text" xml:space="preserve">
-    <value>Xbox-Vollbildschirm-Erfahrung aktivieren</value>
+    <value>Xbox Mode (FSE) aktivieren</value>
   </data>
   <data name="btnEnable_Text_Fix" xml:space="preserve">
-    <value>Xbox-Vollbildschirm-Erfahrung korrigieren</value>
+    <value>Xbox Mode (FSE) korrigieren</value>
   </data>
   <data name="btnDisable_Text" xml:space="preserve">
     <value>Deaktivieren &amp;&amp; Wiederherstellen</value>
@@ -237,6 +237,9 @@
   <data name="LogRegistrySetSuccess" xml:space="preserve">
     <value>Registrierungsschlüssel erfolgreich auf 46 (0x2E) gesetzt.</value>
   </data>
+  <data name="LogResettingBeforeEnable" xml:space="preserve">
+    <value>Setze Feature-ID-Überschreibungen zurück: {0}...</value>
+  </data>
   <data name="LogEnablingFeatures" xml:space="preserve">
     <value>Aktiviere Feature-IDs: {0}...</value>
   </data>
@@ -284,6 +287,9 @@ Bitte stellen Sie sicher, dass Sie dieses Programm mit Administratorrechten ausf
   </data>
   <data name="LogBeginDisable" xml:space="preserve">
     <value>--- Start des Deaktivierungsprozesses ---</value>
+  </data>
+  <data name="LogResettingBeforeDisable" xml:space="preserve">
+    <value>Setze Feature-ID-Überschreibungen zurück: {0}...</value>
   </data>
   <data name="LogDisablingFeatures" xml:space="preserve">
     <value>Deaktiviere explizit Feature-IDs: {0}...</value>
@@ -508,7 +514,7 @@ Bitte stellen Sie sicher, dass Sie dieses Programm mit Administratorrechten ausf
     <value>Fehler beim Archivieren der alten Protokolldatei: {0}</value>
   </data>
   <data name="btnOpenSettings_Text" xml:space="preserve">
-    <value>Vollbildschirm-Erfahrungseinstellungen öffnen</value>
+    <value>Xbox Mode (FSE) Einstellungen öffnen</value>
   </data>
   <data name="btnCheckUpdates_Text" xml:space="preserve">
     <value>Im MS Store nach Xbox-Updates suchen</value>
@@ -517,7 +523,7 @@ Bitte stellen Sie sicher, dass Sie dieses Programm mit Administratorrechten ausf
     <value>Fehler beim Öffnen der Einstellungsseite: {0}</value>
   </data>
   <data name="MsgOpenSettingsManual" xml:space="preserve">
-    <value>Windows-Einstellungen konnten nicht geöffnet werden. Bitte gehen Sie manuell zu [Start &gt; Einstellungen &gt; Spielen &gt; Vollbildschirm-Erfahrung].</value>
+    <value>Windows-Einstellungen konnten nicht geöffnet werden. Bitte gehen Sie manuell zu [Start &gt; Einstellungen &gt; Spielen &gt; Xbox mode].</value>
   </data>
   <data name="ErrorOpenStore" xml:space="preserve">
     <value>Fehler beim Öffnen des Microsoft Store: {0}</value>

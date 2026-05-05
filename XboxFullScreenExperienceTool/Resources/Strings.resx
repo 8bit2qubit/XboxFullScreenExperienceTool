@@ -169,10 +169,10 @@
     <value>Status: Restart pending...</value>
   </data>
   <data name="btnEnable_Text" xml:space="preserve">
-    <value>Enable Xbox Full Screen Experience</value>
+    <value>Enable Xbox Mode (FSE)</value>
   </data>
   <data name="btnEnable_Text_Fix" xml:space="preserve">
-    <value>Fix Xbox Full Screen Experience</value>
+    <value>Fix Xbox Mode (FSE)</value>
   </data>
   <data name="btnDisable_Text" xml:space="preserve">
     <value>Disable &amp;&amp; Restore</value>
@@ -237,6 +237,9 @@
   <data name="LogRegistrySetSuccess" xml:space="preserve">
     <value>Registry key successfully set to 46 (0x2E).</value>
   </data>
+  <data name="LogResettingBeforeEnable" xml:space="preserve">
+    <value>Resetting Feature ID overrides before enabling: {0}...</value>
+  </data>
   <data name="LogEnablingFeatures" xml:space="preserve">
     <value>Enabling Feature IDs: {0}...</value>
   </data>
@@ -284,6 +287,9 @@ Please ensure you are running this program with administrator privileges.</value
   </data>
   <data name="LogBeginDisable" xml:space="preserve">
     <value>--- Starting Disable Process ---</value>
+  </data>
+  <data name="LogResettingBeforeDisable" xml:space="preserve">
+    <value>Resetting Feature ID overrides before disabling: {0}...</value>
   </data>
   <data name="LogDisablingFeatures" xml:space="preserve">
     <value>Explicitly disabling Feature IDs: {0}...</value>
@@ -466,7 +472,7 @@ Please ensure you are running this program with administrator privileges.</value
     <value>Your system has native touch support. Windows will manage the gamepad keyboard display automatically.</value>
   </data>
   <data name="TooltipTouchDisabled" xml:space="preserve">
-    <value>No touch support detected on your system. You can enable this to automatically launch the gamepad keyboard on system startup for a controller-first experience.</value>
+    <value>No touch support detected on your system. You can enable this option to automatically launch the gamepad keyboard on system startup for a controller-first experience.</value>
   </data>
   <data name="LogPanelTaskCreated" xml:space="preserve">
     <value>Scheduled task 'XFSET-SetPanelDimensions' has been created.</value>
@@ -508,7 +514,7 @@ Please ensure you are running this program with administrator privileges.</value
     <value>Failed to archive old log file: {0}</value>
   </data>
   <data name="btnOpenSettings_Text" xml:space="preserve">
-    <value>Open Full Screen Experience Settings</value>
+    <value>Open Xbox Mode (FSE) Settings</value>
   </data>
   <data name="btnCheckUpdates_Text" xml:space="preserve">
     <value>Check MS Store for Xbox Updates</value>
@@ -517,7 +523,7 @@ Please ensure you are running this program with administrator privileges.</value
     <value>Failed to open settings page: {0}</value>
   </data>
   <data name="MsgOpenSettingsManual" xml:space="preserve">
-    <value>Unable to open Windows Settings. Please manually go to [Start &gt; Settings &gt; Gaming &gt; Full Screen Experience].</value>
+    <value>Unable to open Windows Settings. Please manually go to [Start &gt; Settings &gt; Gaming &gt; Xbox mode].</value>
   </data>
   <data name="ErrorOpenStore" xml:space="preserve">
     <value>Failed to open Microsoft Store: {0}</value>
@@ -571,14 +577,14 @@ Please ensure you are running this program with administrator privileges.</value
     <value>Failed to modify the touch simulation task. Error: {0}</value>
   </data>
   <data name="chkSimulateTouch_Text" xml:space="preserve">
-    <value>Simulate touch capabilities at system startup to enable gamepad keyboard input (restart required)</value>
+    <value>Simulate touch input on startup to enable the gamepad keyboard (restart required)</value>
   </data>
   <data name="PromptRestartWarning" xml:space="preserve">
     <value>This operation will automatically restart your computer upon completion. Please save your work first. Do you want to continue?</value>
   </data>
   <data name="PromptEnableSimulateTouch" xml:space="preserve">
-    <value>No physical touch screen detected. Do you want to enable the "Simulate Touch" service?
-(This is required to use the controller to input your PIN/password on the logon screen and to invoke the virtual keyboard on the desktop.)</value>
+    <value>No physical touchscreen detected. Do you want to enable the "Touch Simulation" service?
+(Required to enter your PIN or password with a controller on the sign-in screen, and to open the on-screen keyboard on the desktop.)</value>
   </data>
   <data name="LogUserCancelledEnable" xml:space="preserve">
     <value>User cancelled the enable operation.</value>

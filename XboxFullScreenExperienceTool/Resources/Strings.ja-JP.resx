@@ -169,10 +169,10 @@
     <value>状態: 再起動待ち...</value>
   </data>
   <data name="btnEnable_Text" xml:space="preserve">
-    <value>Xbox 全画面表示エクスペリエンスを有効にする</value>
+    <value>Xbox Mode (FSE) を有効にする</value>
   </data>
   <data name="btnEnable_Text_Fix" xml:space="preserve">
-    <value>Xbox 全画面表示エクスペリエンスを修正する</value>
+    <value>Xbox Mode (FSE) を修正する</value>
   </data>
   <data name="btnDisable_Text" xml:space="preserve">
     <value>無効にして元に戻す</value>
@@ -237,6 +237,9 @@
   <data name="LogRegistrySetSuccess" xml:space="preserve">
     <value>レジストリが正常に 46 (0x2E) に設定されました。</value>
   </data>
+  <data name="LogResettingBeforeEnable" xml:space="preserve">
+    <value>機能 ID の上書き設定をリセットしています: {0}...</value>
+  </data>
   <data name="LogEnablingFeatures" xml:space="preserve">
     <value>機能 ID: {0} を有効にしています...</value>
   </data>
@@ -284,6 +287,9 @@
   </data>
   <data name="LogBeginDisable" xml:space="preserve">
     <value>--- 無効化プロセスを開始 ---</value>
+  </data>
+  <data name="LogResettingBeforeDisable" xml:space="preserve">
+    <value>機能 ID の上書き設定をリセットしています: {0}...</value>
   </data>
   <data name="LogDisablingFeatures" xml:space="preserve">
     <value>機能 ID: {0} を明示的に無効にしています...</value>
@@ -508,7 +514,7 @@
     <value>古いログファイルをアーカイブできませんでした: {0}</value>
   </data>
   <data name="btnOpenSettings_Text" xml:space="preserve">
-    <value>全画面表示エクスペリエンス設定を開く</value>
+    <value>Xbox Mode (FSE) 設定を開く</value>
   </data>
   <data name="btnCheckUpdates_Text" xml:space="preserve">
     <value>MS Store で Xbox の更新を確認</value>
@@ -517,7 +523,7 @@
     <value>設定ページを開けませんでした: {0}</value>
   </data>
   <data name="MsgOpenSettingsManual" xml:space="preserve">
-    <value>Windows の設定を開けませんでした。手動で [スタート &gt; 設定 &gt; ゲーム &gt; 全画面表示エクスペリエンス] へ移動してください。</value>
+    <value>Windows の設定を開けませんでした。手動で [スタート &gt; 設定 &gt; ゲーム &gt; Xbox mode] へ移動してください。</value>
   </data>
   <data name="ErrorOpenStore" xml:space="preserve">
     <value>Microsoft Store を開けませんでした: {0}</value>

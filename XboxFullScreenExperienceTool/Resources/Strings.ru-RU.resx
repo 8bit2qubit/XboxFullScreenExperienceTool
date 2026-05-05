@@ -169,10 +169,10 @@
     <value>Статус: Ожидается перезагрузка...</value>
   </data>
   <data name="btnEnable_Text" xml:space="preserve">
-    <value>Включить полноэкранный режим Xbox</value>
+    <value>Включить Xbox Mode (FSE)</value>
   </data>
   <data name="btnEnable_Text_Fix" xml:space="preserve">
-    <value>Исправить полноэкранный режим Xbox</value>
+    <value>Исправить Xbox Mode (FSE)</value>
   </data>
   <data name="btnDisable_Text" xml:space="preserve">
     <value>Отключить и восстановить</value>
@@ -237,6 +237,9 @@
   <data name="LogRegistrySetSuccess" xml:space="preserve">
     <value>Ключ реестра успешно установлен в 46 (0x2E).</value>
   </data>
+  <data name="LogResettingBeforeEnable" xml:space="preserve">
+    <value>Сброс переопределений идентификаторов функций: {0}...</value>
+  </data>
   <data name="LogEnablingFeatures" xml:space="preserve">
     <value>Включение идентификаторов функций: {0}...</value>
   </data>
@@ -284,6 +287,9 @@
   </data>
   <data name="LogBeginDisable" xml:space="preserve">
     <value>--- Начало процесса отключения ---</value>
+  </data>
+  <data name="LogResettingBeforeDisable" xml:space="preserve">
+    <value>Сброс переопределений идентификаторов функций: {0}...</value>
   </data>
   <data name="LogDisablingFeatures" xml:space="preserve">
     <value>Принудительное отключение идентификаторов функций: {0}...</value>
@@ -508,7 +514,7 @@
     <value>Не удалось заархивировать старый файл журнала: {0}</value>
   </data>
   <data name="btnOpenSettings_Text" xml:space="preserve">
-    <value>Открыть настройки полноэкранного режима</value>
+    <value>Открыть параметры Xbox Mode (FSE)</value>
   </data>
   <data name="btnCheckUpdates_Text" xml:space="preserve">
     <value>Проверить обновления Xbox в MS Store</value>
@@ -517,7 +523,7 @@
     <value>Не удалось открыть страницу настроек: {0}</value>
   </data>
   <data name="MsgOpenSettingsManual" xml:space="preserve">
-    <value>Не удалось открыть параметры Windows. Пожалуйста, перейдите вручную: [Пуск &gt; Параметры &gt; Игры &gt; Полноэкранный режим].</value>
+    <value>Не удалось открыть параметры Windows. Пожалуйста, перейдите вручную: [Пуск &gt; Параметры &gt; Игры &gt; Xbox mode].</value>
   </data>
   <data name="ErrorOpenStore" xml:space="preserve">
     <value>Не удалось открыть Microsoft Store: {0}</value>

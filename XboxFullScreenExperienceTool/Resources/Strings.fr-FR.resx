@@ -169,10 +169,10 @@
     <value>État : Redémarrage en attente...</value>
   </data>
   <data name="btnEnable_Text" xml:space="preserve">
-    <value>Activer l'expérience plein écran Xbox</value>
+    <value>Activer Xbox Mode (FSE)</value>
   </data>
   <data name="btnEnable_Text_Fix" xml:space="preserve">
-    <value>Corriger l'expérience plein écran Xbox</value>
+    <value>Corriger Xbox Mode (FSE)</value>
   </data>
   <data name="btnDisable_Text" xml:space="preserve">
     <value>Désactiver &amp;&amp; Restaurer</value>
@@ -237,6 +237,9 @@
   <data name="LogRegistrySetSuccess" xml:space="preserve">
     <value>La clé de registre a été configurée avec succès à 46 (0x2E).</value>
   </data>
+  <data name="LogResettingBeforeEnable" xml:space="preserve">
+    <value>Réinitialisation des substitutions des ID de fonctionnalités : {0}...</value>
+  </data>
   <data name="LogEnablingFeatures" xml:space="preserve">
     <value>Activation des ID de fonctionnalités : {0}...</value>
   </data>
@@ -284,6 +287,9 @@ Veuillez vous assurer que vous exécutez ce programme avec les privilèges d'adm
   </data>
   <data name="LogBeginDisable" xml:space="preserve">
     <value>--- Début du processus de désactivation ---</value>
+  </data>
+  <data name="LogResettingBeforeDisable" xml:space="preserve">
+    <value>Réinitialisation des substitutions des ID de fonctionnalités : {0}...</value>
   </data>
   <data name="LogDisablingFeatures" xml:space="preserve">
     <value>Désactivation explicite des ID de fonctionnalités : {0}...</value>
@@ -508,7 +514,7 @@ Veuillez vous assurer que vous exécutez ce programme avec les privilèges d'adm
     <value>Échec de l'archivage de l'ancien fichier journal : {0}</value>
   </data>
   <data name="btnOpenSettings_Text" xml:space="preserve">
-    <value>Ouvrir les paramètres d'expérience plein écran</value>
+    <value>Ouvrir les paramètres Xbox Mode (FSE)</value>
   </data>
   <data name="btnCheckUpdates_Text" xml:space="preserve">
     <value>Rechercher des mises à jour Xbox dans le MS Store</value>
@@ -517,7 +523,7 @@ Veuillez vous assurer que vous exécutez ce programme avec les privilèges d'adm
     <value>Échec de l'ouverture de la page des paramètres : {0}</value>
   </data>
   <data name="MsgOpenSettingsManual" xml:space="preserve">
-    <value>Impossible d'ouvrir les paramètres Windows. Veuillez aller manuellement dans [Démarrer &gt; Paramètres &gt; Jeux &gt; Expérience plein écran].</value>
+    <value>Impossible d'ouvrir les paramètres Windows. Veuillez aller manuellement dans [Démarrer &gt; Paramètres &gt; Jeux &gt; Xbox mode].</value>
   </data>
   <data name="ErrorOpenStore" xml:space="preserve">
     <value>Échec de l'ouverture du Microsoft Store : {0}</value>
