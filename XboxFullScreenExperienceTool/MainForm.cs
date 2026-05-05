@@ -207,40 +207,8 @@ namespace XboxFullScreenExperienceTool
                 }
             }
 
-            private static void EnableAllFeatures(Action<string> logger)
-            {
-                try
-                {
-                    var resetUpdates = Array.ConvertAll(ALL_FEATURE_IDS, id => new RTL_FEATURE_CONFIGURATION_UPDATE
-                    {
-                        FeatureId = id,
-                        EnabledState = RTL_FEATURE_ENABLED_STATE.Disabled,
-                        Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState | RTL_FEATURE_CONFIGURATION_OPERATION.VariantState,
-                        Priority = RTL_FEATURE_CONFIGURATION_PRIORITY.User
-                    });
-                    FeatureManager.SetFeatureConfigurations(resetUpdates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
-                    FeatureManager.SetFeatureConfigurations(resetUpdates, RTL_FEATURE_CONFIGURATION_TYPE.Boot);
-
-                    logger($"Enabling features: {string.Join(", ", ALL_FEATURE_IDS)}");
-                    var updates = Array.ConvertAll(ALL_FEATURE_IDS, id => new RTL_FEATURE_CONFIGURATION_UPDATE
-                    {
-                        FeatureId = id,
-                        EnabledState = RTL_FEATURE_ENABLED_STATE.Enabled,
-                        Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState | RTL_FEATURE_CONFIGURATION_OPERATION.VariantState,
-                        Priority = RTL_FEATURE_CONFIGURATION_PRIORITY.User
-                    });
-                    FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
-                    FeatureManager.SetFeatureConfigurations(updates, RTL_FEATURE_CONFIGURATION_TYPE.Boot);
-                    logger("All features enabled successfully.");
-                }
-                catch (Exception ex)
-                {
-                    logger($"ERROR enabling features: {ex.Message}");
-                }
-            }
-
             /// <summary>
-            /// 智慧啟用功能，取代舊的 EnableAllFeatures。
+            /// 智慧啟用功能。
             /// 考慮 Override 狀態，以正確區分「被覆寫的主機」與「真掌機」。
             /// </summary>
             private static void EnableSmartFeatures(Action<string> logger)
@@ -263,11 +231,13 @@ namespace XboxFullScreenExperienceTool
                     // 4. 決定 ID 清單 (傳入 isOverridePresent)
                     uint[] idsToEnable = GetRequiredFeatureIds(isNative, diagonalInches, isOverridePresent);
 
-                    var resetUpdates = Array.ConvertAll(idsToEnable, id => new RTL_FEATURE_CONFIGURATION_UPDATE
+                    // ResetState 清除 ALL_FEATURE_IDS 的 user-priority 覆寫
+                    logger($"Resetting Feature ID overrides before enabling: {string.Join(", ", ALL_FEATURE_IDS)}");
+                    var resetUpdates = Array.ConvertAll(ALL_FEATURE_IDS, id => new RTL_FEATURE_CONFIGURATION_UPDATE
                     {
                         FeatureId = id,
-                        EnabledState = RTL_FEATURE_ENABLED_STATE.Disabled,
-                        Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState | RTL_FEATURE_CONFIGURATION_OPERATION.VariantState,
+                        EnabledState = RTL_FEATURE_ENABLED_STATE.Default,
+                        Operation = RTL_FEATURE_CONFIGURATION_OPERATION.ResetState,
                         Priority = RTL_FEATURE_CONFIGURATION_PRIORITY.User
                     });
                     FeatureManager.SetFeatureConfigurations(resetUpdates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
@@ -304,8 +274,8 @@ namespace XboxFullScreenExperienceTool
                     if (File.Exists(BackupFilePath))
                     {
                         logger($"Detected active state (Backup file found). Applying SMART Feature ID updates...");
-                        // 呼叫智慧啟用，而非 EnableAllFeatures，讓 GetRequiredFeatureIds 根據 build 與裝置型態
-                        // 決定要開哪些 ID (例如 Insider Native + 真掌機只開 BASIC，正式版 Native 一律 ALL)
+                        // 由 GetRequiredFeatureIds 根據 build 與裝置型態決定要開哪些 ID
+                        // (例如 Insider Native + 真掌機只開 BASIC，正式版 Native 一律 ALL)。
                         EnableSmartFeatures(logger);
                     }
                     else
@@ -1318,16 +1288,19 @@ namespace XboxFullScreenExperienceTool
         /// </summary>
         private void EnableViveFeatures(uint[] featureIds)
         {
-            var resetUpdates = Array.ConvertAll(featureIds, id => new RTL_FEATURE_CONFIGURATION_UPDATE
+            // ResetState 清除 ALL_FEATURE_IDS 的 user-priority 覆寫
+            Log(string.Format(Resources.Strings.LogResettingBeforeEnable, string.Join(", ", ALL_FEATURE_IDS)));
+            var resetUpdates = Array.ConvertAll(ALL_FEATURE_IDS, id => new RTL_FEATURE_CONFIGURATION_UPDATE
             {
                 FeatureId = id,
-                EnabledState = RTL_FEATURE_ENABLED_STATE.Disabled,
-                Operation = RTL_FEATURE_CONFIGURATION_OPERATION.FeatureState | RTL_FEATURE_CONFIGURATION_OPERATION.VariantState,
+                EnabledState = RTL_FEATURE_ENABLED_STATE.Default,
+                Operation = RTL_FEATURE_CONFIGURATION_OPERATION.ResetState,
                 Priority = RTL_FEATURE_CONFIGURATION_PRIORITY.User
             });
             FeatureManager.SetFeatureConfigurations(resetUpdates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
             FeatureManager.SetFeatureConfigurations(resetUpdates, RTL_FEATURE_CONFIGURATION_TYPE.Boot);
 
+            // 寫入本次啟用所需的 ID
             Log(string.Format(Resources.Strings.LogEnablingFeatures, string.Join(", ", featureIds)));
             var updates = Array.ConvertAll(featureIds, id => new RTL_FEATURE_CONFIGURATION_UPDATE
             {
@@ -1436,11 +1409,34 @@ namespace XboxFullScreenExperienceTool
         }
 
         /// <summary>
-        /// 停用所需的 ViVe 功能。
+        /// 停用 ViVe 功能。採兩階段策略：
+        ///
+        /// 階段 1 — ResetState (ALL_FEATURE_IDS)：
+        ///   清除所有 user-priority 覆寫。
+        ///
+        /// 階段 2 — 寫入 Disabled (GetIdsToDisable)：
+        ///   單純 Reset 不夠，因為 Microsoft CFR (Controlled Feature Rollout) 已將這些 Feature ID
+        ///   灰度推送給部分使用者。如果只 Reset 而不寫 Disabled，CFR 層會直接接手，使用者按下
+        ///   「停用」後 Xbox Mode 仍然開啟，違反按鈕語意。因此明確以 user-priority 寫入 Disabled，
+        ///   壓過 CFR 的 Enabled，確保 Xbox Mode 確實關閉。
+        ///
+        /// 此設計與 Enable 路徑的「先 Reset 再寫 Enabled」對稱。
         /// </summary>
         private void DisableViveFeatures()
         {
-            // 取得應停用的 ID 清單
+            // 階段 1：清除所有 user-priority 覆寫
+            Log(string.Format(Resources.Strings.LogResettingBeforeDisable, string.Join(", ", ALL_FEATURE_IDS)));
+            var resetUpdates = Array.ConvertAll(ALL_FEATURE_IDS, id => new RTL_FEATURE_CONFIGURATION_UPDATE
+            {
+                FeatureId = id,
+                EnabledState = RTL_FEATURE_ENABLED_STATE.Default,
+                Operation = RTL_FEATURE_CONFIGURATION_OPERATION.ResetState,
+                Priority = RTL_FEATURE_CONFIGURATION_PRIORITY.User
+            });
+            FeatureManager.SetFeatureConfigurations(resetUpdates, RTL_FEATURE_CONFIGURATION_TYPE.Runtime);
+            FeatureManager.SetFeatureConfigurations(resetUpdates, RTL_FEATURE_CONFIGURATION_TYPE.Boot);
+
+            // 階段 2：明確寫入 Disabled，壓過可能存在的 CFR Enabled 推送
             uint[] idsToDisable = GetIdsToDisable();
             Log(string.Format(Resources.Strings.LogDisablingFeatures, string.Join(", ", idsToDisable)));
             var updates = Array.ConvertAll(idsToDisable, id => new RTL_FEATURE_CONFIGURATION_UPDATE

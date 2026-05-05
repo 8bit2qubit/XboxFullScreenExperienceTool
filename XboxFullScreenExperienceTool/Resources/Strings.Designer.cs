@@ -566,6 +566,24 @@ namespace XboxFullScreenExperienceTool.Resources {
                 return ResourceManager.GetString("LogEnablingFeatures", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   查詢類似 Resetting Feature ID overrides before enabling: {0}... 的當地語系化字串。
+        /// </summary>
+        internal static string LogResettingBeforeEnable {
+            get {
+                return ResourceManager.GetString("LogResettingBeforeEnable", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   查詢類似 Resetting Feature ID overrides before disabling: {0}... 的當地語系化字串。
+        /// </summary>
+        internal static string LogResettingBeforeDisable {
+            get {
+                return ResourceManager.GetString("LogResettingBeforeDisable", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   查詢類似 Please ensure this program is run with [Administrator Privileges]. 的當地語系化字串。
