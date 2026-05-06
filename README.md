@@ -86,9 +86,9 @@ Please verify your Windows build version before downloading.
 
 ## ✨ Features
 
-- **One-Click Toggle** – Simple interface to enable or disable the Xbox Full Screen Experience (Xbox Mode).
+- **One-Click Toggle** – Simple interface to enable or disable the Xbox Mode (Full Screen Experience).
 - **Automatic System Check** – Verifies your Windows build for compatibility at startup.
-- **Automatic Gamepad Keyboard Fix & Touch Simulation** – Simulates touch input at system startup to ensure the on-screen keyboard (including the PIN pad on the login screen) is always ready and accessible via gamepad on non-touch PCs.
+- **Automatic Gamepad Keyboard Fix & Touch Simulation** – Simulates touch input at system startup to ensure the on-screen keyboard (including the PIN pad on the sign-in screen) is always ready and accessible via gamepad on non-touch PCs.
 - **Device Type Emulation** – Automatically simulates a handheld device type for activation on desktop or laptop systems.
 - **Convenience Shortcuts** – Dedicated buttons to quickly access **MS Store Updates**, **Xbox Mode (FSE) Settings**, **Startup Apps**, and **UAC Settings**.
 - **Automatic Mode Selection** – Detects your device type (Desktop, Laptop, Handheld) and provides the appropriate screen dimension override options.
@@ -117,19 +117,19 @@ This process consists of preparing your system with the tool, updating apps, and
 3.  Click **"Check for updates"** within the Store to refresh all apps. Make sure **Xbox** and **Xbox Game Bar** are fully updated.
     > 🔄 **Tip:** You may need to run "Check for updates" **twice** to ensure everything is fully installed.
 
-### 3. Activate Full Screen Experience / Xbox mode
+### 3. Activate Xbox Mode / Full Screen Experience
 
-1.  Click the **"Open Xbox Mode (FSE) Settings"** button in the tool (or navigate to **Start → Settings → Gaming → Full screen experience / Xbox mode**).
+1.  Click the **"Open Xbox Mode (FSE) Settings"** button in the tool (or navigate to **Start → Settings → Gaming → Xbox mode / Full screen experience**).
 2.  Set "Choose Home app" to **Xbox**.
     - If this option is missing, return to "Update Core Apps" and ensure the apps are fully updated.
-3.  Enable **"Enter full screen experience on startup" / "Enter Xbox mode on startup"**.
+3.  Enable **"Enter Xbox mode on startup" / "Enter full screen experience on startup"**.
 
 ### 4. Enter Xbox Mode (FSE)
 
 Once activated, you can enter Xbox Mode (FSE) in three ways:
 
 1.  **Manually** – Open Task View and click **Xbox mode (FSE)**.
-2.  **On startup** – Boots directly into Xbox mode (requires `"Enter full screen experience on startup" / "Enter Xbox mode on startup"` enabled in step 3 above).
+2.  **On startup** – Boots directly into Xbox mode (requires `"Enter Xbox mode on startup" / "Enter full screen experience on startup"` enabled in step 3 above).
 3.  **From the Xbox App** – Open the Xbox app and click the **Xbox mode (FSE)** entry.
 
 ### **How to Revert**
