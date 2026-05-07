@@ -23,9 +23,9 @@ body:
         - label: |-
             I understand this tool is an **Enabler / Utility Tool** designed to easily turn on the hidden feature. It is **NOT** the creator or implementer of the "Xbox Mode" (FSE) feature itself.
 
-            💡 **The Amusement Park Analogy:** Think of this tool as someone giving you a free VIP ticket to an amusement park. If the rollercoasters inside are broken, or if the park staff (Microsoft's CFR/A/B Testing) refuses to let you in despite having a ticket, you complain to the park management (Microsoft), not the person who gave you the ticket.
+            *   💡 **The Amusement Park Analogy:** Think of this tool as someone giving you a free VIP ticket to an amusement park. If the rollercoasters inside are broken, or if the park staff (Microsoft's CFR/A/B Testing) refuses to let you in despite having a ticket, you complain to the park management (Microsoft), not the person who gave you the ticket.
 
-            **Identify your issue type before proceeding:**
+            🤔 **Identify your issue type before proceeding:**
 
             *   **❌ Microsoft's Issue:** Bugs, broken features, or any unintended behaviors **originating from the Xbox FSE itself** (including features remaining locked due to **Controlled Feature Rollout (CFR)** even after successful activation). Do not report these here. Report directly to Microsoft via [Windows Feedback Hub](https://apps.microsoft.com/detail/9NBLGGH4R32N) or [Xbox Insider Hub](https://apps.microsoft.com/detail/9PLDPG46G47Z).
             *   **✅ This Tool's Issue:** Bugs in this tool's UI, **technical failures during the write/apply process**, or issues with `PhysPanelCS` / `PhysPanelDrv`.
@@ -56,7 +56,7 @@ body:
     id: pc-model
     attributes:
       label: "PC Model"
-      description: '(e.g., Dell XPS 15, ROG Ally X, or "Custom-built Desktop")'
+      description: '(e.g., Dell XPS 15, ROG Ally X. For a custom-built PC, please specify the CPU and GPU, e.g., "Custom-built Desktop - Ryzen 7 7800X3D + RTX 4070".)'
       placeholder: "Type here..."
     validations:
       required: true
@@ -135,10 +135,24 @@ body:
     validations:
       required: true
   - type: textarea
+    id: logs
+    attributes:
+      label: "8. Logs"
+      description: |-
+        Please attach **both** log files. They are located at:
+
+        *   `C:\Program Files\8bit2qubit\Xbox FullScreen Experience Tool\XboxFullScreenExperienceTool.log`
+        *   `C:\Program Files\8bit2qubit\Xbox FullScreen Experience Tool\XboxFullScreenExperienceTool.log.bak`
+
+        ⚠️ **Note:** Please rename `.log.bak` to `.log.txt` before uploading, as GitHub does not allow `.bak` files.
+      placeholder: "Drag and drop the log files here, or paste the relevant log content."
+    validations:
+      required: true
+  - type: textarea
     id: screenshots
     attributes:
-      label: "8. Screenshots / Videos / Error Messages / Logs"
-      description: "(Attach screenshots, videos, error messages, or provide logs if possible. Logs are located at: \"C:\\Program Files\\8bit2qubit\\Xbox FullScreen Experience Tool\\XboxFullScreenExperienceTool.log\" and \".log.bak\". ⚠️ **Note: Please rename \".log.bak\" to \".log.txt\" before uploading, as GitHub does not allow .bak files.**)"
+      label: "9. Screenshots / Videos / Error Messages"
+      description: "(Attach screenshots, videos, or error messages if applicable.)"
       placeholder: "Type here..."
     validations:
       required: false
