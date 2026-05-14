@@ -468,6 +468,15 @@
   <data name="LogTouchSupportStatus" xml:space="preserve">
     <value>터치 지원 감지됨: {0}</value>
   </data>
+  <data name="LogRegionDetectedNonEu" xml:space="preserve">
+    <value>지역 감지됨: {0} (비EU)</value>
+  </data>
+  <data name="LogRegionDetectedEu" xml:space="preserve">
+    <value>지역 감지됨: {0} (EU). EU 우회 적용됨 (화면 크기 재정의).</value>
+  </data>
+  <data name="LogEuBypassApplying" xml:space="preserve">
+    <value>Native FSE에 EU 우회를 적용 중입니다 (화면 크기 재정의).</value>
+  </data>
   <data name="TooltipTouchEnabled" xml:space="preserve">
     <value>시스템이 기본적으로 터치를 지원합니다. Windows가 게임패드 키보드 표시를 자동으로 관리합니다.</value>
   </data>

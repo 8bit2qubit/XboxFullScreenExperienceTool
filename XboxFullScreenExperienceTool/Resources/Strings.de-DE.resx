@@ -468,6 +468,15 @@ Bitte stellen Sie sicher, dass Sie dieses Programm mit Administratorrechten ausf
   <data name="LogTouchSupportStatus" xml:space="preserve">
     <value>Touch-Unterstützung erkannt: {0}</value>
   </data>
+  <data name="LogRegionDetectedNonEu" xml:space="preserve">
+    <value>Region erkannt: {0} (Nicht-EU)</value>
+  </data>
+  <data name="LogRegionDetectedEu" xml:space="preserve">
+    <value>Region erkannt: {0} (EU). EU-Umgehung aktiv (Bildschirmgrößen-Override).</value>
+  </data>
+  <data name="LogEuBypassApplying" xml:space="preserve">
+    <value>EU-Umgehung für Native FSE wird angewendet (Bildschirmgrößen-Override).</value>
+  </data>
   <data name="TooltipTouchEnabled" xml:space="preserve">
     <value>Ihr System verfügt über native Touch-Unterstützung. Windows verwaltet die Anzeige der Gamepad-Tastatur automatisch.</value>
   </data>

@@ -468,6 +468,15 @@
   <data name="LogTouchSupportStatus" xml:space="preserve">
     <value>Обнаружена поддержка сенсорного ввода: {0}</value>
   </data>
+  <data name="LogRegionDetectedNonEu" xml:space="preserve">
+    <value>Обнаружен регион: {0} (не ЕС)</value>
+  </data>
+  <data name="LogRegionDetectedEu" xml:space="preserve">
+    <value>Обнаружен регион: {0} (ЕС). Активирован обход ЕС (переопределение размеров экрана).</value>
+  </data>
+  <data name="LogEuBypassApplying" xml:space="preserve">
+    <value>Применение обхода ЕС для Native FSE (переопределение размеров экрана).</value>
+  </data>
   <data name="TooltipTouchEnabled" xml:space="preserve">
     <value>Ваша система имеет встроенную поддержку сенсорного ввода. Windows будет автоматически управлять отображением клавиатуры для геймпада.</value>
   </data>

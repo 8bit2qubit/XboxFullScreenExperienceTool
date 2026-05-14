@@ -468,6 +468,15 @@
   <data name="LogTouchSupportStatus" xml:space="preserve">
     <value>检测到触摸支持状态: {0}</value>
   </data>
+  <data name="LogRegionDetectedNonEu" xml:space="preserve">
+    <value>检测到区域: {0} (非 EU)</value>
+  </data>
+  <data name="LogRegionDetectedEu" xml:space="preserve">
+    <value>检测到区域: {0} (EU)。已应用 EU 绕过 (屏幕尺寸覆写)。</value>
+  </data>
+  <data name="LogEuBypassApplying" xml:space="preserve">
+    <value>正在为 Native FSE 应用 EU 绕过 (屏幕尺寸覆写)。</value>
+  </data>
   <data name="TooltipTouchEnabled" xml:space="preserve">
     <value>您的系统已原生支持触摸，Windows 将自动管理游戏控制器键盘的显示。</value>
   </data>
@@ -577,14 +586,14 @@
     <value>修改触摸模拟任务计划时出错。错误: {0}</value>
   </data>
   <data name="chkSimulateTouch_Text" xml:space="preserve">
-    <value>在系统启动时模拟触控输入，以启用游戏控制器键盘 (需要重新启动)</value>
+    <value>在系统启动时模拟触摸输入，以启用游戏控制器键盘 (需要重新启动)</value>
   </data>
   <data name="PromptRestartWarning" xml:space="preserve">
     <value>此操作完成后将自动重新启动计算机，请先保存您的工作。是否继续？</value>
   </data>
   <data name="PromptEnableSimulateTouch" xml:space="preserve">
     <value>未检测到实体触摸屏。是否启用“模拟触摸”服务？
-（此为在登录界面使用控制器输入 PIN 码/密码，以及在桌面呼叫虚拟键盘所必需）</value>
+(此为在登录界面使用控制器输入 PIN 码/密码，以及在桌面调用虚拟键盘所必需)</value>
   </data>
   <data name="LogUserCancelledEnable" xml:space="preserve">
     <value>用户取消启用操作。</value>

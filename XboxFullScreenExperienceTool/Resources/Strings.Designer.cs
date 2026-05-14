@@ -1079,7 +1079,34 @@ namespace XboxFullScreenExperienceTool.Resources {
                 return ResourceManager.GetString("LogTouchSupportStatus", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   查詢類似 Region detected: {0} (Non-EU) 的當地語系化字串。
+        /// </summary>
+        internal static string LogRegionDetectedNonEu {
+            get {
+                return ResourceManager.GetString("LogRegionDetectedNonEu", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   查詢類似 Region detected: {0} (EU). EU bypass enabled (screen dimensions override). 的當地語系化字串。
+        /// </summary>
+        internal static string LogRegionDetectedEu {
+            get {
+                return ResourceManager.GetString("LogRegionDetectedEu", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   查詢類似 Applying EU bypass for Native FSE (screen dimensions override). 的當地語系化字串。
+        /// </summary>
+        internal static string LogEuBypassApplying {
+            get {
+                return ResourceManager.GetString("LogEuBypassApplying", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   查詢類似 User agreed to enable the simulate touch service. 的當地語系化字串。
         /// </summary>

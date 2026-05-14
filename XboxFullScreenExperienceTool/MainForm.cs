@@ -823,6 +823,13 @@ namespace XboxFullScreenExperienceTool
 
                 Log(string.Format(Resources.Strings.LogTouchSupportStatus, HardwareHelper.IsTouchScreenAvailable()));
 
+                // 顯示目前區域，EU 區域同時提示已套用螢幕尺寸覆寫繞過
+                string regionDisplayCode = RegionHelper.GetRegionDisplayCode();
+                bool isEuRegion = RegionHelper.IsEuRegion();
+                Log(string.Format(
+                    isEuRegion ? Resources.Strings.LogRegionDetectedEu : Resources.Strings.LogRegionDetectedNonEu,
+                    regionDisplayCode));
+
                 if (!isNativeSupport && !isTestSigningOn) Log(Resources.Strings.LogTestSigningDisabled); // 如果測試簽章模式未開啟
                 if (!isNativeSupport && !isArchSupported) Log(Resources.Strings.LogArchNotSupported); // 如果架構不支援
                 if (!isNativeSupport && isScreenSizeRestricted) Log(Resources.Strings.LogLargeScreenForceCS); // 只有在螢幕尺寸限制生效時
@@ -971,8 +978,11 @@ namespace XboxFullScreenExperienceTool
                     if (isOverridePresent || !IsHandheldDevice(diagonalInches))
                     {
                         Log(Resources.Strings.LogNonHandheldDetected);
-                        // 建立僅執行 'reg' 指令的工作排程，確保開機時 DeviceForm 維持為 46
-                        TaskSchedulerManager.CreateSetPanelDimensionsTask(regOnly: true);
+                        // EU 區域 Native 路徑會被 Windows 撤掉設定介面中的 Xbox Mode (FSE) 入口和功能，
+                        // 改套 'set 155 87 reg' 透過模擬 7 吋掌機螢幕尺寸繞過 EU 限制。
+                        bool isEuRegion = RegionHelper.IsEuRegion();
+                        if (isEuRegion) Log(Resources.Strings.LogEuBypassApplying);
+                        TaskSchedulerManager.CreateSetPanelDimensionsTask(regOnly: !isEuRegion);
                         Log(Resources.Strings.LogPanelTaskCreated);
                     }
                     else

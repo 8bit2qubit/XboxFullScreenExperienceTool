@@ -468,6 +468,15 @@
   <data name="LogTouchSupportStatus" xml:space="preserve">
     <value>タッチサポートの検出状態: {0}</value>
   </data>
+  <data name="LogRegionDetectedNonEu" xml:space="preserve">
+    <value>リージョン検出: {0} (非EU)</value>
+  </data>
+  <data name="LogRegionDetectedEu" xml:space="preserve">
+    <value>リージョン検出: {0} (EU)。EUバイパスを適用しました (画面サイズの上書き)。</value>
+  </data>
+  <data name="LogEuBypassApplying" xml:space="preserve">
+    <value>Native FSE 用に EU バイパスを適用しています (画面サイズの上書き)。</value>
+  </data>
   <data name="TooltipTouchEnabled" xml:space="preserve">
     <value>お使いのシステムはネイティブでタッチをサポートしています。Windowsはゲームパッドキーボードの表示を自動的に管理します。</value>
   </data>

@@ -468,6 +468,15 @@ Veuillez vous assurer que vous exécutez ce programme avec les privilèges d'adm
   <data name="LogTouchSupportStatus" xml:space="preserve">
     <value>Support tactile détecté : {0}</value>
   </data>
+  <data name="LogRegionDetectedNonEu" xml:space="preserve">
+    <value>Région détectée : {0} (hors UE)</value>
+  </data>
+  <data name="LogRegionDetectedEu" xml:space="preserve">
+    <value>Région détectée : {0} (UE). Contournement UE activé (substitution des dimensions d'écran).</value>
+  </data>
+  <data name="LogEuBypassApplying" xml:space="preserve">
+    <value>Application du contournement UE pour Native FSE (substitution des dimensions d'écran).</value>
+  </data>
   <data name="TooltipTouchEnabled" xml:space="preserve">
     <value>Votre système dispose d'un support tactile natif. Windows gérera automatiquement l'affichage du clavier pour manette.</value>
   </data>

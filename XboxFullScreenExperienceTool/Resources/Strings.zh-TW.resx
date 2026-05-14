@@ -468,6 +468,15 @@
   <data name="LogTouchSupportStatus" xml:space="preserve">
     <value>偵測到觸控支援狀態: {0}</value>
   </data>
+  <data name="LogRegionDetectedNonEu" xml:space="preserve">
+    <value>偵測到區域: {0} (非 EU)</value>
+  </data>
+  <data name="LogRegionDetectedEu" xml:space="preserve">
+    <value>偵測到區域: {0} (EU)。已套用 EU 繞過 (螢幕尺寸覆寫)。</value>
+  </data>
+  <data name="LogEuBypassApplying" xml:space="preserve">
+    <value>正在為 Native FSE 套用 EU 繞過 (螢幕尺寸覆寫)。</value>
+  </data>
   <data name="TooltipTouchEnabled" xml:space="preserve">
     <value>您的系統已原生支援觸控，Windows 將自動管理遊戲控制器鍵盤的顯示。</value>
   </data>
@@ -584,7 +593,7 @@
   </data>
   <data name="PromptEnableSimulateTouch" xml:space="preserve">
     <value>未偵測到實體觸控螢幕。是否啟用「模擬觸控」服務？
-（此為在登入畫面使用控制器輸入 PIN 碼/密碼，以及在桌面呼叫虛擬鍵盤所必需）</value>
+(此為在登入畫面使用控制器輸入 PIN 碼/密碼，以及在桌面呼叫虛擬鍵盤所必需)</value>
   </data>
   <data name="LogUserCancelledEnable" xml:space="preserve">
     <value>使用者取消啟用操作。</value>

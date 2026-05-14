@@ -157,13 +157,15 @@ namespace XboxFullScreenExperienceTool.Helpers
 
                 try
                 {
-                    // 根據 OS 版本或驅動程式狀態決定參數：
-                    // Native Build -> 使用 regOnly (僅設定登錄檔，交由系統原生處理 FSE)
-                    // Driver Installed -> 使用 regOnly (驅動程式處理 FSE，工作排程僅負責鎖定登錄檔)
-                    // Legacy Build -> 使用完整 set 155 87 reg (強制覆寫面板尺寸 + 登錄檔)
-                    bool useRegOnly = isNative || isDriverInstalled;
+                    // 根據 OS 版本、驅動程式狀態與區域決定參數：
+                    // Native Build (非 EU) -> 使用 regOnly (僅設定登錄檔，交由系統原生處理 FSE)
+                    // Native Build (EU)    -> 使用完整 set 155 87 reg (模擬 7 吋掌機，繞過 EU 限制)
+                    // Driver Installed     -> 使用 regOnly (驅動程式處理 FSE，工作排程僅負責登錄檔)
+                    // Legacy Build         -> 使用完整 set 155 87 reg (強制覆寫面板尺寸 + 登錄檔)
+                    bool isEuRegion = RegionHelper.IsEuRegion();
+                    bool useRegOnly = (isNative && !isEuRegion) || isDriverInstalled;
 
-                    logger($"Migrating Panel Task (Native={isNative}, DrvInstalled={isDriverInstalled}) -> Creating task with regOnly={useRegOnly}...");
+                    logger($"Migrating Panel Task (Native={isNative}, DrvInstalled={isDriverInstalled}, EuRegion={isEuRegion}) -> Creating task with regOnly={useRegOnly}...");
 
                     CreateSetPanelDimensionsTask(regOnly: useRegOnly);
 
