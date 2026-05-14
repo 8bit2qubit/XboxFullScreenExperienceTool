@@ -126,11 +126,12 @@ This process consists of preparing your system with the tool, updating apps, and
 
 ### 4. Enter Xbox Mode (FSE)
 
-Once activated, you can enter Xbox Mode (FSE) in three ways:
+Once activated, you can enter Xbox Mode (FSE) in two ways:
 
-1.  **Manually** – Open Task View and click **Xbox mode (FSE)**.
+1.  **Manually** – via one of these entries:
+    - Open Task View and click **Xbox mode (FSE)**.
+    - Open the Xbox app and click the **Xbox mode (FSE)** entry.
 2.  **On startup** – Boots directly into Xbox Mode (FSE) (requires the startup setting in step 3 above to be enabled).
-3.  **From the Xbox App** – Open the Xbox app and click the **Xbox mode (FSE)** entry.
 
 ### **How to Revert**
 
